@@ -1,0 +1,19 @@
+A GNU extension to formatted input lets you safely read a string with no maximum size.  Using this feature, you don’t supply a buffer; instead, scanf allocates a buffer big enough to hold the data and gives you its address.  To use this feature, write ‘a’ as a flag character, as in ‘%as’ or ‘%a[0-9a-z]’. 
+The pointer argument you supply for where to store the input should have type char **.  The scanf function allocates a buffer and stores its address in the word that the argument points to.  You should free the buffer with free when you no longer need it. 
+Here is an example of using the ‘a’ flag with the ‘%[…]’ conversion specification to read a “variable assignment” of the form ‘variable = value’. 
+
+EXAMPLE_BEGIN
+{
+  char *variable, *value;
+
+  if (2 > scanf ("%a[a-zA-Z0-9] = %a[^\n]\n",
+		 &variable, &value))
+    {
+      invalid_input_error ();
+      return 0;
+    }
+
+  …
+}
+EXAMPLE_END
+

@@ -1,0 +1,1 @@
+Here are the symbolic constants for use as the parameter argument to sysconf.  The values are all integer constants (more specifically, enumeration type values). 

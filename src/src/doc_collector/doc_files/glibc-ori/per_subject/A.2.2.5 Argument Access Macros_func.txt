@@ -1,0 +1,41 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: va_list
+The type va_list is used for argument pointer variables. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: void va_start (va_list ap, last-required)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This macro initializes the argument pointer variable ap to point to the first of the optional arguments of the current function; last-required must be the last required argument to the function. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: type va_arg (va_list ap, type)
+Preliminary: | MT-Safe race:ap | AS-Safe  | AC-Unsafe corrupt | See POSIX Safety Concepts. 
+The va_arg macro returns the value of the next optional argument, and modifies the value of ap to point to the subsequent argument. Thus, successive uses of va_arg return successive optional arguments. 
+The type of the value returned by va_arg is type as specified in the call.  type must be a self-promoting type (not char or short int or float) that matches the type of the actual argument. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: void va_end (va_list ap)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This ends the use of ap.  After a va_end call, further va_arg calls with the same ap may not work.  You should invoke va_end before returning from the function in which va_start was invoked with the same ap argument. 
+In the GNU C Library, va_end does nothing, and you need not ever use it except for reasons of portability.  
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: void va_copy (va_list dest, va_list src)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: void __va_copy (va_list dest, va_list src)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The va_copy macro allows copying of objects of type va_list even if this is not an integral type.  The argument pointer in dest is initialized to point to the same argument as the pointer in src. 
+va_copy was added in ISO C99.  When building for strict conformance to ISO C90 (‘gcc -std=c90’), it is not available. GCC provides __va_copy, as an extension, in any standards mode; before GCC 3.0, it was the only macro for this functionality. 
+These macros are no longer provided by the GNU C Library, but rather by the compiler. 

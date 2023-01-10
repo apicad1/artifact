@@ -1,0 +1,5 @@
+You can use the function parse_printf_format to obtain information about the number and types of arguments that are expected by a given template string.  This function permits interpreters that provide interfaces to printf to avoid passing along invalid arguments from the user’s program, which could cause a crash. 
+All the symbols described in this section are declared in the header file printf.h. 
+The argument types are encoded as a combination of a basic type and modifier flag bits. 
+Here are symbolic constants that represent the basic types; they stand for integer values. 
+Here are the flag bits that modify a basic type.  They are combined with the code for the basic type using inclusive-or. 

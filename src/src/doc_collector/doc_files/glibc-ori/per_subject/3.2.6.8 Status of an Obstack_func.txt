@@ -1,0 +1,25 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void * obstack_base (struct obstack *obstack-ptr)
+Preliminary: | MT-Safe  | AS-Unsafe corrupt | AC-Safe  | See POSIX Safety Concepts. 
+This function returns the tentative address of the beginning of the currently growing object in obstack-ptr.  If you finish the object immediately, it will have that address.  If you make it larger first, it may outgrow the current chunk—then its address will change! 
+If no object is growing, this value says where the next object you allocate will start (once again assuming it fits in the current chunk). 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void * obstack_next_free (struct obstack *obstack-ptr)
+Preliminary: | MT-Safe  | AS-Unsafe corrupt | AC-Safe  | See POSIX Safety Concepts. 
+This function returns the address of the first free byte in the current chunk of obstack obstack-ptr.  This is the end of the currently growing object.  If no object is growing, obstack_next_free returns the same value as obstack_base. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int obstack_object_size (struct obstack *obstack-ptr)
+Preliminary: | MT-Safe race:obstack-ptr | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function returns the size in bytes of the currently growing object. This is equivalent to 
+
+EXAMPLE_BEGIN
+obstack_next_free (obstack-ptr) - obstack_base (obstack-ptr)
+EXAMPLE_END
+

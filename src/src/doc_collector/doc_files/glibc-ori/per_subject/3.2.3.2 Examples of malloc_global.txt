@@ -1,0 +1,29 @@
+If no more space is available, malloc returns a null pointer. You should check the value of every call to malloc.  It is useful to write a subroutine that calls malloc and reports an error if the value is a null pointer, returning only if the value is nonzero.  This function is conventionally called xmalloc.  Here it is:  
+
+EXAMPLE_BEGIN
+void *
+xmalloc (size_t size)
+{
+  void *value = malloc (size);
+  if (value == 0)
+    fatal ("virtual memory exhausted");
+  return value;
+}
+EXAMPLE_END
+
+Here is a real example of using malloc (by way of xmalloc). The function savestring will copy a sequence of characters into a newly allocated null-terminated string: 
+
+EXAMPLE_BEGIN
+char *
+savestring (const char *ptr, size_t len)
+{
+  char *value = xmalloc (len + 1);
+  value[len] = '\0';
+  return memcpy (value, ptr, len);
+}
+EXAMPLE_END
+
+The block that malloc gives you is guaranteed to be aligned so that it can hold any type of data.  On GNU systems, the address is always a multiple of eight on 32-bit systems, and a multiple of 16 on 64-bit systems.  Only rarely is any higher boundary (such as a page boundary) necessary; for those cases, use aligned_alloc or posix_memalign (see Aligned Memory Blocks). 
+Note that the memory located after the end of the block is likely to be in use for something else; perhaps a block already allocated by another call to malloc.  If you attempt to treat the block as longer than you asked for it to be, you are liable to destroy the data that malloc uses to keep track of its blocks, or you may destroy the contents of another block.  If you have already allocated a block and discover you want it to be bigger, use realloc (see Changing Block Size). 
+Portability Notes: 
+  In the GNU C Library, a successful malloc (0) returns a non-null pointer to a newly allocated size-zero block; other implementations may return NULL instead. POSIX and the ISO C standard allow both behaviors.   In the GNU C Library, a failed malloc call sets errno, but ISO C does not require this and non-POSIX implementations need not set errno when failing.   In the GNU C Library, malloc always fails when size exceeds PTRDIFF_MAX, to avoid problems with programs that subtract pointers or use signed indexes.  Other implementations may succeed in this case, leading to undefined behavior later. 

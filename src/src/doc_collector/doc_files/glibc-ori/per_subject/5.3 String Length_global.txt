@@ -1,0 +1,2 @@
+You can get the length of a string using the strlen function. This function is declared in the header file string.h.  
+The wide character equivalent is declared in wchar.h. 

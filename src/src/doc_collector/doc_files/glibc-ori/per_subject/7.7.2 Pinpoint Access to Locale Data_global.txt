@@ -1,0 +1,22 @@
+When writing the X/Open Portability Guide the authors realized that the localeconv function is not enough to provide reasonable access to locale information.  The information which was meant to be available in the locale (as later specified in the POSIX.1 standard) requires more ways to access it.  Therefore the nl_langinfo function was introduced. 
+An example of nl_langinfo usage is a function which has to print a given date and time in a locale-specific way.  At first one might think that, since strftime internally uses the locale information, writing something like the following is enough: 
+
+EXAMPLE_BEGIN
+size_t
+i18n_time_n_data (char *s, size_t len, const struct tm *tp)
+{
+  return strftime (s, len, "%X %D", tp);
+}
+EXAMPLE_END
+
+The format contains no weekday or month names and therefore is internationally usable.  Wrong!  The output produced is something like "hh:mm:ss MM/DD/YY".  This format is only recognizable in the USA.  Other countries use different formats.  Therefore the function should be rewritten like this: 
+
+EXAMPLE_BEGIN
+size_t
+i18n_time_n_data (char *s, size_t len, const struct tm *tp)
+{
+  return strftime (s, len, nl_langinfo (D_T_FMT), tp);
+}
+EXAMPLE_END
+
+Now it uses the date and time format of the locale selected when the program runs.  If the user selects the locale correctly there should never be a misunderstanding over the time and date format. 

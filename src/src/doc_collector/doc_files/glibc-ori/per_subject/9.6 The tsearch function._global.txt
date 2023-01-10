@@ -1,0 +1,12 @@
+Another common form to organize data for efficient search is to use trees.  The tsearch function family provides a nice interface to functions to organize possibly large amounts of data by providing a mean access time proportional to the logarithm of the number of elements. The GNU C Library implementation even guarantees that this bound is never exceeded even for input data which cause problems for simple binary tree implementations. 
+The functions described in the chapter are all described in the System V and X/Open specifications and are therefore quite portable. 
+In contrast to the hsearch functions the tsearch functions can be used with arbitrary data and not only zero-terminated strings. 
+The tsearch functions have the advantage that no function to initialize data structures is necessary.  A simple pointer of type void * initialized to NULL is a valid tree and can be extended or searched.  The prototypes for these functions can be found in the header file search.h. 
+Another advantage of the tsearch functions in contrast to the hsearch functions is that there is an easy way to remove elements. 
+In addition to the functions to create and destroy the tree data structure, there is another function which allows you to apply a function to all elements of the tree.  The function must have this type: 
+
+EXAMPLE_BEGIN
+void __action_fn_t (const void *nodep, VISIT value, int level);
+EXAMPLE_END
+
+The nodep is the data value of the current node (once given as the key argument to tsearch).  level is a numeric value which corresponds to the depth of the current node in the tree.  The root node has the depth 0 and its children have a depth of 1 and so on.  The VISIT type is an enumeration type. 

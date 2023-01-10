@@ -1,0 +1,39 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: struct aiocb
+The POSIX.1b standard mandates that the struct aiocb structure contains at least the members described in the following table.  There might be more elements which are used by the implementation, but depending upon these elements is not portable and is highly deprecated. 
+	int aio_fildes
+This element specifies the file descriptor to be used for the operation.  It must be a legal descriptor, otherwise the operation will fail.  The device on which the file is opened must allow the seek operation. I.e., it is not possible to use any of the AIO operations on devices like terminals where an lseek call would lead to an error.  
+	off_t aio_offset
+This element specifies the offset in the file at which the operation (input or output) is performed.  Since the operations are carried out in arbitrary order and more than one operation for one file descriptor can be started, one cannot expect a current read/write position of the file descriptor.  
+	volatile void *aio_buf
+This is a pointer to the buffer with the data to be written or the place where the read data is stored.  
+	size_t aio_nbytes
+This element specifies the length of the buffer pointed to by aio_buf.  
+	int aio_reqprio
+If the platform has defined _POSIX_PRIORITIZED_IO and _POSIX_PRIORITY_SCHEDULING, the AIO requests are processed based on the current scheduling priority.  The aio_reqprio element can then be used to lower the priority of the AIO operation.  
+	struct sigevent aio_sigevent
+This element specifies how the calling process is notified once the operation terminates.  If the sigev_notify element is SIGEV_NONE, no notification is sent.  If it is SIGEV_SIGNAL, the signal determined by sigev_signo is sent.  Otherwise, sigev_notify must be SIGEV_THREAD.  In this case, a thread is created which starts executing the function pointed to by sigev_notify_function.  
+	int aio_lio_opcode
+This element is only used by the lio_listio and lio_listio64 functions.  Since these functions allow an arbitrary number of operations to start at once, and each operation can be input or output (or nothing), the information must be stored in the control block.  The possible values are:   LIO_READ   Start a read operation.  Read from the file at position aio_offset and store the next aio_nbytes bytes in the buffer pointed to by aio_buf.   LIO_WRITE   Start a write operation.  Write aio_nbytes bytes starting at aio_buf into the file starting at position aio_offset.   LIO_NOP   Do nothing for this control block.  This value is useful sometimes when an array of struct aiocb values contains holes, i.e., some of the values must not be handled although the whole array is presented to the lio_listio function.   
+When the sources are compiled using _FILE_OFFSET_BITS == 64 on a 32 bit machine, this type is in fact struct aiocb64, since the LFS interface transparently replaces the struct aiocb definition. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: struct aiocb64
+	int aio_fildes
+This element specifies the file descriptor which is used for the operation.  It must be a legal descriptor since otherwise the operation fails for obvious reasons.  The device on which the file is opened must allow the seek operation. I.e., it is not possible to use any of the AIO operations on devices like terminals where an lseek call would lead to an error.  
+	off64_t aio_offset
+This element specifies at which offset in the file the operation (input or output) is performed.  Since the operation are carried in arbitrary order and more than one operation for one file descriptor can be started, one cannot expect a current read/write position of the file descriptor.  
+	volatile void *aio_buf
+This is a pointer to the buffer with the data to be written or the place where the read data is stored.  
+	size_t aio_nbytes
+This element specifies the length of the buffer pointed to by aio_buf.  
+	int aio_reqprio
+If for the platform _POSIX_PRIORITIZED_IO and _POSIX_PRIORITY_SCHEDULING are defined the AIO requests are processed based on the current scheduling priority.  The aio_reqprio element can then be used to lower the priority of the AIO operation.  
+	struct sigevent aio_sigevent
+This element specifies how the calling process is notified once the operation terminates.  If the sigev_notify element is SIGEV_NONE no notification is sent.  If it is SIGEV_SIGNAL, the signal determined by sigev_signo is sent.  Otherwise, sigev_notify must be SIGEV_THREAD in which case a thread is created which starts executing the function pointed to by sigev_notify_function.  
+	int aio_lio_opcode
+This element is only used by the lio_listio and lio_listio64 functions.  Since these functions allow an arbitrary number of operations to start at once, and since each operation can be input or output (or nothing), the information must be stored in the control block.  See the description of struct aiocb for a description of the possible values. 
+When the sources are compiled using _FILE_OFFSET_BITS == 64 on a 32 bit machine, this type is available under the name struct aiocb64, since the LFS transparently replaces the old interface. 

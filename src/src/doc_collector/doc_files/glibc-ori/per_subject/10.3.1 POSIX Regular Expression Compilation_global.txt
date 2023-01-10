@@ -1,0 +1,4 @@
+Before you can actually match a regular expression, you must compile it.  This is not true compilation—it produces a special data structure, not machine instructions.  But it is like ordinary compilation in that its purpose is to enable you to “execute” the pattern fast.  (See Matching POSIX Regexps, for how to use the compiled regular expression for matching.) 
+There is a special data type for compiled regular expressions: 
+After you create a regex_t object, you can compile a regular expression into it by calling regcomp. 
+Here are the possible nonzero values that regcomp can return: 

@@ -1,0 +1,14 @@
+This section describes the GNU facilities for generating a series of pseudo-random numbers.  The numbers generated are not truly random; typically, they form a sequence that repeats periodically, with a period so large that you can ignore it for ordinary purposes.  The random number generator works by remembering a seed value which it uses to compute the next random number and also to compute a new seed. 
+Although the generated numbers look unpredictable within one run of a program, the sequence of numbers is exactly the same from one run to the next.  This is because the initial seed is always the same.  This is convenient when you are debugging a program, but it is unhelpful if you want the program to behave unpredictably.  If you want a different pseudo-random series each time your program runs, you must specify a different seed each time.  For ordinary purposes, basing the seed on the current time works well.  For random numbers in cryptography, see Unpredictable Bytes. 
+You can obtain repeatable sequences of numbers on a particular machine type by specifying the same initial seed value for the random number generator.  There is no standard meaning for a particular seed value; the same seed, used in different C libraries or on different CPU types, will give you different random numbers. 
+The GNU C Library supports the standard ISO C random number functions plus two other sets derived from BSD and SVID.  The BSD and ISO C functions provide identical, somewhat limited functionality.  If only a small number of random bits are required, we recommend you use the ISO C interface, rand and srand.  The SVID functions provide a more flexible interface, which allows better random number generator algorithms, provides more random bits (up to 48) per call, and can provide random floating-point numbers.  These functions are required by the XPG standard and therefore will be present in all modern Unix systems. 
+
+TABLE_BEGIN
+ • ISO Random    rand and friends.
+
+ • BSD Random    random and friends.
+
+ • SVID Random    drand48 and friends.
+
+TABLE_END
+

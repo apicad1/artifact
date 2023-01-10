@@ -1,0 +1,8 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int sigsuspend (const sigset_t *set)
+Preliminary: | MT-Unsafe race:sigprocmask/!bsd!linux | AS-Unsafe lock/hurd | AC-Unsafe lock/hurd | See POSIX Safety Concepts. 
+This function replaces the process’s signal mask with set and then suspends the process until a signal is delivered whose action is either to terminate the process or invoke a signal handling function.  In other words, the program is effectively suspended until one of the signals that is not a member of set arrives. 
+If the process is woken up by delivery of a signal that invokes a handler function, and the handler function returns, then sigsuspend also returns. 
+The mask remains set only as long as sigsuspend is waiting. The function sigsuspend always restores the previous signal mask when it returns. 
+The return value and error conditions are the same as for pause. 

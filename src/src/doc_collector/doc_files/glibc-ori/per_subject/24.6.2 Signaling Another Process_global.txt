@@ -1,0 +1,5 @@
+The kill function can be used to send a signal to another process. In spite of its name, it can be used for a lot of things other than causing a process to terminate.  Some examples of situations where you might want to send signals between processes are: 
+  A parent process starts a child to perform a task—perhaps having the child running an infinite loop—and then terminates the child when the task is no longer needed.   A process executes as part of a group, and needs to terminate or notify the other processes in the group when an error or other event occurs.   Two processes need to synchronize while working together. 
+This section assumes that you know a little bit about how processes work.  For more information on this subject, see Processes. 
+The kill function is declared in signal.h.  
+As a simple example of kill, the call kill (getpid (), sig) has the same effect as raise (sig). 

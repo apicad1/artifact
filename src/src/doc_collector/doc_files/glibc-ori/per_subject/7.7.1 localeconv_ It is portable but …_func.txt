@@ -1,0 +1,12 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: struct lconv * localeconv (void)
+Preliminary: | MT-Unsafe race:localeconv locale | AS-Unsafe  | AC-Safe  | See POSIX Safety Concepts. 
+The localeconv function returns a pointer to a structure whose components contain information about how numeric and monetary values should be formatted in the current locale. 
+You should not modify the structure or its contents.  The structure might be overwritten by subsequent calls to localeconv, or by calls to setlocale, but no other function in the library overwrites this value. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: struct lconv
+localeconv’s return value is of this data type.  Its elements are described in the following subsections. 

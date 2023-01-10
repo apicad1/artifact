@@ -1,0 +1,3 @@
+The GNU C Library implements functions to provide thread-local storage, a mechanism by which variables can be defined to have unique per-thread storage, lifetimes that match the thread lifetime, and destructors that cleanup the unique per-thread storage. 
+Several data types and macros exist for working with thread-local storage: 
+The following functions are used to manage thread-local storage: 

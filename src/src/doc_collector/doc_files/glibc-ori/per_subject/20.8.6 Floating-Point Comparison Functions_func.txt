@@ -1,0 +1,102 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int isgreater (real-floating x, real-floating y)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This macro determines whether the argument x is greater than y.  It is equivalent to (x) > (y), but no exception is raised if x or y are NaN. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int isgreaterequal (real-floating x, real-floating y)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This macro determines whether the argument x is greater than or equal to y.  It is equivalent to (x) >= (y), but no exception is raised if x or y are NaN. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int isless (real-floating x, real-floating y)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This macro determines whether the argument x is less than y. It is equivalent to (x) < (y), but no exception is raised if x or y are NaN. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int islessequal (real-floating x, real-floating y)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This macro determines whether the argument x is less than or equal to y.  It is equivalent to (x) <= (y), but no exception is raised if x or y are NaN. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int islessgreater (real-floating x, real-floating y)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This macro determines whether the argument x is less or greater than y.  It is equivalent to (x) < (y) || (x) > (y) (although it only evaluates x and y once), but no exception is raised if x or y are NaN. 
+This macro is not equivalent to x != y, because that expression is true if x or y are NaN. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int isunordered (real-floating x, real-floating y)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This macro determines whether its arguments are unordered.  In other words, it is true if x or y are NaN, and false otherwise. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int iseqsig (real-floating x, real-floating y)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This macro determines whether its arguments are equal.  It is equivalent to (x) == (y), but it raises the invalid exception and sets errno to EDOM if either argument is a NaN. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int totalorder (const double *x, const double *y)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int totalorderf (const float *x, const float *y)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int totalorderl (const long double *x, const long double *y)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int totalorderfN (const _FloatN *x, const _FloatN *y)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int totalorderfNx (const _FloatNx *x, const _FloatNx *y)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+These functions determine whether the total order relationship, defined in IEEE 754-2008, is true for *x and *y, returning nonzero if it is true and zero if it is false.  No exceptions are raised even for signaling NaNs.  The relationship is true if they are the same floating-point value (including sign for zero and NaNs, and payload for NaNs), or if *x comes before *y in the following order: negative quiet NaNs, in order of decreasing payload; negative signaling NaNs, in order of decreasing payload; negative infinity; finite numbers, in ascending order, with negative zero before positive zero; positive infinity; positive signaling NaNs, in order of increasing payload; positive quiet NaNs, in order of increasing payload. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int totalordermag (const double *x, const double *y)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int totalordermagf (const float *x, const float *y)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int totalordermagl (const long double *x, const long double *y)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int totalordermagfN (const _FloatN *x, const _FloatN *y)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int totalordermagfNx (const _FloatNx *x, const _FloatNx *y)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+These functions determine whether the total order relationship, defined in IEEE 754-2008, is true for the absolute values of *x and *y, returning nonzero if it is true and zero if it is false. No exceptions are raised even for signaling NaNs. 

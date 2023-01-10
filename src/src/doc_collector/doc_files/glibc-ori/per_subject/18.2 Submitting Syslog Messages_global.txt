@@ -1,0 +1,16 @@
+The GNU C Library provides functions to submit messages to the Syslog facility: 
+
+TABLE_BEGIN
+ • openlog    Open connection to Syslog
+
+ • syslog; vsyslog    Submit message to Syslog
+
+ • closelog    Close connection to Syslog
+
+ • setlogmask    Cause certain messages to be ignored
+
+ • Syslog Example    Example of all of the above
+
+TABLE_END
+
+These functions only work to submit messages to the Syslog facility on the same system.  To submit a message to the Syslog facility on another system, use the socket I/O functions to write a UDP datagram to the syslog UDP port on that system.  See Sockets. 

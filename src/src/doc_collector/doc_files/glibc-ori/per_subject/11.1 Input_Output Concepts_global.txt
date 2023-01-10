@@ -1,0 +1,13 @@
+Before you can read or write the contents of a file, you must establish a connection or communications channel to the file.  This process is called opening the file.  You can open a file for reading, writing, or both.  
+The connection to an open file is represented either as a stream or as a file descriptor.  You pass this as an argument to the functions that do the actual read or write operations, to tell them which file to operate on.  Certain functions expect streams, and others are designed to operate on file descriptors. 
+When you have finished reading to or writing from the file, you can terminate the connection by closing the file.  Once you have closed a stream or file descriptor, you cannot do any more input or output operations on it. 
+
+TABLE_BEGIN
+ • Streams and File Descriptors    The GNU C Library provides two ways
+			             to access the contents of files.
+
+ • File Position    The number of bytes from the
+                                     beginning of the file.
+
+TABLE_END
+

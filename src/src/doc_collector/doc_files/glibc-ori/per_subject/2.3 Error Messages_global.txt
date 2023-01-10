@@ -1,0 +1,66 @@
+The library has functions and variables designed to make it easy for your program to report informative error messages in the customary format about the failure of a library call.  The functions strerror and perror give you the standard error message for a given error code; the variable program_invocation_short_name gives you convenient access to the name of the program that encountered the error. 
+strerror and perror produce the exact same message for any given error code; the precise text varies from system to system.  With the GNU C Library, the messages are fairly short; there are no multi-line messages or embedded newlines.  Each error message begins with a capital letter and does not include any terminating punctuation. 
+Many programs that don’t read input from the terminal are designed to exit if any system call fails.  By convention, the error message from such a program should start with the program’s name, sans directories. You can find that name in the variable program_invocation_short_name; the full file name is stored the variable program_invocation_name. 
+The library initialization code sets up both of these variables before calling main. 
+Portability Note: If you want your program to work with non-GNU libraries, you must save the value of argv[0] in main, and then strip off the directory names yourself.  We added these extensions to make it possible to write self-contained error-reporting subroutines that require no explicit cooperation from main. 
+Here is an example showing how to handle failure to open a file correctly.  The function open_sesame tries to open the named file for reading and returns a stream if successful.  The fopen library function returns a null pointer if it couldn’t open the file for some reason.  In that situation, open_sesame constructs an appropriate error message using the strerror function, and terminates the program.  If we were going to make some other library calls before passing the error code to strerror, we’d have to save it in a local variable instead, because those other library functions might overwrite errno in the meantime. 
+
+EXAMPLE_BEGIN
+#define _GNU_SOURCE
+
+#include <errno.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+FILE *
+open_sesame (char *name)
+{
+  FILE *stream;
+
+  errno = 0;
+  stream = fopen (name, "r");
+  if (stream == NULL)
+    {
+      fprintf (stderr, "%s: Couldn't open file %s; %s\n",
+               program_invocation_short_name, name, strerror (errno));
+      exit (EXIT_FAILURE);
+    }
+  else
+    return stream;
+}
+EXAMPLE_END
+
+Using perror has the advantage that the function is portable and available on all systems implementing ISO C.  But often the text perror generates is not what is wanted and there is no way to extend or change what perror does.  The GNU coding standard, for instance, requires error messages to be preceded by the program name and programs which read some input files should provide information about the input file name and the line number in case an error is encountered while reading the file.  For these occasions there are two functions available which are widely used throughout the GNU project. These functions are declared in error.h. 
+As mentioned above, the error and error_at_line functions can be customized by defining a variable named error_print_progname. 
+A program which read some input file and reports errors in it could look like this: 
+
+EXAMPLE_BEGIN
+{
+  char *line = NULL;
+  size_t len = 0;
+  unsigned int lineno = 0;
+
+  error_message_count = 0;
+  while (! feof_unlocked (fp))
+    {
+      ssize_t n = getline (&line, &len, fp);
+      if (n <= 0)
+        /* End of file or error.  */
+        break;
+      ++lineno;
+
+      /* Process the line.  */
+      …
+
+      if (Detect error in line)
+        error_at_line (0, errval, filename, lineno,
+                       "some error text %s", some_variable);
+    }
+
+  if (error_message_count != 0)
+    error (EXIT_FAILURE, 0, "%u errors found", error_message_count);
+}
+EXAMPLE_END
+
+error and error_at_line are clearly the functions of choice and enable the programmer to write applications which follow the GNU coding standard.  The GNU C Library additionally contains functions which are used in BSD for the same purpose.  These functions are declared in err.h.  It is generally advised to not use these functions.  They are included only for compatibility. 

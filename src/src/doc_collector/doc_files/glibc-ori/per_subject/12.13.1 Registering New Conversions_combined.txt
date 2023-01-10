@@ -1,0 +1,11 @@
+The function to register a new output conversion is register_printf_function, declared in printf.h.  
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int register_printf_function (int spec, printf_function handler-function, printf_arginfo_function arginfo-function)
+Preliminary: | MT-Unsafe const:printfext | AS-Unsafe heap lock | AC-Unsafe mem lock | See POSIX Safety Concepts. 
+This function defines the conversion specifier character spec. Thus, if spec is 'Y', it defines the conversion ‘%Y’. You can redefine the built-in conversions like ‘%s’, but flag characters like ‘#’ and type modifiers like ‘l’ can never be used as conversions; calling register_printf_function for those characters has no effect.  It is advisable not to use lowercase letters, since the ISO C standard warns that additional lowercase letters may be standardized in future editions of the standard. 
+The handler-function is the function called by printf and friends when this conversion appears in a template string. See Defining the Output Handler, for information about how to define a function to pass as this argument.  If you specify a null pointer, any existing handler function for spec is removed. 
+The arginfo-function is the function called by parse_printf_format when this conversion appears in a template string.  See Parsing a Template String, for information about this. 
+Attention: In the GNU C Library versions before 2.0 the arginfo-function function did not need to be installed unless the user used the parse_printf_format function.  This has changed. Now a call to any of the printf functions will call this function when this format specifier appears in the format string. 
+The return value is 0 on success, and -1 on failure (which occurs if spec is out of range). 
+Portability Note: It is possible to redefine the standard output conversions but doing so is strongly discouraged because it may interfere with the behavior of programs and compiler implementations that assume the effects of the conversions conform to the relevant language standards. In addition, conforming compilers need not guarantee that the function registered for a standard conversion will be called for each such conversion in every format string in a program. 

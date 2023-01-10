@@ -1,0 +1,17 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void mtrace (void)
+Preliminary: | MT-Unsafe env race:mtrace init | AS-Unsafe init heap corrupt lock | AC-Unsafe init corrupt lock fd mem | See POSIX Safety Concepts. 
+The mtrace function provides a way to trace memory allocation events in the program that calls it.  It is disabled by default in the library and can be enabled by preloading the debugging library libc_malloc_debug using the LD_PRELOAD environment variable. 
+When the mtrace function is called it looks for an environment variable named MALLOC_TRACE.  This variable is supposed to contain a valid file name.  The user must have write access.  If the file already exists it is truncated.  If the environment variable is not set or it does not name a valid file which can be opened for writing nothing is done.  The behavior of malloc etc. is not changed. For obvious reasons this also happens if the application is installed with the SUID or SGID bit set. 
+If the named file is successfully opened, mtrace installs special handlers for the functions malloc, realloc, and free.  From then on, all uses of these functions are traced and protocolled into the file.  There is now of course a speed penalty for all calls to the traced functions so tracing should not be enabled during normal use. 
+This function is a GNU extension and generally not available on other systems.  The prototype can be found in mcheck.h. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void muntrace (void)
+Preliminary: | MT-Unsafe race:mtrace locale | AS-Unsafe corrupt heap | AC-Unsafe corrupt mem lock fd | See POSIX Safety Concepts. 
+The muntrace function can be called after mtrace was used to enable tracing the malloc calls.  If no (successful) call of mtrace was made muntrace does nothing. 
+Otherwise it deinstalls the handlers for malloc, realloc, and free and then closes the protocol file.  No calls are protocolled anymore and the program runs again at full speed. 
+This function is a GNU extension and generally not available on other systems.  The prototype can be found in mcheck.h. 

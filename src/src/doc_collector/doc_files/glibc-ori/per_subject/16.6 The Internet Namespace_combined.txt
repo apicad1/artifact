@@ -1,0 +1,39 @@
+This section describes the details of the protocols and socket naming conventions used in the Internet namespace. 
+Originally the Internet namespace used only IP version 4 (IPv4).  With the growing number of hosts on the Internet, a new protocol with a larger address space was necessary: IP version 6 (IPv6).  IPv6 introduces 128-bit addresses (IPv4 has 32-bit addresses) and other features, and will eventually replace IPv4. 
+To create a socket in the IPv4 Internet namespace, use the symbolic name PF_INET of this namespace as the namespace argument to socket or socketpair.  For IPv6 addresses you need the macro PF_INET6.  These macros are defined in sys/socket.h.  
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int PF_INET
+This designates the IPv4 Internet namespace and associated family of protocols. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int PF_INET6
+This designates the IPv6 Internet namespace and associated family of protocols. 
+<<<<<<<<<<<<<<<<<<<<
+
+A socket address for the Internet namespace includes the following components: 
+  The address of the machine you want to connect to.  Internet addresses can be specified in several ways; these are discussed in Internet Address Formats, Host Addresses and Host Names.   A port number for that machine.  See Ports. 
+You must ensure that the address and port number are represented in a canonical format called network byte order.  See Byte Order, for information about this. 
+
+TABLE_BEGIN
+ • Internet Address Formats    How socket addresses are specified in the
+                                 Internet namespace.
+
+ • Host Addresses    All about host addresses of Internet host.
+
+ • Ports    Internet port numbers.
+
+ • Services Database    Ports may have symbolic names.
+
+ • Byte Order    Different hosts may use different byte
+                                 ordering conventions; you need to
+                                 canonicalize host address and port number.
+
+ • Protocols Database    Referring to protocols by name.
+
+ • Inet Example    Putting it all together.
+
+TABLE_END
+

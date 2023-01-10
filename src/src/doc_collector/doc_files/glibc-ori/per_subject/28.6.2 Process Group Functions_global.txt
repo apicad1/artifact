@@ -1,0 +1,1 @@
+Here are descriptions of the functions for manipulating process groups. Your program should include the header files sys/types.h and unistd.h to use these functions.   

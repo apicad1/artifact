@@ -1,0 +1,11 @@
+real    246m26.661s
+user    739m51.491s
+sys     166m23.796s
+
+proper count: 1007124
+explored count: 5550546
+
+44G     cad-output/
+39G     cad-output/traces/
+4.3G    cad-output/features/
+473M    cad-output/slices/

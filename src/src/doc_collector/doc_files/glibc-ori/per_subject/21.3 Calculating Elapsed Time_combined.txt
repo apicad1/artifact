@@ -1,0 +1,44 @@
+Often, one wishes to calculate an elapsed time as the difference between two simple calendar times.  The GNU C Library provides only one function for this purpose. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: double difftime (time_t end, time_t begin)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The difftime function returns the number of seconds of elapsed time from calendar time begin to calendar time end, as a value of type double. 
+On POSIX-conformant systems, the advantage of using ‘difftime (end, begin)’ over ‘end - begin’ is that it will produce the mathematically correct result even if end and begin are so far apart that a simple subtraction would overflow.  However, if they are so far apart that a double cannot exactly represent the difference, the result will be inexact. 
+On other systems, time_t values might be encoded in a way that prevents subtraction from working directly, and then difftime would be the only way to compute their difference. 
+<<<<<<<<<<<<<<<<<<<<
+
+The GNU C Library does not provide any functions for computing the difference between two values of type struct timeval or struct timespec.  Here is the recommended way to do this calculation by hand.  It works even on some peculiar operating systems where the tv_sec member has an unsigned type. 
+
+EXAMPLE_BEGIN
+
+
+/* Subtract the ‘struct timeval’ values X and Y,
+   storing the result in RESULT.
+   Return 1 if the difference is negative, otherwise 0. */
+
+int
+timeval_subtract (struct timeval *result, struct timeval *x, struct timeval *y)
+{
+  /* Perform the carry for the later subtraction by updating y. */
+  if (x->tv_usec < y->tv_usec) {
+    int nsec = (y->tv_usec - x->tv_usec) / 1000000 + 1;
+    y->tv_usec -= 1000000 * nsec;
+    y->tv_sec += nsec;
+  }
+  if (x->tv_usec - y->tv_usec > 1000000) {
+    int nsec = (x->tv_usec - y->tv_usec) / 1000000;
+    y->tv_usec += 1000000 * nsec;
+    y->tv_sec -= nsec;
+  }
+
+  /* Compute the time remaining to wait.
+     tv_usec is certainly positive. */
+  result->tv_sec = x->tv_sec - y->tv_sec;
+  result->tv_usec = x->tv_usec - y->tv_usec;
+
+  /* Return 1 if result is negative. */
+  return x->tv_sec < y->tv_sec;
+}
+EXAMPLE_END
+

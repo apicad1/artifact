@@ -1,0 +1,3 @@
+This section describes alternative signal handling functions derived from BSD Unix.  These facilities were an advance, in their time; today, they are mostly obsolete, and supported mainly for compatibility with BSD Unix. 
+There are many similarities between the BSD and POSIX signal handling facilities, because the POSIX facilities were inspired by the BSD facilities.  Besides having different names for all the functions to avoid conflicts, the main difference between the two is that BSD Unix represents signal masks as an int bit mask, rather than as a sigset_t object. 
+The BSD facilities are declared in signal.h.  

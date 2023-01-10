@@ -1,0 +1,30 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: void assert (int expression)
+Preliminary: | MT-Safe  | AS-Unsafe heap corrupt | AC-Unsafe mem lock corrupt | See POSIX Safety Concepts. 
+Verify the programmer’s belief that expression is nonzero at this point in the program. 
+If NDEBUG is not defined, assert tests the value of expression.  If it is false (zero), assert aborts the program (see Aborting a Program) after printing a message of the form: 
+
+EXAMPLE_BEGIN
+file:linenum: function: Assertion `expression' failed.
+EXAMPLE_END
+
+on the standard error stream stderr (see Standard Streams). The filename and line number are taken from the C preprocessor macros __FILE__ and __LINE__ and specify where the call to assert was made.  When using the GNU C compiler, the name of the function which calls assert is taken from the built-in variable __PRETTY_FUNCTION__; with older compilers, the function name and following colon are omitted. 
+If the preprocessor macro NDEBUG is defined before assert.h is included, the assert macro is defined to do absolutely nothing. 
+Warning: Even the argument expression expression is not evaluated if NDEBUG is in effect.  So never use assert with arguments that involve side effects.  For example, assert (++i > 0); is a bad idea, because i will not be incremented if NDEBUG is defined. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: void assert_perror (int errnum)
+Preliminary: | MT-Safe  | AS-Unsafe heap corrupt | AC-Unsafe mem lock corrupt | See POSIX Safety Concepts. 
+Similar to assert, but verifies that errnum is zero. 
+If NDEBUG is not defined, assert_perror tests the value of errnum.  If it is nonzero, assert_perror aborts the program after printing a message of the form: 
+
+EXAMPLE_BEGIN
+file:linenum: function: error text
+EXAMPLE_END
+
+on the standard error stream.  The file name, line number, and function name are as for assert.  The error text is the result of strerror (errnum).  See Error Messages. 
+Like assert, if NDEBUG is defined before assert.h is included, the assert_perror macro does absolutely nothing.  It does not evaluate the argument, so errnum should not have any side effects.  It is best for errnum to be just a simple variable reference; often it will be errno. 
+This macro is a GNU extension. 

@@ -1,0 +1,12 @@
+
+TABLE_BEGIN
+ • Source Layout    How to add new functions or header files
+                             to the GNU C Library.
+
+ • Symbol handling    How to handle symbols in the GNU C Library.
+
+ • Porting    How to port the GNU C Library to
+                             a new machine or operating system.
+
+TABLE_END
+

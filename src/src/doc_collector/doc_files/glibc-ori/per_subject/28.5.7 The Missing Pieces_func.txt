@@ -1,0 +1,22 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- void init_shell (void)
+Initialize the shell’s internal state.  See Initializing the Shell. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- void launch_job (job *j, int foreground)
+Launch the job j as either a foreground or background job. See Launching Jobs. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- void do_job_notification (void)
+Check for and report any jobs that have terminated or stopped.  Can be called synchronously or within a handler for SIGCHLD signals. See Stopped and Terminated Jobs. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- void continue_job (job *j, int foreground)
+Continue the job j.  See Continuing Stopped Jobs. 

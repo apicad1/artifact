@@ -1,0 +1,1 @@
+Directories are created with the mkdir function.  (There is also a shell command mkdir which does the same thing.) 

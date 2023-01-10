@@ -1,0 +1,40 @@
+You can use the functions in this section to perform comparisons on the contents of strings and arrays.  As well as checking for equality, these functions can also be used as the ordering functions for sorting operations.  See Searching and Sorting, for an example of this. 
+Unlike most comparison operations in C, the string comparison functions return a nonzero value if the strings are not equivalent rather than if they are.  The sign of the value indicates the relative ordering of the first part of the strings that are not equivalent:  a negative value indicates that the first string is “less” than the second, while a positive value indicates that the first string is “greater”. 
+The most common use of these functions is to check only for equality. This is canonically done with an expression like ‘! strcmp (s1, s2)’. 
+All of these functions are declared in the header file string.h.  
+On arbitrary arrays, the memcmp function is mostly useful for testing equality.  It usually isn’t meaningful to do byte-wise ordering comparisons on arrays of things other than bytes.  For example, a byte-wise comparison on the bytes that make up floating-point numbers isn’t likely to tell you anything about the relationship between the values of the floating-point numbers. 
+wmemcmp is really only useful to compare arrays of type wchar_t since the function looks at sizeof (wchar_t) bytes at a time and this number of bytes is system dependent. 
+You should also be careful about using memcmp to compare objects that can contain “holes”, such as the padding inserted into structure objects to enforce alignment requirements, extra space at the end of unions, and extra bytes at the ends of strings whose length is less than their allocated size.  The contents of these “holes” are indeterminate and may cause strange behavior when performing byte-wise comparisons.  For more predictable results, perform an explicit component-wise comparison. 
+For example, given a structure type definition like: 
+
+EXAMPLE_BEGIN
+struct foo
+  {
+    unsigned char tag;
+    union
+      {
+        double f;
+        long i;
+        char *p;
+      } value;
+  };
+EXAMPLE_END
+
+you are better off writing a specialized comparison function to compare struct foo objects instead of comparing them with memcmp. 
+Here are some examples showing the use of strcmp and strncmp (equivalent examples can be constructed for the wide character functions).  These examples assume the use of the ASCII character set.  (If some other character set—say, EBCDIC—is used instead, then the glyphs are associated with different numeric codes, and the return values and ordering may differ.) 
+
+EXAMPLE_BEGIN
+strcmp ("hello", "hello")
+    ⇒ 0    /* These two strings are the same. */
+strcmp ("hello", "Hello")
+    ⇒ 32   /* Comparisons are case-sensitive. */
+strcmp ("hello", "world")
+    ⇒ -15  /* The byte 'h' comes before 'w'. */
+strcmp ("hello", "hello, world")
+    ⇒ -44  /* Comparing a null byte against a comma. */
+strncmp ("hello", "hello, world", 5)
+    ⇒ 0    /* The initial 5 bytes are the same. */
+strncmp ("hello, world", "hello, stupid world!!!", 5)
+    ⇒ 0    /* The initial 5 bytes are the same. */
+EXAMPLE_END
+

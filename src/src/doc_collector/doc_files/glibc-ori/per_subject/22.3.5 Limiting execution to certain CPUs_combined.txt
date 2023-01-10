@@ -1,0 +1,93 @@
+On a multi-processor system the operating system usually distributes the different processes which are runnable on all available CPUs in a way which allows the system to work most efficiently.  Which processes and threads run can be to some extend be control with the scheduling functionality described in the last sections.  But which CPU finally executes which process or thread is not covered. 
+There are a number of reasons why a program might want to have control over this aspect of the system as well: 
+  One thread or process is responsible for absolutely critical work which under no circumstances must be interrupted or hindered from making progress by other processes or threads using CPU resources.  In this case the special process would be confined to a CPU which no other process or thread is allowed to use.   The access to certain resources (RAM, I/O ports) has different costs from different CPUs.  This is the case in NUMA (Non-Uniform Memory Architecture) machines.  Preferably memory should be accessed locally but this requirement is usually not visible to the scheduler. Therefore forcing a process or thread to the CPUs which have local access to the most-used memory helps to significantly boost the performance.   In controlled runtimes resource allocation and book-keeping work (for instance garbage collection) is performance local to processors.  This can help to reduce locking costs if the resources do not have to be protected from concurrent accesses from different processors. 
+The POSIX standard up to this date is of not much help to solve this problem.  The Linux kernel provides a set of interfaces to allow specifying affinity sets for a process.  The scheduler will schedule the thread or process on CPUs specified by the affinity masks.  The interfaces which the GNU C Library define follow to some extent the Linux kernel interface. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: cpu_set_t
+This data set is a bitset where each bit represents a CPU.  How the system’s CPUs are mapped to bits in the bitset is system dependent. The data type has a fixed size; in the unlikely case that the number of bits are not sufficient to describe the CPUs of the system a different interface has to be used. 
+This type is a GNU extension and is defined in sched.h. 
+<<<<<<<<<<<<<<<<<<<<
+
+To manipulate the bitset, to set and reset bits, a number of macros are defined.  Some of the macros take a CPU number as a parameter.  Here it is important to never exceed the size of the bitset.  The following macro specifies the number of bits in the cpu_set_t bitset. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int CPU_SETSIZE
+The value of this macro is the maximum number of CPUs which can be handled with a cpu_set_t object. 
+<<<<<<<<<<<<<<<<<<<<
+
+The type cpu_set_t should be considered opaque; all manipulation should happen via the next four macros. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: void CPU_ZERO (cpu_set_t *set)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This macro initializes the CPU set set to be the empty set. 
+This macro is a GNU extension and is defined in sched.h. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: void CPU_SET (int cpu, cpu_set_t *set)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This macro adds cpu to the CPU set set. 
+The cpu parameter must not have side effects since it is evaluated more than once. 
+This macro is a GNU extension and is defined in sched.h. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: void CPU_CLR (int cpu, cpu_set_t *set)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This macro removes cpu from the CPU set set. 
+The cpu parameter must not have side effects since it is evaluated more than once. 
+This macro is a GNU extension and is defined in sched.h. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int CPU_ISSET (int cpu, const cpu_set_t *set)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This macro returns a nonzero value (true) if cpu is a member of the CPU set set, and zero (false) otherwise. 
+The cpu parameter must not have side effects since it is evaluated more than once. 
+This macro is a GNU extension and is defined in sched.h. 
+<<<<<<<<<<<<<<<<<<<<
+
+CPU bitsets can be constructed from scratch or the currently installed affinity mask can be retrieved from the system. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int sched_getaffinity (pid_t pid, size_t cpusetsize, cpu_set_t *cpuset)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function stores the CPU affinity mask for the process or thread with the ID pid in the cpusetsize bytes long bitmap pointed to by cpuset.  If successful, the function always initializes all bits in the cpu_set_t object and returns zero. 
+If pid does not correspond to a process or thread on the system the or the function fails for some other reason, it returns -1 and errno is set to represent the error condition. 
+	ESRCH
+No process or thread with the given ID found.  
+	EFAULT
+The pointer cpuset does not point to a valid object. 
+This function is a GNU extension and is declared in sched.h. 
+<<<<<<<<<<<<<<<<<<<<
+
+Note that it is not portably possible to use this information to retrieve the information for different POSIX threads.  A separate interface must be provided for that. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int sched_setaffinity (pid_t pid, size_t cpusetsize, const cpu_set_t *cpuset)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function installs the cpusetsize bytes long affinity mask pointed to by cpuset for the process or thread with the ID pid. If successful the function returns zero and the scheduler will in the future take the affinity information into account. 
+If the function fails it will return -1 and errno is set to the error code: 
+	ESRCH
+No process or thread with the given ID found.  
+	EFAULT
+The pointer cpuset does not point to a valid object.  
+	EINVAL
+The bitset is not valid.  This might mean that the affinity set might not leave a processor for the process or thread to run on. 
+This function is a GNU extension and is declared in sched.h. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int getcpu (unsigned int *cpu, unsigned int *node)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The getcpu function identifies the processor and node on which the calling thread or process is currently running and writes them into the integers pointed to by the cpu and node arguments.  The processor is a unique nonnegative integer identifying a CPU.  The node is a unique nonnegative integer identifying a NUMA node.  When either cpu or node is NULL, nothing is written to the respective pointer. 
+The return value is 0 on success and -1 on failure.  The following errno error condition is defined for this function: 
+	ENOSYS
+The operating system does not support this function. 
+This function is Linux-specific and is declared in sched.h. 

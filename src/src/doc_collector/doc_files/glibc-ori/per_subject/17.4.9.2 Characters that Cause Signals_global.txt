@@ -1,0 +1,2 @@
+These special characters may be active in either canonical or noncanonical input mode, but only when the ISIG flag is set (see Local Modes). 
+Few applications disable the normal interpretation of the SUSP character.  If your program does this, it should provide some other mechanism for the user to stop the job.  When the user invokes this mechanism, the program should send a SIGTSTP signal to the process group of the process, not just to the process itself. See Signaling Another Process. 

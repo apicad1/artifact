@@ -1,0 +1,152 @@
+You can use the functions in this section to perform comparisons on the contents of strings and arrays.  As well as checking for equality, these functions can also be used as the ordering functions for sorting operations.  See Searching and Sorting, for an example of this. 
+Unlike most comparison operations in C, the string comparison functions return a nonzero value if the strings are not equivalent rather than if they are.  The sign of the value indicates the relative ordering of the first part of the strings that are not equivalent:  a negative value indicates that the first string is “less” than the second, while a positive value indicates that the first string is “greater”. 
+The most common use of these functions is to check only for equality. This is canonically done with an expression like ‘! strcmp (s1, s2)’. 
+All of these functions are declared in the header file string.h.  
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int memcmp (const void *a1, const void *a2, size_t size)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The function memcmp compares the size bytes of memory beginning at a1 against the size bytes of memory beginning at a2.  The value returned has the same sign as the difference between the first differing pair of bytes (interpreted as unsigned char objects, then promoted to int). 
+If the contents of the two blocks are equal, memcmp returns 0. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int wmemcmp (const wchar_t *a1, const wchar_t *a2, size_t size)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The function wmemcmp compares the size wide characters beginning at a1 against the size wide characters beginning at a2.  The value returned is smaller than or larger than zero depending on whether the first differing wide character is a1 is smaller or larger than the corresponding wide character in a2. 
+If the contents of the two blocks are equal, wmemcmp returns 0. 
+<<<<<<<<<<<<<<<<<<<<
+
+On arbitrary arrays, the memcmp function is mostly useful for testing equality.  It usually isn’t meaningful to do byte-wise ordering comparisons on arrays of things other than bytes.  For example, a byte-wise comparison on the bytes that make up floating-point numbers isn’t likely to tell you anything about the relationship between the values of the floating-point numbers. 
+wmemcmp is really only useful to compare arrays of type wchar_t since the function looks at sizeof (wchar_t) bytes at a time and this number of bytes is system dependent. 
+You should also be careful about using memcmp to compare objects that can contain “holes”, such as the padding inserted into structure objects to enforce alignment requirements, extra space at the end of unions, and extra bytes at the ends of strings whose length is less than their allocated size.  The contents of these “holes” are indeterminate and may cause strange behavior when performing byte-wise comparisons.  For more predictable results, perform an explicit component-wise comparison. 
+For example, given a structure type definition like: 
+
+EXAMPLE_BEGIN
+struct foo
+  {
+    unsigned char tag;
+    union
+      {
+        double f;
+        long i;
+        char *p;
+      } value;
+  };
+EXAMPLE_END
+
+you are better off writing a specialized comparison function to compare struct foo objects instead of comparing them with memcmp. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int strcmp (const char *s1, const char *s2)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The strcmp function compares the string s1 against s2, returning a value that has the same sign as the difference between the first differing pair of bytes (interpreted as unsigned char objects, then promoted to int). 
+If the two strings are equal, strcmp returns 0. 
+A consequence of the ordering used by strcmp is that if s1 is an initial substring of s2, then s1 is considered to be “less than” s2. 
+strcmp does not take sorting conventions of the language the strings are written in into account.  To get that one has to use strcoll. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int wcscmp (const wchar_t *ws1, const wchar_t *ws2)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The wcscmp function compares the wide string ws1 against ws2.  The value returned is smaller than or larger than zero depending on whether the first differing wide character is ws1 is smaller or larger than the corresponding wide character in ws2. 
+If the two strings are equal, wcscmp returns 0. 
+A consequence of the ordering used by wcscmp is that if ws1 is an initial substring of ws2, then ws1 is considered to be “less than” ws2. 
+wcscmp does not take sorting conventions of the language the strings are written in into account.  To get that one has to use wcscoll. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int strcasecmp (const char *s1, const char *s2)
+Preliminary: | MT-Safe locale | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function is like strcmp, except that differences in case are ignored, and its arguments must be multibyte strings. How uppercase and lowercase characters are related is determined by the currently selected locale.  In the standard "C" locale the characters Ä and ä do not match but in a locale which regards these characters as parts of the alphabet they do match. 
+strcasecmp is derived from BSD. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int wcscasecmp (const wchar_t *ws1, const wchar_t *ws2)
+Preliminary: | MT-Safe locale | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function is like wcscmp, except that differences in case are ignored.  How uppercase and lowercase characters are related is determined by the currently selected locale.  In the standard "C" locale the characters Ä and ä do not match but in a locale which regards these characters as parts of the alphabet they do match. 
+wcscasecmp is a GNU extension. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int strncmp (const char *s1, const char *s2, size_t size)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function is the similar to strcmp, except that no more than size bytes are compared.  In other words, if the two strings are the same in their first size bytes, the return value is zero. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int wcsncmp (const wchar_t *ws1, const wchar_t *ws2, size_t size)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function is similar to wcscmp, except that no more than size wide characters are compared.  In other words, if the two strings are the same in their first size wide characters, the return value is zero. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int strncasecmp (const char *s1, const char *s2, size_t n)
+Preliminary: | MT-Safe locale | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function is like strncmp, except that differences in case are ignored, and the compared parts of the arguments should consist of valid multibyte characters. Like strcasecmp, it is locale dependent how uppercase and lowercase characters are related. 
+strncasecmp is a GNU extension. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int wcsncasecmp (const wchar_t *ws1, const wchar_t *s2, size_t n)
+Preliminary: | MT-Safe locale | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function is like wcsncmp, except that differences in case are ignored.  Like wcscasecmp, it is locale dependent how uppercase and lowercase characters are related. 
+wcsncasecmp is a GNU extension. 
+<<<<<<<<<<<<<<<<<<<<
+
+Here are some examples showing the use of strcmp and strncmp (equivalent examples can be constructed for the wide character functions).  These examples assume the use of the ASCII character set.  (If some other character set—say, EBCDIC—is used instead, then the glyphs are associated with different numeric codes, and the return values and ordering may differ.) 
+
+EXAMPLE_BEGIN
+strcmp ("hello", "hello")
+    ⇒ 0    /* These two strings are the same. */
+strcmp ("hello", "Hello")
+    ⇒ 32   /* Comparisons are case-sensitive. */
+strcmp ("hello", "world")
+    ⇒ -15  /* The byte 'h' comes before 'w'. */
+strcmp ("hello", "hello, world")
+    ⇒ -44  /* Comparing a null byte against a comma. */
+strncmp ("hello", "hello, world", 5)
+    ⇒ 0    /* The initial 5 bytes are the same. */
+strncmp ("hello, world", "hello, stupid world!!!", 5)
+    ⇒ 0    /* The initial 5 bytes are the same. */
+EXAMPLE_END
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int strverscmp (const char *s1, const char *s2)
+Preliminary: | MT-Safe locale | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The strverscmp function compares the string s1 against s2, considering them as holding indices/version numbers.  The return value follows the same conventions as found in the strcmp function.  In fact, if s1 and s2 contain no digits, strverscmp behaves like strcmp (in the sense that the sign of the result is the same). 
+The comparison algorithm which the strverscmp function implements differs slightly from other version-comparison algorithms.  The implementation is based on a finite-state machine, whose behavior is approximated below. 
+  The input strings are each split into sequences of non-digits and digits.  These sequences can be empty at the beginning and end of the string.  Digits are determined by the isdigit function and are thus subject to the current locale.   Comparison starts with a (possibly empty) non-digit sequence.  The first non-equal sequences of non-digits or digits determines the outcome of the comparison.   Corresponding non-digit sequences in both strings are compared lexicographically if their lengths are equal.  If the lengths differ, the shorter non-digit sequence is extended with the input string character immediately following it (which may be the null terminator), the other sequence is truncated to be of the same (extended) length, and these two sequences are compared lexicographically.  In the last case, the sequence comparison determines the result of the function because the extension character (or some character before it) is necessarily different from the character at the same offset in the other input string.   For two sequences of digits, the number of leading zeros is counted (which can be zero).  If the count differs, the string with more leading zeros in the digit sequence is considered smaller than the other string.   If the two sequences of digits have no leading zeros, they are compared as integers, that is, the string with the longer digit sequence is deemed larger, and if both sequences are of equal length, they are compared lexicographically.   If both digit sequences start with a zero and have an equal number of leading zeros, they are compared lexicographically if their lengths are the same.  If the lengths differ, the shorter sequence is extended with the following character in its input string, and the other sequence is truncated to the same length, and both sequences are compared lexicographically (similar to the non-digit sequence case above). 
+The treatment of leading zeros and the tie-breaking extension characters (which in effect propagate across non-digit/digit sequence boundaries) differs from other version-comparison algorithms. 
+
+EXAMPLE_BEGIN
+strverscmp ("no digit", "no digit")
+    ⇒ 0    /* same behavior as strcmp. */
+strverscmp ("item#99", "item#100")
+    ⇒ <0   /* same prefix, but 99 < 100. */
+strverscmp ("alpha1", "alpha001")
+    ⇒ >0   /* different number of leading zeros (0 and 2). */
+strverscmp ("part1_f012", "part1_f01")
+    ⇒ >0   /* lexicographical comparison with leading zeros. */
+strverscmp ("foo.009", "foo.0")
+    ⇒ <0   /* different number of leading zeros (2 and 1). */
+EXAMPLE_END
+
+strverscmp is a GNU extension. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int bcmp (const void *a1, const void *a2, size_t size)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This is an obsolete alias for memcmp, derived from BSD. 

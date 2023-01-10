@@ -1,0 +1,4 @@
+IPv4 Internet host addresses are represented in some contexts as integers (type uint32_t).  In other contexts, the integer is packaged inside a structure of type struct in_addr.  It would be better if the usage were made consistent, but it is not hard to extract the integer from the structure or put the integer into a structure. 
+You will find older code that uses unsigned long int for IPv4 Internet host addresses instead of uint32_t or struct in_addr.  Historically unsigned long int was a 32-bit number but with 64-bit machines this has changed.  Using unsigned long int might break the code if it is used on machines where this type doesn’t have 32 bits.  uint32_t is specified by Unix98 and guaranteed to have 32 bits. 
+IPv6 Internet host addresses have 128 bits and are packaged inside a structure of type struct in6_addr. 
+The following basic definitions for Internet addresses are declared in the header file netinet/in.h:  

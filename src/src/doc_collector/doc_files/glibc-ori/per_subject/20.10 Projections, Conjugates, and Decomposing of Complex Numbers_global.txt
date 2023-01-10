@@ -1,0 +1,1 @@
+ISO C99 also defines functions that perform basic operations on complex numbers, such as decomposition and conjugation.  The prototypes for all these functions are in complex.h.  All functions are available in three variants, one for each of the three complex types. 

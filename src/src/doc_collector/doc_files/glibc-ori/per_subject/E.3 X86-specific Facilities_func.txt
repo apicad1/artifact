@@ -1,0 +1,17 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: const struct cpuid_feature * __x86_get_cpuid_feature_leaf (unsigned int leaf)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+Return a pointer to x86 CPU feature structure used by query macros for x86 CPU feature leaf. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int CPU_FEATURE_PRESENT (name)
+This macro returns a nonzero value (true) if the processor has the feature name. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int CPU_FEATURE_ACTIVE (name)
+This macro returns a nonzero value (true) if the processor has the feature name and the feature is active.  There may be other preconditions, like sufficient stack space or further setup for AMX, which must be satisfied before the feature can be used. 

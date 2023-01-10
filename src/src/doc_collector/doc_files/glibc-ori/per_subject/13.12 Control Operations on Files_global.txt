@@ -1,0 +1,2 @@
+This section describes how you can perform various other operations on file descriptors, such as inquiring about or setting flags describing the status of the file descriptor, manipulating record locks, and the like.  All of these operations are performed by the function fcntl. 
+The second argument to the fcntl function is a command that specifies which operation to perform.  The function and macros that name various flags that are used with it are declared in the header file fcntl.h.  Many of these flags are also used by the open function; see Opening and Closing Files.  

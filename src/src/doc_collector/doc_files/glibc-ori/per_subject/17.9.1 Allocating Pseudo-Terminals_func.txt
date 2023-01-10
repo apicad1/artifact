@@ -1,0 +1,50 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int getpt (void)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe fd | See POSIX Safety Concepts. 
+The getpt function returns a new file descriptor for the next available master pseudo-terminal.  The normal return value from getpt is a non-negative integer file descriptor.  In the case of an error, a value of -1 is returned instead.  The following errno conditions are defined for this function: 
+	ENOENT
+There are no free master pseudo-terminals available. 
+This function is a GNU extension. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int grantpt (int filedes)
+Preliminary: | MT-Safe locale | AS-Unsafe dlopen plugin heap lock | AC-Unsafe corrupt lock fd mem | See POSIX Safety Concepts. 
+The grantpt function changes the ownership and access permission of the slave pseudo-terminal device corresponding to the master pseudo-terminal device associated with the file descriptor filedes.  The owner is set from the real user ID of the calling process (see Process Persona), and the group is set to a special group (typically tty) or from the real group ID of the calling process.  The access permission is set such that the file is both readable and writable by the owner and only writable by the group. 
+On some systems this function is implemented by invoking a special setuid root program (see How Change Persona).  As a consequence, installing a signal handler for the SIGCHLD signal (see Job Control Signals) may interfere with a call to grantpt. 
+The normal return value from grantpt is 0; a value of -1 is returned in case of failure.  The following errno error conditions are defined for this function: 
+	EBADF
+The filedes argument is not a valid file descriptor.  
+	EINVAL
+The filedes argument is not associated with a master pseudo-terminal device.  
+	EACCES
+The slave pseudo-terminal device corresponding to the master associated with filedes could not be accessed. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int unlockpt (int filedes)
+Preliminary: | MT-Safe  | AS-Unsafe heap/bsd | AC-Unsafe mem fd | See POSIX Safety Concepts. 
+The unlockpt function unlocks the slave pseudo-terminal device corresponding to the master pseudo-terminal device associated with the file descriptor filedes.  On many systems, the slave can only be opened after unlocking, so portable applications should always call unlockpt before trying to open the slave. 
+The normal return value from unlockpt is 0; a value of -1 is returned in case of failure.  The following errno error conditions are defined for this function: 
+	EBADF
+The filedes argument is not a valid file descriptor.  
+	EINVAL
+The filedes argument is not associated with a master pseudo-terminal device. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: char * ptsname (int filedes)
+Preliminary: | MT-Unsafe race:ptsname | AS-Unsafe heap/bsd | AC-Unsafe mem fd | See POSIX Safety Concepts. 
+If the file descriptor filedes is associated with a master pseudo-terminal device, the ptsname function returns a pointer to a statically-allocated, null-terminated string containing the file name of the associated slave pseudo-terminal file.  This string might be overwritten by subsequent calls to ptsname. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int ptsname_r (int filedes, char *buf, size_t len)
+Preliminary: | MT-Safe  | AS-Unsafe heap/bsd | AC-Unsafe mem fd | See POSIX Safety Concepts. 
+The ptsname_r function is similar to the ptsname function except that it places its result into the user-specified buffer starting at buf with length len. 
+This function is a GNU extension. 

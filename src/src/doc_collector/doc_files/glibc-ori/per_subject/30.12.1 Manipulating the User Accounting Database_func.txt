@@ -1,0 +1,192 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: struct exit_status
+The exit_status data structure is used to hold information about the exit status of processes marked as DEAD_PROCESS in the user accounting database. 
+	short int e_termination
+The exit status of the process.  
+	short int e_exit
+The exit status of the process. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: struct utmp
+The utmp data structure is used to hold information about entries in the user accounting database.  On GNU systems it has the following members: 
+	short int ut_type
+Specifies the type of login; one of EMPTY, RUN_LVL, BOOT_TIME, OLD_TIME, NEW_TIME, INIT_PROCESS, LOGIN_PROCESS, USER_PROCESS, DEAD_PROCESS or ACCOUNTING.  
+	pid_t ut_pid
+The process ID number of the login process.  
+	char ut_line[]
+The device name of the tty (without /dev/).  
+	char ut_id[]
+The inittab ID of the process.  
+	char ut_user[]
+The user’s login name.  
+	char ut_host[]
+The name of the host from which the user logged in.  
+	struct exit_status ut_exit
+The exit status of a process marked as DEAD_PROCESS.  
+	long ut_session
+The Session ID, used for windowing.  
+	struct timeval ut_tv
+Time the entry was made.  For entries of type OLD_TIME this is the time when the system clock changed, and for entries of type NEW_TIME this is the time the system clock was set to.  
+	int32_t ut_addr_v6[4]
+The Internet address of a remote host. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- EMPTY  
+This macro is used to indicate that the entry contains no valid user accounting information. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- RUN_LVL  
+This macro is used to identify the system’s runlevel. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- BOOT_TIME  
+This macro is used to identify the time of system boot. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- OLD_TIME  
+This macro is used to identify the time when the system clock changed. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- NEW_TIME  
+This macro is used to identify the time after the system clock changed. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- INIT_PROCESS  
+This macro is used to identify a process spawned by the init process. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- LOGIN_PROCESS  
+This macro is used to identify the session leader of a logged in user. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- USER_PROCESS  
+This macro is used to identify a user process. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- DEAD_PROCESS  
+This macro is used to identify a terminated process. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ACCOUNTING  
+??? 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void setutent (void)
+Preliminary: | MT-Unsafe race:utent | AS-Unsafe lock | AC-Unsafe lock fd | See POSIX Safety Concepts. 
+This function opens the user accounting database to begin scanning it. You can then call getutent, getutid or getutline to read entries and pututline to write entries. 
+If the database is already open, it resets the input to the beginning of the database. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: struct utmp * getutent (void)
+Preliminary: | MT-Unsafe init race:utent race:utentbuf sig:ALRM timer | AS-Unsafe heap lock | AC-Unsafe lock fd mem | See POSIX Safety Concepts. 
+The getutent function reads the next entry from the user accounting database.  It returns a pointer to the entry, which is statically allocated and may be overwritten by subsequent calls to getutent.  You must copy the contents of the structure if you wish to save the information or you can use the getutent_r function which stores the data in a user-provided buffer. 
+A null pointer is returned in case no further entry is available. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void endutent (void)
+Preliminary: | MT-Unsafe race:utent | AS-Unsafe lock | AC-Unsafe lock fd | See POSIX Safety Concepts. 
+This function closes the user accounting database. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: struct utmp * getutid (const struct utmp *id)
+Preliminary: | MT-Unsafe init race:utent sig:ALRM timer | AS-Unsafe lock heap | AC-Unsafe lock mem fd | See POSIX Safety Concepts. 
+This function searches forward from the current point in the database for an entry that matches id.  If the ut_type member of the id structure is one of RUN_LVL, BOOT_TIME, OLD_TIME or NEW_TIME the entries match if the ut_type members are identical.  If the ut_type member of the id structure is INIT_PROCESS, LOGIN_PROCESS, USER_PROCESS or DEAD_PROCESS, the entries match if the ut_type member of the entry read from the database is one of these four, and the ut_id members match.  However if the ut_id member of either the id structure or the entry read from the database is empty it checks if the ut_line members match instead.  If a matching entry is found, getutid returns a pointer to the entry, which is statically allocated, and may be overwritten by a subsequent call to getutent, getutid or getutline. You must copy the contents of the structure if you wish to save the information. 
+A null pointer is returned in case the end of the database is reached without a match. 
+The getutid function may cache the last read entry.  Therefore, if you are using getutid to search for multiple occurrences, it is necessary to zero out the static data after each call.  Otherwise getutid could just return a pointer to the same entry over and over again. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: struct utmp * getutline (const struct utmp *line)
+Preliminary: | MT-Unsafe init race:utent sig:ALRM timer | AS-Unsafe heap lock | AC-Unsafe lock fd mem | See POSIX Safety Concepts. 
+This function searches forward from the current point in the database until it finds an entry whose ut_type value is LOGIN_PROCESS or USER_PROCESS, and whose ut_line member matches the ut_line member of the line structure. If it finds such an entry, it returns a pointer to the entry which is statically allocated, and may be overwritten by a subsequent call to getutent, getutid or getutline.  You must copy the contents of the structure if you wish to save the information. 
+A null pointer is returned in case the end of the database is reached without a match. 
+The getutline function may cache the last read entry.  Therefore if you are using getutline to search for multiple occurrences, it is necessary to zero out the static data after each call.  Otherwise getutline could just return a pointer to the same entry over and over again. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: struct utmp * pututline (const struct utmp *utmp)
+Preliminary: | MT-Unsafe race:utent sig:ALRM timer | AS-Unsafe lock | AC-Unsafe lock fd | See POSIX Safety Concepts. 
+The pututline function inserts the entry *utmp at the appropriate place in the user accounting database.  If it finds that it is not already at the correct place in the database, it uses getutid to search for the position to insert the entry, however this will not modify the static structure returned by getutent, getutid and getutline.  If this search fails, the entry is appended to the database. 
+The pututline function returns a pointer to a copy of the entry inserted in the user accounting database, or a null pointer if the entry could not be added.  The following errno error conditions are defined for this function: 
+	EPERM
+The process does not have the appropriate privileges; you cannot modify the user accounting database. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int getutent_r (struct utmp *buffer, struct utmp **result)
+Preliminary: | MT-Unsafe race:utent sig:ALRM timer | AS-Unsafe lock | AC-Unsafe lock fd | See POSIX Safety Concepts. 
+The getutent_r is equivalent to the getutent function.  It returns the next entry from the database.  But instead of storing the information in a static buffer it stores it in the buffer pointed to by the parameter buffer. 
+If the call was successful, the function returns 0 and the pointer variable pointed to by the parameter result contains a pointer to the buffer which contains the result (this is most probably the same value as buffer).  If something went wrong during the execution of getutent_r the function returns -1. 
+This function is a GNU extension. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int getutid_r (const struct utmp *id, struct utmp *buffer, struct utmp **result)
+Preliminary: | MT-Unsafe race:utent sig:ALRM timer | AS-Unsafe lock | AC-Unsafe lock fd | See POSIX Safety Concepts. 
+This function retrieves just like getutid the next entry matching the information stored in id.  But the result is stored in the buffer pointed to by the parameter buffer. 
+If successful the function returns 0 and the pointer variable pointed to by the parameter result contains a pointer to the buffer with the result (probably the same as result.  If not successful the function return -1. 
+This function is a GNU extension. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int getutline_r (const struct utmp *line, struct utmp *buffer, struct utmp **result)
+Preliminary: | MT-Unsafe race:utent sig:ALRM timer | AS-Unsafe lock | AC-Unsafe lock fd | See POSIX Safety Concepts. 
+This function retrieves just like getutline the next entry matching the information stored in line.  But the result is stored in the buffer pointed to by the parameter buffer. 
+If successful the function returns 0 and the pointer variable pointed to by the parameter result contains a pointer to the buffer with the result (probably the same as result.  If not successful the function return -1. 
+This function is a GNU extension. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int utmpname (const char *file)
+Preliminary: | MT-Unsafe race:utent | AS-Unsafe lock heap | AC-Unsafe lock mem | See POSIX Safety Concepts. 
+The utmpname function changes the name of the database to be examined to file, and closes any previously opened database.  By default getutent, getutid, getutline and pututline read from and write to the user accounting database. 
+The following macros are defined for use as the file argument: 
+	Macro: char * _PATH_UTMP
+This macro is used to specify the user accounting database. 
+	Macro: char * _PATH_WTMP
+This macro is used to specify the user accounting log file. 
+The utmpname function returns a value of 0 if the new name was successfully stored, and a value of -1 to indicate an error. Note that utmpname does not try to open the database, and that therefore the return value does not say anything about whether the database can be successfully opened. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void updwtmp (const char *wtmp_file, const struct utmp *utmp)
+Preliminary: | MT-Unsafe sig:ALRM timer | AS-Unsafe  | AC-Unsafe fd | See POSIX Safety Concepts. 
+The updwtmp function appends the entry *utmp to the database specified by wtmp_file.  For possible values for the wtmp_file argument see the utmpname function. 

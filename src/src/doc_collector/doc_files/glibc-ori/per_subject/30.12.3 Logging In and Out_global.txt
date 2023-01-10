@@ -1,0 +1,3 @@
+These functions, derived from BSD, are available in the separate libutil library, and declared in utmp.h.  
+Note that the ut_user member of struct utmp is called ut_name in BSD.  Therefore, ut_name is defined as an alias for ut_user in utmp.h. 
+Portability Note: The BSD struct utmp only has the ut_line, ut_name, ut_host and ut_time members.  Older systems do not even have the ut_host member. 

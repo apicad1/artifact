@@ -1,0 +1,64 @@
+ASINH(3)                                        Linux Programmer's Manual                                       ASINH(3)
+
+NAME
+       asinh, asinhf, asinhl - inverse hyperbolic sine function
+
+SYNOPSIS
+       #include <math.h>
+
+       double asinh(double x);
+       float asinhf(float x);
+       long double asinhl(long double x);
+
+       Link with -lm.
+
+   Feature Test Macro Requirements for glibc (see feature_test_macros(7)):
+
+       asinh():
+           _ISOC99_SOURCE || _POSIX_C_SOURCE >= 200112L
+               || _XOPEN_SOURCE >= 500
+               || /* Since glibc 2.19: */ _DEFAULT_SOURCE
+               || /* Glibc <= 2.19: */ _BSD_SOURCE || _SVID_SOURCE
+
+       asinhf(), asinhl():
+           _ISOC99_SOURCE || _POSIX_C_SOURCE >= 200112L
+               || /* Since glibc 2.19: */ _DEFAULT_SOURCE
+               || /* Glibc <= 2.19: */ _BSD_SOURCE || _SVID_SOURCE
+
+DESCRIPTION
+       These functions calculate the inverse hyperbolic sine of x; that is the value whose hyperbolic sine is x.
+
+RETURN VALUE
+       On success, these functions return the inverse hyperbolic sine of x.
+
+       If x is a NaN, a NaN is returned.
+
+       If x is +0 (-0), +0 (-0) is returned.
+
+       If x is positive infinity (negative infinity), positive infinity (negative infinity) is returned.
+
+ERRORS
+       No errors occur.
+
+ATTRIBUTES
+       For an explanation of the terms used in this section, see attributes(7).
+
+       ┌──────────────────────────────────────────────────────────────────────────────────────┬───────────────┬─────────┐
+       │Interface                                                                             │ Attribute     │ Value   │
+       ├──────────────────────────────────────────────────────────────────────────────────────┼───────────────┼─────────┤
+       │asinh(), asinhf(), asinhl()                                                           │ Thread safety │ MT-Safe │
+       └──────────────────────────────────────────────────────────────────────────────────────┴───────────────┴─────────┘
+
+CONFORMING TO
+       C99, POSIX.1-2001, POSIX.1-2008.
+
+       The variant returning double also conforms to SVr4, 4.3BSD.
+
+SEE ALSO
+       acosh(3), atanh(3), casinh(3), cosh(3), sinh(3), tanh(3)
+
+COLOPHON
+       This  page  is  part  of  release 5.13 of the Linux man-pages project.  A description of the project, information
+       about reporting bugs, and the latest version of this page, can be found at https://www.kernel.org/doc/man-pages/.
+
+GNU                                                    2021-03-22                                               ASINH(3)

@@ -1,0 +1,16 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int MSG_OOB
+Send or receive out-of-band data.  See Out-of-Band Data. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int MSG_PEEK
+Look at the data but don’t remove it from the input queue.  This is only meaningful with input functions such as recv, not with send. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int MSG_DONTROUTE
+Don’t include routing information in the message.  This is only meaningful with output operations, and is usually only of interest for diagnostic or routing programs.  We don’t try to explain it here. 

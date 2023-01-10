@@ -1,0 +1,45 @@
+The functions vscanf and friends are provided so that you can define your own variadic scanf-like functions that make use of the same internals as the built-in formatted output functions. These functions are analogous to the vprintf series of output functions.  See Variable Arguments Output, for important information on how to use them. 
+Portability Note: The functions listed in this section were introduced in ISO C99 and were before available as GNU extensions. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int vscanf (const char *template, va_list ap)
+Preliminary: | MT-Safe locale | AS-Unsafe corrupt heap | AC-Unsafe mem lock corrupt | See POSIX Safety Concepts. 
+This function is similar to scanf, but instead of taking a variable number of arguments directly, it takes an argument list pointer ap of type va_list (see Variadic Functions). 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int vwscanf (const wchar_t *template, va_list ap)
+Preliminary: | MT-Safe locale | AS-Unsafe corrupt heap | AC-Unsafe mem lock corrupt | See POSIX Safety Concepts. 
+This function is similar to wscanf, but instead of taking a variable number of arguments directly, it takes an argument list pointer ap of type va_list (see Variadic Functions). 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int vfscanf (FILE *stream, const char *template, va_list ap)
+Preliminary: | MT-Safe locale | AS-Unsafe corrupt heap | AC-Unsafe mem lock corrupt | See POSIX Safety Concepts. 
+This is the equivalent of fscanf with the variable argument list specified directly as for vscanf. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int vfwscanf (FILE *stream, const wchar_t *template, va_list ap)
+Preliminary: | MT-Safe locale | AS-Unsafe corrupt heap | AC-Unsafe mem lock corrupt | See POSIX Safety Concepts. 
+This is the equivalent of fwscanf with the variable argument list specified directly as for vwscanf. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int vsscanf (const char *s, const char *template, va_list ap)
+Preliminary: | MT-Safe locale | AS-Unsafe heap | AC-Unsafe mem | See POSIX Safety Concepts. 
+This is the equivalent of sscanf with the variable argument list specified directly as for vscanf. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int vswscanf (const wchar_t *s, const wchar_t *template, va_list ap)
+Preliminary: | MT-Safe locale | AS-Unsafe heap | AC-Unsafe mem | See POSIX Safety Concepts. 
+This is the equivalent of swscanf with the variable argument list specified directly as for vwscanf. 
+<<<<<<<<<<<<<<<<<<<<
+
+In GNU C, there is a special construct you can use to let the compiler know that a function uses a scanf-style format string.  Then it can check the number and types of arguments in each call to the function, and warn you when they do not match the format string. For details, see Declaring Attributes of Functions in Using GNU CC. 

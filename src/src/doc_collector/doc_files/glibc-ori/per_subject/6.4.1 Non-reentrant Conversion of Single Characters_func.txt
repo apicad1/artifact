@@ -1,0 +1,34 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int mbtowc (wchar_t *restrict result, const char *restrict string, size_t size)
+Preliminary: | MT-Unsafe race | AS-Unsafe corrupt heap lock dlopen | AC-Unsafe corrupt lock mem fd | See POSIX Safety Concepts. 
+The mbtowc (“multibyte to wide character”) function when called with non-null string converts the first multibyte character beginning at string to its corresponding wide character code.  It stores the result in *result. 
+mbtowc never examines more than size bytes.  (The idea is to supply for size the number of bytes of data you have in hand.) 
+mbtowc with non-null string distinguishes three possibilities: the first size bytes at string start with valid multibyte characters, they start with an invalid byte sequence or just part of a character, or string points to an empty string (a null character). 
+For a valid multibyte character, mbtowc converts it to a wide character and stores that in *result, and returns the number of bytes in that character (always at least 1 and never more than size). 
+For an invalid byte sequence, mbtowc returns -1.  For an empty string, it returns 0, also storing '\0' in *result. 
+If the multibyte character code uses shift characters, then mbtowc maintains and updates a shift state as it scans.  If you call mbtowc with a null pointer for string, that initializes the shift state to its standard initial value.  It also returns nonzero if the multibyte character code in use actually has a shift state.  See Shift State. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int wctomb (char *string, wchar_t wchar)
+Preliminary: | MT-Unsafe race | AS-Unsafe corrupt heap lock dlopen | AC-Unsafe corrupt lock mem fd | See POSIX Safety Concepts. 
+The wctomb (“wide character to multibyte”) function converts the wide character code wchar to its corresponding multibyte character sequence, and stores the result in bytes starting at string.  At most MB_CUR_MAX characters are stored. 
+wctomb with non-null string distinguishes three possibilities for wchar: a valid wide character code (one that can be translated to a multibyte character), an invalid code, and L'\0'. 
+Given a valid code, wctomb converts it to a multibyte character, storing the bytes starting at string.  Then it returns the number of bytes in that character (always at least 1 and never more than MB_CUR_MAX). 
+If wchar is an invalid wide character code, wctomb returns -1.  If wchar is L'\0', it returns 0, also storing '\0' in *string. 
+If the multibyte character code uses shift characters, then wctomb maintains and updates a shift state as it scans.  If you call wctomb with a null pointer for string, that initializes the shift state to its standard initial value.  It also returns nonzero if the multibyte character code in use actually has a shift state.  See Shift State. 
+Calling this function with a wchar argument of zero when string is not null has the side-effect of reinitializing the stored shift state as well as storing the multibyte character '\0' and returning 0. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int mblen (const char *string, size_t size)
+Preliminary: | MT-Unsafe race | AS-Unsafe corrupt heap lock dlopen | AC-Unsafe corrupt lock mem fd | See POSIX Safety Concepts. 
+The mblen function with a non-null string argument returns the number of bytes that make up the multibyte character beginning at string, never examining more than size bytes.  (The idea is to supply for size the number of bytes of data you have in hand.) 
+The return value of mblen distinguishes three possibilities: the first size bytes at string start with valid multibyte characters, they start with an invalid byte sequence or just part of a character, or string points to an empty string (a null character). 
+For a valid multibyte character, mblen returns the number of bytes in that character (always at least 1 and never more than size).  For an invalid byte sequence, mblen returns -1.  For an empty string, it returns 0. 
+If the multibyte character code uses shift characters, then mblen maintains and updates a shift state as it scans.  If you call mblen with a null pointer for string, that initializes the shift state to its standard initial value.  It also returns a nonzero value if the multibyte character code in use actually has a shift state. See Shift State. 
+
+The function mblen is declared in stdlib.h. 

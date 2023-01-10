@@ -1,0 +1,17 @@
+A socket pair consists of a pair of connected (but unnamed) sockets.  It is very similar to a pipe and is used in much the same way.  Socket pairs are created with the socketpair function, declared in sys/socket.h.  A socket pair is much like a pipe; the main difference is that the socket pair is bidirectional, whereas the pipe has one input-only end and one output-only end (see Pipes and FIFOs). 
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int socketpair (int namespace, int style, int protocol, int filedes[2])
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe fd | See POSIX Safety Concepts. 
+This function creates a socket pair, returning the file descriptors in filedes[0] and filedes[1].  The socket pair is a full-duplex communications channel, so that both reading and writing may be performed at either end. 
+The namespace, style and protocol arguments are interpreted as for the socket function.  style should be one of the communication styles listed in Communication Styles. The namespace argument specifies the namespace, which must be AF_LOCAL (see Local Namespace); protocol specifies the communications protocol, but zero is the only meaningful value. 
+If style specifies a connectionless communication style, then the two sockets you get are not connected, strictly speaking, but each of them knows the other as the default destination address, so they can send packets to each other. 
+The socketpair function returns 0 on success and -1 on failure.  The following errno error conditions are defined for this function: 
+	EMFILE
+The process has too many file descriptors open.  
+	EAFNOSUPPORT
+The specified namespace is not supported.  
+	EPROTONOSUPPORT
+The specified protocol is not supported.  
+	EOPNOTSUPP
+The specified protocol does not support the creation of socket pairs. 

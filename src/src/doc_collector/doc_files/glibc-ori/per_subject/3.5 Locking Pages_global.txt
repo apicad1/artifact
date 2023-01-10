@@ -1,0 +1,13 @@
+You can tell the system to associate a particular virtual memory page with a real page frame and keep it that way — i.e., cause the page to be paged in if it isn’t already and mark it so it will never be paged out and consequently will never cause a page fault.  This is called locking a page. 
+The functions in this chapter lock and unlock the calling process’ pages. 
+
+TABLE_BEGIN
+ • Why Lock Pages    Reasons to read this section.
+
+ • Locked Memory Details    Everything you need to know locked
+                                    memory
+
+ • Page Lock Functions    Here’s how to do it.
+
+TABLE_END
+

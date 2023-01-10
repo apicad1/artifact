@@ -1,0 +1,42 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: stack_t
+This structure describes a signal stack.  It contains the following members: 
+	void *ss_sp
+This points to the base of the signal stack.  
+	size_t ss_size
+This is the size (in bytes) of the signal stack which ‘ss_sp’ points to. You should set this to however much space you allocated for the stack.  There are two macros defined in signal.h that you should use in calculating this size:   SIGSTKSZ   This is the canonical size for a signal stack.  It is judged to be sufficient for normal uses.   MINSIGSTKSZ   This is the amount of signal stack space the operating system needs just to implement signal delivery.  The size of a signal stack must be greater than this.  For most cases, just using SIGSTKSZ for ss_size is sufficient.  But if you know how much stack space your program’s signal handlers will need, you may want to use a different size.  In this case, you should allocate MINSIGSTKSZ additional bytes for the signal stack and increase ss_size accordingly.    
+	int ss_flags
+This field contains the bitwise OR of these flags:   SS_DISABLE   This tells the system that it should not use the signal stack.   SS_ONSTACK   This is set by the system, and indicates that the signal stack is currently in use.  If this bit is not set, then signals will be delivered on the normal user stack.   
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int sigaltstack (const stack_t *restrict stack, stack_t *restrict oldstack)
+Preliminary: | MT-Safe  | AS-Unsafe lock/hurd | AC-Unsafe lock/hurd | See POSIX Safety Concepts. 
+The sigaltstack function specifies an alternate stack for use during signal handling.  When a signal is received by the process and its action indicates that the signal stack is used, the system arranges a switch to the currently installed signal stack while the handler for that signal is executed. 
+If oldstack is not a null pointer, information about the currently installed signal stack is returned in the location it points to.  If stack is not a null pointer, then this is installed as the new stack for use by signal handlers. 
+The return value is 0 on success and -1 on failure.  If sigaltstack fails, it sets errno to one of these values: 
+	EINVAL
+You tried to disable a stack that was in fact currently in use.  
+	ENOMEM
+The size of the alternate stack was too small. It must be greater than MINSIGSTKSZ. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: struct sigstack
+This structure describes a signal stack.  It contains the following members: 
+	void *ss_sp
+This is the stack pointer.  If the stack grows downwards on your machine, this should point to the top of the area you allocated.  If the stack grows upwards, it should point to the bottom.  
+	int ss_onstack
+This field is true if the process is currently using this stack. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int sigstack (struct sigstack *stack, struct sigstack *oldstack)
+Preliminary: | MT-Safe  | AS-Unsafe lock/hurd | AC-Unsafe lock/hurd | See POSIX Safety Concepts. 
+The sigstack function specifies an alternate stack for use during signal handling.  When a signal is received by the process and its action indicates that the signal stack is used, the system arranges a switch to the currently installed signal stack while the handler for that signal is executed. 
+If oldstack is not a null pointer, information about the currently installed signal stack is returned in the location it points to.  If stack is not a null pointer, then this is installed as the new stack for use by signal handlers. 
+The return value is 0 on success and -1 on failure. 

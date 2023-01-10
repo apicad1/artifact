@@ -1,0 +1,18 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int shutdown (int socket, int how)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The shutdown function shuts down the connection of socket socket.  The argument how specifies what action to perform: 
+	0
+Stop receiving data for this socket.  If further data arrives, reject it.  
+	1
+Stop trying to transmit data from this socket.  Discard any data waiting to be sent.  Stop looking for acknowledgement of data already sent; don’t retransmit it if it is lost.  
+	2
+Stop both reception and transmission. 
+The return value is 0 on success and -1 on failure.  The following errno error conditions are defined for this function: 
+	EBADF
+socket is not a valid file descriptor.  
+	ENOTSOCK
+socket is not a socket.  
+	ENOTCONN
+socket is not connected. 

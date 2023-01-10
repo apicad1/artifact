@@ -1,0 +1,10 @@
+The GNU C Library includes only a few special-purpose cryptographic functions: one-way hash functions for passphrase storage, and access to a cryptographic randomness source, if one is provided by the operating system.  Programs that need general-purpose cryptography should use a dedicated cryptography library, such as libgcrypt. 
+Many countries place legal restrictions on the import, export, possession, or use of cryptographic software.  We deplore these restrictions, but we must still warn you that the GNU C Library may be subject to them, even if you do not use the functions in this chapter yourself.  The restrictions vary from place to place and are changed often, so we cannot give any more specific advice than this warning. 
+
+TABLE_BEGIN
+ • Passphrase Storage    One-way hashing for passphrases.
+
+ • Unpredictable Bytes    Randomness for cryptographic purposes.
+
+TABLE_END
+

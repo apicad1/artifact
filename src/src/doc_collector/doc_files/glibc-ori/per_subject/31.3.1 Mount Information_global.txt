@@ -1,0 +1,14 @@
+For some programs it is desirable and necessary to access information about whether a certain filesystem is mounted and, if it is, where, or simply to get lists of all the available filesystems.  The GNU C Library provides some functions to retrieve this information portably. 
+Traditionally Unix systems have a file named /etc/fstab which describes all possibly mounted filesystems.  The mount program uses this file to mount at startup time of the system all the necessary filesystems.  The information about all the filesystems actually mounted is normally kept in a file named either /var/run/mtab or /etc/mtab.  Both files share the same syntax and it is crucial that this syntax is followed all the time. Therefore it is best to never directly write to the files.  The functions described in this section can do this and they also provide the functionality to convert the external textual representation to the internal representation. 
+Note that the fstab and mtab files are maintained on a system by convention.  It is possible for the files not to exist or not to be consistent with what is really mounted or available to mount, if the system’s administration policy allows it.  But programs that mount and unmount filesystems typically maintain and use these files as described herein. 
+The filenames given above should never be used directly.  The portable way to handle these files is to use the macros _PATH_FSTAB, defined in fstab.h, or _PATH_MNTTAB, defined in mntent.h and paths.h, for fstab; and the macro _PATH_MOUNTED, also defined in mntent.h and paths.h, for mtab.  There are also two alternate macro names FSTAB, MNTTAB, and MOUNTED defined but these names are deprecated and kept only for backward compatibility. The names _PATH_MNTTAB and _PATH_MOUNTED should always be used. 
+
+TABLE_BEGIN
+ • fstab    The fstab file
+
+ • mtab    The mtab file
+
+ • Other Mount Information    Other (non-libc) sources of mount information
+
+TABLE_END
+

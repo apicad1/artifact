@@ -1,0 +1,3 @@
+The GNU C Library provides a way to specify the initial signal mask of a thread created using pthread_create, passing a thread attribute object configured for this purpose. 
+It is possible to create a new thread with a specific signal mask without using these functions.  On the thread that calls pthread_create, the required steps for the general case are: 
+The start routine for the created thread needs to locate the desired signal mask and use pthread_sigmask to apply it to the thread. If the signal mask was copied to a heap allocation, the copy should be freed. 

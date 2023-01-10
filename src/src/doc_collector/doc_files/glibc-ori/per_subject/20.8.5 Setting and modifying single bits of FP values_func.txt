@@ -1,0 +1,271 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: double copysign (double x, double y)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: float copysignf (float x, float y)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: long double copysignl (long double x, long double y)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: _FloatN copysignfN (_FloatN x, _FloatN y)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: _FloatNx copysignfNx (_FloatNx x, _FloatNx y)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+These functions return x but with the sign of y.  They work even if x or y are NaN or zero.  Both of these can carry a sign (although not all implementations support it) and this is one of the few operations that can tell the difference. 
+copysign never raises an exception. 
+This function is defined in IEC 559 (and the appendix with recommended functions in IEEE 754/IEEE 854). 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int signbit (float-type x)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+signbit is a generic macro which can work on all floating-point types.  It returns a nonzero value if the value of x has its sign bit set. 
+This is not the same as x < 0.0, because IEEE 754 floating point allows zero to be signed.  The comparison -0.0 < 0.0 is false, but signbit (-0.0) will return a nonzero value. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: double nextafter (double x, double y)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: float nextafterf (float x, float y)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: long double nextafterl (long double x, long double y)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: _FloatN nextafterfN (_FloatN x, _FloatN y)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: _FloatNx nextafterfNx (_FloatNx x, _FloatNx y)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The nextafter function returns the next representable neighbor of x in the direction towards y.  The size of the step between x and the result depends on the type of the result.  If x = y the function simply returns y.  If either value is NaN, NaN is returned.  Otherwise a value corresponding to the value of the least significant bit in the mantissa is added or subtracted, depending on the direction. nextafter will signal overflow or underflow if the result goes outside of the range of normalized numbers. 
+This function is defined in IEC 559 (and the appendix with recommended functions in IEEE 754/IEEE 854). 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: double nexttoward (double x, long double y)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: float nexttowardf (float x, long double y)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: long double nexttowardl (long double x, long double y)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+These functions are identical to the corresponding versions of nextafter except that their second argument is a long double. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: double nextup (double x)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: float nextupf (float x)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: long double nextupl (long double x)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: _FloatN nextupfN (_FloatN x)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: _FloatNx nextupfNx (_FloatNx x)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The nextup function returns the next representable neighbor of x in the direction of positive infinity.  If x is the smallest negative subnormal number in the type of x the function returns -0.  If x = 0 the function returns the smallest positive subnormal number in the type of x.  If x is NaN, NaN is returned. If x is +∞, +∞ is returned. nextup is from TS 18661-1:2014 and TS 18661-3:2015. nextup never raises an exception except for signaling NaNs. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: double nextdown (double x)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: float nextdownf (float x)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: long double nextdownl (long double x)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: _FloatN nextdownfN (_FloatN x)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: _FloatNx nextdownfNx (_FloatNx x)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The nextdown function returns the next representable neighbor of x in the direction of negative infinity.  If x is the smallest positive subnormal number in the type of x the function returns +0.  If x = 0 the function returns the smallest negative subnormal number in the type of x.  If x is NaN, NaN is returned. If x is -∞, -∞ is returned. nextdown is from TS 18661-1:2014 and TS 18661-3:2015. nextdown never raises an exception except for signaling NaNs. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: double nan (const char *tagp)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: float nanf (const char *tagp)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: long double nanl (const char *tagp)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: _FloatN nanfN (const char *tagp)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: _FloatNx nanfNx (const char *tagp)
+Preliminary: | MT-Safe locale | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The nan function returns a representation of NaN, provided that NaN is supported by the target platform. nan ("n-char-sequence") is equivalent to strtod ("NAN(n-char-sequence)"). 
+The argument tagp is used in an unspecified manner.  On IEEE 754 systems, there are many representations of NaN, and tagp selects one.  On other systems it may do nothing. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int canonicalize (double *cx, const double *x)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int canonicalizef (float *cx, const float *x)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int canonicalizel (long double *cx, const long double *x)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int canonicalizefN (_FloatN *cx, const _FloatN *x)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int canonicalizefNx (_FloatNx *cx, const _FloatNx *x)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+In some floating-point formats, some values have canonical (preferred) and noncanonical encodings (for IEEE interchange binary formats, all encodings are canonical).  These functions, defined by TS 18661-1:2014 and TS 18661-3:2015, attempt to produce a canonical version of the floating-point value pointed to by x; if that value is a signaling NaN, they raise the invalid exception and produce a quiet NaN.  If a canonical value is produced, it is stored in the object pointed to by cx, and these functions return zero.  Otherwise (if a canonical value could not be produced because the object pointed to by x is not a valid representation of any floating-point value), the object pointed to by cx is unchanged and a nonzero value is returned. 
+Note that some formats have multiple encodings of a value which are all equally canonical; when such an encoding is used as an input to this function, any such encoding of the same value (or of the corresponding quiet NaN, if that value is a signaling NaN) may be produced as output. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: double getpayload (const double *x)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: float getpayloadf (const float *x)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: long double getpayloadl (const long double *x)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: _FloatN getpayloadfN (const _FloatN *x)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: _FloatNx getpayloadfNx (const _FloatNx *x)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+IEEE 754 defines the payload of a NaN to be an integer value encoded in the representation of the NaN.  Payloads are typically propagated from NaN inputs to the result of a floating-point operation.  These functions, defined by TS 18661-1:2014 and TS 18661-3:2015, return the payload of the NaN pointed to by x (returned as a positive integer, or positive zero, represented as a floating-point number); if x is not a NaN, they return -1.  They raise no floating-point exceptions even for signaling NaNs.  (The return value of -1 for an argument that is not a NaN is specified in C2x; the value was unspecified in TS 18661.) 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int setpayload (double *x, double payload)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int setpayloadf (float *x, float payload)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int setpayloadl (long double *x, long double payload)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int setpayloadfN (_FloatN *x, _FloatN payload)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int setpayloadfNx (_FloatNx *x, _FloatNx payload)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+These functions, defined by TS 18661-1:2014 and TS 18661-3:2015, set the object pointed to by x to a quiet NaN with payload payload and a zero sign bit and return zero.  If payload is not a positive-signed integer that is a valid payload for a quiet NaN of the given type, the object pointed to by x is set to positive zero and a nonzero value is returned.  They raise no floating-point exceptions. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int setpayloadsig (double *x, double payload)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int setpayloadsigf (float *x, float payload)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int setpayloadsigl (long double *x, long double payload)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int setpayloadsigfN (_FloatN *x, _FloatN payload)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int setpayloadsigfNx (_FloatNx *x, _FloatNx payload)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+These functions, defined by TS 18661-1:2014 and TS 18661-3:2015, set the object pointed to by x to a signaling NaN with payload payload and a zero sign bit and return zero.  If payload is not a positive-signed integer that is a valid payload for a signaling NaN of the given type, the object pointed to by x is set to positive zero and a nonzero value is returned.  They raise no floating-point exceptions. 

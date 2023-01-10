@@ -1,0 +1,1 @@
+{"arg.post":{"arg_num":0,"feature":[]},"arg.pre":{"arg_num":0,"feature":[],"has_relation":false,"relations":[]},"causality":{"post.call":{},"pre.call":{}},"loc":"/home/test/api_misuse/evaluation/apimu4c_single/CWE401_Memory_Leak/CWE401_Memory_Leak__int64_t_calloc_05/CWE401_Memory_Leak__int64_t_calloc_05.c:188:5"}

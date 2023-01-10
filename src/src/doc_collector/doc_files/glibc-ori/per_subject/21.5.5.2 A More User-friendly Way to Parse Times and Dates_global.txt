@@ -1,0 +1,1 @@
+The Unix standard defines another function for parsing date strings. The interface is weird, but if the function happens to suit your application it is just fine.  It is problematic to use this function in multi-threaded programs or libraries, since it returns a pointer to a static variable, and uses a global variable and global state (an environment variable). 

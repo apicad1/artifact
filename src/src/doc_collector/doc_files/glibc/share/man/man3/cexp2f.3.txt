@@ -1,0 +1,31 @@
+CEXP2(3)                                        Linux Programmer's Manual                                       CEXP2(3)
+
+NAME
+       cexp2, cexp2f, cexp2l - base-2 exponent of a complex number
+
+SYNOPSIS
+       #include <complex.h>
+
+       double complex cexp2(double complex z);
+       float complex cexp2f(float complex z);
+       long double complex cexp2l(long double complex z);
+
+       Link with -lm.
+
+DESCRIPTION
+       The function returns 2 raised to the power of z.
+
+CONFORMING TO
+       These function names are reserved for future use in C99.
+
+AVAILABILITY
+       Not yet in glibc, as at version 2.19.
+
+SEE ALSO
+       cabs(3), cexp(3), clog10(3), complex(7)
+
+COLOPHON
+       This  page  is  part  of  release 5.05 of the Linux man-pages project.  A description of the project, information
+       about reporting bugs, and the latest version of this page, can be found at https://www.kernel.org/doc/man-pages/.
+
+                                                       2014-08-19                                               CEXP2(3)

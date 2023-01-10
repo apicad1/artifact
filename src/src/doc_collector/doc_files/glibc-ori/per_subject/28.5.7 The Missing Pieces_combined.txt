@@ -1,0 +1,28 @@
+The code extracts for the sample shell included in this chapter are only a part of the entire shell program.  In particular, nothing at all has been said about how job and program data structures are allocated and initialized. 
+Most real shells provide a complex user interface that has support for a command language; variables; abbreviations, substitutions, and pattern matching on file names; and the like.  All of this is far too complicated to explain here!  Instead, we have concentrated on showing how to implement the core process creation and job control functions that can be called from such a shell. 
+Here is a table summarizing the major entry points we have presented: 
+
+>>>>>>>>>>>>>>>>>>>>
+- void init_shell (void)
+Initialize the shell’s internal state.  See Initializing the Shell. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- void launch_job (job *j, int foreground)
+Launch the job j as either a foreground or background job. See Launching Jobs. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- void do_job_notification (void)
+Check for and report any jobs that have terminated or stopped.  Can be called synchronously or within a handler for SIGCHLD signals. See Stopped and Terminated Jobs. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- void continue_job (job *j, int foreground)
+Continue the job j.  See Continuing Stopped Jobs. 
+<<<<<<<<<<<<<<<<<<<<
+
+Of course, a real shell would also want to provide other functions for managing jobs.  For example, it would be useful to have commands to list all active jobs or to send a signal (such as SIGKILL) to a job. 

@@ -1,0 +1,87 @@
+POSIX.2 defines a way to get string-valued parameters from the operating system with the function confstr: 
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: size_t confstr (int parameter, char *buf, size_t len)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function reads the value of a string-valued system parameter, storing the string into len bytes of memory space starting at buf.  The parameter argument should be one of the ‘_CS_’ symbols listed below. 
+The normal return value from confstr is the length of the string value that you asked for.  If you supply a null pointer for buf, then confstr does not try to store the string; it just returns its length.  A value of 0 indicates an error. 
+If the string you asked for is too long for the buffer (that is, longer than len - 1), then confstr stores just that much (leaving room for the terminating null character).  You can tell that this has happened because confstr returns a value greater than or equal to len. 
+The following errno error conditions are defined for this function: 
+	EINVAL
+The value of the parameter is invalid. 
+<<<<<<<<<<<<<<<<<<<<
+
+Currently there is just one parameter you can read with confstr: 
+
+>>>>>>>>>>>>>>>>>>>>
+- _CS_PATH  
+This parameter’s value is the recommended default path for searching for executable files.  This is the path that a user has by default just after logging in. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- _CS_LFS_CFLAGS  
+The returned string specifies which additional flags must be given to the C compiler if a source is compiled using the _LARGEFILE_SOURCE feature select macro; see Feature Test Macros. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- _CS_LFS_LDFLAGS  
+The returned string specifies which additional flags must be given to the linker if a source is compiled using the _LARGEFILE_SOURCE feature select macro; see Feature Test Macros. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- _CS_LFS_LIBS  
+The returned string specifies which additional libraries must be linked to the application if a source is compiled using the _LARGEFILE_SOURCE feature select macro; see Feature Test Macros. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- _CS_LFS_LINTFLAGS  
+The returned string specifies which additional flags must be given to the lint tool if a source is compiled using the _LARGEFILE_SOURCE feature select macro; see Feature Test Macros. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- _CS_LFS64_CFLAGS  
+The returned string specifies which additional flags must be given to the C compiler if a source is compiled using the _LARGEFILE64_SOURCE feature select macro; see Feature Test Macros. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- _CS_LFS64_LDFLAGS  
+The returned string specifies which additional flags must be given to the linker if a source is compiled using the _LARGEFILE64_SOURCE feature select macro; see Feature Test Macros. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- _CS_LFS64_LIBS  
+The returned string specifies which additional libraries must be linked to the application if a source is compiled using the _LARGEFILE64_SOURCE feature select macro; see Feature Test Macros. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- _CS_LFS64_LINTFLAGS  
+The returned string specifies which additional flags must be given to the lint tool if a source is compiled using the _LARGEFILE64_SOURCE feature select macro; see Feature Test Macros. 
+<<<<<<<<<<<<<<<<<<<<
+
+The way to use confstr without any arbitrary limit on string size is to call it twice: first call it to get the length, allocate the buffer accordingly, and then call confstr again to fill the buffer, like this: 
+
+EXAMPLE_BEGIN
+char *
+get_default_path (void)
+{
+  size_t len = confstr (_CS_PATH, NULL, 0);
+  char *buffer = (char *) xmalloc (len);
+
+  if (confstr (_CS_PATH, buf, len + 1) == 0)
+    {
+      free (buffer);
+      return NULL;
+    }
+
+  return buffer;
+}
+EXAMPLE_END
+

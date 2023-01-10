@@ -1,0 +1,47 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int WIFEXITED (int status)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This macro returns a nonzero value if the child process terminated normally with exit or _exit. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int WEXITSTATUS (int status)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+If WIFEXITED is true of status, this macro returns the low-order 8 bits of the exit status value from the child process. See Exit Status. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int WIFSIGNALED (int status)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This macro returns a nonzero value if the child process terminated because it received a signal that was not handled. See Signal Handling. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int WTERMSIG (int status)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+If WIFSIGNALED is true of status, this macro returns the signal number of the signal that terminated the child process. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int WCOREDUMP (int status)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This macro returns a nonzero value if the child process terminated and produced a core dump. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int WIFSTOPPED (int status)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This macro returns a nonzero value if the child process is stopped. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int WSTOPSIG (int status)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+If WIFSTOPPED is true of status, this macro returns the signal number of the signal that caused the child process to stop. 

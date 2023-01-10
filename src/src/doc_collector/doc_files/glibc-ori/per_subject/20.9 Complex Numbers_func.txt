@@ -1,0 +1,23 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: const float complex _Complex_I
+This macro is a representation of the complex number “0+1i”. Multiplying a real floating-point value by _Complex_I gives a complex number whose value is purely imaginary.  You can use this to construct complex constants: 
+
+EXAMPLE_BEGIN
+3.0 + 4.0i = 3.0 + 4.0 * _Complex_I
+EXAMPLE_END
+
+Note that _Complex_I * _Complex_I has the value -1, but the type of that value is complex. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: const float complex I
+This macro has exactly the same value as _Complex_I.  Most of the time it is preferable.  However, it causes problems if you want to use the identifier I for something else.  You can safely write 
+
+EXAMPLE_BEGIN
+#include <complex.h>
+#undef I
+EXAMPLE_END
+
+if you need I for your own purposes.  (In that case we recommend you also define some other short name for _Complex_I, such as J.) 

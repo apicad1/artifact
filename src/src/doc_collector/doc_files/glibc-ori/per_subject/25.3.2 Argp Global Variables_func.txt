@@ -1,0 +1,30 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Variable: const char * argp_program_version
+If defined or set by the user program to a non-zero value, then a ‘--version’ option is added when parsing with argp_parse, which will print the ‘--version’ string followed by a newline and exit.  The exception to this is if the ARGP_NO_EXIT flag is used. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Variable: const char * argp_program_bug_address
+If defined or set by the user program to a non-zero value, argp_program_bug_address should point to a string that will be printed at the end of the standard output for the ‘--help’ option, embedded in a sentence that says ‘Report bugs to address.’. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Variable: argp_program_version_hook
+If defined or set by the user program to a non-zero value, a ‘--version’ option is added when parsing with arg_parse, which prints the program version and exits with a status of zero.  This is not the case if the ARGP_NO_HELP flag is used.  If the ARGP_NO_EXIT flag is set, the exit behavior of the program is suppressed or modified, as when the argp parser is going to be used by other programs. 
+It should point to a function with this type of signature: 
+
+EXAMPLE_BEGIN
+void print-version (FILE *stream, struct argp_state *state)
+EXAMPLE_END
+
+See Argp Parsing State, for an explanation of state. 
+This variable takes precedence over argp_program_version, and is useful if a program has version information not easily expressed in a simple string. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Variable: error_t argp_err_exit_status
+This is the exit status used when argp exits due to a parsing error.  If not defined or set by the user program, this defaults to: EX_USAGE from <sysexits.h>. 

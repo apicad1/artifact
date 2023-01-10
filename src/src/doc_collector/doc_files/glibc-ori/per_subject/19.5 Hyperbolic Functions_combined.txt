@@ -1,0 +1,324 @@
+The functions in this section are related to the exponential functions; see Exponents and Logarithms. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: double sinh (double x)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: float sinhf (float x)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: long double sinhl (long double x)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: _FloatN sinhfN (_FloatN x)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: _FloatNx sinhfNx (_FloatNx x)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+These functions return the hyperbolic sine of x, defined mathematically as (exp (x) - exp (-x)) / 2.  They may signal overflow if x is too large. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: double cosh (double x)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: float coshf (float x)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: long double coshl (long double x)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: _FloatN coshfN (_FloatN x)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: _FloatNx coshfNx (_FloatNx x)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+These functions return the hyperbolic cosine of x, defined mathematically as (exp (x) + exp (-x)) / 2. They may signal overflow if x is too large. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: double tanh (double x)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: float tanhf (float x)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: long double tanhl (long double x)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: _FloatN tanhfN (_FloatN x)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: _FloatNx tanhfNx (_FloatNx x)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+These functions return the hyperbolic tangent of x, defined mathematically as sinh (x) / cosh (x). They may signal overflow if x is too large. 
+<<<<<<<<<<<<<<<<<<<<
+
+There are counterparts for the hyperbolic functions which take complex arguments. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: complex double csinh (complex double z)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: complex float csinhf (complex float z)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: complex long double csinhl (complex long double z)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: complex _FloatN csinhfN (complex _FloatN z)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: complex _FloatNx csinhfNx (complex _FloatNx z)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+These functions return the complex hyperbolic sine of z, defined mathematically as (exp (z) - exp (-z)) / 2. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: complex double ccosh (complex double z)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: complex float ccoshf (complex float z)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: complex long double ccoshl (complex long double z)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: complex _FloatN ccoshfN (complex _FloatN z)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: complex _FloatNx ccoshfNx (complex _FloatNx z)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+These functions return the complex hyperbolic cosine of z, defined mathematically as (exp (z) + exp (-z)) / 2. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: complex double ctanh (complex double z)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: complex float ctanhf (complex float z)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: complex long double ctanhl (complex long double z)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: complex _FloatN ctanhfN (complex _FloatN z)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: complex _FloatNx ctanhfNx (complex _FloatNx z)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+These functions return the complex hyperbolic tangent of z, defined mathematically as csinh (z) / ccosh (z). 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: double asinh (double x)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: float asinhf (float x)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: long double asinhl (long double x)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: _FloatN asinhfN (_FloatN x)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: _FloatNx asinhfNx (_FloatNx x)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+These functions return the inverse hyperbolic sine of x—the value whose hyperbolic sine is x. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: double acosh (double x)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: float acoshf (float x)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: long double acoshl (long double x)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: _FloatN acoshfN (_FloatN x)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: _FloatNx acoshfNx (_FloatNx x)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+These functions return the inverse hyperbolic cosine of x—the value whose hyperbolic cosine is x.  If x is less than 1, acosh signals a domain error. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: double atanh (double x)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: float atanhf (float x)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: long double atanhl (long double x)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: _FloatN atanhfN (_FloatN x)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: _FloatNx atanhfNx (_FloatNx x)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+These functions return the inverse hyperbolic tangent of x—the value whose hyperbolic tangent is x.  If the absolute value of x is greater than 1, atanh signals a domain error; if it is equal to 1, atanh returns infinity. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: complex double casinh (complex double z)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: complex float casinhf (complex float z)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: complex long double casinhl (complex long double z)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: complex _FloatN casinhfN (complex _FloatN z)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: complex _FloatNx casinhfNx (complex _FloatNx z)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+These functions return the inverse complex hyperbolic sine of z—the value whose complex hyperbolic sine is z. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: complex double cacosh (complex double z)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: complex float cacoshf (complex float z)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: complex long double cacoshl (complex long double z)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: complex _FloatN cacoshfN (complex _FloatN z)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: complex _FloatNx cacoshfNx (complex _FloatNx z)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+These functions return the inverse complex hyperbolic cosine of z—the value whose complex hyperbolic cosine is z.  Unlike the real-valued functions, there are no restrictions on the value of z. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: complex double catanh (complex double z)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: complex float catanhf (complex float z)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: complex long double catanhl (complex long double z)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: complex _FloatN catanhfN (complex _FloatN z)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: complex _FloatNx catanhfNx (complex _FloatNx z)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+These functions return the inverse complex hyperbolic tangent of z—the value whose complex hyperbolic tangent is z.  Unlike the real-valued functions, there are no restrictions on the value of z. 

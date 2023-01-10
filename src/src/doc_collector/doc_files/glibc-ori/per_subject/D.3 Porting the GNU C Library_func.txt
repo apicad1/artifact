@@ -1,0 +1,30 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Makefile
+A makefile for this machine or operating system, or class of machine or operating system.  This file is included by the library makefile Makerules, which is used by the top-level makefile and the subdirectory makefiles.  It can change the variables set in the including makefile or add new rules.  It can use GNU make conditional directives based on the variable ‘subdir’ (see above) to select different sets of variables and rules for different sections of the library.  It can also set the make variable ‘sysdep-routines’, to specify extra modules to be included in the library.  You should use ‘sysdep-routines’ rather than adding modules to ‘routines’ because the latter is used in determining what to distribute for each subdirectory of the main source tree. 
+Each makefile in a subdirectory in the ordered list of subdirectories to be searched is included in order.  Since several system-dependent makefiles may be included, each should append to ‘sysdep-routines’ rather than simply setting it: 
+
+EXAMPLE_BEGIN
+sysdep-routines := $(sysdep-routines) foo bar
+EXAMPLE_END
+
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Subdirs
+This file contains the names of new whole subdirectories under the top-level library source tree that should be included for this system. These subdirectories are treated just like the system-independent subdirectories in the library source tree, such as stdio and math. 
+Use this when there are completely new sets of functions and header files that should go into the library for the system this subdirectory of sysdeps implements.  For example, sysdeps/unix/inet/Subdirs contains inet; the inet directory contains various network-oriented operations which only make sense to put in the library on systems that support the Internet. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- configure
+This file is a shell script fragment to be run at configuration time. The top-level configure script uses the shell . command to read the configure file in each system-dependent directory chosen, in order.  The configure files are often generated from configure.ac files using Autoconf. 
+A system-dependent configure script will usually add things to the shell variables ‘DEFS’ and ‘config_vars’; see the top-level configure script for details.  The script can check for ‘--with-package’ options that were passed to the top-level configure.  For an option ‘--with-package=value’ configure sets the shell variable ‘with_package’ (with any dashes in package converted to underscores) to value; if the option is just ‘--with-package’ (no argument), then it sets ‘with_package’ to ‘yes’. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- configure.ac
+This file is an Autoconf input fragment to be processed into the file configure in this subdirectory.  See Introduction in Autoconf: Generating Automatic Configuration Scripts, for a description of Autoconf.  You should write either configure or configure.ac, but not both.  The first line of configure.ac should invoke the m4 macro ‘GLIBC_PROVIDES’.  This macro does several AC_PROVIDE calls for Autoconf macros which are used by the top-level configure script; without this, those macros might be invoked again unnecessarily by Autoconf. 

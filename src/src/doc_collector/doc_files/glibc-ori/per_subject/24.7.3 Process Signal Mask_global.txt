@@ -1,0 +1,3 @@
+The collection of signals that are currently blocked is called the signal mask.  Each process has its own signal mask.  When you create a new process (see Creating a Process), it inherits its parent’s mask.  You can block or unblock signals with total flexibility by modifying the signal mask. 
+The prototype for the sigprocmask function is in signal.h.  
+Note that you must not use sigprocmask in multi-threaded processes, because each thread has its own signal mask and there is no single process signal mask.  According to POSIX, the behavior of sigprocmask in a multi-threaded process is “unspecified”. Instead, use pthread_sigmask. 

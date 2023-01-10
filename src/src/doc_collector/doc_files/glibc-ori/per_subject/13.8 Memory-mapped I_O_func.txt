@@ -1,0 +1,170 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void * mmap (void *address, size_t length, int protect, int flags, int filedes, off_t offset)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The mmap function creates a new mapping, connected to bytes (offset) to (offset + length - 1) in the file open on filedes.  A new reference for the file specified by filedes is created, which is not removed by closing the file. 
+address gives a preferred starting address for the mapping. NULL expresses no preference.  Any previous mapping at that address is automatically removed.  The address you give may still be changed, unless you use the MAP_FIXED flag. 
+protect contains flags that control what kind of access is permitted.  They include PROT_READ, PROT_WRITE, and PROT_EXEC.  The special flag PROT_NONE reserves a region of address space for future use.  The mprotect function can be used to change the protection flags.  See Memory Protection. 
+flags contains flags that control the nature of the map. One of MAP_SHARED or MAP_PRIVATE must be specified. 
+They include: 
+	MAP_PRIVATE  
+This specifies that writes to the region should never be written back to the attached file.  Instead, a copy is made for the process, and the region will be swapped normally if memory runs low.  No other process will see the changes.  Since private mappings effectively revert to ordinary memory when written to, you must have enough virtual memory for a copy of the entire mmapped region if you use this mode with PROT_WRITE.  
+	MAP_SHARED  
+This specifies that writes to the region will be written back to the file.  Changes made will be shared immediately with other processes mmaping the same file.  Note that actual writing may take place at any time.  You need to use msync, described below, if it is important that other processes using conventional I/O get a consistent view of the file.  
+	MAP_FIXED  
+This forces the system to use the exact mapping address specified in address and fail if it can’t.  
+	MAP_ANONYMOUS  
+	MAP_ANON  
+This flag tells the system to create an anonymous mapping, not connected to a file.  filedes and offset are ignored, and the region is initialized with zeros.  Anonymous maps are used as the basic primitive to extend the heap on some systems.  They are also useful to share data between multiple tasks without creating a file.  On some systems using private anonymous mmaps is more efficient than using malloc for large blocks.  This is not an issue with the GNU C Library, as the included malloc automatically uses mmap where appropriate.  
+	MAP_HUGETLB  
+ This requests that the system uses an alternative page size which is larger than the default page size for the mapping.  For some workloads, increasing the page size for large mappings improves performance because the system needs to handle far fewer pages.  For other workloads which require frequent transfer of pages between storage or different nodes, the decreased page granularity may cause performance problems due to the increased page size and larger transfers.  In order to create the mapping, the system needs physically contiguous memory of the size of the increased page size.  As a result, MAP_HUGETLB mappings are affected by memory fragmentation, and their creation can fail even if plenty of memory is available in the system.  Not all file systems support mappings with an increased page size.  The MAP_HUGETLB flag is specific to Linux.    
+mmap returns the address of the new mapping, or MAP_FAILED for an error. 
+Possible errors include: 
+	EINVAL
+ Either address was unusable (because it is not a multiple of the applicable page size), or inconsistent flags were given.  If MAP_HUGETLB was specified, the file or system does not support large page sizes.  
+	EACCES
+ filedes was not open for the type of access specified in protect.  
+	ENOMEM
+ Either there is not enough memory for the operation, or the process is out of address space.  
+	ENODEV
+ This file is of a type that doesn’t support mapping.  
+	ENOEXEC
+ The file is on a filesystem that doesn’t support mapping.   
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void * mmap64 (void *address, size_t length, int protect, int flags, int filedes, off64_t offset)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The mmap64 function is equivalent to the mmap function but the offset parameter is of type off64_t.  On 32-bit systems this allows the file associated with the filedes descriptor to be larger than 2GB.  filedes must be a descriptor returned from a call to open64 or fopen64 and freopen64 where the descriptor is retrieved with fileno. 
+When the sources are translated with _FILE_OFFSET_BITS == 64 this function is actually available under the name mmap.  I.e., the new, extended API using 64 bit file sizes and offsets transparently replaces the old API. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int munmap (void *addr, size_t length)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+munmap removes any memory maps from (addr) to (addr + length).  length should be the length of the mapping. 
+It is safe to unmap multiple mappings in one command, or include unmapped space in the range.  It is also possible to unmap only part of an existing mapping.  However, only entire pages can be removed.  If length is not an even number of pages, it will be rounded up. 
+It returns 0 for success and -1 for an error. 
+One error is possible: 
+	EINVAL
+The memory range given was outside the user mmap range or wasn’t page aligned.  
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int msync (void *address, size_t length, int flags)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+When using shared mappings, the kernel can write the file at any time before the mapping is removed.  To be certain data has actually been written to the file and will be accessible to non-memory-mapped I/O, it is necessary to use this function. 
+It operates on the region address to (address + length). It may be used on part of a mapping or multiple mappings, however the region given should not contain any unmapped space. 
+flags can contain some options: 
+	MS_SYNC  
+ This flag makes sure the data is actually written to disk. Normally msync only makes sure that accesses to a file with conventional I/O reflect the recent changes.  
+	MS_ASYNC  
+ This tells msync to begin the synchronization, but not to wait for it to complete.   
+msync returns 0 for success and -1 for error.  Errors include: 
+	EINVAL
+An invalid region was given, or the flags were invalid.  
+	EFAULT
+There is no existing mapping in at least part of the given region.  
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void * mremap (void *address, size_t length, size_t new_length, int flag)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function can be used to change the size of an existing memory area. address and length must cover a region entirely mapped in the same mmap statement.  A new mapping with the same characteristics will be returned with the length new_length. 
+One option is possible, MREMAP_MAYMOVE.  If it is given in flags, the system may remove the existing mapping and create a new one of the desired length in another location. 
+The address of the resulting mapping is returned, or -1.  Possible error codes include: 
+	EFAULT
+There is no existing mapping in at least part of the original region, or the region covers two or more distinct mappings.  
+	EINVAL
+The address given is misaligned or inappropriate.  
+	EAGAIN
+The region has pages locked, and if extended it would exceed the process’s resource limit for locked pages.  See Limits on Resources.  
+	ENOMEM
+The region is private writable, and insufficient virtual memory is available to extend it.  Also, this error will occur if MREMAP_MAYMOVE is not given and the extension would collide with another mapped region.  
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int madvise (void *addr, size_t length, int advice)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function can be used to provide the system with advice about the intended usage patterns of the memory region starting at addr and extending length bytes. 
+The valid BSD values for advice are: 
+	MADV_NORMAL  
+The region should receive no further special treatment.  
+	MADV_RANDOM  
+The region will be accessed via random page references.  The kernel should page-in the minimal number of pages for each page fault.  
+	MADV_SEQUENTIAL  
+The region will be accessed via sequential page references.  This may cause the kernel to aggressively read-ahead, expecting further sequential references after any page fault within this region.  
+	MADV_WILLNEED  
+The region will be needed.  The pages within this region may be pre-faulted in by the kernel.  
+	MADV_DONTNEED  
+The region is no longer needed.  The kernel may free these pages, causing any changes to the pages to be lost, as well as swapped out pages to be discarded.  
+	MADV_HUGEPAGE  
+ Indicate that it is beneficial to increase the page size for this mapping.  This can improve performance for larger mappings because the system needs to handle far fewer pages.  However, if parts of the mapping are frequently transferred between storage or different nodes, performance may suffer because individual transfers can become substantially larger due to the increased page size.  This flag is specific to Linux.  
+	MADV_NOHUGEPAGE  
+Undo the effect of a previous MADV_HUGEPAGE advice.  This flag is specific to Linux.  
+The POSIX names are slightly different, but with the same meanings: 
+	POSIX_MADV_NORMAL  
+This corresponds with BSD’s MADV_NORMAL.  
+	POSIX_MADV_RANDOM  
+This corresponds with BSD’s MADV_RANDOM.  
+	POSIX_MADV_SEQUENTIAL  
+This corresponds with BSD’s MADV_SEQUENTIAL.  
+	POSIX_MADV_WILLNEED  
+This corresponds with BSD’s MADV_WILLNEED.  
+	POSIX_MADV_DONTNEED  
+This corresponds with BSD’s MADV_DONTNEED.  
+madvise returns 0 for success and -1 for error.  Errors include: 
+	EINVAL
+An invalid region was given, or the advice was invalid.  
+	EFAULT
+There is no existing mapping in at least part of the given region.  
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int shm_open (const char *name, int oflag, mode_t mode)
+Preliminary: | MT-Safe locale | AS-Unsafe init heap lock | AC-Unsafe lock mem fd | See POSIX Safety Concepts. 
+This function returns a file descriptor that can be used to allocate shared memory via mmap.  Unrelated processes can use same name to create or open existing shared memory objects. 
+A name argument specifies the shared memory object to be opened. In the GNU C Library it must be a string smaller than NAME_MAX bytes starting with an optional slash but containing no other slashes. 
+The semantics of oflag and mode arguments is same as in open. 
+shm_open returns the file descriptor on success or -1 on error. On failure errno is set. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int shm_unlink (const char *name)
+Preliminary: | MT-Safe locale | AS-Unsafe init heap lock | AC-Unsafe lock mem fd | See POSIX Safety Concepts. 
+This function is the inverse of shm_open and removes the object with the given name previously created by shm_open. 
+shm_unlink returns 0 on success or -1 on error. On failure errno is set. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int memfd_create (const char *name, unsigned int flags)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe fd | See POSIX Safety Concepts. 
+The memfd_create function returns a file descriptor which can be used to create memory mappings using the mmap function.  It is similar to the shm_open function in the sense that these mappings are not backed by actual files.  However, the descriptor returned by memfd_create does not correspond to a named object; the name argument is used for debugging purposes only (e.g., will appear in /proc), and separate invocations of memfd_create with the same name will not return descriptors for the same region of memory.  The descriptor can also be used to create alias mappings within the same process. 
+The descriptor initially refers to a zero-length file.  Before mappings can be created which are backed by memory, the file size needs to be increased with the ftruncate function.  See File Size. 
+The flags argument can be a combination of the following flags: 
+	MFD_CLOEXEC  
+ The descriptor is created with the O_CLOEXEC flag.  
+	MFD_ALLOW_SEALING  
+ The descriptor supports the addition of seals using the fcntl function.  
+	MFD_HUGETLB  
+ This requests that mappings created using the returned file descriptor use a larger page size.  See MAP_HUGETLB above for details.  This flag is incompatible with MFD_ALLOW_SEALING. 
+memfd_create returns a file descriptor on success, and -1 on failure. 
+The following errno error conditions are defined for this function: 
+	EINVAL
+An invalid combination is specified in flags, or name is too long.  
+	EFAULT
+The name argument does not point to a string.  
+	EMFILE
+The operation would exceed the file descriptor limit for this process.  
+	ENFILE
+The operation would exceed the system-wide file descriptor limit.  
+	ENOMEM
+There is not enough memory for the operation. 

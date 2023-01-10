@@ -1,0 +1,21 @@
+The usual way for a program to terminate is simply for its main function to return.  The exit status value returned from the main function is used to report information back to the process’s parent process or shell. 
+A program can also terminate normally by calling the exit function. 
+In addition, programs can be terminated by signals; this is discussed in more detail in Signal Handling.  The abort function causes a signal that kills the program. 
+
+TABLE_BEGIN
+ • Normal Termination    If a program calls exit, a
+                                 process terminates normally.
+
+ • Exit Status    The exit status provides information
+                                 about why the process terminated.
+
+ • Cleanups on Exit    A process can run its own cleanup
+                                 functions upon normal termination.
+
+ • Aborting a Program    The abort function causes
+                                 abnormal program termination.
+
+ • Termination Internals    What happens when a process terminates.
+
+TABLE_END
+

@@ -1,0 +1,2 @@
+The error code macros are defined in the header file errno.h. All of them expand into integer constant values.  Some of these error codes can’t occur on GNU systems, but they can occur using the GNU C Library on other systems. 
+The following error codes are defined by the Linux/i386 kernel. They are not yet documented. 

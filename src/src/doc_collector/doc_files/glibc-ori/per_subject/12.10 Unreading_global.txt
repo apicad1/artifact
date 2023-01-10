@@ -1,0 +1,10 @@
+In parser programs it is often useful to examine the next character in the input stream without removing it from the stream.  This is called “peeking ahead” at the input because your program gets a glimpse of the input it will read next. 
+Using stream I/O, you can peek ahead at input by first reading it and then unreading it (also called  pushing it back on the stream). Unreading a character makes it available to be input again from the stream, by  the next call to fgetc or other input function on that stream. 
+
+TABLE_BEGIN
+ • Unreading Idea    An explanation of unreading with pictures.
+
+ • How Unread    How to call ungetc to do unreading.
+
+TABLE_END
+

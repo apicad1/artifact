@@ -1,0 +1,52 @@
+Here are more details on how you should define the four hook functions that a custom stream needs. 
+You should define the function to read data from the cookie as: 
+
+EXAMPLE_BEGIN
+ssize_t reader (void *cookie, char *buffer, size_t size)
+EXAMPLE_END
+
+This is very similar to the read function; see I/O Primitives.  Your function should transfer up to size bytes into the buffer, and return the number of bytes read, or zero to indicate end-of-file.  You can return a value of -1 to indicate an error. 
+You should define the function to write data to the cookie as: 
+
+EXAMPLE_BEGIN
+ssize_t writer (void *cookie, const char *buffer, size_t size)
+EXAMPLE_END
+
+This is very similar to the write function; see I/O Primitives.  Your function should transfer up to size bytes from the buffer, and return the number of bytes written.  You can return a value of 0 to indicate an error.  You must not return any negative value. 
+You should define the function to perform seek operations on the cookie as: 
+
+EXAMPLE_BEGIN
+int seeker (void *cookie, off64_t *position, int whence)
+EXAMPLE_END
+
+For this function, the position and whence arguments are interpreted as for fgetpos; see Portable Positioning. 
+After doing the seek operation, your function should store the resulting file position relative to the beginning of the file in position. Your function should return a value of 0 on success and -1 to indicate an error. 
+You should define the function to do cleanup operations on the cookie appropriate for closing the stream as: 
+
+EXAMPLE_BEGIN
+int cleaner (void *cookie)
+EXAMPLE_END
+
+Your function should return -1 to indicate an error, and 0 otherwise. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: cookie_read_function_t
+This is the data type that the read function for a custom stream should have. If you declare the function as shown above, this is the type it will have. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: cookie_write_function_t
+The data type of the write function for a custom stream. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: cookie_seek_function_t
+The data type of the seek function for a custom stream. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: cookie_close_function_t
+The data type of the close function for a custom stream. 

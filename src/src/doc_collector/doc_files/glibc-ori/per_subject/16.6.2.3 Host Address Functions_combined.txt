@@ -1,0 +1,67 @@
+These additional functions for manipulating Internet addresses are declared in the header file arpa/inet.h.  They represent Internet addresses in network byte order, and network numbers and local-address-within-network numbers in host byte order.  See Byte Order, for an explanation of network and host byte order. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int inet_aton (const char *name, struct in_addr *addr)
+Preliminary: | MT-Safe locale | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function converts the IPv4 Internet host address name from the standard numbers-and-dots notation into binary data and stores it in the struct in_addr that addr points to. inet_aton returns nonzero if the address is valid, zero if not. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: uint32_t inet_addr (const char *name)
+Preliminary: | MT-Safe locale | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function converts the IPv4 Internet host address name from the standard numbers-and-dots notation into binary data.  If the input is not valid, inet_addr returns INADDR_NONE.  This is an obsolete interface to inet_aton, described immediately above.  It is obsolete because INADDR_NONE is a valid address (255.255.255.255), and inet_aton provides a cleaner way to indicate error return. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: uint32_t inet_network (const char *name)
+Preliminary: | MT-Safe locale | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function extracts the network number from the address name, given in the standard numbers-and-dots notation.  The returned address is in host order.  If the input is not valid, inet_network returns -1. 
+The function works only with traditional IPv4 class A, B and C network types.  It doesn’t work with classless addresses and shouldn’t be used anymore. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: char * inet_ntoa (struct in_addr addr)
+Preliminary: | MT-Safe locale | AS-Unsafe race | AC-Safe  | See POSIX Safety Concepts. 
+This function converts the IPv4 Internet host address addr to a string in the standard numbers-and-dots notation.  The return value is a pointer into a statically-allocated buffer.  Subsequent calls will overwrite the same buffer, so you should copy the string if you need to save it. 
+In multi-threaded programs each thread has its own statically-allocated buffer.  But still subsequent calls of inet_ntoa in the same thread will overwrite the result of the last call. 
+Instead of inet_ntoa the newer function inet_ntop which is described below should be used since it handles both IPv4 and IPv6 addresses. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: struct in_addr inet_makeaddr (uint32_t net, uint32_t local)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function makes an IPv4 Internet host address by combining the network number net with the local-address-within-network number local. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: uint32_t inet_lnaof (struct in_addr addr)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function returns the local-address-within-network part of the Internet host address addr. 
+The function works only with traditional IPv4 class A, B and C network types.  It doesn’t work with classless addresses and shouldn’t be used anymore. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: uint32_t inet_netof (struct in_addr addr)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function returns the network number part of the Internet host address addr. 
+The function works only with traditional IPv4 class A, B and C network types.  It doesn’t work with classless addresses and shouldn’t be used anymore. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int inet_pton (int af, const char *cp, void *buf)
+Preliminary: | MT-Safe locale | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function converts an Internet address (either IPv4 or IPv6) from presentation (textual) to network (binary) format.  af should be either AF_INET or AF_INET6, as appropriate for the type of address being converted.  cp is a pointer to the input string, and buf is a pointer to a buffer for the result.  It is the caller’s responsibility to make sure the buffer is large enough. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: const char * inet_ntop (int af, const void *cp, char *buf, socklen_t len)
+Preliminary: | MT-Safe locale | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function converts an Internet address (either IPv4 or IPv6) from network (binary) to presentation (textual) form.  af should be either AF_INET or AF_INET6, as appropriate.  cp is a pointer to the address to be converted.  buf should be a pointer to a buffer to hold the result, and len is the length of this buffer.  The return value from the function will be this buffer address. 

@@ -1,0 +1,33 @@
+We already said above that the currently selected locale for the LC_CTYPE category decides the conversion that is performed by the functions we are about to describe.  Each locale uses its own character set (given as an argument to localedef) and this is the one assumed as the external multibyte encoding.  The wide character set is always UCS-4 in the GNU C Library. 
+A characteristic of each multibyte character set is the maximum number of bytes that can be necessary to represent one character.  This information is quite important when writing code that uses the conversion functions (as shown in the examples below). The ISO C standard defines two macros that provide this information. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int MB_LEN_MAX
+MB_LEN_MAX specifies the maximum number of bytes in the multibyte sequence for a single character in any of the supported locales.  It is a compile-time constant and is defined in limits.h.  
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int MB_CUR_MAX
+MB_CUR_MAX expands into a positive integer expression that is the maximum number of bytes in a multibyte character in the current locale. The value is never greater than MB_LEN_MAX.  Unlike MB_LEN_MAX this macro need not be a compile-time constant, and in the GNU C Library it is not. 
+
+MB_CUR_MAX is defined in stdlib.h. 
+<<<<<<<<<<<<<<<<<<<<
+
+Two different macros are necessary since strictly ISO C90 compilers do not allow variable length array definitions, but still it is desirable to avoid dynamic allocation.  This incomplete piece of code shows the problem: 
+
+EXAMPLE_BEGIN
+{
+  char buf[MB_LEN_MAX];
+  ssize_t len = 0;
+
+  while (! feof (fp))
+    {
+      fread (&buf[len], 1, MB_CUR_MAX - len, fp);
+      /* … process buf */
+      len -= used;
+    }
+}
+EXAMPLE_END
+
+The code in the inner loop is expected to have always enough bytes in the array buf to convert one multibyte character.  The array buf has to be sized statically since many compilers do not allow a variable size.  The fread call makes sure that MB_CUR_MAX bytes are always available in buf.  Note that it isn’t a problem if MB_CUR_MAX is not a compile-time constant. 

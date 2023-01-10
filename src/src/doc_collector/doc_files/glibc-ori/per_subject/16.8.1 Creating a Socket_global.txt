@@ -1,0 +1,2 @@
+The primitive for creating a socket is the socket function, declared in sys/socket.h.  
+For examples of how to call the socket function, see Local Socket Example, or Inet Example. 

@@ -1,0 +1,3 @@
+To create a socket in the local namespace, use the constant PF_LOCAL as the namespace argument to socket or socketpair.  This constant is defined in sys/socket.h. 
+The structure for specifying socket names in the local namespace is defined in the header file sys/un.h:  
+You should compute the length parameter for a socket address in the local namespace as the sum of the size of the sun_family component and the string length (not the allocation size!) of the file name string.  This can be done using the macro SUN_LEN: 

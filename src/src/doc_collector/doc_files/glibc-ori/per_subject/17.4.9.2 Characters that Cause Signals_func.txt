@@ -1,0 +1,38 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int VINTR
+
+
+This is the subscript for the INTR character in the special control character array.  termios.c_cc[VINTR] holds the character itself. 
+The INTR (interrupt) character raises a SIGINT signal for all processes in the foreground job associated with the terminal.  The INTR character itself is then discarded.  See Signal Handling, for more information about signals. 
+Typically, the INTR character is C-c. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int VQUIT
+
+This is the subscript for the QUIT character in the special control character array.  termios.c_cc[VQUIT] holds the character itself. 
+The QUIT character raises a SIGQUIT signal for all processes in the foreground job associated with the terminal.  The QUIT character itself is then discarded.  See Signal Handling, for more information about signals. 
+Typically, the QUIT character is C-\. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int VSUSP
+
+
+This is the subscript for the SUSP character in the special control character array.  termios.c_cc[VSUSP] holds the character itself. 
+The SUSP (suspend) character is recognized only if the implementation supports job control (see Job Control).  It causes a SIGTSTP signal to be sent to all processes in the foreground job associated with the terminal.  The SUSP character itself is then discarded. See Signal Handling, for more information about signals. 
+Typically, the SUSP character is C-z. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int VDSUSP
+
+
+This is the subscript for the DSUSP character in the special control character array.  termios.c_cc[VDSUSP] holds the character itself. 
+The DSUSP (suspend) character is recognized only if the implementation supports job control (see Job Control).  It sends a SIGTSTP signal, like the SUSP character, but not right away—only when the program tries to read it as input.  Not all systems with job control support DSUSP; only BSD-compatible systems do (including GNU/Hurd systems). 
+See Signal Handling, for more information about signals. 
+Typically, the DSUSP character is C-y. 

@@ -1,0 +1,10 @@
+Having a single level of options is sometimes not enough.  There might be too many options which have to be available or a set of options is closely related. 
+For this case some programs use suboptions.  One of the most prominent programs is certainly mount(8).  The -o option take one argument which itself is a comma separated list of options.  To ease the programming of code like this the function getsubopt is available. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int getsubopt (char **optionp, char *const *tokens, char **valuep)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The optionp parameter must be a pointer to a variable containing the address of the string to process.  When the function returns, the reference is updated to point to the next suboption or to the terminating ‘\0’ character if there are no more suboptions available. 
+The tokens parameter references an array of strings containing the known suboptions.  All strings must be ‘\0’ terminated and to mark the end a null pointer must be stored.  When getsubopt finds a possible legal suboption it compares it with all strings available in the tokens array and returns the index in the string as the indicator. 
+In case the suboption has an associated value introduced by a ‘=’ character, a pointer to the value is returned in valuep.  The string is ‘\0’ terminated.  If no argument is available valuep is set to the null pointer.  By doing this the caller can check whether a necessary value is given or whether no unexpected value is present. 
+In case the next suboption in the string is not mentioned in the tokens array the starting address of the suboption including a possible value is returned in valuep and the return value of the function is ‘-1’. 

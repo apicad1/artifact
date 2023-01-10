@@ -1,0 +1,26 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Variable: char * tzname [2]
+The array tzname contains two strings, which are the standard names of the pair of time zones (standard and Daylight Saving) that the user has selected.  tzname[0] is the name of the standard time zone (for example, "EST"), and tzname[1] is the name for the time zone when Daylight Saving Time is in use (for example, "EDT").  These correspond to the std and dst strings (respectively) from the TZ environment variable.  If Daylight Saving Time is never used, tzname[1] is the empty string. 
+The tzname array is initialized from the TZ environment variable whenever tzset, ctime, strftime, mktime, or localtime is called.  If multiple abbreviations have been used (e.g. "EWT" and "EDT" for U.S. Eastern War Time and Eastern Daylight Time), the array contains the most recent abbreviation. 
+The tzname array is required for POSIX.1 compatibility, but in GNU programs it is better to use the tm_zone member of the broken-down time structure, since tm_zone reports the correct abbreviation even when it is not the latest one. 
+Though the strings are declared as char * the user must refrain from modifying these strings.  Modifying the strings will almost certainly lead to trouble. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void tzset (void)
+Preliminary: | MT-Safe env locale | AS-Unsafe heap lock | AC-Unsafe lock mem fd | See POSIX Safety Concepts. 
+The tzset function initializes the tzname variable from the value of the TZ environment variable.  It is not usually necessary for your program to call this function, because it is called automatically when you use the other time conversion functions that depend on the time zone. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Variable: long int timezone
+This contains the difference between UTC and the latest local standard time, in seconds west of UTC.  For example, in the U.S. Eastern time zone, the value is 5*60*60.  Unlike the tm_gmtoff member of the broken-down time structure, this value is not adjusted for daylight saving, and its sign is reversed.  In GNU programs it is better to use tm_gmtoff, since it contains the correct offset even when it is not the latest one. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Variable: int daylight
+This variable has a nonzero value if Daylight Saving Time rules apply. A nonzero value does not necessarily mean that Daylight Saving Time is now in effect; it means only that Daylight Saving Time is sometimes in effect. 

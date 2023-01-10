@@ -1,0 +1,22 @@
+The symbols in this section are declared in unistd.h. 
+You will not normally use the functions in this section, because the functions described in Memory Allocation are easier to use.  Those are interfaces to a GNU C Library memory allocator that uses the functions below itself.  The functions below are simple interfaces to system calls. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int brk (void *addr)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+brk sets the high end of the calling process’ data segment to addr. 
+The address of the end of a segment is defined to be the address of the last byte in the segment plus 1. 
+The function has no effect if addr is lower than the low end of the data segment.  (This is considered success, by the way.) 
+The function fails if it would cause the data segment to overlap another segment or exceed the process’ data storage limit (see Limits on Resources). 
+The function is named for a common historical case where data storage and the stack are in the same segment.  Data storage allocation grows upward from the bottom of the segment while the stack grows downward toward it from the top of the segment and the curtain between them is called the break. 
+The return value is zero on success.  On failure, the return value is -1 and errno is set accordingly.  The following errno values are specific to this function: 
+	ENOMEM
+The request would cause the data segment to overlap another segment or exceed the process’ data storage limit. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void *sbrk (ptrdiff_t delta)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function is the same as brk except that you specify the new end of the data segment as an offset delta from the current end and on success the return value is the address of the resulting end of the data segment instead of zero. 
+This means you can use ‘sbrk(0)’ to find out what the current end of the data segment is. 

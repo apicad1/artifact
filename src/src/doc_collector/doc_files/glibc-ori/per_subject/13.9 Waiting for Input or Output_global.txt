@@ -1,0 +1,51 @@
+Sometimes a program needs to accept input on multiple input channels whenever input arrives.  For example, some workstations may have devices such as a digitizing tablet, function button box, or dial box that are connected via normal asynchronous serial interfaces; good user interface style requires responding immediately to input on any device.  Another example is a program that acts as a server to several other processes via pipes or sockets. 
+You cannot normally use read for this purpose, because this blocks the program until input is available on one particular file descriptor; input on other channels won’t wake it up.  You could set nonblocking mode and poll each file descriptor in turn, but this is very inefficient. 
+A better solution is to use the select function.  This blocks the program until input or output is ready on a specified set of file descriptors, or until a timer expires, whichever comes first.  This facility is declared in the header file sys/types.h.  
+In the case of a server socket (see Listening), we say that “input” is available when there are pending connections that could be accepted (see Accepting Connections).  accept for server sockets blocks and interacts with select just as read does for normal input. 
+The file descriptor sets for the select function are specified as fd_set objects.  Here is the description of the data type and some macros for manipulating these objects. 
+Next, here is the description of the select function itself. 
+Portability Note:  The select function is a BSD Unix feature. 
+Here is an example showing how you can use select to establish a timeout period for reading from a file descriptor.  The input_timeout function blocks the calling process until input is available on the file descriptor, or until the timeout period expires. 
+
+EXAMPLE_BEGIN
+
+
+#include <errno.h>
+#include <stdio.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/time.h>
+
+
+int
+input_timeout (int filedes, unsigned int seconds)
+{
+  fd_set set;
+  struct timeval timeout;
+
+
+  /* Initialize the file descriptor set. */
+  FD_ZERO (&set);
+  FD_SET (filedes, &set);
+
+  /* Initialize the timeout data structure. */
+  timeout.tv_sec = seconds;
+  timeout.tv_usec = 0;
+
+  /* select returns 0 if timeout, 1 if input available, -1 if error. */
+  return TEMP_FAILURE_RETRY (select (FD_SETSIZE,
+                                     &set, NULL, NULL,
+                                     &timeout));
+}
+
+
+int
+main (void)
+{
+  fprintf (stderr, "select returned %d.\n",
+           input_timeout (STDIN_FILENO, 5));
+  return 0;
+}
+EXAMPLE_END
+
+There is another example showing the use of select to multiplex input from multiple sockets in Server Example. 

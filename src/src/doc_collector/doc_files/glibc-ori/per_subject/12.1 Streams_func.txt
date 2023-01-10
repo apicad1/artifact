@@ -1,0 +1,4 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: FILE
+This is the data type used to represent stream objects.  A FILE object holds all of the internal state information about the connection to the associated file, including such things as the file position indicator and buffering information.  Each stream also has error and end-of-file status indicators that can be tested with the ferror and feof functions; see EOF and Errors. 

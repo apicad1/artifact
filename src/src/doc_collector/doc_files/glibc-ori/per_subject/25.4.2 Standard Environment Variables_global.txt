@@ -1,0 +1,1 @@
+These environment variables have standard meanings.  This doesn’t mean that they are always present in the environment; but if these variables are present, they have these meanings.  You shouldn’t try to use these environment variable names for some other purpose. 

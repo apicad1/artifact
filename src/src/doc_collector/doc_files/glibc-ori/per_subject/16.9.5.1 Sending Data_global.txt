@@ -1,0 +1,1 @@
+The send function is declared in the header file sys/socket.h.  If your flags argument is zero, you can just as well use write instead of send; see I/O Primitives.  If the socket was connected but the connection has broken, you get a SIGPIPE signal for any use of send or write (see Miscellaneous Signals). 

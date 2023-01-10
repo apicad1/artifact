@@ -1,0 +1,11 @@
+A pseudo-terminal is a special interprocess communication channel that acts like a terminal.  One end of the channel is called the master side or master pseudo-terminal device, the other side is called the slave side.  Data written to the master side is received by the slave side as if it was the result of a user typing at an ordinary terminal, and data written to the slave side is sent to the master side as if it was written on an ordinary terminal. 
+Pseudo terminals are the way programs like xterm and emacs implement their terminal emulation functionality. 
+
+TABLE_BEGIN
+ • Allocation    Allocating a pseudo terminal.
+
+ • Pseudo-Terminal Pairs    How to open both sides of a
+                            pseudo-terminal in a single operation.
+
+TABLE_END
+

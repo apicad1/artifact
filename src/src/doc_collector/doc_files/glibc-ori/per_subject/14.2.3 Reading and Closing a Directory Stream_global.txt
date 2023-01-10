@@ -1,0 +1,2 @@
+This section describes how to read directory entries from a directory stream, and how to close the stream when you are done with it.  All the symbols are declared in the header file dirent.h. 
+To support large filesystems on 32-bit machines there are LFS variants of the last two functions. 

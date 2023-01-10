@@ -1,0 +1,14 @@
+Most Unix-like operating systems keep track of logged in users by maintaining a user accounting database.  This user accounting database stores for each terminal, who has logged on, at what time, the process ID of the user’s login shell, etc., etc., but also stores information about the run level of the system, the time of the last system reboot, and possibly more. 
+The user accounting database typically lives in /etc/utmp, /var/adm/utmp or /var/run/utmp.  However, these files should never be accessed directly.  For reading information from and writing information to the user accounting database, the functions described in this section should be used. 
+
+TABLE_BEGIN
+ • Manipulating the Database    Scanning and modifying the user
+                                 accounting database.
+
+ • XPG Functions    A standardized way for doing the same thing.
+
+ • Logging In and Out    Functions from BSD that modify the user
+                                 accounting database.
+
+TABLE_END
+

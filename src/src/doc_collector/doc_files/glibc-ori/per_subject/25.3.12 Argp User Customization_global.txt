@@ -1,0 +1,7 @@
+The formatting of argp ‘--help’ output may be controlled to some extent by a program’s users, by setting the ARGP_HELP_FMT environment variable to a comma-separated list of tokens.  Whitespace is ignored: 
+
+TABLE_BEGIN
+ • Parsing of Suboptions    
+
+TABLE_END
+

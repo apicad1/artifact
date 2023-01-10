@@ -1,0 +1,90 @@
+The fmemopen and open_memstream functions allow you to do I/O to a string or memory buffer.  These facilities are declared in stdio.h.  
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: FILE * fmemopen (void *buf, size_t size, const char *opentype)
+Preliminary: | MT-Safe  | AS-Unsafe heap lock | AC-Unsafe mem lock | See POSIX Safety Concepts. 
+This function opens a stream that allows the access specified by the opentype argument, that reads from or writes to the buffer specified by the argument buf.  This array must be at least size bytes long. 
+If you specify a null pointer as the buf argument, fmemopen dynamically allocates an array size bytes long (as with malloc; see Unconstrained Allocation).  This is really only useful if you are going to write things to the buffer and then read them back in again, because you have no way of actually getting a pointer to the buffer (for this, try open_memstream, below).  The buffer is freed when the stream is closed. 
+The argument opentype is the same as in fopen (see Opening Streams).  If the opentype specifies append mode, then the initial file position is set to the first null character in the buffer.  Otherwise the initial file position is at the beginning of the buffer. 
+When a stream open for writing is flushed or closed, a null character (zero byte) is written at the end of the buffer if it fits.  You should add an extra byte to the size argument to account for this. Attempts to write more than size bytes to the buffer result in an error. 
+For a stream open for reading, null characters (zero bytes) in the buffer do not count as “end of file”.  Read operations indicate end of file only when the file position advances past size bytes.  So, if you want to read characters from a null-terminated string, you should supply the length of the string as the size argument. 
+<<<<<<<<<<<<<<<<<<<<
+
+Here is an example of using fmemopen to create a stream for reading from a string: 
+
+EXAMPLE_BEGIN
+
+
+#include <stdio.h>
+
+static char buffer[] = "foobar";
+
+int
+main (void)
+{
+  int ch;
+  FILE *stream;
+
+  stream = fmemopen (buffer, strlen (buffer), "r");
+  while ((ch = fgetc (stream)) != EOF)
+    printf ("Got %c\n", ch);
+  fclose (stream);
+
+  return 0;
+}
+EXAMPLE_END
+
+This program produces the following output: 
+
+EXAMPLE_BEGIN
+Got f
+Got o
+Got o
+Got b
+Got a
+Got r
+EXAMPLE_END
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: FILE * open_memstream (char **ptr, size_t *sizeloc)
+Preliminary: | MT-Safe  | AS-Unsafe heap | AC-Unsafe mem | See POSIX Safety Concepts. 
+This function opens a stream for writing to a buffer.  The buffer is allocated dynamically and grown as necessary, using malloc. After you’ve closed the stream, this buffer is your responsibility to clean up using free or realloc.  See Unconstrained Allocation. 
+When the stream is closed with fclose or flushed with fflush, the locations ptr and sizeloc are updated to contain the pointer to the buffer and its size.  The values thus stored remain valid only as long as no further output on the stream takes place.  If you do more output, you must flush the stream again to store new values before you use them again. 
+A null character is written at the end of the buffer.  This null character is not included in the size value stored at sizeloc. 
+You can move the stream’s file position with fseek or fseeko (see File Positioning).  Moving the file position past the end of the data already written fills the intervening space with zeroes. 
+<<<<<<<<<<<<<<<<<<<<
+
+Here is an example of using open_memstream: 
+
+EXAMPLE_BEGIN
+
+
+#include <stdio.h>
+
+int
+main (void)
+{
+  char *bp;
+  size_t size;
+  FILE *stream;
+
+  stream = open_memstream (&bp, &size);
+  fprintf (stream, "hello");
+  fflush (stream);
+  printf ("buf = `%s', size = %zu\n", bp, size);
+  fprintf (stream, ", world");
+  fclose (stream);
+  printf ("buf = `%s', size = %zu\n", bp, size);
+
+  return 0;
+}
+EXAMPLE_END
+
+This program produces the following output: 
+
+EXAMPLE_BEGIN
+buf = `hello', size = 5
+buf = `hello, world', size = 12
+EXAMPLE_END
+

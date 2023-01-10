@@ -1,0 +1,104 @@
+ISO C99 defines functions to query and manipulate the floating-point status word.  You can use these functions to check for untrapped exceptions when it’s convenient, rather than worrying about them in the middle of a calculation. 
+These constants represent the various IEEE 754 exceptions.  Not all FPUs report all the different exceptions.  Each constant is defined if and only if the FPU you are compiling for supports that exception, so you can test for FPU support with ‘#ifdef’.  They are defined in fenv.h. 
+
+>>>>>>>>>>>>>>>>>>>>
+- FE_INEXACT  
+The inexact exception. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- FE_DIVBYZERO  
+The divide by zero exception. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- FE_UNDERFLOW  
+The underflow exception. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- FE_OVERFLOW  
+The overflow exception. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- FE_INVALID  
+The invalid exception. 
+<<<<<<<<<<<<<<<<<<<<
+
+The macro FE_ALL_EXCEPT is the bitwise OR of all exception macros which are supported by the FP implementation. 
+These functions allow you to clear exception flags, test for exceptions, and save and restore the set of exceptions flagged. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int feclearexcept (int excepts)
+Preliminary: | MT-Safe  | AS-Safe !posix | AC-Safe !posix | See POSIX Safety Concepts. 
+This function clears all of the supported exception flags indicated by excepts. 
+The function returns zero in case the operation was successful, a non-zero value otherwise. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int feraiseexcept (int excepts)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function raises the supported exceptions indicated by excepts.  If more than one exception bit in excepts is set the order in which the exceptions are raised is undefined except that overflow (FE_OVERFLOW) or underflow (FE_UNDERFLOW) are raised before inexact (FE_INEXACT).  Whether for overflow or underflow the inexact exception is also raised is also implementation dependent. 
+The function returns zero in case the operation was successful, a non-zero value otherwise. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int fesetexcept (int excepts)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function sets the supported exception flags indicated by excepts, like feraiseexcept, but without causing enabled traps to be taken.  fesetexcept is from TS 18661-1:2014. 
+The function returns zero in case the operation was successful, a non-zero value otherwise. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int fetestexcept (int excepts)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+Test whether the exception flags indicated by the parameter except are currently set.  If any of them are, a nonzero value is returned which specifies which exceptions are set.  Otherwise the result is zero. 
+<<<<<<<<<<<<<<<<<<<<
+
+To understand these functions, imagine that the status word is an integer variable named status.  feclearexcept is then equivalent to ‘status &= ~excepts’ and fetestexcept is equivalent to ‘(status & excepts)’.  The actual implementation may be very different, of course. 
+Exception flags are only cleared when the program explicitly requests it, by calling feclearexcept.  If you want to check for exceptions from a set of calculations, you should clear all the flags first.  Here is a simple example of the way to use fetestexcept: 
+
+EXAMPLE_BEGIN
+{
+  double f;
+  int raised;
+  feclearexcept (FE_ALL_EXCEPT);
+  f = compute ();
+  raised = fetestexcept (FE_OVERFLOW | FE_INVALID);
+  if (raised & FE_OVERFLOW) { /* … */ }
+  if (raised & FE_INVALID) { /* … */ }
+  /* … */
+}
+EXAMPLE_END
+
+You cannot explicitly set bits in the status word.  You can, however, save the entire status word and restore it later.  This is done with the following functions: 
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int fegetexceptflag (fexcept_t *flagp, int excepts)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function stores in the variable pointed to by flagp an implementation-defined value representing the current setting of the exception flags indicated by excepts. 
+The function returns zero in case the operation was successful, a non-zero value otherwise. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int fesetexceptflag (const fexcept_t *flagp, int excepts)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function restores the flags for the exceptions indicated by excepts to the values stored in the variable pointed to by flagp. 
+The function returns zero in case the operation was successful, a non-zero value otherwise. 
+<<<<<<<<<<<<<<<<<<<<
+
+Note that the value stored in fexcept_t bears no resemblance to the bit mask returned by fetestexcept.  The type may not even be an integer.  Do not attempt to modify an fexcept_t variable. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int fetestexceptflag (const fexcept_t *flagp, int excepts)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+Test whether the exception flags indicated by the parameter excepts are set in the variable pointed to by flagp.  If any of them are, a nonzero value is returned which specifies which exceptions are set.  Otherwise the result is zero. fetestexceptflag is from TS 18661-1:2014. 

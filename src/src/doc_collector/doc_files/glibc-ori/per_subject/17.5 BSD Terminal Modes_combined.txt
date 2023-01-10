@@ -1,0 +1,32 @@
+The usual way to get and set terminal modes is with the functions described in Terminal Modes.  However, on some systems you can use the BSD-derived functions in this section to do some of the same things.  On many systems, these functions do not exist.  Even with the GNU C Library, the functions simply fail with errno = ENOSYS with many kernels, including Linux. 
+The symbols used in this section are declared in sgtty.h. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: struct sgttyb
+This structure is an input or output parameter list for gtty and stty. 
+	char sg_ispeed
+Line speed for input 
+	char sg_ospeed
+Line speed for output 
+	char sg_erase
+Erase character 
+	char sg_kill
+Kill character 
+	int sg_flags
+Various flags 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int gtty (int filedes, struct sgttyb *attributes)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function gets the attributes of a terminal. 
+gtty sets *attributes to describe the terminal attributes of the terminal which is open with file descriptor filedes. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int stty (int filedes, const struct sgttyb *attributes)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function sets the attributes of a terminal. 
+stty sets the terminal attributes of the terminal which is open with file descriptor filedes to those described by *attributes. 

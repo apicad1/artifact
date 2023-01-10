@@ -1,0 +1,1 @@
+Here are the functions for examining and modifying socket options. They are declared in sys/socket.h. 

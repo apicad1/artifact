@@ -1,0 +1,73 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: double fmod (double numerator, double denominator)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: float fmodf (float numerator, float denominator)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: long double fmodl (long double numerator, long double denominator)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: _FloatN fmodfN (_FloatN numerator, _FloatN denominator)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: _FloatNx fmodfNx (_FloatNx numerator, _FloatNx denominator)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+These functions compute the remainder from the division of numerator by denominator.  Specifically, the return value is numerator - n * denominator, where n is the quotient of numerator divided by denominator, rounded towards zero to an integer.  Thus, fmod (6.5, 2.3) returns 1.9, which is 6.5 minus 4.6. 
+The result has the same sign as the numerator and has magnitude less than the magnitude of the denominator. 
+If denominator is zero, fmod signals a domain error. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: double remainder (double numerator, double denominator)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: float remainderf (float numerator, float denominator)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: long double remainderl (long double numerator, long double denominator)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: _FloatN remainderfN (_FloatN numerator, _FloatN denominator)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: _FloatNx remainderfNx (_FloatNx numerator, _FloatNx denominator)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+These functions are like fmod except that they round the internal quotient n to the nearest integer instead of towards zero to an integer.  For example, remainder (6.5, 2.3) returns -0.4, which is 6.5 minus 6.9. 
+The absolute value of the result is less than or equal to half the absolute value of the denominator.  The difference between fmod (numerator, denominator) and remainder (numerator, denominator) is always either denominator, minus denominator, or zero. 
+If denominator is zero, remainder signals a domain error. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: double drem (double numerator, double denominator)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: float dremf (float numerator, float denominator)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: long double dreml (long double numerator, long double denominator)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function is another name for remainder. 

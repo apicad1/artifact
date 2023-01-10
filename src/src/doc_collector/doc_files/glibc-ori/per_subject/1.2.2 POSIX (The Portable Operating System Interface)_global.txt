@@ -1,0 +1,17 @@
+The GNU C Library is also compatible with the ISO POSIX family of standards, known more formally as the Portable Operating System Interface for Computer Environments (ISO/IEC 9945).  They were also published as ANSI/IEEE Std 1003.  POSIX is derived mostly from various versions of the Unix operating system. 
+The library facilities specified by the POSIX standards are a superset of those required by ISO C; POSIX specifies additional features for ISO C functions, as well as specifying new additional functions.  In general, the additional requirements and functionality defined by the POSIX standards are aimed at providing lower-level support for a particular kind of operating system environment, rather than general programming language support which can run in many diverse operating system environments. 
+The GNU C Library implements all of the functions specified in ISO/IEC 9945-1:1996, the POSIX System Application Program Interface, commonly referred to as POSIX.1.  The primary extensions to the ISO C facilities specified by this standard include file system interface primitives (see File System Interface), device-specific terminal control functions (see Low-Level Terminal Interface), and process control functions (see Processes). 
+Some facilities from ISO/IEC 9945-2:1993, the POSIX Shell and Utilities standard (POSIX.2) are also implemented in the GNU C Library. These include utilities for dealing with regular expressions and other pattern matching facilities (see Pattern Matching). 
+
+TABLE_BEGIN
+ • POSIX Safety Concepts    Safety concepts from POSIX.
+
+ • Unsafe Features    Features that make functions unsafe.
+
+ • Conditionally Safe Features    Features that make functions unsafe
+                                 in the absence of workarounds.
+
+ • Other Safety Remarks    Additional safety features and remarks.
+
+TABLE_END
+

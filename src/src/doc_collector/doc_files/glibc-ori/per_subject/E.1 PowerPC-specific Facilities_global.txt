@@ -1,0 +1,3 @@
+Facilities specific to PowerPC that are not specific to a particular operating system are declared in sys/platform/ppc.h. 
+The following functions provide hints about the usage of resources that are shared with other processors.  They can be used, for example, if a program waiting on a lock intends to divert the shared resources to be used by other processors.  More information is available in Power ISA 2.06b - Book II - Section 3.2. 
+Power ISA 2.07 extends the priorities that can be set to the Program Priority Register (PPR).  The following functions implement the new priority levels: very low and medium high. 

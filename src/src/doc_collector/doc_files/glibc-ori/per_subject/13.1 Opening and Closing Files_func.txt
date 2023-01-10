@@ -1,0 +1,115 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int open (const char *filename, int flags[, mode_t mode])
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe fd | See POSIX Safety Concepts. 
+The open function creates and returns a new file descriptor for the file named by filename.  Initially, the file position indicator for the file is at the beginning of the file.  The argument mode (see Permission Bits) is used only when a file is created, but it doesn’t hurt to supply the argument in any case. 
+The flags argument controls how the file is to be opened.  This is a bit mask; you create the value by the bitwise OR of the appropriate parameters (using the ‘|’ operator in C). See File Status Flags, for the parameters available. 
+The normal return value from open is a non-negative integer file descriptor.  In the case of an error, a value of -1 is returned instead.  In addition to the usual file name errors (see File Name Errors), the following errno error conditions are defined for this function: 
+	EACCES
+The file exists but is not readable/writable as requested by the flags argument, or the file does not exist and the directory is unwritable so it cannot be created.  
+	EEXIST
+Both O_CREAT and O_EXCL are set, and the named file already exists.  
+	EINTR
+The open operation was interrupted by a signal. See Interrupted Primitives.  
+	EISDIR
+The flags argument specified write access, and the file is a directory.  
+	EMFILE
+The process has too many files open. The maximum number of file descriptors is controlled by the RLIMIT_NOFILE resource limit; see Limits on Resources.  
+	ENFILE
+The entire system, or perhaps the file system which contains the directory, cannot support any additional open files at the moment. (This problem cannot happen on GNU/Hurd systems.)  
+	ENOENT
+The named file does not exist, and O_CREAT is not specified.  
+	ENOSPC
+The directory or file system that would contain the new file cannot be extended, because there is no disk space left.  
+	ENXIO
+O_NONBLOCK and O_WRONLY are both set in the flags argument, the file named by filename is a FIFO (see Pipes and FIFOs), and no process has the file open for reading.  
+	EROFS
+The file resides on a read-only file system and any of O_WRONLY, O_RDWR, and O_TRUNC are set in the flags argument, or O_CREAT is set and the file does not already exist. 
+If on a 32 bit machine the sources are translated with _FILE_OFFSET_BITS == 64 the function open returns a file descriptor opened in the large file mode which enables the file handling functions to use files up to 2^63 bytes in size and offset from -2^63 to 2^63.  This happens transparently for the user since all of the low-level file handling functions are equally replaced. 
+This function is a cancellation point in multi-threaded programs.  This is a problem if the thread allocates some resources (like memory, file descriptors, semaphores or whatever) at the time open is called.  If the thread gets canceled these resources stay allocated until the program ends.  To avoid this calls to open should be protected using cancellation handlers. 
+The open function is the underlying primitive for the fopen and freopen functions, that create streams. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int open64 (const char *filename, int flags[, mode_t mode])
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe fd | See POSIX Safety Concepts. 
+This function is similar to open.  It returns a file descriptor which can be used to access the file named by filename.  The only difference is that on 32 bit systems the file is opened in the large file mode.  I.e., file length and file offsets can exceed 31 bits. 
+When the sources are translated with _FILE_OFFSET_BITS == 64 this function is actually available under the name open.  I.e., the new, extended API using 64 bit file sizes and offsets transparently replaces the old API. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Obsolete function: int creat (const char *filename, mode_t mode)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe fd | See POSIX Safety Concepts. 
+This function is obsolete.  The call: 
+
+EXAMPLE_BEGIN
+creat (filename, mode)
+EXAMPLE_END
+
+is equivalent to: 
+
+EXAMPLE_BEGIN
+open (filename, O_WRONLY | O_CREAT | O_TRUNC, mode)
+EXAMPLE_END
+
+If on a 32 bit machine the sources are translated with _FILE_OFFSET_BITS == 64 the function creat returns a file descriptor opened in the large file mode which enables the file handling functions to use files up to 2^63 in size and offset from -2^63 to 2^63.  This happens transparently for the user since all of the low-level file handling functions are equally replaced. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Obsolete function: int creat64 (const char *filename, mode_t mode)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe fd | See POSIX Safety Concepts. 
+This function is similar to creat.  It returns a file descriptor which can be used to access the file named by filename.  The only difference is that on 32 bit systems the file is opened in the large file mode.  I.e., file length and file offsets can exceed 31 bits. 
+To use this file descriptor one must not use the normal operations but instead the counterparts named *64, e.g., read64. 
+When the sources are translated with _FILE_OFFSET_BITS == 64 this function is actually available under the name open.  I.e., the new, extended API using 64 bit file sizes and offsets transparently replaces the old API. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int close (int filedes)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe fd | See POSIX Safety Concepts. 
+The function close closes the file descriptor filedes. Closing a file has the following consequences: 
+  The file descriptor is deallocated.   Any record locks owned by the process on the file are unlocked.   When all file descriptors associated with a pipe or FIFO have been closed, any unread data is discarded. 
+This function is a cancellation point in multi-threaded programs.  This is a problem if the thread allocates some resources (like memory, file descriptors, semaphores or whatever) at the time close is called.  If the thread gets canceled these resources stay allocated until the program ends.  To avoid this, calls to close should be protected using cancellation handlers. 
+The normal return value from close is 0; a value of -1 is returned in case of failure.  The following errno error conditions are defined for this function: 
+	EBADF
+The filedes argument is not a valid file descriptor.  
+	EINTR
+The close call was interrupted by a signal. See Interrupted Primitives. Here is an example of how to handle EINTR properly:   TEMP_FAILURE_RETRY (close (desc));   
+	ENOSPC
+	EIO
+	EDQUOT
+When the file is accessed by NFS, these errors from write can sometimes not be detected until close.  See I/O Primitives, for details on their meaning. 
+Please note that there is no separate close64 function. This is not necessary since this function does not determine nor depend on the mode of the file.  The kernel which performs the close operation knows which mode the descriptor is used for and can handle this situation. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int close_range (unsigned int lowfd, unsigned int maxfd, int flags)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe fd | See POSIX Safety Concepts. 
+The function close_range closes the file descriptor from lowfd to maxfd (inclusive).  This function is similar to call close in specified file descriptor range depending on the flags. 
+This is function is only supported on recent Linux versions and the GNU C Library does not provide any fallback (the application will need to handle possible ENOSYS). 
+The flags add options on how the files are closes.  Linux currently supports: 
+	CLOSE_RANGE_UNSHARE  
+Unshare the file descriptor table before closing file descriptors.  
+	CLOSE_RANGE_CLOEXEC  
+Set the FD_CLOEXEC bit instead of closing the file descriptor. 
+The normal return value from close_range is 0; a value of -1 is returned in case of failure.  The following errno error conditions are defined for this function: 
+	EINVAL
+The lowfd value is larger than maxfd or an unsupported flags is used.  
+	ENOMEM
+Either there is not enough memory for the operation, or the process is out of address space.  It can only happnes when CLOSE_RANGE_UNSHARED flag is used.  
+	EMFILE
+The process has too many files open and it can only happens when CLOSE_RANGE_UNSHARED flag is used. The maximum number of file descriptors is controlled by the RLIMIT_NOFILE resource limit; see Limits on Resources.  
+	ENOSYS
+The kernel does not implement the required functionality. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void closefrom (int lowfd)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe fd | See POSIX Safety Concepts. 
+The function closefrom closes all file descriptors larger than or equal to lowfd then lowfd.  This function is similar to calling close for all open file descriptors not less than lowfd. 
+Already closed file descriptors are ignored. 

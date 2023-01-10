@@ -1,0 +1,11 @@
+Sometimes a subexpression matches a substring of no characters.  This happens when ‘f\(o*\)’ matches the string ‘fum’.  (It really matches just the ‘f’.)  In this case, both of the offsets identify the point in the string where the null substring was found.  In this example, the offsets are both 1. 
+Sometimes the entire regular expression can match without using some of its subexpressions at all—for example, when ‘ba\(na\)*’ matches the string ‘ba’, the parenthetical subexpression is not used.  When this happens, regexec stores -1 in both fields of the element for that subexpression. 
+Sometimes matching the entire regular expression can match a particular subexpression more than once—for example, when ‘ba\(na\)*’ matches the string ‘bananana’, the parenthetical subexpression matches three times.  When this happens, regexec usually stores the offsets of the last part of the string that matched the subexpression.  In the case of ‘bananana’, these offsets are 6 and 8. 
+But the last match is not always the one that is chosen.  It’s more accurate to say that the last opportunity to match is the one that takes precedence.  What this means is that when one subexpression appears within another, then the results reported for the inner subexpression reflect whatever happened on the last match of the outer subexpression.  For an example, consider ‘\(ba\(na\)*s \)*’ matching the string ‘bananas bas ’.  The last time the inner expression actually matches is near the end of the first word.  But it is considered again in the second word, and fails to match there. regexec reports nonuse of the “na” subexpression. 
+Another place where this rule applies is when the regular expression 
+
+EXAMPLE_BEGIN
+\(ba\(na\)*s \|nefer\(ti\)* \)*
+EXAMPLE_END
+
+matches ‘bananas nefertiti’.  The “na” subexpression does match in the first word, but it doesn’t match in the second word because the other alternative is used there.  Once again, the second repetition of the outer subexpression overrides the first, and within that second repetition, the “na” subexpression is not used.  So regexec reports nonuse of the “na” subexpression. 

@@ -1,0 +1,23 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- key
+For each option that is parsed, parser is called with a value of key from that option’s key field in the option vector.  See Argp Option Vectors.  parser is also called at other times with special reserved keys, such as ARGP_KEY_ARG for non-option arguments.  See Argp Special Keys. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- arg
+If key is an option, arg is its given value.  This defaults to zero if no value is specified.  Only options that have a non-zero arg field can ever have a value.  These must always have a value unless the OPTION_ARG_OPTIONAL flag is specified.  If the input being parsed specifies a value for an option that doesn’t allow one, an error results before parser ever gets called. 
+If key is ARGP_KEY_ARG, arg is a non-option argument.  Other special keys always have a zero arg. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- state
+state points to a struct argp_state, containing useful information about the current parsing state for use by parser.  See Argp Parsing State. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int ARGP_ERR_UNKNOWN
+Argp parser functions should return ARGP_ERR_UNKNOWN for any key value they do not recognize, or for non-option arguments (key == ARGP_KEY_ARG) that they are not equipped to handle. 

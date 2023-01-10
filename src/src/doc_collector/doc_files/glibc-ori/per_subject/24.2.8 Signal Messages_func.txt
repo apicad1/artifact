@@ -1,0 +1,36 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: char * strsignal (int signum)
+Preliminary: | MT-Unsafe race:strsignal locale | AS-Unsafe init i18n corrupt heap | AC-Unsafe init corrupt mem | See POSIX Safety Concepts. 
+This function returns a pointer to a statically-allocated string containing a message describing the signal signum.  You should not modify the contents of this string; and, since it can be rewritten on subsequent calls, you should save a copy of it if you need to reference it later. 
+
+This function is a GNU extension, declared in the header file string.h. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void psignal (int signum, const char *message)
+Preliminary: | MT-Safe locale | AS-Unsafe corrupt i18n heap | AC-Unsafe lock corrupt mem | See POSIX Safety Concepts. 
+This function prints a message describing the signal signum to the standard error output stream stderr; see Standard Streams. 
+If you call psignal with a message that is either a null pointer or an empty string, psignal just prints the message corresponding to signum, adding a trailing newline. 
+If you supply a non-null message argument, then psignal prefixes its output with this string.  It adds a colon and a space character to separate the message from the string corresponding to signum. 
+
+This function is a BSD feature, declared in the header file signal.h. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: const char * sigdescr_np (int signum)
+| MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function returns the message describing the signal signum or NULL for invalid signal number (e.g "Hangup" for SIGHUP). Different than strsignal the returned description is not translated. The message points to a static storage whose lifetime is the whole lifetime of the program. 
+
+This function is a GNU extension, declared in the header file string.h. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: const char * sigabbrev_np (int signum)
+| MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function returns the abbreviation describing the signal signum or NULL for invalid signal number.  The message points to a static storage whose lifetime is the whole lifetime of the program. 
+
+This function is a GNU extension, declared in the header file string.h. 

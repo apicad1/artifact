@@ -1,0 +1,32 @@
+This section describes functions for performing character-oriented input.  These narrow stream functions are declared in the header file stdio.h and the wide character functions are declared in wchar.h.   
+These functions return an int or wint_t value (for narrow and wide stream functions respectively) that is either a character of input, or the special value EOF/WEOF (usually -1).  For the narrow stream functions it is important to store the result of these functions in a variable of type int instead of char, even when you plan to use it only as a character.  Storing EOF in a char variable truncates its value to the size of a character, so that it is no longer distinguishable from the valid character ‘(char) -1’.  So always use an int for the result of getc and friends, and check for EOF after the call; once you’ve verified that the result is not EOF, you can be sure that it will fit in a ‘char’ variable without loss of information. 
+Here is an example of a function that does input using fgetc.  It would work just as well using getc instead, or using getchar () instead of fgetc (stdin).  The code would also work the same for the wide character stream functions. 
+
+EXAMPLE_BEGIN
+int
+y_or_n_p (const char *question)
+{
+  fputs (question, stdout);
+  while (1)
+    {
+      int c, answer;
+      /* Write a space to separate answer from question. */
+      fputc (' ', stdout);
+      /* Read the first character of the line.
+	 This should be the answer character, but might not be. */
+      c = tolower (fgetc (stdin));
+      answer = c;
+      /* Discard rest of input line. */
+      while (c != '\n' && c != EOF)
+	c = fgetc (stdin);
+      /* Obey the answer if it was valid. */
+      if (answer == 'y')
+	return 1;
+      if (answer == 'n')
+	return 0;
+      /* Answer was invalid: ask for valid answer. */
+      fputs ("Please answer y or n:", stdout);
+    }
+}
+EXAMPLE_END
+

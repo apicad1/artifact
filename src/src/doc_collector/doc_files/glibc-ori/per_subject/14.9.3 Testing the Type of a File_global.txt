@@ -1,0 +1,18 @@
+The file mode, stored in the st_mode field of the file attributes, contains two kinds of information: the file type code, and the access permission bits.  This section discusses only the type code, which you can use to tell whether the file is a directory, socket, symbolic link, and so on.  For details about access permissions see Permission Bits. 
+There are two ways you can access the file type information in a file mode.  Firstly, for each file type there is a predicate macro which examines a given file mode and returns whether it is of that type or not.  Secondly, you can mask out the rest of the file mode to leave just the file type code, and compare this against constants for each of the supported file types. 
+All of the symbols listed in this section are defined in the header file sys/stat.h.  
+The following predicate macros test the type of a file, given the value m which is the st_mode field returned by stat on that file: 
+An alternate non-POSIX method of testing the file type is supported for compatibility with BSD.  The mode can be bitwise AND-ed with S_IFMT to extract the file type code, and compared to the appropriate constant.  For example, 
+
+EXAMPLE_BEGIN
+S_ISCHR (mode)
+EXAMPLE_END
+
+is equivalent to: 
+
+EXAMPLE_BEGIN
+((mode & S_IFMT) == S_IFCHR)
+EXAMPLE_END
+
+These are the symbolic names for the different file type codes: 
+The POSIX.1b standard introduced a few more objects which possibly can be implemented as objects in the filesystem.  These are message queues, semaphores, and shared memory objects.  To allow differentiating these objects from other files the POSIX standard introduced three new test macros.  But unlike the other macros they do not take the value of the st_mode field as the parameter.  Instead they expect a pointer to the whole struct stat structure. 

@@ -1,0 +1,29 @@
+This chapter contains information about functions for performing mathematical computations, such as trigonometric functions.  Most of these functions have prototypes declared in the header file math.h.  The complex-valued functions are defined in complex.h.   
+All mathematical functions which take a floating-point argument have three variants, one each for double, float, and long double arguments.  The double versions are mostly defined in ISO C89.  The float and long double versions are from the numeric extensions to C included in ISO C99. 
+Which of the three versions of a function should be used depends on the situation.  For most calculations, the float functions are the fastest.  On the other hand, the long double functions have the highest precision.  double is somewhere in between.  It is usually wise to pick the narrowest type that can accommodate your data. Not all machines have a distinct long double type; it may be the same as double. 
+The GNU C Library also provides _FloatN and _FloatNx types.  These types are defined in ISO/IEC TS 18661-3, which extends ISO C and defines floating-point types that are not machine-dependent.  When such a type, such as _Float128, is supported by the GNU C Library, extra variants for most of the mathematical functions provided for double, float, and long double are also provided for the supported type.  Throughout this manual, the _FloatN and _FloatNx variants of these functions are described along with the double, float, and long double variants and they come from ISO/IEC TS 18661-3, unless explicitly stated otherwise. 
+Support for _FloatN or _FloatNx types is provided for _Float32, _Float64 and _Float32x on all platforms. It is also provided for _Float128 and _Float64x on powerpc64le (PowerPC 64-bits little-endian), x86_64, x86, ia64, aarch64, alpha, mips64, riscv, s390 and sparc. 
+
+TABLE_BEGIN
+ • Mathematical Constants    Precise numeric values for often-used
+                                 constants.
+
+ • Trig Functions    Sine, cosine, tangent, and friends.
+
+ • Inverse Trig Functions    Arcsine, arccosine, etc.
+
+ • Exponents and Logarithms    Also pow and sqrt.
+
+ • Hyperbolic Functions    sinh, cosh, tanh, etc.
+
+ • Special Functions    Bessel, gamma, erf.
+
+ • Errors in Math Functions    Known Maximum Errors in Math Functions.
+
+ • Pseudo-Random Numbers    Functions for generating pseudo-random
+				 numbers.
+
+ • FP Function Optimizations    Fast code or small code.
+
+TABLE_END
+

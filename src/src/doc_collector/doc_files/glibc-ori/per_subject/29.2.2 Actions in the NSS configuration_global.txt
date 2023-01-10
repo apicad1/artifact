@@ -1,0 +1,31 @@
+The second item in the specification gives the user much finer control on the lookup process.  Action items are placed between two service names and are written within brackets.  The general form is 
+where 
+
+EXAMPLE_BEGIN
+status ⇒ success | notfound | unavail | tryagain
+action ⇒ return | continue
+EXAMPLE_END
+
+The case of the keywords is insignificant.  The status values are the results of a call to a lookup function of a specific service.  They mean: 
+The action values mean: 
+If we have a line like 
+
+EXAMPLE_BEGIN
+ethers: nisplus [NOTFOUND=return] db files
+EXAMPLE_END
+
+this is equivalent to 
+
+EXAMPLE_BEGIN
+ethers: nisplus [SUCCESS=return NOTFOUND=return UNAVAIL=continue
+                 TRYAGAIN=continue]
+        db      [SUCCESS=return NOTFOUND=continue UNAVAIL=continue
+                 TRYAGAIN=continue]
+        files
+EXAMPLE_END
+
+(except that it would have to be written on one line).  The default value for the actions are normally what you want, and only need to be changed in exceptional cases. 
+If the optional ! is placed before the status this means the following action is used for all statuses but status itself. I.e., ! is negation as in the C language (and others). 
+Before we explain the exception which makes this action item necessary one more remark: obviously it makes no sense to add another action item after the files service.  Since there is no other service following the action always is return. 
+Now, why is this [NOTFOUND=return] action useful?  To understand this we should know that the nisplus service is often complete; i.e., if an entry is not available in the NIS+ tables it is not available anywhere else.  This is what is expressed by this action item: it is useless to examine further services since they will not give us a result. 
+The situation would be different if the NIS+ service is not available because the machine is booting.  In this case the return value of the lookup function is not notfound but instead unavail.  And as you can see in the complete form above: in this situation the db and files services are used.  Neat, isn’t it?  The system administrator need not pay special care for the time the system is not completely ready to work (while booting or shutdown or network problems). 

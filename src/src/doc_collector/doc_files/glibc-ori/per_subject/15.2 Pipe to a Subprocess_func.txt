@@ -1,0 +1,15 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: FILE * popen (const char *command, const char *mode)
+Preliminary: | MT-Safe  | AS-Unsafe heap corrupt | AC-Unsafe corrupt lock fd mem | See POSIX Safety Concepts. 
+The popen function is closely related to the system function; see Running a Command.  It executes the shell command command as a subprocess.  However, instead of waiting for the command to complete, it creates a pipe to the subprocess and returns a stream that corresponds to that pipe. 
+If you specify a mode argument of "r", you can read from the stream to retrieve data from the standard output channel of the subprocess. The subprocess inherits its standard input channel from the parent process. 
+Similarly, if you specify a mode argument of "w", you can write to the stream to send data to the standard input channel of the subprocess.  The subprocess inherits its standard output channel from the parent process. 
+In the event of an error popen returns a null pointer.  This might happen if the pipe or stream cannot be created, if the subprocess cannot be forked, or if the program cannot be executed. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int pclose (FILE *stream)
+Preliminary: | MT-Safe  | AS-Unsafe heap plugin corrupt lock | AC-Unsafe corrupt lock fd mem | See POSIX Safety Concepts. 
+The pclose function is used to close a stream created by popen. It waits for the child process to terminate and returns its status value, as for the system function. 

@@ -1,0 +1,16 @@
+The terminal line speed tells the computer how fast to read and write data on the terminal. 
+If the terminal is connected to a real serial line, the terminal speed you specify actually controls the line—if it doesn’t match the terminal’s own idea of the speed, communication does not work.  Real serial ports accept only certain standard speeds.  Also, particular hardware may not support even all the standard speeds.  Specifying a speed of zero hangs up a dialup connection and turns off modem control signals. 
+If the terminal is not a real serial line (for example, if it is a network connection), then the line speed won’t really affect data transmission speed, but some programs will use it to determine the amount of padding needed.  It’s best to specify a line speed value that matches the actual speed of the actual terminal, but you can safely experiment with different values to vary the amount of padding. 
+There are actually two line speeds for each terminal, one for input and one for output.  You can set them independently, but most often terminals use the same speed for both directions. 
+The speed values are stored in the struct termios structure, but don’t try to access them in the struct termios structure directly.  Instead, you should use the following functions to read and store them: 
+The functions cfsetospeed and cfsetispeed report errors only for speed values that the system simply cannot handle.  If you specify a speed value that is basically acceptable, then those functions will succeed.  But they do not check that a particular hardware device can actually support the specified speeds—in fact, they don’t know which device you plan to set the speed for.  If you use tcsetattr to set the speed of a particular device to a value that it cannot handle, tcsetattr returns -1. 
+Portability note: In the GNU C Library, the functions above accept speeds measured in bits per second as input, and return speed values measured in bits per second.  Other libraries require speeds to be indicated by special codes.  For POSIX.1 portability, you must use one of the following symbols to represent the speed; their precise numeric values are system-dependent, but each name has a fixed meaning: B110 stands for 110 bps, B300 for 300 bps, and so on. There is no portable way to represent any speed but these, but these are the only speeds that typical serial lines can support. 
+
+EXAMPLE_BEGIN
+B0  B50  B75  B110  B134  B150  B200
+B300  B600  B1200  B1800  B2400  B4800
+B9600  B19200  B38400  B57600  B115200
+B230400  B460800
+EXAMPLE_END
+
+BSD defines two additional speed symbols as aliases: EXTA is an alias for B19200 and EXTB is an alias for B38400. These aliases are obsolete. 

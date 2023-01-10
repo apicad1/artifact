@@ -1,0 +1,36 @@
+An IPv4 Internet host address is a number containing four bytes of data. Historically these are divided into two parts, a network number and a local network address number within that network.  In the mid-1990s classless addresses were introduced which changed this behavior.  Since some functions implicitly expect the old definitions, we first describe the class-based network and will then describe classless addresses.  IPv6 uses only classless addresses and therefore the following paragraphs don’t apply. 
+The class-based IPv4 network number consists of the first one, two or three bytes; the rest of the bytes are the local address. 
+IPv4 network numbers are registered with the Network Information Center (NIC), and are divided into three classes—A, B and C.  The local network address numbers of individual machines are registered with the administrator of the particular network. 
+Class A networks have single-byte numbers in the range 0 to 127.  There are only a small number of Class A networks, but they can each support a very large number of hosts.  Medium-sized Class B networks have two-byte network numbers, with the first byte in the range 128 to 191.  Class C networks are the smallest; they have three-byte network numbers, with the first byte in the range 192-255.  Thus, the first 1, 2, or 3 bytes of an Internet address specify a network.  The remaining bytes of the Internet address specify the address within that network. 
+The Class A network 0 is reserved for broadcast to all networks.  In addition, the host number 0 within each network is reserved for broadcast to all hosts in that network.  These uses are obsolete now but for compatibility reasons you shouldn’t use network 0 and host number 0. 
+The Class A network 127 is reserved for loopback; you can always use the Internet address ‘127.0.0.1’ to refer to the host machine. 
+Since a single machine can be a member of multiple networks, it can have multiple Internet host addresses.  However, there is never supposed to be more than one machine with the same host address. 
+There are four forms of the standard numbers-and-dots notation for Internet addresses: 
+
+>>>>>>>>>>>>>>>>>>>>
+- a.b.c.d
+This specifies all four bytes of the address individually and is the commonly used representation. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- a.b.c
+The last part of the address, c, is interpreted as a 2-byte quantity. This is useful for specifying host addresses in a Class B network with network address number a.b. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- a.b
+The last part of the address, b, is interpreted as a 3-byte quantity. This is useful for specifying host addresses in a Class A network with network address number a. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- a
+If only one part is given, this corresponds directly to the host address number. 
+<<<<<<<<<<<<<<<<<<<<
+
+Within each part of the address, the usual C conventions for specifying the radix apply.  In other words, a leading ‘0x’ or ‘0X’ implies hexadecimal radix; a leading ‘0’ implies octal; and otherwise decimal radix is assumed. 
+IPv4 addresses (and IPv6 addresses also) are now considered classless; the distinction between classes A, B and C can be ignored.  Instead an IPv4 host address consists of a 32-bit address and a 32-bit mask.  The mask contains set bits for the network part and cleared bits for the host part.  The network part is contiguous from the left, with the remaining bits representing the host.  As a consequence, the netmask can simply be specified as the number of set bits.  Classes A, B and C are just special cases of this general rule.  For example, class A addresses have a netmask of ‘255.0.0.0’ or a prefix length of 8. 
+Classless IPv4 network addresses are written in numbers-and-dots notation with the prefix length appended and a slash as separator.  For example the class A network 10 is written as ‘10.0.0.0/8’. 
+IPv6 addresses contain 128 bits (IPv4 has 32 bits) of data.  A host address is usually written as eight 16-bit hexadecimal numbers that are separated by colons.  Two colons are used to abbreviate strings of consecutive zeros.  For example, the IPv6 loopback address ‘0:0:0:0:0:0:0:1’ can just be written as ‘::1’. 

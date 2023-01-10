@@ -1,0 +1,1 @@
+These are the bit flags that you can use in the cflags operand when compiling a regular expression with regcomp. 

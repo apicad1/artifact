@@ -1,0 +1,34 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int strcoll (const char *s1, const char *s2)
+Preliminary: | MT-Safe locale | AS-Unsafe heap | AC-Unsafe mem | See POSIX Safety Concepts. 
+The strcoll function is similar to strcmp but uses the collating sequence of the current locale for collation (the LC_COLLATE locale).  The arguments are multibyte strings. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int wcscoll (const wchar_t *ws1, const wchar_t *ws2)
+Preliminary: | MT-Safe locale | AS-Unsafe heap | AC-Unsafe mem | See POSIX Safety Concepts. 
+The wcscoll function is similar to wcscmp but uses the collating sequence of the current locale for collation (the LC_COLLATE locale). 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: size_t strxfrm (char *restrict to, const char *restrict from, size_t size)
+Preliminary: | MT-Safe locale | AS-Unsafe heap | AC-Unsafe mem | See POSIX Safety Concepts. 
+The function strxfrm transforms the multibyte string from using the collation transformation determined by the locale currently selected for collation, and stores the transformed string in the array to.  Up to size bytes (including a terminating null byte) are stored. 
+The behavior is undefined if the strings to and from overlap; see Copying Strings and Arrays. 
+The return value is the length of the entire transformed string.  This value is not affected by the value of size, but if it is greater or equal than size, it means that the transformed string did not entirely fit in the array to.  In this case, only as much of the string as actually fits was stored.  To get the whole transformed string, call strxfrm again with a bigger output array. 
+The transformed string may be longer than the original string, and it may also be shorter. 
+If size is zero, no bytes are stored in to.  In this case, strxfrm simply returns the number of bytes that would be the length of the transformed string.  This is useful for determining what size the allocated array should be.  It does not matter what to is if size is zero; to may even be a null pointer. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: size_t wcsxfrm (wchar_t *restrict wto, const wchar_t *wfrom, size_t size)
+Preliminary: | MT-Safe locale | AS-Unsafe heap | AC-Unsafe mem | See POSIX Safety Concepts. 
+The function wcsxfrm transforms wide string wfrom using the collation transformation determined by the locale currently selected for collation, and stores the transformed string in the array wto.  Up to size wide characters (including a terminating null wide character) are stored. 
+The behavior is undefined if the strings wto and wfrom overlap; see Copying Strings and Arrays. 
+The return value is the length of the entire transformed wide string.  This value is not affected by the value of size, but if it is greater or equal than size, it means that the transformed wide string did not entirely fit in the array wto.  In this case, only as much of the wide string as actually fits was stored.  To get the whole transformed wide string, call wcsxfrm again with a bigger output array. 
+The transformed wide string may be longer than the original wide string, and it may also be shorter. 
+If size is zero, no wide characters are stored in to.  In this case, wcsxfrm simply returns the number of wide characters that would be the length of the transformed wide string.  This is useful for determining what size the allocated array should be (remember to multiply with sizeof (wchar_t)).  It does not matter what wto is if size is zero; wto may even be a null pointer. 

@@ -1,0 +1,82 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: div_t
+This is a structure type used to hold the result returned by the div function.  It has the following members: 
+	int quot
+The quotient from the division.  
+	int rem
+The remainder from the division. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: div_t div (int numerator, int denominator)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The function div computes the quotient and remainder from the division of numerator by denominator, returning the result in a structure of type div_t. 
+If the result cannot be represented (as in a division by zero), the behavior is undefined. 
+Here is an example, albeit not a very useful one. 
+
+EXAMPLE_BEGIN
+div_t result;
+result = div (20, -6);
+EXAMPLE_END
+
+Now result.quot is -3 and result.rem is 2. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: ldiv_t
+This is a structure type used to hold the result returned by the ldiv function.  It has the following members: 
+	long int quot
+The quotient from the division.  
+	long int rem
+The remainder from the division. 
+(This is identical to div_t except that the components are of type long int rather than int.) 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: ldiv_t ldiv (long int numerator, long int denominator)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The ldiv function is similar to div, except that the arguments are of type long int and the result is returned as a structure of type ldiv_t. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: lldiv_t
+This is a structure type used to hold the result returned by the lldiv function.  It has the following members: 
+	long long int quot
+The quotient from the division.  
+	long long int rem
+The remainder from the division. 
+(This is identical to div_t except that the components are of type long long int rather than int.) 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: lldiv_t lldiv (long long int numerator, long long int denominator)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The lldiv function is like the div function, but the arguments are of type long long int and the result is returned as a structure of type lldiv_t. 
+The lldiv function was added in ISO C99. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: imaxdiv_t
+This is a structure type used to hold the result returned by the imaxdiv function.  It has the following members: 
+	intmax_t quot
+The quotient from the division.  
+	intmax_t rem
+The remainder from the division. 
+(This is identical to div_t except that the components are of type intmax_t rather than int.) 
+See Integers for a description of the intmax_t type. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: imaxdiv_t imaxdiv (intmax_t numerator, intmax_t denominator)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The imaxdiv function is like the div function, but the arguments are of type intmax_t and the result is returned as a structure of type imaxdiv_t. 
+See Integers for a description of the intmax_t type. 
+The imaxdiv function was added in ISO C99. 

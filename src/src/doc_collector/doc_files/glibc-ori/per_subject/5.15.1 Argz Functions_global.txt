@@ -1,0 +1,4 @@
+Each argz vector is represented by a pointer to the first element, of type char *, and a size, of type size_t, both of which can be initialized to 0 to represent an empty argz vector.  All argz functions accept either a pointer and a size argument, or pointers to them, if they will be modified. 
+The argz functions use malloc/realloc to allocate/grow argz vectors, and so any argz vector created using these functions may be freed by using free; conversely, any argz function that may grow a string expects that string to have been allocated using malloc (those argz functions that only examine their arguments or modify them in place will work on any sort of memory). See Unconstrained Allocation. 
+All argz functions that do memory allocation have a return type of error_t, and return 0 for success, and ENOMEM if an allocation error occurs. 
+These functions are declared in the standard include file argz.h. 

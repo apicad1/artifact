@@ -1,0 +1,91 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: size_t parse_printf_format (const char *template, size_t n, int *argtypes)
+Preliminary: | MT-Safe locale | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function returns information about the number and types of arguments expected by the printf template string template. The information is stored in the array argtypes; each element of this array describes one argument.  This information is encoded using the various ‘PA_’ macros, listed below. 
+The argument n specifies the number of elements in the array argtypes.  This is the maximum number of elements that parse_printf_format will try to write. 
+parse_printf_format returns the total number of arguments required by template.  If this number is greater than n, then the information returned describes only the first n arguments.  If you want information about additional arguments, allocate a bigger array and call parse_printf_format again. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int PA_FLAG_MASK
+This macro is a bitmask for the type modifier flag bits.  You can write the expression (argtypes[i] & PA_FLAG_MASK) to extract just the flag bits for an argument, or (argtypes[i] & ~PA_FLAG_MASK) to extract just the basic type code. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- PA_INT  
+This specifies that the base type is int. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- PA_CHAR  
+This specifies that the base type is int, cast to char. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- PA_STRING  
+This specifies that the base type is char *, a null-terminated string. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- PA_POINTER  
+This specifies that the base type is void *, an arbitrary pointer. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- PA_FLOAT  
+This specifies that the base type is float. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- PA_DOUBLE  
+This specifies that the base type is double. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- PA_LAST  
+You can define additional base types for your own programs as offsets from PA_LAST.  For example, if you have data types ‘foo’ and ‘bar’ with their own specialized printf conversions, you could define encodings for these types as: 
+
+EXAMPLE_BEGIN
+#define PA_FOO  PA_LAST
+#define PA_BAR  (PA_LAST + 1)
+EXAMPLE_END
+
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- PA_FLAG_PTR  
+If this bit is set, it indicates that the encoded type is a pointer to the base type, rather than an immediate value. For example, ‘PA_INT|PA_FLAG_PTR’ represents the type ‘int *’. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- PA_FLAG_SHORT  
+If this bit is set, it indicates that the base type is modified with short.  (This corresponds to the ‘h’ type modifier.) 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- PA_FLAG_LONG  
+If this bit is set, it indicates that the base type is modified with long.  (This corresponds to the ‘l’ type modifier.) 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- PA_FLAG_LONG_LONG  
+If this bit is set, it indicates that the base type is modified with long long.  (This corresponds to the ‘L’ type modifier.) 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- PA_FLAG_LONG_DOUBLE  
+This is a synonym for PA_FLAG_LONG_LONG, used by convention with a base type of PA_DOUBLE to indicate a type of long double. 

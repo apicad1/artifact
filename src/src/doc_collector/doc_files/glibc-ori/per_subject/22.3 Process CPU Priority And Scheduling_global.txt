@@ -1,0 +1,19 @@
+When multiple processes simultaneously require CPU time, the system’s scheduling policy and process CPU priorities determine which processes get it.  This section describes how that determination is made and GNU C Library functions to control it. 
+It is common to refer to CPU scheduling simply as scheduling and a process’ CPU priority simply as the process’ priority, with the CPU resource being implied.  Bear in mind, though, that CPU time is not the only resource a process uses or that processes contend for.  In some cases, it is not even particularly important.  Giving a process a high “priority” may have very little effect on how fast a process runs with respect to other processes.  The priorities discussed in this section apply only to CPU time. 
+CPU scheduling is a complex issue and different systems do it in wildly different ways.  New ideas continually develop and find their way into the intricacies of the various systems’ scheduling algorithms.  This section discusses the general concepts, some specifics of systems that commonly use the GNU C Library, and some standards. 
+For simplicity, we talk about CPU contention as if there is only one CPU in the system.  But all the same principles apply when a processor has multiple CPUs, and knowing that the number of processes that can run at any one time is equal to the number of CPUs, you can easily extrapolate the information. 
+The functions described in this section are all defined by the POSIX.1 and POSIX.1b standards (the sched… functions are POSIX.1b). However, POSIX does not define any semantics for the values that these functions get and set.  In this chapter, the semantics are based on the Linux kernel’s implementation of the POSIX standard.  As you will see, the Linux implementation is quite the inverse of what the authors of the POSIX syntax had in mind. 
+
+TABLE_BEGIN
+ • Absolute Priority    The first tier of priority.  Posix
+
+ • Realtime Scheduling    Scheduling among the process nobility
+
+ • Basic Scheduling Functions    Get/set scheduling policy, priority
+
+ • Traditional Scheduling    Scheduling among the vulgar masses
+
+ • CPU Affinity    Limiting execution to certain CPUs
+
+TABLE_END
+

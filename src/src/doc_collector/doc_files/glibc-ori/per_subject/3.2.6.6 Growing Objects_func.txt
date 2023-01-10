@@ -1,0 +1,56 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void obstack_blank (struct obstack *obstack-ptr, int size)
+Preliminary: | MT-Safe race:obstack-ptr | AS-Safe  | AC-Unsafe corrupt mem | See POSIX Safety Concepts. 
+The most basic function for adding to a growing object is obstack_blank, which adds space without initializing it. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void obstack_grow (struct obstack *obstack-ptr, void *data, int size)
+Preliminary: | MT-Safe race:obstack-ptr | AS-Safe  | AC-Unsafe corrupt mem | See POSIX Safety Concepts. 
+To add a block of initialized space, use obstack_grow, which is the growing-object analogue of obstack_copy.  It adds size bytes of data to the growing object, copying the contents from data. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void obstack_grow0 (struct obstack *obstack-ptr, void *data, int size)
+Preliminary: | MT-Safe race:obstack-ptr | AS-Safe  | AC-Unsafe corrupt mem | See POSIX Safety Concepts. 
+This is the growing-object analogue of obstack_copy0.  It adds size bytes copied from data, followed by an additional null character. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void obstack_1grow (struct obstack *obstack-ptr, char c)
+Preliminary: | MT-Safe race:obstack-ptr | AS-Safe  | AC-Unsafe corrupt mem | See POSIX Safety Concepts. 
+To add one character at a time, use the function obstack_1grow. It adds a single byte containing c to the growing object. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void obstack_ptr_grow (struct obstack *obstack-ptr, void *data)
+Preliminary: | MT-Safe race:obstack-ptr | AS-Safe  | AC-Unsafe corrupt mem | See POSIX Safety Concepts. 
+Adding the value of a pointer one can use the function obstack_ptr_grow.  It adds sizeof (void *) bytes containing the value of data. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void obstack_int_grow (struct obstack *obstack-ptr, int data)
+Preliminary: | MT-Safe race:obstack-ptr | AS-Safe  | AC-Unsafe corrupt mem | See POSIX Safety Concepts. 
+A single value of type int can be added by using the obstack_int_grow function.  It adds sizeof (int) bytes to the growing object and initializes them with the value of data. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void * obstack_finish (struct obstack *obstack-ptr)
+Preliminary: | MT-Safe race:obstack-ptr | AS-Safe  | AC-Unsafe corrupt | See POSIX Safety Concepts. 
+When you are finished growing the object, use the function obstack_finish to close it off and return its final address. 
+Once you have finished the object, the obstack is available for ordinary allocation or for growing another object. 
+This function can return a null pointer under the same conditions as obstack_alloc (see Allocation in an Obstack). 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int obstack_object_size (struct obstack *obstack-ptr)
+Preliminary: | MT-Safe race:obstack-ptr | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function returns the current size of the growing object, in bytes. Remember to call this function before finishing the object. After it is finished, obstack_object_size will return zero. 

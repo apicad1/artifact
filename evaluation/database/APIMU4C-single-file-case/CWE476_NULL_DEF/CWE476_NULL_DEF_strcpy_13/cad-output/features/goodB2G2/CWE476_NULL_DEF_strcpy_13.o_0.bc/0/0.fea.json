@@ -1,0 +1,1 @@
+{"arg.post":{"arg_num":0,"feature":[]},"arg.pre":{"arg_num":0,"feature":[],"has_relation":false,"relations":[]},"causality":{"post.call":{},"pre.call":{}},"loc":"/home/test/api_misuse/evaluation/apimu4c_single/CWE476_NULL_DEF/CWE476_NULL_DEF_strcpy_13/CWE476_NULL_DEF_strcpy_13.c:176:5"}

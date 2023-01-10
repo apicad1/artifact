@@ -1,0 +1,64 @@
+PTHREAD_ATTR_SETSCHEDPOLICY(3)                  Linux Programmer's Manual                 PTHREAD_ATTR_SETSCHEDPOLICY(3)
+
+NAME
+       pthread_attr_setschedpolicy,  pthread_attr_getschedpolicy  -  set/get  scheduling  policy attribute in thread at‐
+       tributes object
+
+SYNOPSIS
+       #include <pthread.h>
+
+       int pthread_attr_setschedpolicy(pthread_attr_t *attr, int policy);
+       int pthread_attr_getschedpolicy(const pthread_attr_t *attr, int *policy);
+
+       Compile and link with -pthread.
+
+DESCRIPTION
+       The pthread_attr_setschedpolicy() function sets the scheduling policy attribute of the thread  attributes  object
+       referred  to  by  attr  to  the  value specified in policy.  This attribute determines the scheduling policy of a
+       thread created using the thread attributes object attr.
+
+       The supported values for policy are SCHED_FIFO, SCHED_RR,  and  SCHED_OTHER,  with  the  semantics  described  in
+       sched(7).
+
+       The pthread_attr_getschedpolicy() returns the scheduling policy attribute of the thread attributes object attr in
+       the buffer pointed to by policy.
+
+       In order for the policy setting made by pthread_attr_setschedpolicy() to have effect  when  calling  pthread_cre‐
+       ate(3),  the  caller  must  use pthread_attr_setinheritsched(3) to set the inherit-scheduler attribute of the at‐
+       tributes object attr to PTHREAD_EXPLICIT_SCHED.
+
+RETURN VALUE
+       On success, these functions return 0; on error, they return a nonzero error number.
+
+ERRORS
+       pthread_attr_setschedpolicy() can fail with the following error:
+
+       EINVAL Invalid value in policy.
+
+       POSIX.1 also documents an optional ENOTSUP error ("attempt was made  to  set  the  attribute  to  an  unsupported
+       value") for pthread_attr_setschedpolicy().
+
+ATTRIBUTES
+       For an explanation of the terms used in this section, see attributes(7).
+
+       ┌───────────────────────────────┬───────────────┬─────────┐
+       │Interface                      │ Attribute     │ Value   │
+       ├───────────────────────────────┼───────────────┼─────────┤
+       │pthread_attr_setschedpolicy(), │ Thread safety │ MT-Safe │
+       │pthread_attr_getschedpolicy()  │               │         │
+       └───────────────────────────────┴───────────────┴─────────┘
+CONFORMING TO
+       POSIX.1-2001, POSIX.1-2008.
+
+EXAMPLE
+       See pthread_setschedparam(3).
+
+SEE ALSO
+       pthread_attr_init(3), pthread_attr_setinheritsched(3), pthread_attr_setschedparam(3), pthread_create(3),
+       pthread_setschedparam(3), pthread_setschedprio(3), pthreads(7), sched(7)
+
+COLOPHON
+       This page is part of release 5.05 of the Linux man-pages project.  A description of the project, information
+       about reporting bugs, and the latest version of this page, can be found at https://www.kernel.org/doc/man-pages/.
+
+Linux                                                  2017-09-15                         PTHREAD_ATTR_SETSCHEDPOLICY(3)

@@ -1,0 +1,3 @@
+This section describes the flags for the c_lflag member of the struct termios structure.  These flags generally control higher-level aspects of input processing than the input modes flags described in Input Modes, such as echoing, signals, and the choice of canonical or noncanonical input. 
+The c_lflag member itself is an integer, and you change the flags and fields using the operators &, |, and ^.  Don’t try to specify the entire value for c_lflag—instead, change only specific flags and leave the rest untouched (see Setting Modes). 
+The following bits are BSD extensions; they exist only on BSD systems and GNU/Hurd systems. 

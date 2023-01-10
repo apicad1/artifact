@@ -1,0 +1,46 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- char *positive_sign
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- char *negative_sign
+These are strings used to indicate positive (or zero) and negative monetary quantities, respectively. 
+In the standard ‘C’ locale, both of these members have a value of "" (the empty string), meaning “unspecified”. 
+The ISO standard doesn’t say what to do when you find this value; we recommend printing positive_sign as you find it, even if it is empty.  For a negative value, print negative_sign as you find it unless both it and positive_sign are empty, in which case print ‘-’ instead.  (Failing to indicate the sign at all seems rather unreasonable.) 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- char p_sign_posn
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- char n_sign_posn
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- char int_p_sign_posn
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- char int_n_sign_posn
+These members are small integers that indicate how to position the sign for nonnegative and negative monetary quantities, respectively.  (The string used for the sign is what was specified with positive_sign or negative_sign.)  The possible values are as follows: 
+	0
+The currency symbol and quantity should be surrounded by parentheses.  
+	1
+Print the sign string before the quantity and currency symbol.  
+	2
+Print the sign string after the quantity and currency symbol.  
+	3
+Print the sign string right before the currency symbol.  
+	4
+Print the sign string right after the currency symbol.  
+	CHAR_MAX
+“Unspecified”.  Both members have this value in the standard ‘C’ locale. 
+The ISO standard doesn’t say what you should do when the value is CHAR_MAX.  We recommend you print the sign after the currency symbol. 
+The members with the int_ prefix apply to the int_curr_symbol while the other two apply to currency_symbol. 

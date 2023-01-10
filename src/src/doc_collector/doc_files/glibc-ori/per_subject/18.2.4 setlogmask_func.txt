@@ -1,0 +1,27 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int setlogmask (int mask)
+Preliminary: | MT-Unsafe race:LogMask | AS-Unsafe  | AC-Safe  | See POSIX Safety Concepts. 
+setlogmask sets a mask (the “logmask”) that determines which future syslog calls shall be ignored.  If a program has not called setlogmask, syslog doesn’t ignore any calls.  You can use setlogmask to specify that messages of particular priorities shall be ignored in the future. 
+A setlogmask call overrides any previous setlogmask call. 
+Note that the logmask exists entirely independently of opening and closing of Syslog connections. 
+Setting the logmask has a similar effect to, but is not the same as, configuring Syslog.  The Syslog configuration may cause Syslog to discard certain messages it receives, but the logmask causes certain messages never to get submitted to Syslog in the first place. 
+mask is a bit string with one bit corresponding to each of the possible message priorities.  If the bit is on, syslog handles messages of that priority normally.  If it is off, syslog discards messages of that priority.  Use the message priority macros described in syslog; vsyslog and the LOG_MASK to construct an appropriate mask value, as in this example: 
+
+EXAMPLE_BEGIN
+LOG_MASK(LOG_EMERG) | LOG_MASK(LOG_ERROR)
+EXAMPLE_END
+
+or 
+
+EXAMPLE_BEGIN
+~(LOG_MASK(LOG_INFO))
+EXAMPLE_END
+
+There is also a LOG_UPTO macro, which generates a mask with the bits on for a certain priority and all priorities above it: 
+
+EXAMPLE_BEGIN
+LOG_UPTO(LOG_ERROR)
+EXAMPLE_END
+
+The unfortunate naming of the macro is due to the fact that internally, higher numbers are used for lower message priorities. 

@@ -1,0 +1,2 @@
+The following functions and data structure access the mtab file. 
+For accessing the mtab file there is again a set of three functions to access all entries in a row.  Unlike the functions to handle fstab these functions do not access a fixed file and there is even a thread safe variant of the get function.  Besides this the GNU C Library contains functions to alter the file and test for specific options. 

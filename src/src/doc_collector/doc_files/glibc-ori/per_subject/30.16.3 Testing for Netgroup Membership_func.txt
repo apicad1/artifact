@@ -1,0 +1,8 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int innetgr (const char *netgroup, const char *host, const char *user, const char *domain)
+Preliminary: | MT-Unsafe race:netgrent locale | AS-Unsafe dlopen plugin heap lock | AC-Unsafe corrupt lock fd mem | See POSIX Safety Concepts. 
+This function tests whether the triple specified by the parameters host, user, and domain is part of the netgroup netgroup.  Using this function has the advantage that 
+  no other netgroup function can use the global netgroup state since internal locking is used and  the function is implemented more efficiently than successive calls to the other set/get/endnetgrent functions. 
+Any of the pointers host, user, or domain can be NULL which means any value is accepted in this position.  This is also true for the name - which should not match any other string otherwise. 
+The return value is 1 if an entry matching the given triple is found in the netgroup.  The return value is 0 if the netgroup itself is not found, the netgroup does not contain the triple or internal errors occurred. 

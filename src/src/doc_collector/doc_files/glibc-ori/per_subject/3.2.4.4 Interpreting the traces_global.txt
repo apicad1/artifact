@@ -1,0 +1,59 @@
+If you take a look at the output it will look similar to this: 
+
+EXAMPLE_BEGIN
+= Start
+ [0x8048209] - 0x8064cc8
+ [0x8048209] - 0x8064ce0
+ [0x8048209] - 0x8064cf8
+ [0x80481eb] + 0x8064c48 0x14
+ [0x80481eb] + 0x8064c60 0x14
+ [0x80481eb] + 0x8064c78 0x14
+ [0x80481eb] + 0x8064c90 0x14
+= End
+EXAMPLE_END
+
+What this all means is not really important since the trace file is not meant to be read by a human.  Therefore no attention is given to readability.  Instead there is a program which comes with the GNU C Library which interprets the traces and outputs a summary in an user-friendly way.  The program is called mtrace (it is in fact a Perl script) and it takes one or two arguments.  In any case the name of the file with the trace output must be specified.  If an optional argument precedes the name of the trace file this must be the name of the program which generated the trace. 
+
+EXAMPLE_BEGIN
+drepper$ mtrace tst-mtrace log
+No memory leaks.
+EXAMPLE_END
+
+In this case the program tst-mtrace was run and it produced a trace file log.  The message printed by mtrace shows there are no problems with the code, all allocated memory was freed afterwards. 
+If we call mtrace on the example trace given above we would get a different outout: 
+
+EXAMPLE_BEGIN
+drepper$ mtrace errlog
+- 0x08064cc8 Free 2 was never alloc'd 0x8048209
+- 0x08064ce0 Free 3 was never alloc'd 0x8048209
+- 0x08064cf8 Free 4 was never alloc'd 0x8048209
+
+Memory not freed:
+-----------------
+   Address     Size     Caller
+0x08064c48     0x14  at 0x80481eb
+0x08064c60     0x14  at 0x80481eb
+0x08064c78     0x14  at 0x80481eb
+0x08064c90     0x14  at 0x80481eb
+EXAMPLE_END
+
+We have called mtrace with only one argument and so the script has no chance to find out what is meant with the addresses given in the trace.  We can do better: 
+
+EXAMPLE_BEGIN
+drepper$ mtrace tst errlog
+- 0x08064cc8 Free 2 was never alloc'd /home/drepper/tst.c:39
+- 0x08064ce0 Free 3 was never alloc'd /home/drepper/tst.c:39
+- 0x08064cf8 Free 4 was never alloc'd /home/drepper/tst.c:39
+
+Memory not freed:
+-----------------
+   Address     Size     Caller
+0x08064c48     0x14  at /home/drepper/tst.c:33
+0x08064c60     0x14  at /home/drepper/tst.c:33
+0x08064c78     0x14  at /home/drepper/tst.c:33
+0x08064c90     0x14  at /home/drepper/tst.c:33
+EXAMPLE_END
+
+Suddenly the output makes much more sense and the user can see immediately where the function calls causing the trouble can be found. 
+Interpreting this output is not complicated.  There are at most two different situations being detected.  First, free was called for pointers which were never returned by one of the allocation functions. This is usually a very bad problem and what this looks like is shown in the first three lines of the output.  Situations like this are quite rare and if they appear they show up very drastically: the program normally crashes. 
+The other situation which is much harder to detect are memory leaks.  As you can see in the output the mtrace function collects all this information and so can say that the program calls an allocation function from line 33 in the source file /home/drepper/tst-mtrace.c four times without freeing this memory before the program terminates. Whether this is a real problem remains to be investigated. 

@@ -1,0 +1,40 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int vscanf (const char *template, va_list ap)
+Preliminary: | MT-Safe locale | AS-Unsafe corrupt heap | AC-Unsafe mem lock corrupt | See POSIX Safety Concepts. 
+This function is similar to scanf, but instead of taking a variable number of arguments directly, it takes an argument list pointer ap of type va_list (see Variadic Functions). 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int vwscanf (const wchar_t *template, va_list ap)
+Preliminary: | MT-Safe locale | AS-Unsafe corrupt heap | AC-Unsafe mem lock corrupt | See POSIX Safety Concepts. 
+This function is similar to wscanf, but instead of taking a variable number of arguments directly, it takes an argument list pointer ap of type va_list (see Variadic Functions). 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int vfscanf (FILE *stream, const char *template, va_list ap)
+Preliminary: | MT-Safe locale | AS-Unsafe corrupt heap | AC-Unsafe mem lock corrupt | See POSIX Safety Concepts. 
+This is the equivalent of fscanf with the variable argument list specified directly as for vscanf. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int vfwscanf (FILE *stream, const wchar_t *template, va_list ap)
+Preliminary: | MT-Safe locale | AS-Unsafe corrupt heap | AC-Unsafe mem lock corrupt | See POSIX Safety Concepts. 
+This is the equivalent of fwscanf with the variable argument list specified directly as for vwscanf. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int vsscanf (const char *s, const char *template, va_list ap)
+Preliminary: | MT-Safe locale | AS-Unsafe heap | AC-Unsafe mem | See POSIX Safety Concepts. 
+This is the equivalent of sscanf with the variable argument list specified directly as for vscanf. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int vswscanf (const wchar_t *s, const wchar_t *template, va_list ap)
+Preliminary: | MT-Safe locale | AS-Unsafe heap | AC-Unsafe mem | See POSIX Safety Concepts. 
+This is the equivalent of swscanf with the variable argument list specified directly as for vwscanf. 

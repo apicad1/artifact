@@ -1,0 +1,14 @@
+The getopt and getopt_long functions automate some of the chore involved in parsing typical unix command line options. 
+
+TABLE_BEGIN
+ • Using Getopt    Using the getopt function.
+
+ • Example of Getopt    An example of parsing options with getopt.
+
+ • Getopt Long Options    GNU suggests utilities accept long-named
+                                 options; here is one way to do.
+
+ • Getopt Long Option Example    An example of using getopt_long.
+
+TABLE_END
+

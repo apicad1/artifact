@@ -1,0 +1,34 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void sync (void)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+A call to this function will not return as long as there is data which has not been written to the device.  All dirty buffers in the kernel will be written and so an overall consistent system can be achieved (if no other process in parallel writes data). 
+A prototype for sync can be found in unistd.h. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int fsync (int fildes)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The fsync function can be used to make sure all data associated with the open file fildes is written to the device associated with the descriptor.  The function call does not return unless all actions have finished. 
+A prototype for fsync can be found in unistd.h. 
+This function is a cancellation point in multi-threaded programs.  This is a problem if the thread allocates some resources (like memory, file descriptors, semaphores or whatever) at the time fsync is called.  If the thread gets canceled these resources stay allocated until the program ends.  To avoid this, calls to fsync should be protected using cancellation handlers. 
+The return value of the function is zero if no error occurred.  Otherwise it is -1 and the global variable errno is set to the following values: 
+	EBADF
+The descriptor fildes is not valid.  
+	EINVAL
+No synchronization is possible since the system does not implement this. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int fdatasync (int fildes)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+When a call to the fdatasync function returns, it is ensured that all of the file data is written to the device.  For all pending I/O operations, the parts guaranteeing data integrity finished. 
+Not all systems implement the fdatasync operation.  On systems missing this functionality fdatasync is emulated by a call to fsync since the performed actions are a superset of those required by fdatasync. 
+The prototype for fdatasync is in unistd.h. 
+The return value of the function is zero if no error occurred.  Otherwise it is -1 and the global variable errno is set to the following values: 
+	EBADF
+The descriptor fildes is not valid.  
+	EINVAL
+No synchronization is possible since the system does not implement this. 

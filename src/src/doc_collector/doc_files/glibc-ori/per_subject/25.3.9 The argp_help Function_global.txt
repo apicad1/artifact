@@ -1,0 +1,7 @@
+Normally programs using argp need not be written with particular printing argument-usage-type help messages in mind as the standard ‘--help’ option is handled automatically by argp.  Typical error cases can be handled using argp_usage and argp_error.  See Argp Helper Functions.  However, if it’s desirable to print a help message in some context other than parsing the program options, argp offers the argp_help interface. 
+
+TABLE_BEGIN
+ • Flags    Specifying what sort of help message to print.
+
+TABLE_END
+

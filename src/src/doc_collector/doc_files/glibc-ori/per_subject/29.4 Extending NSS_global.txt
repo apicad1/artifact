@@ -1,0 +1,11 @@
+One of the advantages of NSS mentioned above is that it can be extended quite easily.  There are two ways in which the extension can happen: adding another database or adding another service.  The former is normally done only by the C library developers.  It is here only important to remember that adding another database is independent from adding another service because a service need not support all databases or lookup functions. 
+A designer/implementer of a new service is therefore free to choose the databases s/he is interested in and leave the rest for later (or completely aside). 
+
+TABLE_BEGIN
+ • Adding another Service to NSS    What is to do to add a new service.
+
+ • NSS Module Function Internals    Guidelines for writing new NSS
+                                        service functions.
+
+TABLE_END
+

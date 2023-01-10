@@ -1,0 +1,2 @@
+The POSIX standard does not specify how the AIO functions are implemented.  They could be system calls, but it is also possible to emulate them at userlevel. 
+At the time of writing, the available implementation is a user-level implementation which uses threads for handling the enqueued requests. While this implementation requires making some decisions about limitations, hard limitations are something best avoided in the GNU C Library.  Therefore, the GNU C Library provides a means for tuning the AIO implementation according to the individual use. 

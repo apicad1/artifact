@@ -1,0 +1,32 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int regexec (const regex_t *restrict compiled, const char *restrict string, size_t nmatch, regmatch_t matchptr[restrict], int eflags)
+Preliminary: | MT-Safe locale | AS-Unsafe corrupt heap lock dlopen | AC-Unsafe corrupt lock mem fd | See POSIX Safety Concepts. 
+This function tries to match the compiled regular expression *compiled against string. 
+regexec returns 0 if the regular expression matches; otherwise, it returns a nonzero value.  See the table below for what nonzero values mean.  You can use regerror to produce an error message string describing the reason for a nonzero value; see Regexp Cleanup. 
+The argument eflags is a word of bit flags that enable various options. 
+If you want to get information about what part of string actually matched the regular expression or its subexpressions, use the arguments matchptr and nmatch.  Otherwise, pass 0 for nmatch, and NULL for matchptr.  See Regexp Subexpressions. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- REG_NOTBOL  
+Do not regard the beginning of the specified string as the beginning of a line; more generally, don’t make any assumptions about what text might precede it. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- REG_NOTEOL  
+Do not regard the end of the specified string as the end of a line; more generally, don’t make any assumptions about what text might follow it. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- REG_NOMATCH  
+The pattern didn’t match the string.  This isn’t really an error. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- REG_ESPACE  
+regexec ran out of memory. 

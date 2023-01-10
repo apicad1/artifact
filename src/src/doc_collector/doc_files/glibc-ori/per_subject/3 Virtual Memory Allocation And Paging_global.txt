@@ -1,0 +1,17 @@
+This chapter describes how processes manage and use memory in a system that uses the GNU C Library. 
+The GNU C Library has several functions for dynamically allocating virtual memory in various ways.  They vary in generality and in efficiency.  The library also provides functions for controlling paging and allocation of real memory. 
+
+TABLE_BEGIN
+ • Memory Concepts    An introduction to concepts and terminology.
+
+ • Memory Allocation    Allocating storage for your program data
+
+ • Resizing the Data Segment    brk, sbrk
+
+ • Memory Protection    Controlling access to memory regions.
+
+ • Locking Pages    Preventing page faults
+
+TABLE_END
+
+Memory mapped I/O is not discussed in this chapter.  See Memory-mapped I/O. 

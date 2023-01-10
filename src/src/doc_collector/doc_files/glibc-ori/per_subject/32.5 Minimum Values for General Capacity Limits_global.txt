@@ -1,0 +1,1 @@
+Here are the names for the POSIX minimum upper bounds for the system limit parameters.  The significance of these values is that you can safely push to these limits without checking whether the particular system you are using can go that far. 

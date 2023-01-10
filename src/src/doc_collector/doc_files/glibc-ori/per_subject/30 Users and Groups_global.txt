@@ -1,0 +1,63 @@
+Every user who can log in on the system is identified by a unique number called the user ID.  Each process has an effective user ID which says which user’s access permissions it has. 
+Users are classified into groups for access control purposes.  Each process has one or more group ID values which say which groups the process can use for access to files. 
+The effective user and group IDs of a process collectively form its persona.  This determines which files the process can access. Normally, a process inherits its persona from the parent process, but under special circumstances a process can change its persona and thus change its access permissions. 
+Each file in the system also has a user ID and a group ID.  Access control works by comparing the user and group IDs of the file with those of the running process. 
+The system keeps a database of all the registered users, and another database of all the defined groups.  There are library functions you can use to examine these databases. 
+
+TABLE_BEGIN
+ • User and Group IDs    Each user has a unique numeric ID;
+				 likewise for groups.
+
+ • Process Persona    The user IDs and group IDs of a process.
+
+ • Why Change Persona    Why a program might need to change
+				 its user and/or group IDs.
+
+ • How Change Persona    Changing the user and group IDs.
+
+ • Reading Persona    How to examine the user and group IDs.
+
+ 
+
+
+ • Setting User ID    Functions for setting the user ID.
+
+ • Setting Groups    Functions for setting the group IDs.
+
+ 
+
+
+ • Enable/Disable Setuid    Turning setuid access on and off.
+
+ • Setuid Program Example    The pertinent parts of one sample program.
+
+ • Tips for Setuid    How to avoid granting unlimited access.
+
+ 
+
+
+ • Who Logged In    Getting the name of the user who logged in,
+				 or of the real user ID of the current process.
+
+ 
+
+
+ • User Accounting Database    Keeping information about users and various
+                                 actions in databases.
+
+ 
+
+
+ • User Database    Functions and data structures for
+                        	 accessing the user database.
+
+ • Group Database    Functions and data structures for
+                        	 accessing the group database.
+
+ • Database Example    Example program showing the use of database
+				 inquiry functions.
+
+ • Netgroup Database    Functions for accessing the netgroup database.
+
+TABLE_END
+

@@ -1,0 +1,62 @@
+AIO_FSYNC(3)                                    Linux Programmer's Manual                                   AIO_FSYNC(3)
+
+NAME
+       aio_fsync - asynchronous file synchronization
+
+SYNOPSIS
+       #include <aio.h>
+
+       int aio_fsync(int op, struct aiocb *aiocbp);
+
+       Link with -lrt.
+
+DESCRIPTION
+       The   aio_fsync()  function  does  a  sync  on  all  outstanding  asynchronous  I/O  operations  associated  with
+       aiocbp->aio_fildes.  (See aio(7) for a description of the aiocb structure.)
+
+       More precisely, if op is O_SYNC, then all currently queued I/O operations shall be completed as if by a  call  of
+       fsync(2), and if op is O_DSYNC, this call is the asynchronous analog of fdatasync(2).
+
+       Note that this is a request only; it does not wait for I/O completion.
+
+       Apart  from  aio_fildes,  the  only  field in the structure pointed to by aiocbp that is used by this call is the
+       aio_sigevent field (a sigevent structure, described in sigevent(7)), which indicates the desired  type  of  asyn‐
+       chronous notification at completion.  All other fields are ignored.
+
+RETURN VALUE
+       On success (the sync request was successfully queued) this function returns 0.  On error, -1 is returned, and er‐
+       rno is set to indicate the error.
+
+ERRORS
+       EAGAIN Out of resources.
+
+       EBADF  aio_fildes is not a valid file descriptor open for writing.
+
+       EINVAL Synchronized I/O is not supported for this file, or op is not O_SYNC or O_DSYNC.
+
+       ENOSYS aio_fsync() is not implemented.
+
+VERSIONS
+       The aio_fsync() function is available since glibc 2.1.
+
+ATTRIBUTES
+       For an explanation of the terms used in this section, see attributes(7).
+
+       ┌──────────────────────────────────────────────────────────────────────────────────────┬───────────────┬─────────┐
+       │Interface                                                                             │ Attribute     │ Value   │
+       ├──────────────────────────────────────────────────────────────────────────────────────┼───────────────┼─────────┤
+       │aio_fsync()                                                                           │ Thread safety │ MT-Safe │
+       └──────────────────────────────────────────────────────────────────────────────────────┴───────────────┴─────────┘
+
+CONFORMING TO
+       POSIX.1-2001, POSIX.1-2008.
+
+SEE ALSO
+       aio_cancel(3), aio_error(3), aio_read(3), aio_return(3),  aio_suspend(3),  aio_write(3),  lio_listio(3),  aio(7),
+       sigevent(7)
+
+COLOPHON
+       This  page  is  part  of  release 5.13 of the Linux man-pages project.  A description of the project, information
+       about reporting bugs, and the latest version of this page, can be found at https://www.kernel.org/doc/man-pages/.
+
+                                                       2021-03-22                                           AIO_FSYNC(3)

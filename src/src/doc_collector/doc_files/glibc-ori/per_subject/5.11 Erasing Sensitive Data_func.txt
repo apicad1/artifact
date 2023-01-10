@@ -1,0 +1,8 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void explicit_bzero (void *block, size_t len)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+explicit_bzero writes zero into len bytes of memory beginning at block, just as bzero would.  The zeroes are always written, even if the compiler could determine that this is “unnecessary” because no correct program could read them back. 
+Note: The only optimization that explicit_bzero disables is removal of “unnecessary” writes to memory.  The compiler can perform all the other optimizations that it could for a call to memset.  For instance, it may replace the function call with inline memory writes, and it may assume that block cannot be a null pointer. 
+Portability Note: This function first appeared in OpenBSD 5.5 and has not been standardized.  Other systems may provide the same functionality under a different name, such as explicit_memset, memset_s, or SecureZeroMemory. 
+The GNU C Library declares this function in string.h, but on other systems it may be in strings.h instead. 

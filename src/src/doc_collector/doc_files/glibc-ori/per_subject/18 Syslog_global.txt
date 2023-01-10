@@ -1,0 +1,11 @@
+This chapter describes facilities for issuing and logging messages of system administration interest.  This chapter has nothing to do with programs issuing messages to their own users or keeping private logs (One would typically do that with the facilities described in I/O on Streams). 
+Most systems have a facility called “Syslog” that allows programs to submit messages of interest to system administrators and can be configured to pass these messages on in various ways, such as printing on the console, mailing to a particular person, or recording in a log file for future reference. 
+A program uses the facilities in this chapter to submit such messages. 
+
+TABLE_BEGIN
+ • Overview of Syslog    Overview of a system’s Syslog facility
+
+ • Submitting Syslog Messages    Functions to submit messages to Syslog
+
+TABLE_END
+

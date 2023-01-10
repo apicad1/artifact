@@ -1,0 +1,46 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: struct protoent
+This data type is used to represent entries in the network protocols database.  It has the following members: 
+	char *p_name
+This is the official name of the protocol.  
+	char **p_aliases
+These are alternate names for the protocol, specified as an array of strings.  The last element of the array is a null pointer.  
+	int p_proto
+This is the protocol number (in host byte order); use this member as the protocol argument to socket. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: struct protoent * getprotobyname (const char *name)
+Preliminary: | MT-Unsafe race:protobyname locale | AS-Unsafe dlopen plugin heap lock | AC-Unsafe corrupt lock fd mem | See POSIX Safety Concepts. 
+The getprotobyname function returns information about the network protocol named name.  If there is no such protocol, it returns a null pointer. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: struct protoent * getprotobynumber (int protocol)
+Preliminary: | MT-Unsafe race:protobynumber locale | AS-Unsafe dlopen plugin heap lock | AC-Unsafe corrupt lock fd mem | See POSIX Safety Concepts. 
+The getprotobynumber function returns information about the network protocol with number protocol.  If there is no such protocol, it returns a null pointer. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void setprotoent (int stayopen)
+Preliminary: | MT-Unsafe race:protoent locale | AS-Unsafe dlopen plugin heap lock | AC-Unsafe corrupt lock fd mem | See POSIX Safety Concepts. 
+This function opens the protocols database to begin scanning it. 
+If the stayopen argument is nonzero, this sets a flag so that subsequent calls to getprotobyname or getprotobynumber will not close the database (as they usually would).  This makes for more efficiency if you call those functions several times, by avoiding reopening the database for each call. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: struct protoent * getprotoent (void)
+Preliminary: | MT-Unsafe race:protoent race:protoentbuf locale | AS-Unsafe dlopen plugin heap lock | AC-Unsafe corrupt lock fd mem | See POSIX Safety Concepts. 
+This function returns the next entry in the protocols database.  It returns a null pointer if there are no more entries. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void endprotoent (void)
+Preliminary: | MT-Unsafe race:protoent locale | AS-Unsafe dlopen plugin heap lock | AC-Unsafe corrupt lock fd mem | See POSIX Safety Concepts. 
+This function closes the protocols database. 

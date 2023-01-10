@@ -1,0 +1,234 @@
+Amendment 1 to ISO C90 defines functions to classify wide characters.  Although the original ISO C90 standard already defined the type wchar_t, no functions operating on them were defined. 
+The general design of the classification functions for wide characters is more general.  It allows extensions to the set of available classifications, beyond those which are always available.  The POSIX standard specifies how extensions can be made, and this is already implemented in the GNU C Library implementation of the localedef program. 
+The character class functions are normally implemented with bitsets, with a bitset per character.  For a given character, the appropriate bitset is read from a table and a test is performed as to whether a certain bit is set.  Which bit is tested for is determined by the class. 
+For the wide character classification functions this is made visible. There is a type classification type defined, a function to retrieve this value for a given class, and a function to test whether a given character is in this class, using the classification value.  On top of this the normal character classification functions as used for char objects can be defined. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Data type: wctype_t
+The wctype_t can hold a value which represents a character class. The only defined way to generate such a value is by using the wctype function. 
+
+This type is defined in wctype.h. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: wctype_t wctype (const char *property)
+Preliminary: | MT-Safe locale | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+wctype returns a value representing a class of wide characters which is identified by the string property.  Besides some standard properties each locale can define its own ones.  In case no property with the given name is known for the current locale selected for the LC_CTYPE category, the function returns zero. 
+The properties known in every locale are: 
+
+TABLE_BEGIN
+ "alnum" "alpha" "cntrl" "digit"
+ "graph" "lower" "print" "punct"
+ "space" "upper" "xdigit"
+TABLE_END
+
+
+This function is declared in wctype.h. 
+<<<<<<<<<<<<<<<<<<<<
+
+To test the membership of a character to one of the non-standard classes the ISO C standard defines a completely new function. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int iswctype (wint_t wc, wctype_t desc)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function returns a nonzero value if wc is in the character class specified by desc.  desc must previously be returned by a successful call to wctype. 
+
+This function is declared in wctype.h. 
+<<<<<<<<<<<<<<<<<<<<
+
+To make it easier to use the commonly-used classification functions, they are defined in the C library.  There is no need to use wctype if the property string is one of the known character classes.  In some situations it is desirable to construct the property strings, and then it is important that wctype can also handle the standard classes. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int iswalnum (wint_t wc)
+Preliminary: | MT-Safe locale | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function returns a nonzero value if wc is an alphanumeric character (a letter or number); in other words, if either iswalpha or iswdigit is true of a character, then iswalnum is also true. 
+This function can be implemented using 
+
+EXAMPLE_BEGIN
+iswctype (wc, wctype ("alnum"))
+EXAMPLE_END
+
+
+It is declared in wctype.h. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int iswalpha (wint_t wc)
+Preliminary: | MT-Safe locale | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+Returns true if wc is an alphabetic character (a letter).  If iswlower or iswupper is true of a character, then iswalpha is also true. 
+In some locales, there may be additional characters for which iswalpha is true—letters which are neither upper case nor lower case.  But in the standard "C" locale, there are no such additional characters. 
+This function can be implemented using 
+
+EXAMPLE_BEGIN
+iswctype (wc, wctype ("alpha"))
+EXAMPLE_END
+
+
+It is declared in wctype.h. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int iswcntrl (wint_t wc)
+Preliminary: | MT-Safe locale | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+Returns true if wc is a control character (that is, a character that is not a printing character). 
+This function can be implemented using 
+
+EXAMPLE_BEGIN
+iswctype (wc, wctype ("cntrl"))
+EXAMPLE_END
+
+
+It is declared in wctype.h. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int iswdigit (wint_t wc)
+Preliminary: | MT-Safe locale | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+Returns true if wc is a digit (e.g., ‘0’ through ‘9’). Please note that this function does not only return a nonzero value for decimal digits, but for all kinds of digits.  A consequence is that code like the following will not work unconditionally for wide characters: 
+
+EXAMPLE_BEGIN
+n = 0;
+while (iswdigit (*wc))
+  {
+    n *= 10;
+    n += *wc++ - L'0';
+  }
+EXAMPLE_END
+
+This function can be implemented using 
+
+EXAMPLE_BEGIN
+iswctype (wc, wctype ("digit"))
+EXAMPLE_END
+
+
+It is declared in wctype.h. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int iswgraph (wint_t wc)
+Preliminary: | MT-Safe locale | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+Returns true if wc is a graphic character; that is, a character that has a glyph associated with it.  The whitespace characters are not considered graphic. 
+This function can be implemented using 
+
+EXAMPLE_BEGIN
+iswctype (wc, wctype ("graph"))
+EXAMPLE_END
+
+
+It is declared in wctype.h. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int iswlower (wint_t wc)
+Preliminary: | MT-Safe locale | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+Returns true if wc is a lower-case letter.  The letter need not be from the Latin alphabet, any alphabet representable is valid. 
+This function can be implemented using 
+
+EXAMPLE_BEGIN
+iswctype (wc, wctype ("lower"))
+EXAMPLE_END
+
+
+It is declared in wctype.h. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int iswprint (wint_t wc)
+Preliminary: | MT-Safe locale | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+Returns true if wc is a printing character.  Printing characters include all the graphic characters, plus the space (‘ ’) character. 
+This function can be implemented using 
+
+EXAMPLE_BEGIN
+iswctype (wc, wctype ("print"))
+EXAMPLE_END
+
+
+It is declared in wctype.h. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int iswpunct (wint_t wc)
+Preliminary: | MT-Safe locale | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+Returns true if wc is a punctuation character. This means any printing character that is not alphanumeric or a space character. 
+This function can be implemented using 
+
+EXAMPLE_BEGIN
+iswctype (wc, wctype ("punct"))
+EXAMPLE_END
+
+
+It is declared in wctype.h. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int iswspace (wint_t wc)
+Preliminary: | MT-Safe locale | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+Returns true if wc is a whitespace character.  In the standard "C" locale, iswspace returns true for only the standard whitespace characters: 
+	L' '
+space  
+	L'\f'
+formfeed  
+	L'\n'
+newline  
+	L'\r'
+carriage return  
+	L'\t'
+horizontal tab  
+	L'\v'
+vertical tab 
+This function can be implemented using 
+
+EXAMPLE_BEGIN
+iswctype (wc, wctype ("space"))
+EXAMPLE_END
+
+
+It is declared in wctype.h. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int iswupper (wint_t wc)
+Preliminary: | MT-Safe locale | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+Returns true if wc is an upper-case letter.  The letter need not be from the Latin alphabet, any alphabet representable is valid. 
+This function can be implemented using 
+
+EXAMPLE_BEGIN
+iswctype (wc, wctype ("upper"))
+EXAMPLE_END
+
+
+It is declared in wctype.h. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int iswxdigit (wint_t wc)
+Preliminary: | MT-Safe locale | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+Returns true if wc is a hexadecimal digit. Hexadecimal digits include the normal decimal digits ‘0’ through ‘9’ and the letters ‘A’ through ‘F’ and ‘a’ through ‘f’. 
+This function can be implemented using 
+
+EXAMPLE_BEGIN
+iswctype (wc, wctype ("xdigit"))
+EXAMPLE_END
+
+
+It is declared in wctype.h. 
+<<<<<<<<<<<<<<<<<<<<
+
+The GNU C Library also provides a function which is not defined in the ISO C standard but which is available as a version for single byte characters as well. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int iswblank (wint_t wc)
+Preliminary: | MT-Safe locale | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+Returns true if wc is a blank character; that is, a space or a tab. This function was originally a GNU extension, but was added in ISO C99. It is declared in wchar.h. 

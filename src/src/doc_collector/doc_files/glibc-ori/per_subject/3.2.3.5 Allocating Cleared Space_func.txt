@@ -1,0 +1,5 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void * calloc (size_t count, size_t eltsize)
+Preliminary: | MT-Safe  | AS-Unsafe lock | AC-Unsafe lock fd mem | See POSIX Safety Concepts. 
+This function allocates a block long enough to contain a vector of count elements, each of size eltsize.  Its contents are cleared to zero before calloc returns. 

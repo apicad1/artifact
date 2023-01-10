@@ -1,0 +1,32 @@
+Every file has an owner which is one of the registered user names defined on the system.  Each file also has a group which is one of the defined groups.  The file owner can often be useful for showing you who edited the file (especially when you edit with GNU Emacs), but its main purpose is for access control. 
+The file owner and group play a role in determining access because the file has one set of access permission bits for the owner, another set that applies to users who belong to the file’s group, and a third set of bits that applies to everyone else.  See Access Permission, for the details of how access is decided based on this data. 
+When a file is created, its owner is set to the effective user ID of the process that creates it (see Process Persona).  The file’s group ID may be set to either the effective group ID of the process, or the group ID of the directory that contains the file, depending on the system where the file is stored.  When you access a remote file system, it behaves according to its own rules, not according to the system your program is running on.  Thus, your program must be prepared to encounter either kind of behavior no matter what kind of system you run it on. 
+You can change the owner and/or group owner of an existing file using the chown function.  This is the primitive for the chown and chgrp shell commands. 
+The prototype for this function is declared in unistd.h. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int chown (const char *filename, uid_t owner, gid_t group)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The chown function changes the owner of the file filename to owner, and its group owner to group. 
+Changing the owner of the file on certain systems clears the set-user-ID and set-group-ID permission bits.  (This is because those bits may not be appropriate for the new owner.)  Other file permission bits are not changed. 
+The return value is 0 on success and -1 on failure. In addition to the usual file name errors (see File Name Errors), the following errno error conditions are defined for this function: 
+	EPERM
+This process lacks permission to make the requested change.  Only privileged users or the file’s owner can change the file’s group. On most file systems, only privileged users can change the file owner; some file systems allow you to change the owner if you are currently the owner.  When you access a remote file system, the behavior you encounter is determined by the system that actually holds the file, not by the system your program is running on.  See Options for Files, for information about the _POSIX_CHOWN_RESTRICTED macro.  
+	EROFS
+The file is on a read-only file system. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int fchown (int filedes, uid_t owner, gid_t group)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This is like chown, except that it changes the owner of the open file with descriptor filedes. 
+The return value from fchown is 0 on success and -1 on failure.  The following errno error codes are defined for this function: 
+	EBADF
+The filedes argument is not a valid file descriptor.  
+	EINVAL
+The filedes argument corresponds to a pipe or socket, not an ordinary file.  
+	EPERM
+This process lacks permission to make the requested change.  For details see chmod above.  
+	EROFS
+The file resides on a read-only file system. 

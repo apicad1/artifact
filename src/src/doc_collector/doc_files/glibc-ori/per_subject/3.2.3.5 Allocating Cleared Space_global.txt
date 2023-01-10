@@ -1,0 +1,15 @@
+The function calloc allocates memory and clears it to zero.  It is declared in stdlib.h.  
+You could define calloc as follows: 
+
+EXAMPLE_BEGIN
+void *
+calloc (size_t count, size_t eltsize)
+{
+  void *value = reallocarray (0, count, eltsize);
+  if (value != 0)
+    memset (value, 0, count * eltsize);
+  return value;
+}
+EXAMPLE_END
+
+But in general, it is not guaranteed that calloc calls reallocarray and memset internally.  For example, if the calloc implementation knows for other reasons that the new memory block is zero, it need not zero out the block again with memset.  Also, if an application provides its own reallocarray outside the C library, calloc might not use that redefinition.  See Replacing malloc. 

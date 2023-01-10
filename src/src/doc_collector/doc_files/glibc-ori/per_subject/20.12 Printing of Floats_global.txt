@@ -1,0 +1,1 @@
+The ‘strfrom’ functions are declared in stdlib.h. 

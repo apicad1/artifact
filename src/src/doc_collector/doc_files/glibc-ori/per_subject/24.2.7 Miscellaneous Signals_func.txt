@@ -1,0 +1,26 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int SIGUSR1
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int SIGUSR2
+
+The SIGUSR1 and SIGUSR2 signals are set aside for you to use any way you want.  They’re useful for simple interprocess communication, if you write a signal handler for them in the program that receives the signal. 
+There is an example showing the use of SIGUSR1 and SIGUSR2 in Signaling Another Process. 
+The default action is to terminate the process. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int SIGWINCH
+Window size change.  This is generated on some systems (including GNU) when the terminal driver’s record of the number of rows and columns on the screen is changed.  The default action is to ignore it. 
+If a program does full-screen display, it should handle SIGWINCH. When the signal arrives, it should fetch the new screen size and reformat its display accordingly. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int SIGINFO
+Information request.  On 4.4 BSD and GNU/Hurd systems, this signal is sent to all the processes in the foreground process group of the controlling terminal when the user types the STATUS character in canonical mode; see Signal Characters. 
+If the process is the leader of the process group, the default action is to print some status information about the system and what the process is doing.  Otherwise the default is to do nothing. 

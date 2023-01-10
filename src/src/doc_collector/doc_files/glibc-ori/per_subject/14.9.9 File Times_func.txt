@@ -1,0 +1,58 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: struct utimbuf
+The utimbuf structure is used with the utime function to specify new access and modification times for a file.  It contains the following members: 
+	time_t actime
+This is the access time for the file.  
+	time_t modtime
+This is the modification time for the file. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int utime (const char *filename, const struct utimbuf *times)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function is used to modify the file times associated with the file named filename. 
+If times is a null pointer, then the access and modification times of the file are set to the current time.  Otherwise, they are set to the values from the actime and modtime members (respectively) of the utimbuf structure pointed to by times. 
+The attribute modification time for the file is set to the current time in either case (since changing the time stamps is itself a modification of the file attributes). 
+The utime function returns 0 if successful and -1 on failure.  In addition to the usual file name errors (see File Name Errors), the following errno error conditions are defined for this function: 
+	EACCES
+There is a permission problem in the case where a null pointer was passed as the times argument.  In order to update the time stamp on the file, you must either be the owner of the file, have write permission for the file, or be a privileged user.  
+	ENOENT
+The file doesn’t exist.  
+	EPERM
+If the times argument is not a null pointer, you must either be the owner of the file or be a privileged user.  
+	EROFS
+The file lives on a read-only file system. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int utimes (const char *filename, const struct timeval tvp[2])
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function sets the file access and modification times of the file filename.  The new file access time is specified by tvp[0], and the new modification time by tvp[1].  Similar to utime, if tvp is a null pointer then the access and modification times of the file are set to the current time.  This function comes from BSD. 
+The return values and error conditions are the same as for the utime function. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int lutimes (const char *filename, const struct timeval tvp[2])
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function is like utimes, except that it does not follow symbolic links.  If filename is the name of a symbolic link, lutimes sets the file access and modification times of the symbolic link special file itself (as seen by lstat; see Symbolic Links) while utimes sets the file access and modification times of the file the symbolic link refers to.  This function comes from FreeBSD, and is not available on all platforms (if not available, it will fail with ENOSYS). 
+The return values and error conditions are the same as for the utime function. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int futimes (int fd, const struct timeval tvp[2])
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function is like utimes, except that it takes an open file descriptor as an argument instead of a file name.  See Low-Level I/O.  This function comes from FreeBSD, and is not available on all platforms (if not available, it will fail with ENOSYS). 
+Like utimes, futimes returns 0 on success and -1 on failure.  The following errno error conditions are defined for futimes: 
+	EACCES
+There is a permission problem in the case where a null pointer was passed as the times argument.  In order to update the time stamp on the file, you must either be the owner of the file, have write permission for the file, or be a privileged user.  
+	EBADF
+The filedes argument is not a valid file descriptor.  
+	EPERM
+If the times argument is not a null pointer, you must either be the owner of the file or be a privileged user.  
+	EROFS
+The file lives on a read-only file system. 

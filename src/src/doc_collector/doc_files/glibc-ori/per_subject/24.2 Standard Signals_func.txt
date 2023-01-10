@@ -1,0 +1,4 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int NSIG
+The value of this symbolic constant is the total number of signals defined.  Since the signal numbers are allocated consecutively, NSIG is also one greater than the largest defined signal number. 

@@ -1,0 +1,5 @@
+Simple calendar times represent absolute times as elapsed times since an epoch.  This is convenient for computation, but has no relation to the way people normally think of calendar time.  By contrast, broken-down time is a binary representation of calendar time separated into year, month, day, and so on.  Broken-down time values are not useful for calculations, but they are useful for printing human readable time information. 
+A broken-down time value is always relative to a choice of time zone, and it also indicates which time zone that is. 
+The symbols in this section are declared in the header file time.h. 
+Using the localtime function is a big problem in multi-threaded programs.  The result is returned in a static buffer and this is used in all threads.  POSIX.1c introduced a variant of this function. 
+As for the localtime function we have the problem that the result is placed in a static variable.  POSIX.1c also provides a replacement for gmtime. 

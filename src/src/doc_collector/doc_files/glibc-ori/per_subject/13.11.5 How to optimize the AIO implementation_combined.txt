@@ -1,0 +1,29 @@
+The POSIX standard does not specify how the AIO functions are implemented.  They could be system calls, but it is also possible to emulate them at userlevel. 
+At the time of writing, the available implementation is a user-level implementation which uses threads for handling the enqueued requests. While this implementation requires making some decisions about limitations, hard limitations are something best avoided in the GNU C Library.  Therefore, the GNU C Library provides a means for tuning the AIO implementation according to the individual use. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: struct aioinit
+This data type is used to pass the configuration or tunable parameters to the implementation.  The program has to initialize the members of this struct and pass it to the implementation using the aio_init function. 
+	int aio_threads
+This member specifies the maximal number of threads which may be used at any one time. 
+	int aio_num
+This number provides an estimate on the maximal number of simultaneously enqueued requests. 
+	int aio_locks
+Unused. 
+	int aio_usedba
+Unused. 
+	int aio_debug
+Unused. 
+	int aio_numusers
+Unused. 
+	int aio_reserved[2]
+Unused. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void aio_init (const struct aioinit *init)
+Preliminary: | MT-Safe  | AS-Unsafe lock | AC-Unsafe lock | See POSIX Safety Concepts. 
+This function must be called before any other AIO function.  Calling it is completely voluntary, as it is only meant to help the AIO implementation perform better. 
+Before calling aio_init, the members of a variable of type struct aioinit must be initialized.  Then a reference to this variable is passed as the parameter to aio_init which itself may or may not pay attention to the hints. 
+The function has no return value and no error cases are defined.  It is an extension which follows a proposal from the SGI implementation in Irix 6.  It is not covered by POSIX.1b or Unix98. 

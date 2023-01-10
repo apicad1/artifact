@@ -1,0 +1,8 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int putpwent (const struct passwd *p, FILE *stream)
+Preliminary: | MT-Safe locale | AS-Unsafe corrupt | AC-Unsafe lock corrupt | See POSIX Safety Concepts. 
+This function writes the user entry *p to the stream stream, in the format used for the standard user database file.  The return value is zero on success and nonzero on failure. 
+This function exists for compatibility with SVID.  We recommend that you avoid using it, because it makes sense only on the assumption that the struct passwd structure has no members except the standard ones; on a system which merges the traditional Unix data base with other extended information about users, adding an entry using this function would inevitably leave out much of the important information. 
+The group and user ID fields are left empty if the group or user name starts with a - or +. 
+The function putpwent is declared in pwd.h. 

@@ -1,0 +1,5 @@
+A higher-level interface to the directory handling functions is the scandir function.  With its help one can select a subset of the entries in a directory, possibly sort them and get a list of names as the result. 
+As described above, the fourth argument to the scandir function must be a pointer to a sorting function.  For the convenience of the programmer the GNU C Library contains implementations of functions which are very helpful for this purpose. 
+If the filesystem supports large files we cannot use the scandir anymore since the dirent structure might not able to contain all the information.  The LFS provides the new type struct dirent64.  To use this we need a new function. 
+As cmp is now a function of a different type, the functions alphasort and versionsort cannot be supplied for that argument.  Instead we provide the two replacement functions below. 
+It is important not to mix the use of scandir and the 64-bit comparison functions or vice versa.  There are systems on which this works but on others it will fail miserably. 

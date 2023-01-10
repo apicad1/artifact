@@ -1,0 +1,1 @@
+You can search the system user database for information about a specific user using getpwuid or getpwnam.  These functions are declared in pwd.h. 

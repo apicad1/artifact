@@ -1,0 +1,22 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘%25[1234567890]’
+Matches a string of up to 25 digits. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘%25[][]’
+Matches a string of up to 25 square brackets. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘%25[^ \f\n\r\t\v]’
+Matches a string up to 25 characters long that doesn’t contain any of the standard whitespace characters.  This is slightly different from ‘%s’, because if the input begins with a whitespace character, ‘%[’ reports a matching failure while ‘%s’ simply discards the initial whitespace. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘%25[a-z]’
+Matches up to 25 lowercase characters. 

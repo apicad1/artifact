@@ -1,0 +1,36 @@
+Here is a revised version of the directory lister found above (see Simple Directory Lister).  Using the scandir function we can avoid the functions which work directly with the directory contents. After the call the returned entries are available for direct use. 
+
+EXAMPLE_BEGIN
+
+
+#include <stdio.h>
+#include <dirent.h>
+
+
+static int
+one (const struct dirent *unused)
+{
+  return 1;
+}
+
+int
+main (void)
+{
+  struct dirent **eps;
+  int n;
+
+  n = scandir ("./", &eps, one, alphasort);
+  if (n >= 0)
+    {
+      int cnt;
+      for (cnt = 0; cnt < n; ++cnt)
+        puts (eps[cnt]->d_name);
+    }
+  else
+    perror ("Couldn't open the directory");
+
+  return 0;
+}
+EXAMPLE_END
+
+Note the simple selector function in this example.  Since we want to see all directory entries we always return 1. 

@@ -1,0 +1,2 @@
+The operating modes affect how input and output operations using a file descriptor work.  These flags are set by open and can be fetched and changed with fcntl. 
+The remaining operating modes are BSD and GNU extensions.  They exist only on some systems.  On other systems, these macros are not defined. 

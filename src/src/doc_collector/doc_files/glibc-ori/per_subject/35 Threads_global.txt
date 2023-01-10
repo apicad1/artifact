@@ -1,0 +1,9 @@
+This chapter describes functions used for managing threads. The GNU C Library provides two threading implementations: ISO C threads and POSIX threads. 
+
+TABLE_BEGIN
+ • ISO C Threads    Threads based on the ISO C specification.
+
+ • POSIX Threads    Threads based on the POSIX specification.
+
+TABLE_END
+

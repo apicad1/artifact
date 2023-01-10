@@ -1,0 +1,60 @@
+The internal representation for entries of the file is struct fstab, defined in fstab.h. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: struct fstab
+This structure is used with the getfsent, getfsspec, and getfsfile functions. 
+	char *fs_spec
+This element describes the device from which the filesystem is mounted. Normally this is the name of a special device, such as a hard disk partition, but it could also be a more or less generic string.  For NFS it would be a hostname and directory name combination.  Even though the element is not declared const it shouldn’t be modified.  The missing const has historic reasons, since this function predates ISO C.  The same is true for the other string elements of this structure.  
+	char *fs_file
+This describes the mount point on the local system.  I.e., accessing any file in this filesystem has implicitly or explicitly this string as a prefix.  
+	char *fs_vfstype
+This is the type of the filesystem.  Depending on what the underlying kernel understands it can be any string.  
+	char *fs_mntops
+This is a string containing options passed to the kernel with the mount call.  Again, this can be almost anything.  There can be more than one option, separated from the others by a comma.  Each option consists of a name and an optional value part, introduced by an = character.  If the value of this element must be processed it should ideally be done using the getsubopt function; see Suboptions.  
+	const char *fs_type
+This name is poorly chosen.  This element points to a string (possibly in the fs_mntops string) which describes the modes with which the filesystem is mounted.  fstab defines five macros to describe the possible values:   FSTAB_RW   The filesystem gets mounted with read and write enabled.  FSTAB_RQ   The filesystem gets mounted with read and write enabled.  Write access is restricted by quotas.  FSTAB_RO   The filesystem gets mounted read-only.  FSTAB_SW   This is not a real filesystem, it is a swap device.  FSTAB_XX   This entry from the fstab file is totally ignored.    Testing for equality with these values must happen using strcmp since these are all strings.  Comparing the pointer will probably always fail.  
+	int fs_freq
+This element describes the dump frequency in days.  
+	int fs_passno
+This element describes the pass number on parallel dumps.  It is closely related to the dump utility used on Unix systems. 
+<<<<<<<<<<<<<<<<<<<<
+
+To read the entire content of the of the fstab file the GNU C Library contains a set of three functions which are designed in the usual way. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int setfsent (void)
+Preliminary: | MT-Unsafe race:fsent | AS-Unsafe heap corrupt lock | AC-Unsafe corrupt lock mem fd | See POSIX Safety Concepts. 
+This function makes sure that the internal read pointer for the fstab file is at the beginning of the file.  This is done by either opening the file or resetting the read pointer. 
+Since the file handle is internal to the libc this function is not thread-safe. 
+This function returns a non-zero value if the operation was successful and the getfs* functions can be used to read the entries of the file. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void endfsent (void)
+Preliminary: | MT-Unsafe race:fsent | AS-Unsafe heap corrupt lock | AC-Unsafe corrupt lock mem fd | See POSIX Safety Concepts. 
+This function makes sure that all resources acquired by a prior call to setfsent (explicitly or implicitly by calling getfsent) are freed. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: struct fstab * getfsent (void)
+Preliminary: | MT-Unsafe race:fsent locale | AS-Unsafe corrupt heap lock | AC-Unsafe corrupt lock mem | See POSIX Safety Concepts. 
+This function returns the next entry of the fstab file.  If this is the first call to any of the functions handling fstab since program start or the last call of endfsent, the file will be opened. 
+The function returns a pointer to a variable of type struct fstab.  This variable is shared by all threads and therefore this function is not thread-safe.  If an error occurred getfsent returns a NULL pointer. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: struct fstab * getfsspec (const char *name)
+Preliminary: | MT-Unsafe race:fsent locale | AS-Unsafe corrupt heap lock | AC-Unsafe corrupt lock mem | See POSIX Safety Concepts. 
+This function returns the next entry of the fstab file which has a string equal to name pointed to by the fs_spec element. Since there is normally exactly one entry for each special device it makes no sense to call this function more than once for the same argument.  If this is the first call to any of the functions handling fstab since program start or the last call of endfsent, the file will be opened. 
+The function returns a pointer to a variable of type struct fstab.  This variable is shared by all threads and therefore this function is not thread-safe.  If an error occurred getfsent returns a NULL pointer. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: struct fstab * getfsfile (const char *name)
+Preliminary: | MT-Unsafe race:fsent locale | AS-Unsafe corrupt heap lock | AC-Unsafe corrupt lock mem | See POSIX Safety Concepts. 
+This function returns the next entry of the fstab file which has a string equal to name pointed to by the fs_file element. Since there is normally exactly one entry for each mount point it makes no sense to call this function more than once for the same argument.  If this is the first call to any of the functions handling fstab since program start or the last call of endfsent, the file will be opened. 
+The function returns a pointer to a variable of type struct fstab.  This variable is shared by all threads and therefore this function is not thread-safe.  If an error occurred getfsent returns a NULL pointer. 

@@ -1,0 +1,58 @@
+One place where the gettext functions, if used normally, have big problems is within programs with graphical user interfaces (GUIs).  The problem is that many of the strings which have to be translated are very short.  They have to appear in pull-down menus which restricts the length.  But strings which are not containing entire sentences or at least large fragments of a sentence may appear in more than one situation in the program but might have different translations.  This is especially true for the one-word strings which are frequently used in GUI programs. 
+As a consequence many people say that the gettext approach is wrong and instead catgets should be used which indeed does not have this problem.  But there is a very simple and powerful method to handle these kind of problems with the gettext functions. 
+As an example consider the following fictional situation.  A GUI program has a menu bar with the following entries: 
+
+EXAMPLE_BEGIN
++------------+------------+--------------------------------------+
+| File       | Printer    |                                      |
++------------+------------+--------------------------------------+
+| Open     | | Select   |
+| New      | | Open     |
++----------+ | Connect  |
+             +----------+
+EXAMPLE_END
+
+To have the strings File, Printer, Open, New, Select, and Connect translated there has to be at some point in the code a call to a function of the gettext family.  But in two places the string passed into the function would be Open.  The translations might not be the same and therefore we are in the dilemma described above. 
+One solution to this problem is to artificially extend the strings to make them unambiguous.  But what would the program do if no translation is available?  The extended string is not what should be printed.  So we should use a slightly modified version of the functions. 
+To extend the strings a uniform method should be used.  E.g., in the example above, the strings could be chosen as 
+
+EXAMPLE_BEGIN
+Menu|File
+Menu|Printer
+Menu|File|Open
+Menu|File|New
+Menu|Printer|Select
+Menu|Printer|Open
+Menu|Printer|Connect
+EXAMPLE_END
+
+Now all the strings are different and if now instead of gettext the following little wrapper function is used, everything works just fine: 
+
+EXAMPLE_BEGIN
+  char *
+  sgettext (const char *msgid)
+  {
+    char *msgval = gettext (msgid);
+    if (msgval == msgid)
+      msgval = strrchr (msgid, '|') + 1;
+    return msgval;
+  }
+EXAMPLE_END
+
+What this little function does is to recognize the case when no translation is available.  This can be done very efficiently by a pointer comparison since the return value is the input value.  If there is no translation we know that the input string is in the format we used for the Menu entries and therefore contains a | character.  We simply search for the last occurrence of this character and return a pointer to the character following it.  That’s it! 
+If one now consistently uses the extended string form and replaces the gettext calls with calls to sgettext (this is normally limited to very few places in the GUI implementation) then it is possible to produce a program which can be internationalized. 
+With advanced compilers (such as GNU C) one can write the sgettext functions as an inline function or as a macro like this: 
+
+EXAMPLE_BEGIN
+#define sgettext(msgid) \
+  ({ const char *__msgid = (msgid);            \
+     char *__msgstr = gettext (__msgid);       \
+     if (__msgval == __msgid)                  \
+       __msgval = strrchr (__msgid, '|') + 1;  \
+     __msgval; })
+EXAMPLE_END
+
+The other gettext functions (dgettext, dcgettext and the ngettext equivalents) can and should have corresponding functions as well which look almost identical, except for the parameters and the call to the underlying function. 
+Now there is of course the question why such functions do not exist in the GNU C Library?  There are two parts of the answer to this question. 
+  They are easy to write and therefore can be provided by the project they are used in.  This is not an answer by itself and must be seen together with the second part which is:   There is no way the C library can contain a version which can work everywhere.  The problem is the selection of the character to separate the prefix from the actual string in the extended string.  The examples above used | which is a quite good choice because it resembles a notation frequently used in this context and it also is a character not often used in message strings.  But what if the character is used in message strings.  Or if the chose character is not available in the character set on the machine one compiles (e.g., | is not required to exist for ISO C; this is why the iso646.h file exists in ISO C programming environments). 
+There is only one more comment to make left.  The wrapper function above requires that the translations strings are not extended themselves. This is only logical.  There is no need to disambiguate the strings (since they are never used as keys for a search) and one also saves quite some memory and disk space by doing this. 

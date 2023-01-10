@@ -1,0 +1,21 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int SOCK_STREAM
+The SOCK_STREAM style is like a pipe (see Pipes and FIFOs). It operates over a connection with a particular remote socket and transmits data reliably as a stream of bytes. 
+Use of this style is covered in detail in Connections. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int SOCK_DGRAM
+The SOCK_DGRAM style is used for sending individually-addressed packets unreliably. It is the diametrical opposite of SOCK_STREAM. 
+Each time you write data to a socket of this kind, that data becomes one packet.  Since SOCK_DGRAM sockets do not have connections, you must specify the recipient address with each packet. 
+The only guarantee that the system makes about your requests to transmit data is that it will try its best to deliver each packet you send.  It may succeed with the sixth packet after failing with the fourth and fifth packets; the seventh packet may arrive before the sixth, and may arrive a second time after the sixth. 
+The typical use for SOCK_DGRAM is in situations where it is acceptable to simply re-send a packet if no response is seen in a reasonable amount of time. 
+See Datagrams, for detailed information about how to use datagram sockets. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int SOCK_RAW
+This style provides access to low-level network protocols and interfaces.  Ordinary user programs usually have no need to use this style. 

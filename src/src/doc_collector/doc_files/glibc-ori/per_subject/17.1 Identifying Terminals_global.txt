@@ -1,0 +1,3 @@
+The functions described in this chapter only work on files that correspond to terminal devices.  You can find out whether a file descriptor is associated with a terminal by using the isatty function. 
+Prototypes for the functions in this section are declared in the header file unistd.h. 
+If a file descriptor is associated with a terminal, you can get its associated file name using the ttyname function.  See also the ctermid function, described in Identifying the Terminal. 

@@ -1,0 +1,4 @@
+ISO C99 defines macros that let you determine what sort of floating-point number a variable holds. 
+fpclassify is most useful if more than one property of a number must be tested.  There are more specific macros which only test one property at a time.  Generally these macros execute faster than fpclassify, since there is special hardware support for them. You should therefore use the specific macros whenever possible. 
+Another set of floating-point classification functions was provided by BSD.  The GNU C Library also supports these functions; however, we recommend that you use the ISO C99 macros in new code.  Those are standard and will be available more widely.  Also, since they are macros, you do not have to worry about the type of their argument. 
+Portability Note: The functions listed in this section are BSD extensions. 

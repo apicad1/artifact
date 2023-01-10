@@ -1,0 +1,55 @@
+LOG10(3)                                        Linux Programmer's Manual                                       LOG10(3)
+
+NAME
+       log10, log10f, log10l -  base-10 logarithmic function
+
+SYNOPSIS
+       #include <math.h>
+
+       double log10(double x);
+       float log10f(float x);
+       long double log10l(long double x);
+
+       Link with -lm.
+
+   Feature Test Macro Requirements for glibc (see feature_test_macros(7)):
+
+       log10f(), log10l():
+           _ISOC99_SOURCE || _POSIX_C_SOURCE >= 200112L
+               || /* Since glibc 2.19: */ _DEFAULT_SOURCE
+               || /* Glibc versions <= 2.19: */ _BSD_SOURCE || _SVID_SOURCE
+
+DESCRIPTION
+       These functions return the base 10 logarithm of x.
+
+RETURN VALUE
+       On success, these functions return the base 10 logarithm of x.
+
+       For special cases, including where x is 0, 1, negative, infinity, or NaN, see log(3).
+
+ERRORS
+       See math_error(7) for information on how to determine whether an error has occurred when calling these functions.
+
+       For a discussion of the errors that can occur for these functions, see log(3).
+
+ATTRIBUTES
+       For an explanation of the terms used in this section, see attributes(7).
+
+       ┌─────────────────────────────┬───────────────┬─────────┐
+       │Interface                    │ Attribute     │ Value   │
+       ├─────────────────────────────┼───────────────┼─────────┤
+       │log10(), log10f(), log10l()  │ Thread safety │ MT-Safe │
+       └─────────────────────────────┴───────────────┴─────────┘
+CONFORMING TO
+       C99, POSIX.1-2001, POSIX.1-2008.
+
+       The variant returning double also conforms to SVr4, 4.3BSD, C89.
+
+SEE ALSO
+       cbrt(3), clog10(3), exp10(3), log(3), log2(3), sqrt(3)
+
+COLOPHON
+       This  page  is  part  of  release 5.05 of the Linux man-pages project.  A description of the project, information
+       about reporting bugs, and the latest version of this page, can be found at https://www.kernel.org/doc/man-pages/.
+
+                                                       2017-09-15                                               LOG10(3)

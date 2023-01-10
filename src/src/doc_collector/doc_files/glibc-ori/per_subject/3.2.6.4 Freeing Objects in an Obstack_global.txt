@@ -1,0 +1,8 @@
+To free an object allocated in an obstack, use the function obstack_free.  Since the obstack is a stack of objects, freeing one object automatically frees all other objects allocated more recently in the same obstack. 
+Note that if object is a null pointer, the result is an uninitialized obstack.  To free all memory in an obstack but leave it valid for further allocation, call obstack_free with the address of the first object allocated on the obstack: 
+
+EXAMPLE_BEGIN
+obstack_free (obstack_ptr, first_object_allocated_ptr);
+EXAMPLE_END
+
+Recall that the objects in an obstack are grouped into chunks.  When all the objects in a chunk become free, the obstack library automatically frees the chunk (see Preparing for Obstacks).  Then other obstacks, or non-obstack allocation, can reuse the space of the chunk. 

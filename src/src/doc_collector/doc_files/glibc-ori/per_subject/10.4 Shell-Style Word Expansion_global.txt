@@ -1,0 +1,21 @@
+Word expansion means the process of splitting a string into words and substituting for variables, commands, and wildcards just as the shell does. 
+For example, when you write ‘ls -l foo.c’, this string is split into three separate words—‘ls’, ‘-l’ and ‘foo.c’. This is the most basic function of word expansion. 
+When you write ‘ls *.c’, this can become many words, because the word ‘*.c’ can be replaced with any number of file names. This is called wildcard expansion, and it is also a part of word expansion. 
+When you use ‘echo $PATH’ to print your path, you are taking advantage of variable substitution, which is also part of word expansion. 
+Ordinary programs can perform word expansion just like the shell by calling the library function wordexp. 
+
+TABLE_BEGIN
+ • Expansion Stages    What word expansion does to a string.
+
+ • Calling Wordexp    How to call wordexp.
+
+ • Flags for Wordexp    Options you can enable in wordexp.
+
+ • Wordexp Example    A sample program that does word expansion.
+
+ • Tilde Expansion    Details of how tilde expansion works.
+
+ • Variable Substitution    Different types of variable substitution.
+
+TABLE_END
+

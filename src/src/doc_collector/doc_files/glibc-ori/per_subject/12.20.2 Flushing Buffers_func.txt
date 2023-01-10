@@ -1,0 +1,29 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int fflush (FILE *stream)
+Preliminary: | MT-Safe  | AS-Unsafe corrupt | AC-Unsafe lock corrupt | See POSIX Safety Concepts. 
+This function causes any buffered output on stream to be delivered to the file.  If stream is a null pointer, then fflush causes buffered output on all open output streams to be flushed. 
+This function returns EOF if a write error occurs, or zero otherwise. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int fflush_unlocked (FILE *stream)
+Preliminary: | MT-Safe race:stream | AS-Unsafe corrupt | AC-Unsafe corrupt | See POSIX Safety Concepts. 
+The fflush_unlocked function is equivalent to the fflush function except that it does not implicitly lock the stream. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void _flushlbf (void)
+Preliminary: | MT-Safe  | AS-Unsafe corrupt | AC-Unsafe lock corrupt | See POSIX Safety Concepts. 
+The _flushlbf function flushes all line buffered streams currently opened. 
+This function is declared in the stdio_ext.h header. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void __fpurge (FILE *stream)
+Preliminary: | MT-Safe race:stream | AS-Unsafe corrupt | AC-Unsafe corrupt | See POSIX Safety Concepts. 
+The __fpurge function causes the buffer of the stream stream to be emptied.  If the stream is currently in read mode all input in the buffer is lost.  If the stream is in output mode the buffered output is not written to the device (or whatever other underlying storage) and the buffer is cleared. 
+This function is declared in stdio_ext.h. 

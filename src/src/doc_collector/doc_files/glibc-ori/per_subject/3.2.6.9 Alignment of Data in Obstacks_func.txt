@@ -1,0 +1,12 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int obstack_alignment_mask (struct obstack *obstack-ptr)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The value is a bit mask; a bit that is 1 indicates that the corresponding bit in the address of an object should be 0.  The mask value should be one less than a power of 2; the effect is that all object addresses are multiples of that power of 2.  The default value of the mask is a value that allows aligned objects to hold any type of data: for example, if its value is 3, any type of data can be stored at locations whose addresses are multiples of 4.  A mask value of 0 means an object can start on any multiple of 1 (that is, no alignment is required). 
+The expansion of the macro obstack_alignment_mask is an lvalue, so you can alter the mask by assignment.  For example, this statement: 
+
+EXAMPLE_BEGIN
+obstack_alignment_mask (obstack_ptr) = 0;
+EXAMPLE_END
+
+has the effect of turning off alignment processing in the specified obstack. 

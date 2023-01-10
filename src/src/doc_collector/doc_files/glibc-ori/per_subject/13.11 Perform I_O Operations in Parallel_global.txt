@@ -1,0 +1,18 @@
+The POSIX.1b standard defines a new set of I/O operations which can significantly reduce the time an application spends waiting for I/O.  The new functions allow a program to initiate one or more I/O operations and then immediately resume normal work while the I/O operations are executed in parallel.  This functionality is available if the unistd.h file defines the symbol _POSIX_ASYNCHRONOUS_IO. 
+These functions are part of the library with realtime functions named librt.  They are not actually part of the libc binary. The implementation of these functions can be done using support in the kernel (if available) or using an implementation based on threads at userlevel.  In the latter case it might be necessary to link applications with the thread library libpthread in addition to librt. 
+All AIO operations operate on files which were opened previously.  There might be arbitrarily many operations running for one file.  The asynchronous I/O operations are controlled using a data structure named struct aiocb (AIO control block).  It is defined in aio.h as follows. 
+For use with the AIO functions defined in the LFS, there is a similar type defined which replaces the types of the appropriate members with larger types but otherwise is equivalent to struct aiocb.  Particularly, all member names are the same. 
+
+TABLE_BEGIN
+ • Asynchronous Reads/Writes    Asynchronous Read and Write Operations.
+
+ • Status of AIO Operations    Getting the Status of AIO Operations.
+
+ • Synchronizing AIO Operations    Getting into a consistent state.
+
+ • Cancel AIO Operations    Cancellation of AIO Operations.
+
+ • Configuration of AIO    How to optimize the AIO implementation.
+
+TABLE_END
+

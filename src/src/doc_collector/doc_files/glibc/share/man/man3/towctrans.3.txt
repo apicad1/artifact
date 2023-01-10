@@ -1,0 +1,42 @@
+TOWCTRANS(3)                                    Linux Programmer's Manual                                   TOWCTRANS(3)
+
+NAME
+       towctrans - wide-character transliteration
+
+SYNOPSIS
+       #include <wctype.h>
+
+       wint_t towctrans(wint_t wc, wctrans_t desc);
+
+DESCRIPTION
+       If  wc  is  a  wide character, the towctrans() function translates it according to the transliteration descriptor
+       desc.  If wc is WEOF, WEOF is returned.
+
+       desc must be a transliteration descriptor returned by the wctrans(3) function.
+
+RETURN VALUE
+       The towctrans() function returns the translated wide character, or WEOF if wc is WEOF.
+
+ATTRIBUTES
+       For an explanation of the terms used in this section, see attributes(7).
+
+       ┌──────────────────────────────────────────────────────────────────────────────────────┬───────────────┬─────────┐
+       │Interface                                                                             │ Attribute     │ Value   │
+       ├──────────────────────────────────────────────────────────────────────────────────────┼───────────────┼─────────┤
+       │towctrans()                                                                           │ Thread safety │ MT-Safe │
+       └──────────────────────────────────────────────────────────────────────────────────────┴───────────────┴─────────┘
+
+CONFORMING TO
+       POSIX.1-2001, POSIX.1-2008, C99.
+
+NOTES
+       The behavior of towctrans() depends on the LC_CTYPE category of the current locale.
+
+SEE ALSO
+       towlower(3), towupper(3), wctrans(3)
+
+COLOPHON
+       This page is part of release 5.13 of the Linux man-pages project.  A  description  of  the  project,  information
+       about reporting bugs, and the latest version of this page, can be found at https://www.kernel.org/doc/man-pages/.
+
+GNU                                                    2021-03-22                                           TOWCTRANS(3)

@@ -1,0 +1,18 @@
+This section describes the GNU C Library ISO C threads implementation. To have a deeper understanding of this API, it is strongly recommended to read ISO/IEC 9899:2011, section 7.26, in which ISO C threads were originally specified.  All types and function prototypes are declared in the header file threads.h. 
+
+TABLE_BEGIN
+ • ISO C Threads Return Values    Symbolic constants that represent a
+				function’s return value.
+
+ • ISO C Thread Management    Support for basic threading.
+
+ • Call Once    Single-call functions and macros.
+
+ • ISO C Mutexes    A low-level mechanism for mutual exclusion.
+
+ • ISO C Condition Variables    High-level objects for thread synchronization.
+
+ • ISO C Thread-local Storage    Functions to support thread-local storage.
+
+TABLE_END
+

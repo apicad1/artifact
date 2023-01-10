@@ -1,0 +1,1 @@
+The GNU C Library includes support for several different kinds of sockets, each with different characteristics.  This section describes the supported socket types.  The symbolic constants listed here are defined in sys/socket.h.  

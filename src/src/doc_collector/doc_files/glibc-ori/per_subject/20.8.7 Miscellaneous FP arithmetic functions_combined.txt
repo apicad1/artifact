@@ -1,0 +1,322 @@
+The functions in this section perform miscellaneous but common operations that are awkward to express with C operators.  On some processors these functions can use special machine instructions to perform these operations faster than the equivalent C code. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: double fmin (double x, double y)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: float fminf (float x, float y)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: long double fminl (long double x, long double y)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: _FloatN fminfN (_FloatN x, _FloatN y)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: _FloatNx fminfNx (_FloatNx x, _FloatNx y)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The fmin function returns the lesser of the two values x and y.  It is similar to the expression 
+
+EXAMPLE_BEGIN
+((x) < (y) ? (x) : (y))
+EXAMPLE_END
+
+except that x and y are only evaluated once. 
+If an argument is NaN, the other argument is returned.  If both arguments are NaN, NaN is returned. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: double fmax (double x, double y)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: float fmaxf (float x, float y)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: long double fmaxl (long double x, long double y)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: _FloatN fmaxfN (_FloatN x, _FloatN y)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: _FloatNx fmaxfNx (_FloatNx x, _FloatNx y)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The fmax function returns the greater of the two values x and y. 
+If an argument is NaN, the other argument is returned.  If both arguments are NaN, NaN is returned. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: double fminmag (double x, double y)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: float fminmagf (float x, float y)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: long double fminmagl (long double x, long double y)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: _FloatN fminmagfN (_FloatN x, _FloatN y)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: _FloatNx fminmagfNx (_FloatNx x, _FloatNx y)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+These functions, from TS 18661-1:2014 and TS 18661-3:2015, return whichever of the two values x and y has the smaller absolute value.  If both have the same absolute value, or either is NaN, they behave the same as the fmin functions. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: double fmaxmag (double x, double y)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: float fmaxmagf (float x, float y)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: long double fmaxmagl (long double x, long double y)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: _FloatN fmaxmagfN (_FloatN x, _FloatN y)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: _FloatNx fmaxmagfNx (_FloatNx x, _FloatNx y)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+These functions, from TS 18661-1:2014, return whichever of the two values x and y has the greater absolute value.  If both have the same absolute value, or either is NaN, they behave the same as the fmax functions. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: double fdim (double x, double y)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: float fdimf (float x, float y)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: long double fdiml (long double x, long double y)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: _FloatN fdimfN (_FloatN x, _FloatN y)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: _FloatNx fdimfNx (_FloatNx x, _FloatNx y)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The fdim function returns the positive difference between x and y.  The positive difference is x - y if x is greater than y, and 0 otherwise. 
+If x, y, or both are NaN, NaN is returned. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: double fma (double x, double y, double z)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: float fmaf (float x, float y, float z)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: long double fmal (long double x, long double y, long double z)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: _FloatN fmafN (_FloatN x, _FloatN y, _FloatN z)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: _FloatNx fmafNx (_FloatNx x, _FloatNx y, _FloatNx z)
+
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The fma function performs floating-point multiply-add.  This is the operation (x · y) + z, but the intermediate result is not rounded to the destination type.  This can sometimes improve the precision of a calculation. 
+This function was introduced because some processors have a special instruction to perform multiply-add.  The C compiler cannot use it directly, because the expression ‘x*y + z’ is defined to round the intermediate result.  fma lets you choose when you want to round only once. 
+
+On processors which do not implement multiply-add in hardware, fma can be very slow since it must avoid intermediate rounding. math.h defines the symbols FP_FAST_FMA, FP_FAST_FMAF, and FP_FAST_FMAL when the corresponding version of fma is no slower than the expression ‘x*y + z’. In the GNU C Library, this always means the operation is implemented in hardware. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: float fadd (double x, double y)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: float faddl (long double x, long double y)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: double daddl (long double x, long double y)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: _FloatM fMaddfN (_FloatN x, _FloatN y)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: _FloatM fMaddfNx (_FloatNx x, _FloatNx y)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: _FloatMx fMxaddfN (_FloatN x, _FloatN y)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: _FloatMx fMxaddfNx (_FloatNx x, _FloatNx y)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+These functions, from TS 18661-1:2014 and TS 18661-3:2015, return x + y, rounded once to the return type of the function without any intermediate rounding to the type of the arguments. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: float fsub (double x, double y)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: float fsubl (long double x, long double y)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: double dsubl (long double x, long double y)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: _FloatM fMsubfN (_FloatN x, _FloatN y)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: _FloatM fMsubfNx (_FloatNx x, _FloatNx y)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: _FloatMx fMxsubfN (_FloatN x, _FloatN y)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: _FloatMx fMxsubfNx (_FloatNx x, _FloatNx y)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+These functions, from TS 18661-1:2014 and TS 18661-3:2015, return x - y, rounded once to the return type of the function without any intermediate rounding to the type of the arguments. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: float fmul (double x, double y)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: float fmull (long double x, long double y)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: double dmull (long double x, long double y)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: _FloatM fMmulfN (_FloatN x, _FloatN y)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: _FloatM fMmulfNx (_FloatNx x, _FloatNx y)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: _FloatMx fMxmulfN (_FloatN x, _FloatN y)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: _FloatMx fMxmulfNx (_FloatNx x, _FloatNx y)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+These functions, from TS 18661-1:2014 and TS 18661-3:2015, return x * y, rounded once to the return type of the function without any intermediate rounding to the type of the arguments. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: float fdiv (double x, double y)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: float fdivl (long double x, long double y)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: double ddivl (long double x, long double y)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: _FloatM fMdivfN (_FloatN x, _FloatN y)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: _FloatM fMdivfNx (_FloatNx x, _FloatNx y)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: _FloatMx fMxdivfN (_FloatN x, _FloatN y)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: _FloatMx fMxdivfNx (_FloatNx x, _FloatNx y)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+These functions, from TS 18661-1:2014 and TS 18661-3:2015, return x / y, rounded once to the return type of the function without any intermediate rounding to the type of the arguments. 

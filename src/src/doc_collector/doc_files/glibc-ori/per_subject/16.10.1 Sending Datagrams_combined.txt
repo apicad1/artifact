@@ -1,0 +1,11 @@
+The normal way of sending data on a datagram socket is by using the sendto function, declared in sys/socket.h. 
+You can call connect on a datagram socket, but this only specifies a default destination for further data transmission on the socket.  When a socket has a default destination you can use send (see Sending Data) or even write (see I/O Primitives) to send a packet there.  You can cancel the default destination by calling connect using an address format of AF_UNSPEC in the addr argument.  See Connecting, for more information about the connect function. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: ssize_t sendto (int socket, const void *buffer, size_t size, int flags, struct sockaddr *addr, socklen_t length)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The sendto function transmits the data in the buffer through the socket socket to the destination address specified by the addr and length arguments.  The size argument specifies the number of bytes to be transmitted. 
+The flags are interpreted the same way as for send; see Socket Data Options. 
+The return value and error conditions are also the same as for send, but you cannot rely on the system to detect errors and report them; the most common error is that the packet is lost or there is no-one at the specified address to receive it, and the operating system on your machine usually does not know this. 
+It is also possible for one call to sendto to report an error owing to a problem related to a previous call. 
+This function is defined as a cancellation point in multi-threaded programs, so one has to be prepared for this and make sure that allocated resources (like memory, file descriptors, semaphores or whatever) are freed even if the thread is canceled. 

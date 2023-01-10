@@ -1,0 +1,63 @@
+MBSINIT(3)                                      Linux Programmer's Manual                                     MBSINIT(3)
+
+NAME
+       mbsinit - test for initial shift state
+
+SYNOPSIS
+       #include <wchar.h>
+
+       int mbsinit(const mbstate_t *ps);
+
+DESCRIPTION
+       Character  conversion  between the multibyte representation and the wide character representation uses conversion
+       state, of type mbstate_t.  Conversion of a string uses a finite-state machine; when it is interrupted  after  the
+       complete  conversion  of a number of characters, it may need to save a state for processing the remaining charac‐
+       ters.  Such a conversion state is needed for the sake of encodings such as ISO-2022 and UTF-7.
+
+       The initial state is the state at the beginning of conversion of a string.  There are two kinds of state: the one
+       used  by multibyte to wide character conversion functions, such as mbsrtowcs(3), and the one used by wide charac‐
+       ter to multibyte conversion functions, such as wcsrtombs(3), but they both fit in a mbstate_t, and they both have
+       the same representation for an initial state.
+
+       For  8-bit encodings, all states are equivalent to the initial state.  For multibyte encodings like UTF-8, EUC-*,
+       BIG5, or SJIS, the wide character to multibyte conversion functions never produce  non-initial  states,  but  the
+       multibyte  to  wide-character conversion functions like mbrtowc(3) do produce non-initial states when interrupted
+       in the middle of a character.
+
+       One possible way to create an mbstate_t in initial state is to set it to zero:
+
+           mbstate_t state;
+           memset(&state, 0, sizeof(state));
+
+       On Linux, the following works as well, but might generate compiler warnings:
+
+           mbstate_t state = { 0 };
+
+       The function mbsinit() tests whether *ps corresponds to an initial state.
+
+RETURN VALUE
+       mbsinit() returns nonzero if *ps is an initial state, or if ps is NULL.  Otherwise, it returns 0.
+
+ATTRIBUTES
+       For an explanation of the terms used in this section, see attributes(7).
+
+       ┌──────────────────────────────────────────────────────────────────────────────────────┬───────────────┬─────────┐
+       │Interface                                                                             │ Attribute     │ Value   │
+       ├──────────────────────────────────────────────────────────────────────────────────────┼───────────────┼─────────┤
+       │mbsinit()                                                                             │ Thread safety │ MT-Safe │
+       └──────────────────────────────────────────────────────────────────────────────────────┴───────────────┴─────────┘
+
+CONFORMING TO
+       POSIX.1-2001, POSIX.1-2008, C99.
+
+NOTES
+       The behavior of mbsinit() depends on the LC_CTYPE category of the current locale.
+
+SEE ALSO
+       mbrlen(3), mbrtowc(3), mbsrtowcs(3), wcrtomb(3), wcsrtombs(3)
+
+COLOPHON
+       This page is part of release 5.13 of the Linux man-pages project.  A  description  of  the  project,  information
+       about reporting bugs, and the latest version of this page, can be found at https://www.kernel.org/doc/man-pages/.
+
+GNU                                                    2021-03-22                                             MBSINIT(3)

@@ -1,0 +1,12 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int EXIT_SUCCESS
+This macro can be used with the exit function to indicate successful program completion. 
+On POSIX systems, the value of this macro is 0.  On other systems, the value might be some other (possibly non-constant) integer expression. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int EXIT_FAILURE
+This macro can be used with the exit function to indicate unsuccessful program completion in a general sense. 
+On POSIX systems, the value of this macro is 1.  On other systems, the value might be some other (possibly non-constant) integer expression.  Other nonzero status values also indicate failures.  Certain programs use different nonzero status values to indicate particular kinds of "non-success".  For example, diff uses status value 1 to mean that the files are different, and 2 or more to mean that there was difficulty in opening the files. 

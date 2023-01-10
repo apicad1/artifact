@@ -1,0 +1,3 @@
+The functions listed here perform operations such as rounding and truncation of floating-point values.  Some of these functions convert floating point numbers to integer values.  They are all declared in math.h. 
+You can also convert floating-point numbers to integers simply by casting them to int.  This discards the fractional part, effectively rounding towards zero.  However, this only works if the result can actually be represented as an int—for very large numbers, this is impossible.  The functions listed here return the result as a double instead to get around this problem. 
+The fromfp functions use the following macros, from TS 18661-1:2014, to specify the direction of rounding.  These correspond to the rounding directions defined in IEEE 754-2008. 

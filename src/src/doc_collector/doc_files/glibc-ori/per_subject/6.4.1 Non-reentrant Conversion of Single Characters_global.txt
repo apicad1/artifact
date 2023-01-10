@@ -1,0 +1,1 @@
+Similar to mbrlen there is also a non-reentrant function that computes the length of a multibyte character.  It can be defined in terms of mbtowc. 

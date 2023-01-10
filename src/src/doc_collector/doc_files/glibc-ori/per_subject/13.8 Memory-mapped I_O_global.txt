@@ -1,0 +1,13 @@
+On modern operating systems, it is possible to mmap (pronounced “em-map”) a file to a region of memory.  When this is done, the file can be accessed just like an array in the program. 
+This is more efficient than read or write, as only the regions of the file that a program actually accesses are loaded.  Accesses to not-yet-loaded parts of the mmapped region are handled in the same way as swapped out pages. 
+Since mmapped pages can be stored back to their file when physical memory is low, it is possible to mmap files orders of magnitude larger than both the physical memory and swap space.  The only limit is address space.  The theoretical limit is 4GB on a 32-bit machine - however, the actual limit will be smaller since some areas will be reserved for other purposes.  If the LFS interface is used the file size on 32-bit systems is not limited to 2GB (offsets are signed which reduces the addressable area of 4GB by half); the full 64-bit are available. 
+Memory mapping only works on entire pages of memory.  Thus, addresses for mapping must be page-aligned, and length values will be rounded up. To determine the default size of a page the machine uses one should use: 
+
+EXAMPLE_BEGIN
+size_t page_size = (size_t) sysconf (_SC_PAGESIZE);
+EXAMPLE_END
+
+On some systems, mappings can use larger page sizes for certain files, and applications can request larger page sizes for anonymous mappings as well (see the MAP_HUGETLB flag below). 
+The following functions are declared in sys/mman.h: 
+This function is only available on a few systems.  Except for performing optional optimizations one should not rely on this function. 
+Not all file descriptors may be mapped.  Sockets, pipes, and most devices only allow sequential access and do not fit into the mapping abstraction. In addition, some regular files may not be mmapable, and older kernels may not support mapping at all.  Thus, programs using mmap should have a fallback method to use should it fail. See Mmap in GNU Coding Standards. 

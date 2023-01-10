@@ -1,0 +1,73 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- ${variable}
+If you write braces around the variable name, then it is completely unambiguous where the variable name ends.  You can concatenate additional letters onto the end of the variable value by writing them immediately after the close brace.  For example, ‘${foo}s’ expands into ‘tractors’. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- $variable
+If you do not put braces around the variable name, then the variable name consists of all the alphanumeric characters and underscores that follow the ‘$’.  The next punctuation character ends the variable name.  Thus, ‘$foo-bar’ refers to the variable foo and expands into ‘tractor-bar’. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ${variable:-default}
+Substitute the value of variable, but if that is empty or undefined, use default instead. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ${variable:=default}
+Substitute the value of variable, but if that is empty or undefined, use default instead and set the variable to default. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ${variable:?message}
+If variable is defined and not empty, substitute its value. 
+Otherwise, print message as an error message on the standard error stream, and consider word expansion a failure. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ${variable:+replacement}
+Substitute replacement, but only if variable is defined and nonempty.  Otherwise, substitute nothing for this construct. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ${#variable}
+Substitute a numeral which expresses in base ten the number of characters in the value of variable.  ‘${#foo}’ stands for ‘7’, because ‘tractor’ is seven characters. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ${variable%%suffix}
+Substitute the value of variable, but first discard from that variable any portion at the end that matches the pattern suffix. 
+If there is more than one alternative for how to match against suffix, this construct uses the longest possible match. 
+Thus, ‘${foo%%r*}’ substitutes ‘t’, because the largest match for ‘r*’ at the end of ‘tractor’ is ‘ractor’. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ${variable%suffix}
+Substitute the value of variable, but first discard from that variable any portion at the end that matches the pattern suffix. 
+If there is more than one alternative for how to match against suffix, this construct uses the shortest possible alternative. 
+Thus, ‘${foo%r*}’ substitutes ‘tracto’, because the shortest match for ‘r*’ at the end of ‘tractor’ is just ‘r’. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ${variable##prefix}
+Substitute the value of variable, but first discard from that variable any portion at the beginning that matches the pattern prefix. 
+If there is more than one alternative for how to match against prefix, this construct uses the longest possible match. 
+Thus, ‘${foo##*t}’ substitutes ‘or’, because the largest match for ‘*t’ at the beginning of ‘tractor’ is ‘tract’. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ${variable#prefix}
+Substitute the value of variable, but first discard from that variable any portion at the beginning that matches the pattern prefix. 
+If there is more than one alternative for how to match against prefix, this construct uses the shortest possible alternative. 
+Thus, ‘${foo#*t}’ substitutes ‘ractor’, because the shortest match for ‘*t’ at the beginning of ‘tractor’ is just ‘t’. 

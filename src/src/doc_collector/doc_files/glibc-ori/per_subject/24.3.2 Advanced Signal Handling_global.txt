@@ -1,0 +1,2 @@
+The sigaction function has the same basic effect as signal: to specify how a signal should be handled by the process. However, sigaction offers more control, at the expense of more complexity.  In particular, sigaction allows you to specify additional flags to control when the signal is generated and how the handler is invoked. 
+The sigaction function is declared in signal.h.  

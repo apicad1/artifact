@@ -1,0 +1,19 @@
+The recv function is declared in the header file sys/socket.h.  If your flags argument is zero, you can just as well use read instead of recv; see I/O Primitives. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: ssize_t recv (int socket, void *buffer, size_t size, int flags)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The recv function is like read, but with the additional flags flags.  The possible values of flags are described in Socket Data Options. 
+If nonblocking mode is set for socket, and no data are available to be read, recv fails immediately rather than waiting.  See File Status Flags, for information about nonblocking mode. 
+This function returns the number of bytes received, or -1 on failure. The following errno error conditions are defined for this function: 
+	EBADF
+The socket argument is not a valid file descriptor.  
+	ENOTSOCK
+The descriptor socket is not a socket.  
+	EWOULDBLOCK
+Nonblocking mode has been set on the socket, and the read operation would block.  (Normally, recv blocks until there is input available to be read.)  
+	EINTR
+The operation was interrupted by a signal before any data was read. See Interrupted Primitives.  
+	ENOTCONN
+You never connected this socket. 
+This function is defined as a cancellation point in multi-threaded programs, so one has to be prepared for this and make sure that allocated resources (like memory, file descriptors, semaphores or whatever) are freed even if the thread is canceled. 

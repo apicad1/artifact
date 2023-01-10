@@ -1,0 +1,10 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: struct group
+The group structure is used to hold information about an entry in the system group database.  It has at least the following members: 
+	char *gr_name
+The name of the group.  
+	gid_t gr_gid
+The group ID of the group.  
+	char **gr_mem
+A vector of pointers to the names of users in the group.  Each user name is a null-terminated string, and the vector itself is terminated by a null pointer. 

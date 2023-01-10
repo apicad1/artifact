@@ -1,0 +1,50 @@
+Many of the functions described in this chapter return the value of the macro EOF to indicate unsuccessful completion of the operation. Since EOF is used to report both end of file and random errors, it’s often better to use the feof function to check explicitly for end of file and ferror to check for errors.  These functions check indicators that are part of the internal state of the stream object, indicators set if the appropriate condition was detected by a previous I/O operation on that stream. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int EOF
+This macro is an integer value that is returned by a number of narrow stream functions to indicate an end-of-file condition, or some other error situation.  With the GNU C Library, EOF is -1.  In other libraries, its value may be some other negative number. 
+This symbol is declared in stdio.h. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int WEOF
+This macro is an integer value that is returned by a number of wide stream functions to indicate an end-of-file condition, or some other error situation.  With the GNU C Library, WEOF is -1.  In other libraries, its value may be some other negative number. 
+This symbol is declared in wchar.h. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int feof (FILE *stream)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Unsafe lock | See POSIX Safety Concepts. 
+The feof function returns nonzero if and only if the end-of-file indicator for the stream stream is set. 
+This symbol is declared in stdio.h. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int feof_unlocked (FILE *stream)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The feof_unlocked function is equivalent to the feof function except that it does not implicitly lock the stream. 
+This function is a GNU extension. 
+This symbol is declared in stdio.h. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int ferror (FILE *stream)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Unsafe lock | See POSIX Safety Concepts. 
+The ferror function returns nonzero if and only if the error indicator for the stream stream is set, indicating that an error has occurred on a previous operation on the stream. 
+This symbol is declared in stdio.h. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int ferror_unlocked (FILE *stream)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The ferror_unlocked function is equivalent to the ferror function except that it does not implicitly lock the stream. 
+This function is a GNU extension. 
+This symbol is declared in stdio.h. 
+<<<<<<<<<<<<<<<<<<<<
+
+In addition to setting the error indicator associated with the stream, the functions that operate on streams also set errno in the same way as the corresponding low-level functions that operate on file descriptors.  For example, all of the functions that perform output to a stream—such as fputc, printf, and fflush—are implemented in terms of write, and all of the errno error conditions defined for write are meaningful for these functions. For more information about the descriptor-level I/O functions, see Low-Level I/O. 

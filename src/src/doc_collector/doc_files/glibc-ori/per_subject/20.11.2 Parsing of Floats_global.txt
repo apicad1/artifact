@@ -1,0 +1,3 @@
+The ‘str’ functions are declared in stdlib.h and those beginning with ‘wcs’ are declared in wchar.h.  One might wonder about the use of restrict in the prototypes of the functions in this section.  It is seemingly useless but the ISO C standard uses it (for the functions defined there) so we have to do it as well. 
+The GNU C Library also provides ‘_l’ versions of these functions, which take an additional argument, the locale to use in conversion. 
+See also Parsing of Integers. 

@@ -1,0 +1,17 @@
+Use the function getsockname to examine the address of an Internet socket.  The prototype for this function is in the header file sys/socket.h. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int getsockname (int socket, struct sockaddr *addr, socklen_t *length-ptr)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe mem/hurd | See POSIX Safety Concepts. 
+The getsockname function returns information about the address of the socket socket in the locations specified by the addr and length-ptr arguments.  Note that the length-ptr is a pointer; you should initialize it to be the allocation size of addr, and on return it contains the actual size of the address data. 
+The format of the address data depends on the socket namespace.  The length of the information is usually fixed for a given namespace, so normally you can know exactly how much space is needed and can provide that much.  The usual practice is to allocate a place for the value using the proper data type for the socket’s namespace, then cast its address to struct sockaddr * to pass it to getsockname. 
+The return value is 0 on success and -1 on error.  The following errno error conditions are defined for this function: 
+	EBADF
+The socket argument is not a valid file descriptor.  
+	ENOTSOCK
+The descriptor socket is not a socket.  
+	ENOBUFS
+There are not enough internal buffers available for the operation. 
+<<<<<<<<<<<<<<<<<<<<
+
+You can’t read the address of a socket in the file namespace.  This is consistent with the rest of the system; in general, there’s no way to find a file’s name from a descriptor for that file. 

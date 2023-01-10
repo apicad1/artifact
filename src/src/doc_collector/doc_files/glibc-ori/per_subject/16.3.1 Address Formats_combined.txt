@@ -1,0 +1,53 @@
+The functions bind and getsockname use the generic data type struct sockaddr * to represent a pointer to a socket address.  You can’t use this data type effectively to interpret an address or construct one; for that, you must use the proper data type for the socket’s namespace. 
+Thus, the usual practice is to construct an address of the proper namespace-specific type, then cast a pointer to struct sockaddr * when you call bind or getsockname. 
+The one piece of information that you can get from the struct sockaddr data type is the address format designator.  This tells you which data type to use to understand the address fully. 
+The symbols in this section are defined in the header file sys/socket.h. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: struct sockaddr
+The struct sockaddr type itself has the following members: 
+	short int sa_family
+This is the code for the address format of this address.  It identifies the format of the data which follows.  
+	char sa_data[14]
+This is the actual socket address data, which is format-dependent.  Its length also depends on the format, and may well be more than 14.  The length 14 of sa_data is essentially arbitrary. 
+<<<<<<<<<<<<<<<<<<<<
+
+Each address format has a symbolic name which starts with ‘AF_’. Each of them corresponds to a ‘PF_’ symbol which designates the corresponding namespace.  Here is a list of address format names: 
+
+>>>>>>>>>>>>>>>>>>>>
+- AF_LOCAL  
+This designates the address format that goes with the local namespace. (PF_LOCAL is the name of that namespace.)  See Local Namespace Details, for information about this address format. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- AF_UNIX  
+This is a synonym for AF_LOCAL.  Although AF_LOCAL is mandated by POSIX.1g, AF_UNIX is portable to more systems. AF_UNIX was the traditional name stemming from BSD, so even most POSIX systems support it.  It is also the name of choice in the Unix98 specification. (The same is true for PF_UNIX vs. PF_LOCAL). 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- AF_FILE  
+This is another synonym for AF_LOCAL, for compatibility. (PF_FILE is likewise a synonym for PF_LOCAL.) 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- AF_INET  
+This designates the address format that goes with the Internet namespace.  (PF_INET is the name of that namespace.) See Internet Address Formats. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- AF_INET6  
+This is similar to AF_INET, but refers to the IPv6 protocol. (PF_INET6 is the name of the corresponding namespace.) 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- AF_UNSPEC  
+This designates no particular address format.  It is used only in rare cases, such as to clear out the default destination address of a “connected” datagram socket.  See Sending Datagrams. 
+The corresponding namespace designator symbol PF_UNSPEC exists for completeness, but there is no reason to use it in a program. 
+<<<<<<<<<<<<<<<<<<<<
+
+sys/socket.h defines symbols starting with ‘AF_’ for many different kinds of networks, most or all of which are not actually implemented.  We will document those that really work as we receive information about how to use them. 

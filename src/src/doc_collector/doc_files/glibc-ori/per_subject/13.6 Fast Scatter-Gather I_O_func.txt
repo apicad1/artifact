@@ -1,0 +1,109 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: struct iovec
+The iovec structure describes a buffer.  It contains two fields: 
+	void *iov_base
+Contains the address of a buffer.  
+	size_t iov_len
+Contains the length of the buffer.  
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: ssize_t readv (int filedes, const struct iovec *vector, int count)
+Preliminary: | MT-Safe  | AS-Unsafe heap | AC-Unsafe mem | See POSIX Safety Concepts. 
+The readv function reads data from filedes and scatters it into the buffers described in vector, which is taken to be count structures long.  As each buffer is filled, data is sent to the next. 
+Note that readv is not guaranteed to fill all the buffers. It may stop at any point, for the same reasons read would. 
+The return value is a count of bytes (not buffers) read, 0 indicating end-of-file, or -1 indicating an error.  The possible errors are the same as in read. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: ssize_t writev (int filedes, const struct iovec *vector, int count)
+Preliminary: | MT-Safe  | AS-Unsafe heap | AC-Unsafe mem | See POSIX Safety Concepts. 
+The writev function gathers data from the buffers described in vector, which is taken to be count structures long, and writes them to filedes.  As each buffer is written, it moves on to the next. 
+Like readv, writev may stop midstream under the same conditions write would. 
+The return value is a count of bytes written, or -1 indicating an error.  The possible errors are the same as in write. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: ssize_t preadv (int fd, const struct iovec *iov, int iovcnt, off_t offset)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function is similar to the readv function, with the difference it adds an extra offset parameter of type off_t similar to pread.  The data is read from the file starting at position offset.  The position of the file descriptor itself is not affected by the operation.  The value is the same as before the call. 
+When the source file is compiled with _FILE_OFFSET_BITS == 64 the preadv function is in fact preadv64 and the type off_t has 64 bits, which makes it possible to handle files up to 2^63 bytes in length. 
+The return value is a count of bytes (not buffers) read, 0 indicating end-of-file, or -1 indicating an error.  The possible errors are the same as in readv and pread. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: ssize_t preadv64 (int fd, const struct iovec *iov, int iovcnt, off64_t offset)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function is similar to the preadv function with the difference is that the offset parameter is of type off64_t instead of off_t.  It makes it possible on 32 bit machines to address files larger than 2^31 bytes and up to 2^63 bytes.  The file descriptor filedes must be opened using open64 since otherwise the large offsets possible with off64_t will lead to errors with a descriptor in small file mode. 
+When the source file is compiled using _FILE_OFFSET_BITS == 64 on a 32 bit machine this function is actually available under the name preadv and so transparently replaces the 32 bit interface. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: ssize_t pwritev (int fd, const struct iovec *iov, int iovcnt, off_t offset)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function is similar to the writev function, with the difference it adds an extra offset parameter of type off_t similar to pwrite.  The data is written to the file starting at position offset.  The position of the file descriptor itself is not affected by the operation.  The value is the same as before the call. 
+However, on Linux, if a file is opened with O_APPEND,  pwrite appends data to the end of the file, regardless of the value of offset. 
+When the source file is compiled with _FILE_OFFSET_BITS == 64 the pwritev function is in fact pwritev64 and the type off_t has 64 bits, which makes it possible to handle files up to 2^63 bytes in length. 
+The return value is a count of bytes (not buffers) written, 0 indicating end-of-file, or -1 indicating an error.  The possible errors are the same as in writev and pwrite. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: ssize_t pwritev64 (int fd, const struct iovec *iov, int iovcnt, off64_t offset)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function is similar to the pwritev function with the difference is that the offset parameter is of type off64_t instead of off_t.  It makes it possible on 32 bit machines to address files larger than 2^31 bytes and up to 2^63 bytes.  The file descriptor filedes must be opened using open64 since otherwise the large offsets possible with off64_t will lead to errors with a descriptor in small file mode. 
+When the source file is compiled using _FILE_OFFSET_BITS == 64 on a 32 bit machine this function is actually available under the name pwritev and so transparently replaces the 32 bit interface. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: ssize_t preadv2 (int fd, const struct iovec *iov, int iovcnt, off_t offset, int flags)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function is similar to the preadv function, with the difference it adds an extra flags parameter of type int. Additionally, if offset is -1, the current file position is used and updated (like the readv function). 
+The supported flags are dependent of the underlying system.  For Linux it supports: 
+	RWF_HIPRI  
+High priority request.  This adds a flag that tells the file system that this is a high priority request for which it is worth to poll the hardware. The flag is purely advisory and can be ignored if not supported.  The fd must be opened using O_DIRECT.  
+	RWF_DSYNC  
+Per-IO synchronization as if the file was opened with O_DSYNC flag.  
+	RWF_SYNC  
+Per-IO synchronization as if the file was opened with O_SYNC flag.  
+	RWF_NOWAIT  
+Use nonblocking mode for this operation; that is, this call to preadv2 will fail and set errno to EAGAIN if the operation would block.  
+	RWF_APPEND  
+Per-IO synchronization as if the file was opened with O_APPEND flag. 
+When the source file is compiled with _FILE_OFFSET_BITS == 64 the preadv2 function is in fact preadv64v2 and the type off_t has 64 bits, which makes it possible to handle files up to 2^63 bytes in length. 
+The return value is a count of bytes (not buffers) read, 0 indicating end-of-file, or -1 indicating an error.  The possible errors are the same as in preadv with the addition of: 
+	EOPNOTSUPP
+ An unsupported flags was used.  
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: ssize_t preadv64v2 (int fd, const struct iovec *iov, int iovcnt, off64_t offset, int flags)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function is similar to the preadv2 function with the difference is that the offset parameter is of type off64_t instead of off_t.  It makes it possible on 32 bit machines to address files larger than 2^31 bytes and up to 2^63 bytes.  The file descriptor filedes must be opened using open64 since otherwise the large offsets possible with off64_t will lead to errors with a descriptor in small file mode. 
+When the source file is compiled using _FILE_OFFSET_BITS == 64 on a 32 bit machine this function is actually available under the name preadv2 and so transparently replaces the 32 bit interface. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: ssize_t pwritev2 (int fd, const struct iovec *iov, int iovcnt, off_t offset, int flags)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function is similar to the pwritev function, with the difference it adds an extra flags parameter of type int. Additionally, if offset is -1, the current file position should is used and updated (like the writev function). 
+The supported flags are dependent of the underlying system.  For Linux, the supported flags are the same as those for preadv2. 
+When the source file is compiled with _FILE_OFFSET_BITS == 64 the pwritev2 function is in fact pwritev64v2 and the type off_t has 64 bits, which makes it possible to handle files up to 2^63 bytes in length. 
+The return value is a count of bytes (not buffers) write, 0 indicating end-of-file, or -1 indicating an error.  The possible errors are the same as in preadv2. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: ssize_t pwritev64v2 (int fd, const struct iovec *iov, int iovcnt, off64_t offset, int flags)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function is similar to the pwritev2 function with the difference is that the offset parameter is of type off64_t instead of off_t.  It makes it possible on 32 bit machines to address files larger than 2^31 bytes and up to 2^63 bytes.  The file descriptor filedes must be opened using open64 since otherwise the large offsets possible with off64_t will lead to errors with a descriptor in small file mode. 
+When the source file is compiled using _FILE_OFFSET_BITS == 64 on a 32 bit machine this function is actually available under the name pwritev2 and so transparently replaces the 32 bit interface. 

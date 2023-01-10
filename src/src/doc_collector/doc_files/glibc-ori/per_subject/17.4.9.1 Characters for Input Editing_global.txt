@@ -1,0 +1,1 @@
+These special characters are active only in canonical input mode. See Canonical or Not. 

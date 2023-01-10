@@ -1,0 +1,1 @@
+The GNU C Library provides non-standard API functions to set and get the default attributes used in the creation of threads in a process. 

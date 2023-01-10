@@ -1,0 +1,46 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- _POSIX2_BC_BASE_MAX  
+The most restrictive limit permitted by POSIX.2 for the maximum value of obase in the bc utility.  Its value is 99. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- _POSIX2_BC_DIM_MAX  
+The most restrictive limit permitted by POSIX.2 for the maximum size of an array in the bc utility.  Its value is 2048. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- _POSIX2_BC_SCALE_MAX  
+The most restrictive limit permitted by POSIX.2 for the maximum value of scale in the bc utility.  Its value is 99. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- _POSIX2_BC_STRING_MAX  
+The most restrictive limit permitted by POSIX.2 for the maximum size of a string constant in the bc utility.  Its value is 1000. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- _POSIX2_COLL_WEIGHTS_MAX  
+The most restrictive limit permitted by POSIX.2 for the maximum number of weights that can necessarily be used in defining the collating sequence for a locale.  Its value is 2. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- _POSIX2_EXPR_NEST_MAX  
+The most restrictive limit permitted by POSIX.2 for the maximum number of expressions nested within parenthesis when using the expr utility. Its value is 32. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- _POSIX2_LINE_MAX  
+The most restrictive limit permitted by POSIX.2 for the maximum size of a text line that the text utilities can handle.  Its value is 2048. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- _POSIX2_EQUIV_CLASS_MAX  
+The most restrictive limit permitted by POSIX.2 for the maximum number of weights that can be assigned to an entry of the LC_COLLATE category ‘order’ keyword in a locale definition.  Its value is 2.  The GNU C Library does not presently support locale definitions. 

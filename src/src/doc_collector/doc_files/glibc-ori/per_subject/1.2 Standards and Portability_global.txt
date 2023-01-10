@@ -1,0 +1,19 @@
+This section discusses the various standards and other sources that the GNU C Library is based upon.  These sources include the ISO C and POSIX standards, and the System V and Berkeley Unix implementations. 
+The primary focus of this manual is to tell you how to make effective use of the GNU C Library facilities.  But if you are concerned about making your programs compatible with these standards, or portable to operating systems other than GNU, this can affect how you use the library.  This section gives you an overview of these standards, so that you will know what they are when they are mentioned in other parts of the manual. 
+See Library Summary, for an alphabetical list of the functions and other symbols provided by the library.  This list also states which standards each function or symbol comes from. 
+
+TABLE_BEGIN
+ • ISO C    The international standard for the C
+                                 programming language.
+
+ • POSIX    The ISO/IEC 9945 (aka IEEE 1003) standards
+                                 for operating systems.
+
+ • Berkeley Unix    BSD and SunOS.
+
+ • SVID    The System V Interface Description.
+
+ • XPG    The X/Open Portability Guide.
+
+TABLE_END
+

@@ -1,0 +1,14 @@
+Characters that are written to a stream are normally accumulated and transmitted asynchronously to the file in a block, instead of appearing as soon as they are output by the application program.  Similarly, streams often retrieve input from the host environment in blocks rather than on a character-by-character basis.  This is called buffering. 
+If you are writing programs that do interactive input and output using streams, you need to understand how buffering works when you design the user interface to your program.  Otherwise, you might find that output (such as progress or prompt messages) doesn’t appear when you intended it to, or displays some other unexpected behavior. 
+This section deals only with controlling when characters are transmitted between the stream and the file or device, and not with how things like echoing, flow control, and the like are handled on specific classes of devices.  For information on common control operations on terminal devices, see Low-Level Terminal Interface. 
+You can bypass the stream buffering facilities altogether by using the low-level input and output functions that operate on file descriptors instead.  See Low-Level I/O. 
+
+TABLE_BEGIN
+ • Buffering Concepts    Terminology is defined here.
+
+ • Flushing Buffers    How to ensure that output buffers are flushed.
+
+ • Controlling Buffering    How to specify what kind of buffering to use.
+
+TABLE_END
+

@@ -1,0 +1,38 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int tcgetattr (int filedes, struct termios *termios-p)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function is used to examine the attributes of the terminal device with file descriptor filedes.  The attributes are returned in the structure that termios-p points to. 
+If successful, tcgetattr returns 0.  A return value of -1 indicates an error.  The following errno error conditions are defined for this function: 
+	EBADF
+The filedes argument is not a valid file descriptor.  
+	ENOTTY
+The filedes is not associated with a terminal. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int tcsetattr (int filedes, int when, const struct termios *termios-p)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function sets the attributes of the terminal device with file descriptor filedes.  The new attributes are taken from the structure that termios-p points to. 
+The when argument specifies how to deal with input and output already queued.  It can be one of the following values: 
+	TCSANOW  
+ Make the change immediately.  
+	TCSADRAIN  
+ Make the change after waiting until all queued output has been written. You should usually use this option when changing parameters that affect output.  
+	TCSAFLUSH  
+ This is like TCSADRAIN, but also discards any queued input.  
+	TCSASOFT  
+ This is a flag bit that you can add to any of the above alternatives. Its meaning is to inhibit alteration of the state of the terminal hardware.  It is a BSD extension; it is only supported on BSD systems and GNU/Hurd systems.  Using TCSASOFT is exactly the same as setting the CIGNORE bit in the c_cflag member of the structure termios-p points to.  See Control Modes, for a description of CIGNORE. 
+If this function is called from a background process on its controlling terminal, normally all processes in the process group are sent a SIGTTOU signal, in the same way as if the process were trying to write to the terminal.  The exception is if the calling process itself is ignoring or blocking SIGTTOU signals, in which case the operation is performed and no signal is sent.  See Job Control. 
+If successful, tcsetattr returns 0.  A return value of -1 indicates an error.  The following errno error conditions are defined for this function: 
+	EBADF
+The filedes argument is not a valid file descriptor.  
+	ENOTTY
+The filedes is not associated with a terminal.  
+	EINVAL
+Either the value of the when argument is not valid, or there is something wrong with the data in the termios-p argument. 
+<<<<<<<<<<<<<<<<<<<<
+
+Although tcgetattr and tcsetattr specify the terminal device with a file descriptor, the attributes are those of the terminal device itself and not of the file descriptor.  This means that the effects of changing terminal attributes are persistent; if another process opens the terminal file later on, it will see the changed attributes even though it doesn’t have anything to do with the open file descriptor you originally specified in changing the attributes. 
+Similarly, if a single process has multiple or duplicated file descriptors for the same terminal device, changing the terminal attributes affects input and output to all of these file descriptors.  This means, for example, that you can’t open one file descriptor or stream to read from a terminal in the normal line-buffered, echoed mode; and simultaneously have another file descriptor for the same terminal that you use to read from it in single-character, non-echoed mode.  Instead, you have to explicitly switch the terminal back and forth between the two modes. 

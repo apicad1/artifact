@@ -1,0 +1,11 @@
+This section describes how to search and scan the database of registered groups.  The database itself is kept in the file /etc/group on most systems, but on some systems a special network service provides access to it. 
+
+TABLE_BEGIN
+ • Group Data Structure    What each group record contains.
+
+ • Lookup Group    How to look for a particular group.
+
+ • Scanning All Groups    Scanning the list of all groups.
+
+TABLE_END
+

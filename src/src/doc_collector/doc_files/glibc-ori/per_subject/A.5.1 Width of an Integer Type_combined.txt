@@ -1,0 +1,115 @@
+TS 18661-1:2014 defines macros for the width of integer types (the number of value and sign bits).  One benefit of these macros is they can be used in #if preprocessor directives, whereas sizeof cannot.  The following macros are defined in limits.h. 
+
+>>>>>>>>>>>>>>>>>>>>
+- CHAR_WIDTH  
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- SCHAR_WIDTH  
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- UCHAR_WIDTH  
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- SHRT_WIDTH  
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- USHRT_WIDTH  
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- INT_WIDTH  
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- UINT_WIDTH  
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- LONG_WIDTH  
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ULONG_WIDTH  
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- LLONG_WIDTH  
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ULLONG_WIDTH  
+These are the widths of the types char, signed char, unsigned char, short int, unsigned short int, int, unsigned int, long int, unsigned long int, long long int and unsigned long long int, respectively. 
+<<<<<<<<<<<<<<<<<<<<
+
+Further such macros are defined in stdint.h.  Apart from those for types specified by width (see Integers), the following are defined: 
+
+>>>>>>>>>>>>>>>>>>>>
+- INTPTR_WIDTH  
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- UINTPTR_WIDTH  
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- PTRDIFF_WIDTH  
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- SIG_ATOMIC_WIDTH  
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- SIZE_WIDTH  
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- WCHAR_WIDTH  
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- WINT_WIDTH  
+These are the widths of the types intptr_t, uintptr_t, ptrdiff_t, sig_atomic_t, size_t, wchar_t and wint_t, respectively. 
+<<<<<<<<<<<<<<<<<<<<
+
+A common reason that a program needs to know how many bits are in an integer type is for using an array of unsigned long int as a bit vector.  You can access the bit at index n with: 
+
+EXAMPLE_BEGIN
+vector[n / ULONG_WIDTH] & (1UL << (n % ULONG_WIDTH))
+EXAMPLE_END
+
+Before ULONG_WIDTH was a part of the C language, CHAR_BIT was used to compute the number of bits in an integer data type. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int CHAR_BIT
+This is the number of bits in a char.  POSIX.1-2001 requires this to be 8. 
+<<<<<<<<<<<<<<<<<<<<
+
+The number of bits in any data type type can be computed like this: 
+
+EXAMPLE_BEGIN
+sizeof (type) * CHAR_BIT
+EXAMPLE_END
+
+That expression includes padding bits as well as value and sign bits. On all systems supported by the GNU C Library, standard integer types other than _Bool do not have any padding bits. 
+Portability Note: One cannot actually easily compute the number of usable bits in a portable manner. 

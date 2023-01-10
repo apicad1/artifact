@@ -1,0 +1,58 @@
+ISWALNUM(3)                                     Linux Programmer's Manual                                    ISWALNUM(3)
+
+NAME
+       iswalnum - test for alphanumeric wide character
+
+SYNOPSIS
+       #include <wctype.h>
+
+       int iswalnum(wint_t wc);
+
+DESCRIPTION
+       The  iswalnum()  function  is the wide-character equivalent of the isalnum(3) function.  It tests whether wc is a
+       wide character belonging to the wide-character class "alnum".
+
+       The wide-character class "alnum" is a subclass of the wide-character class "graph", and therefore also a subclass
+       of the wide-character class "print".
+
+       Being a subclass of the wide-character class "print", the wide-character class "alnum" is disjoint from the wide-
+       character class "cntrl".
+
+       Being a subclass of the wide-character class "graph", the wide-character class "alnum" is disjoint from the wide-
+       character class "space" and its subclass "blank".
+
+       The wide-character class "alnum" is disjoint from the wide-character class "punct".
+
+       The  wide-character  class  "alnum"  is the union of the wide-character classes "alpha" and "digit".  As such, it
+       also contains the wide-character class "xdigit".
+
+       The wide-character class "alnum" always contains at least the letters 'A' to 'Z', 'a' to 'z' and the  digits  '0'
+       to '9'.
+
+RETURN VALUE
+       The  iswalnum() function returns nonzero if wc is a wide character belonging to the wide-character class "alnum".
+       Otherwise, it returns zero.
+
+ATTRIBUTES
+       For an explanation of the terms used in this section, see attributes(7).
+
+       ┌───────────────────────────────────────────────────────────────────────────────┬───────────────┬────────────────┐
+       │Interface                                                                      │ Attribute     │ Value          │
+       ├───────────────────────────────────────────────────────────────────────────────┼───────────────┼────────────────┤
+       │iswalnum()                                                                     │ Thread safety │ MT-Safe locale │
+       └───────────────────────────────────────────────────────────────────────────────┴───────────────┴────────────────┘
+
+CONFORMING TO
+       POSIX.1-2001, POSIX.1-2008, C99.
+
+NOTES
+       The behavior of iswalnum() depends on the LC_CTYPE category of the current locale.
+
+SEE ALSO
+       isalnum(3), iswctype(3)
+
+COLOPHON
+       This page is part of release 5.13 of the Linux man-pages project.  A  description  of  the  project,  information
+       about reporting bugs, and the latest version of this page, can be found at https://www.kernel.org/doc/man-pages/.
+
+GNU                                                    2021-03-22                                            ISWALNUM(3)

@@ -1,0 +1,41 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: FILE * fdopen (int filedes, const char *opentype)
+Preliminary: | MT-Safe  | AS-Unsafe heap lock | AC-Unsafe mem lock | See POSIX Safety Concepts. 
+The fdopen function returns a new stream for the file descriptor filedes. 
+The opentype argument is interpreted in the same way as for the fopen function (see Opening Streams), except that the ‘b’ option is not permitted; this is because GNU systems make no distinction between text and binary files.  Also, "w" and "w+" do not cause truncation of the file; these have an effect only when opening a file, and in this case the file has already been opened. You must make sure that the opentype argument matches the actual mode of the open file descriptor. 
+The return value is the new stream.  If the stream cannot be created (for example, if the modes for the file indicated by the file descriptor do not permit the access specified by the opentype argument), a null pointer is returned instead. 
+In some other systems, fdopen may fail to detect that the modes for file descriptors do not permit the access specified by opentype.  The GNU C Library always checks for this. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int fileno (FILE *stream)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function returns the file descriptor associated with the stream stream.  If an error is detected (for example, if the stream is not valid) or if stream does not do I/O to a file, fileno returns -1. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int fileno_unlocked (FILE *stream)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The fileno_unlocked function is equivalent to the fileno function except that it does not implicitly lock the stream if the state is FSETLOCKING_INTERNAL. 
+This function is a GNU extension. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- STDIN_FILENO  
+This macro has value 0, which is the file descriptor for standard input.  
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- STDOUT_FILENO  
+This macro has value 1, which is the file descriptor for standard output.  
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- STDERR_FILENO  
+This macro has value 2, which is the file descriptor for standard error output. 

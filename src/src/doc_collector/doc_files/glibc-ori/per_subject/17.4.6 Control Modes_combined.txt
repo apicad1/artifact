@@ -1,0 +1,97 @@
+This section describes the terminal flags and fields that control parameters usually associated with asynchronous serial data transmission.  These flags may not make sense for other kinds of terminal ports (such as a network connection pseudo-terminal).  All of these are contained in the c_cflag member of the struct termios structure. 
+The c_cflag member itself is an integer, and you change the flags and fields using the operators &, |, and ^.  Don’t try to specify the entire value for c_cflag—instead, change only specific flags and leave the rest untouched (see Setting Modes). 
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: tcflag_t CLOCAL
+If this bit is set, it indicates that the terminal is connected “locally” and that the modem status lines (such as carrier detect) should be ignored.   
+On many systems if this bit is not set and you call open without the O_NONBLOCK flag set, open blocks until a modem connection is established. 
+If this bit is not set and a modem disconnect is detected, a SIGHUP signal is sent to the controlling process group for the terminal (if it has one).  Normally, this causes the process to exit; see Signal Handling.  Reading from the terminal after a disconnect causes an end-of-file condition, and writing causes an EIO error to be returned.  The terminal device must be closed and reopened to clear the condition.  
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: tcflag_t HUPCL
+If this bit is set, a modem disconnect is generated when all processes that have the terminal device open have either closed the file or exited. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: tcflag_t CREAD
+If this bit is set, input can be read from the terminal.  Otherwise, input is discarded when it arrives. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: tcflag_t CSTOPB
+If this bit is set, two stop bits are used.  Otherwise, only one stop bit is used. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: tcflag_t PARENB
+If this bit is set, generation and detection of a parity bit are enabled. See Input Modes, for information on how input parity errors are handled. 
+If this bit is not set, no parity bit is added to output characters, and input characters are not checked for correct parity. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: tcflag_t PARODD
+This bit is only useful if PARENB is set.  If PARODD is set, odd parity is used, otherwise even parity is used. 
+<<<<<<<<<<<<<<<<<<<<
+
+The control mode flags also includes a field for the number of bits per character.  You can use the CSIZE macro as a mask to extract the value, like this: settings.c_cflag & CSIZE. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: tcflag_t CSIZE
+This is a mask for the number of bits per character. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: tcflag_t CS5
+This specifies five bits per byte. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: tcflag_t CS6
+This specifies six bits per byte. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: tcflag_t CS7
+This specifies seven bits per byte. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: tcflag_t CS8
+This specifies eight bits per byte. 
+<<<<<<<<<<<<<<<<<<<<
+
+The following four bits are BSD extensions; these exist only on BSD systems and GNU/Hurd systems. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: tcflag_t CCTS_OFLOW
+If this bit is set, enable flow control of output based on the CTS wire (RS232 protocol). 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: tcflag_t CRTS_IFLOW
+If this bit is set, enable flow control of input based on the RTS wire (RS232 protocol). 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: tcflag_t MDMBUF
+If this bit is set, enable carrier-based flow control of output. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: tcflag_t CIGNORE
+If this bit is set, it says to ignore the control modes and line speed values entirely.  This is only meaningful in a call to tcsetattr. 
+The c_cflag member and the line speed values returned by cfgetispeed and cfgetospeed will be unaffected by the call.  CIGNORE is useful if you want to set all the software modes in the other members, but leave the hardware details in c_cflag unchanged.  (This is how the TCSASOFT flag to tcsettattr works.) 
+This bit is never set in the structure filled in by tcgetattr. 

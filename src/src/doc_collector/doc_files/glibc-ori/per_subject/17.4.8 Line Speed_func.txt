@@ -1,0 +1,39 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: speed_t cfgetospeed (const struct termios *termios-p)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function returns the output line speed stored in the structure *termios-p. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: speed_t cfgetispeed (const struct termios *termios-p)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function returns the input line speed stored in the structure *termios-p. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int cfsetospeed (struct termios *termios-p, speed_t speed)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function stores speed in *termios-p as the output speed.  The normal return value is 0; a value of -1 indicates an error.  If speed is not a speed, cfsetospeed returns -1. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int cfsetispeed (struct termios *termios-p, speed_t speed)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function stores speed in *termios-p as the input speed.  The normal return value is 0; a value of -1 indicates an error.  If speed is not a speed, cfsetospeed returns -1. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int cfsetspeed (struct termios *termios-p, speed_t speed)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function stores speed in *termios-p as both the input and output speeds.  The normal return value is 0; a value of -1 indicates an error.  If speed is not a speed, cfsetspeed returns -1.  This function is an extension in 4.4 BSD. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: speed_t
+The speed_t type is an unsigned integer data type used to represent line speeds. 

@@ -1,0 +1,6 @@
+The file position of a stream describes where in the file the stream is currently reading or writing.  I/O on the stream advances the file position through the file.  On GNU systems, the file position is represented as an integer, which counts the number of bytes from the beginning of the file.  See File Position. 
+During I/O to an ordinary disk file, you can change the file position whenever you wish, so as to read or write any portion of the file.  Some other kinds of files may also permit this.  Files which support changing the file position are sometimes referred to as random-access files. 
+You can use the functions in this section to examine or modify the file position indicator associated with a stream.  The symbols listed below are declared in the header file stdio.h.  
+Portability Note: In non-POSIX systems, ftell, ftello, fseek and fseeko might work reliably only on binary streams.  See Binary Streams. 
+The following symbolic constants are defined for use as the whence argument to fseek.  They are also used with the lseek function (see I/O Primitives) and to specify offsets for file locks (see Control Operations). 
+These three aliases for the ‘SEEK_…’ constants exist for the sake of compatibility with older BSD systems.  They are defined in two different header files: fcntl.h and sys/file.h. 

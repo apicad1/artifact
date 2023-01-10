@@ -1,0 +1,2 @@
+Here is a table that summarizes the various conversion specifications: 
+If the syntax of a conversion specification is invalid, the behavior is undefined.  If there aren’t enough function arguments provided to supply addresses for all the conversion specifications in the template strings that perform assignments, or if the arguments are not of the correct types, the behavior is also undefined.  On the other hand, extra arguments are simply ignored. 

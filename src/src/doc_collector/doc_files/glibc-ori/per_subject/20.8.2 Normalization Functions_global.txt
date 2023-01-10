@@ -1,0 +1,3 @@
+The functions described in this section are primarily provided as a way to efficiently perform certain low-level manipulations on floating point numbers that are represented internally using a binary radix; see Floating Point Concepts.  These functions are required to have equivalent behavior even if the representation does not use a radix of 2, but of course they are unlikely to be particularly efficient in those cases. 
+All these functions are declared in math.h. 
+The following functions, which come from BSD, provide facilities equivalent to those of ldexp and frexp.  See also the ISO C function logb which originally also appeared in BSD. The _FloatN and _FloatN variants of the following functions come from TS 18661-3:2015. 

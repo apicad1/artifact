@@ -1,0 +1,5 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Variable: char __libc_single_threaded
+This variable is non-zero if the current process is definitely single-threaded.  If it is zero, the process may be multi-threaded, or the GNU C Library cannot determine at this point of the program execution whether the process is single-threaded or not. 
+Applications must never write to this variable. 

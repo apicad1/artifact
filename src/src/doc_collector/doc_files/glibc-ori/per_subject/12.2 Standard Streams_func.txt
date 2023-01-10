@@ -1,0 +1,16 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Variable: FILE * stdin
+The standard input stream, which is the normal source of input for the program. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Variable: FILE * stdout
+The standard output stream, which is used for normal output from the program. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Variable: FILE * stderr
+The standard error stream, which is used for error messages and diagnostics issued by the program. 

@@ -1,0 +1,29 @@
+The alarm and setitimer functions provide a mechanism for a process to interrupt itself in the future.  They do this by setting a timer; when the timer expires, the process receives a signal. 
+Each process has three independent interval timers available: 
+  A real-time timer that counts elapsed time.  This timer sends a SIGALRM signal to the process when it expires.     A virtual timer that counts processor time used by the process.  This timer sends a SIGVTALRM signal to the process when it expires.     A profiling timer that counts both processor time used by the process, and processor time spent in system calls on behalf of the process.  This timer sends a SIGPROF signal to the process when it expires.    This timer is useful for profiling in interpreters.  The interval timer mechanism does not have the fine granularity necessary for profiling native code. 
+You can only have one timer of each kind set at any given time.  If you set a timer that has not yet expired, that timer is simply reset to the new value. 
+You should establish a handler for the appropriate alarm signal using signal or sigaction before issuing a call to setitimer or alarm.  Otherwise, an unusual chain of events could cause the timer to expire before your program establishes the handler.  In this case it would be terminated, since termination is the default action for the alarm signals.  See Signal Handling. 
+To be able to use the alarm function to interrupt a system call which might block otherwise indefinitely it is important to not set the SA_RESTART flag when registering the signal handler using sigaction.  When not using sigaction things get even uglier: the signal function has fixed semantics with respect to restarts.  The BSD semantics for this function is to set the flag. Therefore, if sigaction for whatever reason cannot be used, it is necessary to use sysv_signal and not signal. 
+The setitimer function is the primary means for setting an alarm. This facility is declared in the header file sys/time.h.  The alarm function, declared in unistd.h, provides a somewhat simpler interface for setting the real-time timer.   
+The alarm function could be defined in terms of setitimer like this: 
+
+EXAMPLE_BEGIN
+unsigned int
+alarm (unsigned int seconds)
+{
+  struct itimerval old, new;
+  new.it_interval.tv_usec = 0;
+  new.it_interval.tv_sec = 0;
+  new.it_value.tv_usec = 0;
+  new.it_value.tv_sec = (long int) seconds;
+  if (setitimer (ITIMER_REAL, &new, &old) < 0)
+    return 0;
+  else
+    return old.it_value.tv_sec;
+}
+EXAMPLE_END
+
+There is an example showing the use of the alarm function in Handler Returns. 
+If you simply want your process to wait for a given number of seconds, you should use the sleep function.  See Sleeping. 
+You shouldn’t count on the signal arriving precisely when the timer expires.  In a multiprocessing environment there is typically some amount of delay involved. 
+Portability Note: The setitimer and getitimer functions are derived from BSD Unix, while the alarm function is specified by the POSIX.1 standard.  setitimer is more powerful than alarm, but alarm is more widely used. 

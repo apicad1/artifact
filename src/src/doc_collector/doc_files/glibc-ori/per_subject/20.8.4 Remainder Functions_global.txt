@@ -1,0 +1,1 @@
+The functions in this section compute the remainder on division of two floating-point numbers.  Each is a little different; pick the one that suits your problem. 

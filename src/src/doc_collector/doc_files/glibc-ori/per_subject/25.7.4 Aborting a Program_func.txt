@@ -1,0 +1,6 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void abort (void)
+Preliminary: | MT-Safe  | AS-Unsafe corrupt | AC-Unsafe lock corrupt | See POSIX Safety Concepts. 
+The abort function causes abnormal program termination.  This does not execute cleanup functions registered with atexit or on_exit. 
+This function actually terminates the process by raising a SIGABRT signal, and your program can include a handler to intercept this signal; see Signal Handling. 

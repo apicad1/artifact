@@ -1,0 +1,5 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void __riscv_flush_icache (void *start, void *end, unsigned long int flags)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+Enforce ordering between stores and instruction cache fetches.  The range of addresses over which ordering is enforced is specified by start and end.  The flags argument controls the extent of this ordering, with the default behavior (a flags value of 0) being to enforce the fence on all threads in the current process.  Setting the SYS_RISCV_FLUSH_ICACHE_LOCAL bit allows users to indicate that enforcing ordering on only the current thread is necessary.  All other flag bits are reserved. 

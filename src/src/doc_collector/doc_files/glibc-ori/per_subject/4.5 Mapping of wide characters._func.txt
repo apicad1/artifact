@@ -1,0 +1,60 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: wctrans_t
+This data type is defined as a scalar type which can hold a value representing the locale-dependent character mapping.  There is no way to construct such a value apart from using the return value of the wctrans function. 
+
+This type is defined in wctype.h. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: wctrans_t wctrans (const char *property)
+Preliminary: | MT-Safe locale | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The wctrans function has to be used to find out whether a named mapping is defined in the current locale selected for the LC_CTYPE category.  If the returned value is non-zero, you can use it afterwards in calls to towctrans.  If the return value is zero no such mapping is known in the current locale. 
+Beside locale-specific mappings there are two mappings which are guaranteed to be available in every locale: 
+
+TABLE_BEGIN
+ "tolower" "toupper"
+TABLE_END
+
+
+These functions are declared in wctype.h. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: wint_t towctrans (wint_t wc, wctrans_t desc)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+towctrans maps the input character wc according to the rules of the mapping for which desc is a descriptor, and returns the value it finds.  desc must be obtained by a successful call to wctrans. 
+
+This function is declared in wctype.h. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: wint_t towlower (wint_t wc)
+Preliminary: | MT-Safe locale | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+If wc is an upper-case letter, towlower returns the corresponding lower-case letter.  If wc is not an upper-case letter, wc is returned unchanged. 
+towlower can be implemented using 
+
+EXAMPLE_BEGIN
+towctrans (wc, wctrans ("tolower"))
+EXAMPLE_END
+
+
+This function is declared in wctype.h. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: wint_t towupper (wint_t wc)
+Preliminary: | MT-Safe locale | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+If wc is a lower-case letter, towupper returns the corresponding upper-case letter.  Otherwise wc is returned unchanged. 
+towupper can be implemented using 
+
+EXAMPLE_BEGIN
+towctrans (wc, wctrans ("toupper"))
+EXAMPLE_END
+
+
+This function is declared in wctype.h. 

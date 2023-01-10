@@ -1,0 +1,164 @@
+It’s fairly common for programs to have a need to do some simple kinds of lexical analysis and parsing, such as splitting a command string up into tokens.  You can do this with the strtok function, declared in the header file string.h.  
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: char * strtok (char *restrict newstring, const char *restrict delimiters)
+Preliminary: | MT-Unsafe race:strtok | AS-Unsafe  | AC-Safe  | See POSIX Safety Concepts. 
+A string can be split into tokens by making a series of calls to the function strtok. 
+The string to be split up is passed as the newstring argument on the first call only.  The strtok function uses this to set up some internal state information.  Subsequent calls to get additional tokens from the same string are indicated by passing a null pointer as the newstring argument.  Calling strtok with another non-null newstring argument reinitializes the state information. It is guaranteed that no other library function ever calls strtok behind your back (which would mess up this internal state information). 
+The delimiters argument is a string that specifies a set of delimiters that may surround the token being extracted.  All the initial bytes that are members of this set are discarded.  The first byte that is not a member of this set of delimiters marks the beginning of the next token.  The end of the token is found by looking for the next byte that is a member of the delimiter set.  This byte in the original string newstring is overwritten by a null byte, and the pointer to the beginning of the token in newstring is returned. 
+On the next call to strtok, the searching begins at the next byte beyond the one that marked the end of the previous token. Note that the set of delimiters delimiters do not have to be the same on every call in a series of calls to strtok. 
+If the end of the string newstring is reached, or if the remainder of string consists only of delimiter bytes, strtok returns a null pointer. 
+In a multibyte string, characters consisting of more than one byte are not treated as single entities.  Each byte is treated separately.  The function is not locale-dependent. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: wchar_t * wcstok (wchar_t *newstring, const wchar_t *delimiters, wchar_t **save_ptr)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+A string can be split into tokens by making a series of calls to the function wcstok. 
+The string to be split up is passed as the newstring argument on the first call only.  The wcstok function uses this to set up some internal state information.  Subsequent calls to get additional tokens from the same wide string are indicated by passing a null pointer as the newstring argument, which causes the pointer previously stored in save_ptr to be used instead. 
+The delimiters argument is a wide string that specifies a set of delimiters that may surround the token being extracted.  All the initial wide characters that are members of this set are discarded. The first wide character that is not a member of this set of delimiters marks the beginning of the next token.  The end of the token is found by looking for the next wide character that is a member of the delimiter set.  This wide character in the original wide string newstring is overwritten by a null wide character, the pointer past the overwritten wide character is saved in save_ptr, and the pointer to the beginning of the token in newstring is returned. 
+On the next call to wcstok, the searching begins at the next wide character beyond the one that marked the end of the previous token. Note that the set of delimiters delimiters do not have to be the same on every call in a series of calls to wcstok. 
+If the end of the wide string newstring is reached, or if the remainder of string consists only of delimiter wide characters, wcstok returns a null pointer. 
+<<<<<<<<<<<<<<<<<<<<
+
+Warning: Since strtok and wcstok alter the string they is parsing, you should always copy the string to a temporary buffer before parsing it with strtok/wcstok (see Copying Strings and Arrays).  If you allow strtok or wcstok to modify a string that came from another part of your program, you are asking for trouble; that string might be used for other purposes after strtok or wcstok has modified it, and it would not have the expected value. 
+The string that you are operating on might even be a constant.  Then when strtok or wcstok tries to modify it, your program will get a fatal signal for writing in read-only memory.  See Program Error Signals.  Even if the operation of strtok or wcstok would not require a modification of the string (e.g., if there is exactly one token) the string can (and in the GNU C Library case will) be modified. 
+This is a special case of a general principle: if a part of a program does not have as its purpose the modification of a certain data structure, then it is error-prone to modify the data structure temporarily. 
+The function strtok is not reentrant, whereas wcstok is. See Nonreentrancy, for a discussion of where and why reentrancy is important. 
+Here is a simple example showing the use of strtok. 
+
+EXAMPLE_BEGIN
+#include <string.h>
+#include <stddef.h>
+
+…
+
+const char string[] = "words separated by spaces -- and, punctuation!";
+const char delimiters[] = " .,;:!-";
+char *token, *cp;
+
+…
+
+cp = strdupa (string);                /* Make writable copy.  */
+token = strtok (cp, delimiters);      /* token => "words" */
+token = strtok (NULL, delimiters);    /* token => "separated" */
+token = strtok (NULL, delimiters);    /* token => "by" */
+token = strtok (NULL, delimiters);    /* token => "spaces" */
+token = strtok (NULL, delimiters);    /* token => "and" */
+token = strtok (NULL, delimiters);    /* token => "punctuation" */
+token = strtok (NULL, delimiters);    /* token => NULL */
+EXAMPLE_END
+
+The GNU C Library contains two more functions for tokenizing a string which overcome the limitation of non-reentrancy.  They are not available available for wide strings. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: char * strtok_r (char *newstring, const char *delimiters, char **save_ptr)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+Just like strtok, this function splits the string into several tokens which can be accessed by successive calls to strtok_r. The difference is that, as in wcstok, the information about the next token is stored in the space pointed to by the third argument, save_ptr, which is a pointer to a string pointer.  Calling strtok_r with a null pointer for newstring and leaving save_ptr between the calls unchanged does the job without hindering reentrancy. 
+This function is defined in POSIX.1 and can be found on many systems which support multi-threading. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: char * strsep (char **string_ptr, const char *delimiter)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function has a similar functionality as strtok_r with the newstring argument replaced by the save_ptr argument.  The initialization of the moving pointer has to be done by the user. Successive calls to strsep move the pointer along the tokens separated by delimiter, returning the address of the next token and updating string_ptr to point to the beginning of the next token. 
+One difference between strsep and strtok_r is that if the input string contains more than one byte from delimiter in a row strsep returns an empty string for each pair of bytes from delimiter.  This means that a program normally should test for strsep returning an empty string before processing it. 
+This function was introduced in 4.3BSD and therefore is widely available. 
+<<<<<<<<<<<<<<<<<<<<
+
+Here is how the above example looks like when strsep is used. 
+
+EXAMPLE_BEGIN
+#include <string.h>
+#include <stddef.h>
+
+…
+
+const char string[] = "words separated by spaces -- and, punctuation!";
+const char delimiters[] = " .,;:!-";
+char *running;
+char *token;
+
+…
+
+running = strdupa (string);
+token = strsep (&running, delimiters);    /* token => "words" */
+token = strsep (&running, delimiters);    /* token => "separated" */
+token = strsep (&running, delimiters);    /* token => "by" */
+token = strsep (&running, delimiters);    /* token => "spaces" */
+token = strsep (&running, delimiters);    /* token => "" */
+token = strsep (&running, delimiters);    /* token => "" */
+token = strsep (&running, delimiters);    /* token => "" */
+token = strsep (&running, delimiters);    /* token => "and" */
+token = strsep (&running, delimiters);    /* token => "" */
+token = strsep (&running, delimiters);    /* token => "punctuation" */
+token = strsep (&running, delimiters);    /* token => "" */
+token = strsep (&running, delimiters);    /* token => NULL */
+EXAMPLE_END
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: char * basename (const char *filename)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The GNU version of the basename function returns the last component of the path in filename.  This function is the preferred usage, since it does not modify the argument, filename, and respects trailing slashes.  The prototype for basename can be found in string.h.  Note, this function is overridden by the XPG version, if libgen.h is included. 
+Example of using GNU basename: 
+
+EXAMPLE_BEGIN
+#include <string.h>
+
+int
+main (int argc, char *argv[])
+{
+  char *prog = basename (argv[0]);
+
+  if (argc < 2)
+    {
+      fprintf (stderr, "Usage %s <arg>\n", prog);
+      exit (1);
+    }
+
+  …
+}
+EXAMPLE_END
+
+Portability Note: This function may produce different results on different systems. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: char * basename (char *path)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This is the standard XPG defined basename.  It is similar in spirit to the GNU version, but may modify the path by removing trailing ’/’ bytes.  If the path is made up entirely of ’/’ bytes, then "/" will be returned.  Also, if path is NULL or an empty string, then "." is returned.  The prototype for the XPG version can be found in libgen.h. 
+Example of using XPG basename: 
+
+EXAMPLE_BEGIN
+#include <libgen.h>
+
+int
+main (int argc, char *argv[])
+{
+  char *prog;
+  char *path = strdupa (argv[0]);
+
+  prog = basename (path);
+
+  if (argc < 2)
+    {
+      fprintf (stderr, "Usage %s <arg>\n", prog);
+      exit (1);
+    }
+
+  …
+
+}
+EXAMPLE_END
+
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: char * dirname (char *path)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The dirname function is the compliment to the XPG version of basename.  It returns the parent directory of the file specified by path.  If path is NULL, an empty string, or contains no ’/’ bytes, then "." is returned.  The prototype for this function can be found in libgen.h. 

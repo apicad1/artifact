@@ -1,0 +1,10 @@
+We’ve explained above how to write a server program that does its own listening.  Such a server must already be running in order for anyone to connect to it. 
+Another way to provide a service on an Internet port is to let the daemon program inetd do the listening.  inetd is a program that runs all the time and waits (using select) for messages on a specified set of ports.  When it receives a message, it accepts the connection (if the socket style calls for connections) and then forks a child process to run the corresponding server program.  You specify the ports and their programs in the file /etc/inetd.conf. 
+
+TABLE_BEGIN
+ • Inetd Servers    
+
+ • Configuring Inetd    
+
+TABLE_END
+

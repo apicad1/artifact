@@ -1,0 +1,9 @@
+This section is about the scheduling among processes whose absolute priority is 0.  When the system hands out the scraps of CPU time that are left over after the processes with higher absolute priority have taken all they want, the scheduling described herein determines who among the great unwashed processes gets them. 
+
+TABLE_BEGIN
+ • Traditional Scheduling Intro    
+
+ • Traditional Scheduling Functions    
+
+TABLE_END
+

@@ -1,0 +1,118 @@
+Another common form to organize data for efficient search is to use trees.  The tsearch function family provides a nice interface to functions to organize possibly large amounts of data by providing a mean access time proportional to the logarithm of the number of elements. The GNU C Library implementation even guarantees that this bound is never exceeded even for input data which cause problems for simple binary tree implementations. 
+The functions described in the chapter are all described in the System V and X/Open specifications and are therefore quite portable. 
+In contrast to the hsearch functions the tsearch functions can be used with arbitrary data and not only zero-terminated strings. 
+The tsearch functions have the advantage that no function to initialize data structures is necessary.  A simple pointer of type void * initialized to NULL is a valid tree and can be extended or searched.  The prototypes for these functions can be found in the header file search.h. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void * tsearch (const void *key, void **rootp, comparison_fn_t compar)
+Preliminary: | MT-Safe race:rootp | AS-Unsafe heap | AC-Unsafe corrupt mem | See POSIX Safety Concepts. 
+The tsearch function searches in the tree pointed to by *rootp for an element matching key.  The function pointed to by compar is used to determine whether two elements match.  See Comparison Functions, for a specification of the functions which can be used for the compar parameter. 
+If the tree does not contain a matching entry the key value will be added to the tree.  tsearch does not make a copy of the object pointed to by key (how could it since the size is unknown). Instead it adds a reference to this object which means the object must be available as long as the tree data structure is used. 
+The tree is represented by a pointer to a pointer since it is sometimes necessary to change the root node of the tree.  So it must not be assumed that the variable pointed to by rootp has the same value after the call.  This also shows that it is not safe to call the tsearch function more than once at the same time using the same tree.  It is no problem to run it more than once at a time on different trees. 
+The return value is a pointer to the matching element in the tree.  If a new element was created the pointer points to the new data (which is in fact key).  If an entry had to be created and the program ran out of space NULL is returned. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void * tfind (const void *key, void *const *rootp, comparison_fn_t compar)
+Preliminary: | MT-Safe race:rootp | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The tfind function is similar to the tsearch function.  It locates an element matching the one pointed to by key and returns a pointer to this element.  But if no matching element is available no new element is entered (note that the rootp parameter points to a constant pointer).  Instead the function returns NULL. 
+<<<<<<<<<<<<<<<<<<<<
+
+Another advantage of the tsearch functions in contrast to the hsearch functions is that there is an easy way to remove elements. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void * tdelete (const void *key, void **rootp, comparison_fn_t compar)
+Preliminary: | MT-Safe race:rootp | AS-Unsafe heap | AC-Unsafe corrupt mem | See POSIX Safety Concepts. 
+To remove a specific element matching key from the tree tdelete can be used.  It locates the matching element using the same method as tfind.  The corresponding element is then removed and a pointer to the parent of the deleted node is returned by the function.  If there is no matching entry in the tree nothing can be deleted and the function returns NULL.  If the root of the tree is deleted tdelete returns some unspecified value not equal to NULL. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void tdestroy (void *vroot, __free_fn_t freefct)
+Preliminary: | MT-Safe  | AS-Unsafe heap | AC-Unsafe mem | See POSIX Safety Concepts. 
+If the complete search tree has to be removed one can use tdestroy.  It frees all resources allocated by the tsearch functions to generate the tree pointed to by vroot. 
+For the data in each tree node the function freefct is called. The pointer to the data is passed as the argument to the function.  If no such work is necessary freefct must point to a function doing nothing.  It is called in any case. 
+This function is a GNU extension and not covered by the System V or X/Open specifications. 
+<<<<<<<<<<<<<<<<<<<<
+
+In addition to the functions to create and destroy the tree data structure, there is another function which allows you to apply a function to all elements of the tree.  The function must have this type: 
+
+EXAMPLE_BEGIN
+void __action_fn_t (const void *nodep, VISIT value, int level);
+EXAMPLE_END
+
+The nodep is the data value of the current node (once given as the key argument to tsearch).  level is a numeric value which corresponds to the depth of the current node in the tree.  The root node has the depth 0 and its children have a depth of 1 and so on.  The VISIT type is an enumeration type. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: VISIT
+The VISIT value indicates the status of the current node in the tree and how the function is called.  The status of a node is either ‘leaf’ or ‘internal node’.  For each leaf node the function is called exactly once, for each internal node it is called three times: before the first child is processed, after the first child is processed and after both children are processed.  This makes it possible to handle all three methods of tree traversal (or even a combination of them). 
+	preorder  
+The current node is an internal node and the function is called before the first child was processed. 
+	postorder  
+The current node is an internal node and the function is called after the first child was processed. 
+	endorder  
+The current node is an internal node and the function is called after the second child was processed. 
+	leaf  
+The current node is a leaf. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void twalk (const void *root, __action_fn_t action)
+Preliminary: | MT-Safe race:root | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+For each node in the tree with a node pointed to by root, the twalk function calls the function provided by the parameter action.  For leaf nodes the function is called exactly once with value set to leaf.  For internal nodes the function is called three times, setting the value parameter or action to the appropriate value.  The level argument for the action function is computed while descending the tree by increasing the value by one for each descent to a child, starting with the value 0 for the root node. 
+Since the functions used for the action parameter to twalk must not modify the tree data, it is safe to run twalk in more than one thread at the same time, working on the same tree.  It is also safe to call tfind in parallel.  Functions which modify the tree must not be used, otherwise the behavior is undefined.  However, it is difficult to pass data external to the tree to the callback function without resorting to global variables (and thread safety issues), so see the twalk_r function below. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void twalk_r (const void *root, void (*action) (const void *key, VISIT which, void *closure), void *closure)
+Preliminary: | MT-Safe race:root | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+For each node in the tree with a node pointed to by root, the twalk_r function calls the function provided by the parameter action.  For leaf nodes the function is called exactly once with which set to leaf.  For internal nodes the function is called three times, setting the which parameter of action to the appropriate value.  The closure parameter is passed down to each call of the action function, unmodified. 
+It is possible to implement the twalk function on top of the twalk_r function, which is why there is no separate level parameter. 
+
+EXAMPLE_BEGIN
+
+
+#include <search.h>
+
+struct twalk_with_twalk_r_closure
+{
+  void (*action) (const void *, VISIT, int);
+  int depth;
+};
+
+static void
+twalk_with_twalk_r_action (const void *nodep, VISIT which, void *closure0)
+{
+  struct twalk_with_twalk_r_closure *closure = closure0;
+
+  switch (which)
+    {
+    case leaf:
+      closure->action (nodep, which, closure->depth);
+      break;
+    case preorder:
+      closure->action (nodep, which, closure->depth);
+      ++closure->depth;
+      break;
+    case postorder:
+      /* The preorder action incremented the depth. */
+      closure->action (nodep, which, closure->depth - 1);
+      break;
+    case endorder:
+      --closure->depth;
+      closure->action (nodep, which, closure->depth);
+      break;
+    }
+}
+
+void
+twalk (const void *root, void (*action) (const void *, VISIT, int))
+{
+  struct twalk_with_twalk_r_closure closure = { action, 0 };
+  twalk_r (root, twalk_with_twalk_r_action, &closure);
+}
+EXAMPLE_END
+

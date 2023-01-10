@@ -1,0 +1,190 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘--prefix=directory’
+Install machine-independent data files in subdirectories of directory.  The default is to install in /usr/local. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘--exec-prefix=directory’
+Install the library and other machine-dependent files in subdirectories of directory.  The default is to the ‘--prefix’ directory if that option is specified, or /usr/local otherwise. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘--with-headers=directory’
+Look for kernel header files in directory, not /usr/include.  The GNU C Library needs information from the kernel’s header files describing the interface to the kernel.  The GNU C Library will normally look in /usr/include for them, but if you specify this option, it will look in DIRECTORY instead. 
+This option is primarily of use on a system where the headers in /usr/include come from an older version of the GNU C Library.  Conflicts can occasionally happen in this case.  You can also use this option if you want to compile the GNU C Library with a newer set of kernel headers than the ones found in /usr/include. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘--enable-kernel=version’
+This option is currently only useful on GNU/Linux systems.  The version parameter should have the form X.Y.Z and describes the smallest version of the Linux kernel the generated library is expected to support.  The higher the version number is, the less compatibility code is added, and the faster the code gets. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘--with-binutils=directory’
+Use the binutils (assembler and linker) in directory, not the ones the C compiler would default to.  You can use this option if the default binutils on your system cannot deal with all the constructs in the GNU C Library.  In that case, configure will detect the problem and suppress these constructs, so that the library will still be usable, but functionality may be lost—for example, you can’t build a shared libc with old binutils. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘--with-nonshared-cflags=cflags’
+Use additional compiler flags cflags to build the parts of the library which are always statically linked into applications and libraries even with shared linking (that is, the object files contained in lib*_nonshared.a libraries).  The build process will automatically use the appropriate flags, but this option can be used to set additional flags required for building applications and libraries, to match local policy.  For example, if such a policy requires that all code linked into applications must be built with source fortification, ‘--with-nonshared-cflags=-Wp,-D_FORTIFY_SOURCE=2’ will make sure that the objects in libc_nonshared.a are compiled with this flag (although this will not affect the generated code in this particular case and potentially change debugging information and metadata only). 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘--disable-shared’
+Don’t build shared libraries even if it is possible.  Not all systems support shared libraries; you need ELF support and (currently) the GNU linker. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘--enable-static-pie’
+Enable static position independent executable (static PIE) support. Static PIE is similar to static executable, but can be loaded at any address without help from a dynamic linker.  All static programs as well as static tests are built as static PIE, except for those marked with no-pie.  The resulting glibc can be used with the GCC option, -static-pie, which is available with GCC 8 or above, to create static PIE.  This option also implies that glibc programs and tests are created as dynamic position independent executables (PIE) by default. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘--enable-cet’
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘--enable-cet=permissive’
+Enable Intel Control-flow Enforcement Technology (CET) support.  When the GNU C Library is built with --enable-cet or --enable-cet=permissive, the resulting library is protected with indirect branch tracking (IBT) and shadow stack (SHSTK).  When CET is enabled, the GNU C Library is compatible with all existing executables and shared libraries.  This feature is currently supported on i386, x86_64 and x32 with GCC 8 and binutils 2.29 or later. Note that when CET is enabled, the GNU C Library requires CPUs capable of multi-byte NOPs, like x86-64 processors as well as Intel Pentium Pro or newer.  With --enable-cet, it is an error to dlopen a non CET enabled shared library in CET enabled application.  With --enable-cet=permissive, CET is disabled when dlopening a non CET enabled shared library in CET enabled application. 
+NOTE: --enable-cet has been tested for i686, x86_64 and x32 on non-CET processors.  --enable-cet has been tested for i686, x86_64 and x32 on CET processors. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘--enable-memory-tagging’
+Enable memory tagging support if the architecture supports it.  When the GNU C Library is built with this option then the resulting library will be able to control the use of tagged memory when hardware support is present by use of the tunable ‘glibc.mem.tagging’.  This includes the generation of tagged memory when using the malloc APIs. 
+At present only AArch64 platforms with MTE provide this functionality, although the library will still operate (without memory tagging) on older versions of the architecture. 
+The default is to disable support for memory tagging. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘--disable-profile’
+Don’t build libraries with profiling information.  You may want to use this option if you don’t plan to do profiling. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘--enable-static-nss’
+Compile static versions of the NSS (Name Service Switch) libraries. This is not recommended because it defeats the purpose of NSS; a program linked statically with the NSS libraries cannot be dynamically reconfigured to use a different name database. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘--enable-hardcoded-path-in-tests’
+By default, dynamic tests are linked to run with the installed C library. This option hardcodes the newly built C library path in dynamic tests so that they can be invoked directly. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘--disable-timezone-tools’
+By default, timezone related utilities (zic, zdump, and tzselect) are installed with the GNU C Library.  If you are building these independently (e.g. by using the ‘tzcode’ package), then this option will allow disabling the install of these. 
+Note that you need to make sure the external tools are kept in sync with the versions that the GNU C Library expects as the data formats may change over time.  Consult the timezone subdirectory for more details. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘--enable-stack-protector’
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘--enable-stack-protector=strong’
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘--enable-stack-protector=all’
+Compile the C library and all other parts of the glibc package (including the threading and math libraries, NSS modules, and transliteration modules) using the GCC -fstack-protector, -fstack-protector-strong or -fstack-protector-all options to detect stack overruns.  Only the dynamic linker and a small number of routines called directly from assembler are excluded from this protection. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘--enable-bind-now’
+Disable lazy binding for installed shared objects and programs.  This provides additional security hardening because it enables full RELRO and a read-only global offset table (GOT), at the cost of slightly increased program load times. 
+
+
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘--enable-pt_chown’
+The file pt_chown is a helper binary for grantpt (see Pseudo-Terminals) that is installed setuid root to fix up pseudo-terminal ownership on GNU/Hurd.  It is not required on GNU/Linux, and the GNU C Library will not use the installed pt_chown program when configured with --enable-pt_chown. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘--disable-werror’
+By default, the GNU C Library is built with -Werror.  If you wish to build without this option (for example, if building with a newer version of GCC than this version of the GNU C Library was tested with, so new warnings cause the build with -Werror to fail), you can configure with --disable-werror. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘--disable-mathvec’
+By default for x86_64, the GNU C Library is built with the vector math library. Use this option to disable the vector math library. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘--enable-tunables’
+Tunables support allows additional library parameters to be customized at runtime.  This feature is enabled by default.  This option can take the following values: 
+	yes
+This is the default if no option is passed to configure. This enables tunables and selects the default frontend (currently ‘valstring’).  
+	no
+This option disables tunables.  
+	valstring
+This enables tunables and selects the ‘valstring’ frontend for tunables. This frontend allows users to specify tunables as a colon-separated list in a single environment variable GLIBC_TUNABLES. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘--disable-crypt’
+Do not install the passphrase-hashing library libcrypt or the header file crypt.h.  unistd.h will still declare the function crypt.  Using this option does not change the set of programs that may need to be linked with -lcrypt; it only means that the GNU C Library will not provide that library. 
+This option is for hackers and distributions experimenting with independently-maintained implementations of libcrypt.  It may become the default in a future release. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘--disable-experimental-malloc’
+By default, a per-thread cache is enabled in malloc.  While this cache can be disabled on a per-application basis using tunables (set glibc.malloc.tcache_count to zero), this option can be used to remove it from the build completely. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘--disable-scv’
+Disable using scv instruction for syscalls. All syscalls will use sc instead, even if the kernel supports scv. PowerPC only. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘--build=build-system’
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘--host=host-system’
+These options are for cross-compiling.  If you specify both options and build-system is different from host-system, configure will prepare to cross-compile the GNU C Library from build-system to be used on host-system.  You’ll probably need the ‘--with-headers’ option too, and you may have to override configure’s selection of the compiler and/or binutils. 
+If you only specify ‘--host’, configure will prepare for a native compile but use what you specify instead of guessing what your system is.  This is most useful to change the CPU submodel.  For example, if configure guesses your machine as i686-pc-linux-gnu but you want to compile a library for 586es, give ‘--host=i586-pc-linux-gnu’ or just ‘--host=i586-linux’ and add the appropriate compiler flags (‘-mcpu=i586’ will do the trick) to CC. 
+If you specify just ‘--build’, configure will get confused. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘--with-pkgversion=version’
+Specify a description, possibly including a build number or build date, of the binaries being built, to be included in --version output from programs installed with the GNU C Library. For example, --with-pkgversion='FooBar GNU/Linux glibc build 123'.  The default value is ‘GNU libc’. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘--with-bugurl=url’
+Specify the URL that users should visit if they wish to report a bug, to be included in --help output from programs installed with the GNU C Library.  The default value refers to the main bug-reporting information for the GNU C Library. 

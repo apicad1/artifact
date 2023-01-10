@@ -1,0 +1,17 @@
+A pipe is a mechanism for interprocess communication; data written to the pipe by one process can be read by another process.  The data is handled in a first-in, first-out (FIFO) order.  The pipe has no name; it is created for one use and both ends must be inherited from the single process which created the pipe. 
+A FIFO special file is similar to a pipe, but instead of being an anonymous, temporary connection, a FIFO has a name or names like any other file.  Processes open the FIFO by name in order to communicate through it. 
+A pipe or FIFO has to be open at both ends simultaneously.  If you read from a pipe or FIFO file that doesn’t have any processes writing to it (perhaps because they have all closed the file, or exited), the read returns end-of-file.  Writing to a pipe or FIFO that doesn’t have a reading process is treated as an error condition; it generates a SIGPIPE signal, and fails with error code EPIPE if the signal is handled or blocked. 
+Neither pipes nor FIFO special files allow file positioning.  Both reading and writing operations happen sequentially; reading from the beginning of the file and writing at the end. 
+
+TABLE_BEGIN
+ • Creating a Pipe    Making a pipe with the pipe function.
+
+ • Pipe to a Subprocess    Using a pipe to communicate with a
+				 child process.
+
+ • FIFO Special Files    Making a FIFO special file.
+
+ • Pipe Atomicity    When pipe (or FIFO) I/O is atomic.
+
+TABLE_END
+

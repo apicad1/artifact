@@ -1,0 +1,40 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int unlink (const char *filename)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The unlink function deletes the file name filename.  If this is a file’s sole name, the file itself is also deleted.  (Actually, if any process has the file open when this happens, deletion is postponed until all processes have closed the file.) 
+
+The function unlink is declared in the header file unistd.h. 
+This function returns 0 on successful completion, and -1 on error.  In addition to the usual file name errors (see File Name Errors), the following errno error conditions are defined for this function: 
+	EACCES
+Write permission is denied for the directory from which the file is to be removed, or the directory has the sticky bit set and you do not own the file.  
+	EBUSY
+This error indicates that the file is being used by the system in such a way that it can’t be unlinked.  For example, you might see this error if the file name specifies the root directory or a mount point for a file system.  
+	ENOENT
+The file name to be deleted doesn’t exist.  
+	EPERM
+On some systems unlink cannot be used to delete the name of a directory, or at least can only be used this way by a privileged user. To avoid such problems, use rmdir to delete directories.  (On GNU/Linux and GNU/Hurd systems unlink can never delete the name of a directory.)  
+	EROFS
+The directory containing the file name to be deleted is on a read-only file system and can’t be modified. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int rmdir (const char *filename)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+
+
+The rmdir function deletes a directory.  The directory must be empty before it can be removed; in other words, it can only contain entries for . and ... 
+In most other respects, rmdir behaves like unlink.  There are two additional errno error conditions defined for rmdir: 
+	ENOTEMPTY
+	EEXIST
+The directory to be deleted is not empty. 
+These two error codes are synonymous; some systems use one, and some use the other.  GNU/Linux and GNU/Hurd systems always use ENOTEMPTY. 
+The prototype for this function is declared in the header file unistd.h.  
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int remove (const char *filename)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This is the ISO C function to remove a file.  It works like unlink for files and like rmdir for directories. remove is declared in stdio.h.  

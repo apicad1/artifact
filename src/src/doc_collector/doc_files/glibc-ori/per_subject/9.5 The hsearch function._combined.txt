@@ -1,0 +1,71 @@
+The functions mentioned so far in this chapter are for searching in a sorted or unsorted array.  There are other methods to organize information which later should be searched.  The costs of insert, delete and search differ.  One possible implementation is using hashing tables. The following functions are declared in the header file search.h. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int hcreate (size_t nel)
+Preliminary: | MT-Unsafe race:hsearch | AS-Unsafe heap | AC-Unsafe corrupt mem | See POSIX Safety Concepts. 
+The hcreate function creates a hashing table which can contain at least nel elements.  There is no possibility to grow this table so it is necessary to choose the value for nel wisely.  The method used to implement this function might make it necessary to make the number of elements in the hashing table larger than the expected maximal number of elements.  Hashing tables usually work inefficiently if they are filled 80% or more.  The constant access time guaranteed by hashing can only be achieved if few collisions exist.  See Knuth’s “The Art of Computer Programming, Part 3: Searching and Sorting” for more information. 
+The weakest aspect of this function is that there can be at most one hashing table used through the whole program.  The table is allocated in local memory out of control of the programmer.  As an extension the GNU C Library provides an additional set of functions with a reentrant interface which provides a similar interface but which allows keeping arbitrarily many hashing tables. 
+It is possible to use more than one hashing table in the program run if the former table is first destroyed by a call to hdestroy. 
+The function returns a non-zero value if successful.  If it returns zero, something went wrong.  This could either mean there is already a hashing table in use or the program ran out of memory. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void hdestroy (void)
+Preliminary: | MT-Unsafe race:hsearch | AS-Unsafe heap | AC-Unsafe corrupt mem | See POSIX Safety Concepts. 
+The hdestroy function can be used to free all the resources allocated in a previous call of hcreate.  After a call to this function it is again possible to call hcreate and allocate a new table with possibly different size. 
+It is important to remember that the elements contained in the hashing table at the time hdestroy is called are not freed by this function.  It is the responsibility of the program code to free those strings (if necessary at all).  Freeing all the element memory is not possible without extra, separately kept information since there is no function to iterate through all available elements in the hashing table. If it is really necessary to free a table and all elements the programmer has to keep a list of all table elements and before calling hdestroy s/he has to free all element’s data using this list. This is a very unpleasant mechanism and it also shows that this kind of hashing table is mainly meant for tables which are created once and used until the end of the program run. 
+<<<<<<<<<<<<<<<<<<<<
+
+Entries of the hashing table and keys for the search are defined using this type: 
+
+>>>>>>>>>>>>>>>>>>>>
+- Data type: ENTRY
+	char *key
+Pointer to a zero-terminated string of characters describing the key for the search or the element in the hashing table.  This is a limiting restriction of the functionality of the hsearch functions: They can only be used for data sets which use the NUL character always and solely to terminate keys.  It is not possible to handle general binary data for keys.  
+	void *data
+Generic pointer for use by the application.  The hashing table implementation preserves this pointer in entries, but does not use it in any way otherwise. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Data type: struct entry
+The underlying type of ENTRY. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: ENTRY * hsearch (ENTRY item, ACTION action)
+Preliminary: | MT-Unsafe race:hsearch | AS-Unsafe  | AC-Unsafe corrupt/action==ENTER | See POSIX Safety Concepts. 
+To search in a hashing table created using hcreate the hsearch function must be used.  This function can perform a simple search for an element (if action has the value FIND) or it can alternatively insert the key element into the hashing table.  Entries are never replaced. 
+The key is denoted by a pointer to an object of type ENTRY.  For locating the corresponding position in the hashing table only the key element of the structure is used. 
+If an entry with a matching key is found the action parameter is irrelevant.  The found entry is returned.  If no matching entry is found and the action parameter has the value FIND the function returns a NULL pointer.  If no entry is found and the action parameter has the value ENTER a new entry is added to the hashing table which is initialized with the parameter item. A pointer to the newly added entry is returned. 
+<<<<<<<<<<<<<<<<<<<<
+
+As mentioned before, the hashing table used by the functions described so far is global and there can be at any time at most one hashing table in the program.  A solution is to use the following functions which are a GNU extension.  All have in common that they operate on a hashing table which is described by the content of an object of the type struct hsearch_data.  This type should be treated as opaque, none of its members should be changed directly. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int hcreate_r (size_t nel, struct hsearch_data *htab)
+Preliminary: | MT-Safe race:htab | AS-Unsafe heap | AC-Unsafe corrupt mem | See POSIX Safety Concepts. 
+The hcreate_r function initializes the object pointed to by htab to contain a hashing table with at least nel elements. So this function is equivalent to the hcreate function except that the initialized data structure is controlled by the user. 
+This allows having more than one hashing table at one time.  The memory necessary for the struct hsearch_data object can be allocated dynamically.  It must be initialized with zero before calling this function. 
+The return value is non-zero if the operation was successful.  If the return value is zero, something went wrong, which probably means the program ran out of memory. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void hdestroy_r (struct hsearch_data *htab)
+Preliminary: | MT-Safe race:htab | AS-Unsafe heap | AC-Unsafe corrupt mem | See POSIX Safety Concepts. 
+The hdestroy_r function frees all resources allocated by the hcreate_r function for this very same object htab.  As for hdestroy it is the program’s responsibility to free the strings for the elements of the table. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int hsearch_r (ENTRY item, ACTION action, ENTRY **retval, struct hsearch_data *htab)
+Preliminary: | MT-Safe race:htab | AS-Safe  | AC-Unsafe corrupt/action==ENTER | See POSIX Safety Concepts. 
+The hsearch_r function is equivalent to hsearch.  The meaning of the first two arguments is identical.  But instead of operating on a single global hashing table the function works on the table described by the object pointed to by htab (which is initialized by a call to hcreate_r). 
+Another difference to hcreate is that the pointer to the found entry in the table is not the return value of the function.  It is returned by storing it in a pointer variable pointed to by the retval parameter.  The return value of the function is an integer value indicating success if it is non-zero and failure if it is zero. In the latter case the global variable errno signals the reason for the failure. 
+	ENOMEM
+The table is filled and hsearch_r was called with a so far unknown key and action set to ENTER. 
+	ESRCH
+The action parameter is FIND and no corresponding element is found in the table. 

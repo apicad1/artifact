@@ -1,0 +1,27 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: struct tms
+The tms structure is used to return information about process times.  It contains at least the following members: 
+	clock_t tms_utime
+This is the total processor time the calling process has used in executing the instructions of its program.  
+	clock_t tms_stime
+This is the processor time the system has used on behalf of the calling process.  
+	clock_t tms_cutime
+This is the sum of the tms_utime values and the tms_cutime values of all terminated child processes of the calling process, whose status has been reported to the parent process by wait or waitpid; see Process Completion.  In other words, it represents the total processor time used in executing the instructions of all the terminated child processes of the calling process, excluding child processes which have not yet been reported by wait or waitpid.   
+	clock_t tms_cstime
+This is similar to tms_cutime, but represents the total processor time the system has used on behalf of all the terminated child processes of the calling process. 
+All of the times are given in numbers of clock ticks.  Unlike CPU time, these are the actual amounts of time; not relative to any event. See Creating a Process. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int CLK_TCK
+This is an obsolete name for the number of clock ticks per second.  Use sysconf (_SC_CLK_TCK) instead. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: clock_t times (struct tms *buffer)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The times function stores the processor time information for the calling process in buffer. 
+The return value is the number of clock ticks since an arbitrary point in the past, e.g. since system start-up.  times returns (clock_t)(-1) to indicate failure. 

@@ -1,0 +1,74 @@
+GAMMA(3)                                        Linux Programmer's Manual                                       GAMMA(3)
+
+NAME
+       gamma, gammaf, gammal - (logarithm of the) gamma function
+
+SYNOPSIS
+       #include <math.h>
+
+       double gamma(double x);
+       float gammaf(float x);
+       long double gammal(long double x);
+
+       Link with -lm.
+
+   Feature Test Macro Requirements for glibc (see feature_test_macros(7)):
+
+       gamma():
+           _XOPEN_SOURCE
+               || /* Since glibc 2.19: */ _DEFAULT_SOURCE
+               || /* Glibc versions <= 2.19: */ _BSD_SOURCE || _SVID_SOURCE
+       gammaf(), gammal():
+           _XOPEN_SOURCE >= 600 || (_XOPEN_SOURCE && _ISOC99_SOURCE)
+               || /* Since glibc 2.19: */ _DEFAULT_SOURCE
+               || /* Glibc versions <= 2.19: */ _BSD_SOURCE || _SVID_SOURCE
+
+DESCRIPTION
+       These functions are deprecated: instead, use either the tgamma(3) or the lgamma(3) functions, as appropriate.
+
+       For the definition of the Gamma function, see tgamma(3).
+
+   *BSD version
+       The  libm  in 4.4BSD and some versions of FreeBSD had a gamma() function that computes the Gamma function, as one
+       would expect.
+
+   glibc version
+       Glibc has a gamma() function that is equivalent to lgamma(3) and computes the  natural  logarithm  of  the  Gamma
+       function.
+
+RETURN VALUE
+       See lgamma(3).
+
+ERRORS
+       See lgamma(3).
+
+ATTRIBUTES
+       For an explanation of the terms used in this section, see attributes(7).
+
+       ┌────────────────────────────┬───────────────┬────────────────────────┐
+       │Interface                   │ Attribute     │ Value                  │
+       ├────────────────────────────┼───────────────┼────────────────────────┤
+       │gamma(), gammaf(), gammal() │ Thread safety │ MT-Unsafe race:signgam │
+       └────────────────────────────┴───────────────┴────────────────────────┘
+CONFORMING TO
+       Because  of  historical variations in behavior across systems, this function is not specified in any recent stan‐
+       dard.  It was documented in SVID 2.
+
+NOTES
+   History
+       4.2BSD had a gamma() that computed ln(|Gamma(|x|)|), leaving the sign  of  Gamma(|x|)  in  the  external  integer
+       signgam.  In 4.3BSD the name was changed to lgamma(3), and the man page promises
+
+           "At some time in the future the name gamma will be rehabilitated and used for the Gamma function"
+
+       This  did  indeed  happen in 4.4BSD, where gamma() computes the Gamma function (with no effect on signgam).  How‐
+       ever, this came too late, and we now have tgamma(3), the "true gamma" function.
+
+SEE ALSO
+       lgamma(3), signgam(3), tgamma(3)
+
+COLOPHON
+       This page is part of release 5.05 of the Linux man-pages project.  A  description  of  the  project,  information
+       about reporting bugs, and the latest version of this page, can be found at https://www.kernel.org/doc/man-pages/.
+
+GNU                                                    2017-09-15                                               GAMMA(3)

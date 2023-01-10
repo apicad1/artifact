@@ -1,0 +1,1 @@
+Here are detailed descriptions of the functions for reading the user and group IDs of a process, both real and effective.  To use these facilities, you must include the header files sys/types.h and unistd.h.   

@@ -1,0 +1,1 @@
+Functions that accept file name arguments usually detect these errno error conditions relating to the file name syntax or trouble finding the named file.  These errors are referred to throughout this manual as the usual file name errors. 

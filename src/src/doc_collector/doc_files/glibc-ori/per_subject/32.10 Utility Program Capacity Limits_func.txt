@@ -1,0 +1,46 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int BC_BASE_MAX
+The largest value of obase that the bc utility is guaranteed to support. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int BC_DIM_MAX
+The largest number of elements in one array that the bc utility is guaranteed to support. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int BC_SCALE_MAX
+The largest value of scale that the bc utility is guaranteed to support. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int BC_STRING_MAX
+The largest number of characters in one string constant that the bc utility is guaranteed to support. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int COLL_WEIGHTS_MAX
+The largest number of weights that can necessarily be used in defining the collating sequence for a locale. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int EXPR_NEST_MAX
+The maximum number of expressions that can be nested within parentheses by the expr utility. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int LINE_MAX
+The largest text line that the text-oriented POSIX.2 utilities can support.  (If you are using the GNU versions of these utilities, then there is no actual limit except that imposed by the available virtual memory, but there is no way that the library can tell you this.) 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int EQUIV_CLASS_MAX
+The maximum number of weights that can be assigned to an entry of the LC_COLLATE category ‘order’ keyword in a locale definition. The GNU C Library does not presently support locale definitions. 

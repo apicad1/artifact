@@ -1,0 +1,72 @@
+ERF(3)                                          Linux Programmer's Manual                                         ERF(3)
+
+NAME
+       erf, erff, erfl, - error function
+
+SYNOPSIS
+       #include <math.h>
+
+       double erf(double x);
+       float erff(float x);
+       long double erfl(long double x);
+
+       Link with -lm.
+
+   Feature Test Macro Requirements for glibc (see feature_test_macros(7)):
+
+       erf():
+           _ISOC99_SOURCE || _POSIX_C_SOURCE >= 200112L || _XOPEN_SOURCE
+               || /* Since glibc 2.19: */ _DEFAULT_SOURCE
+               || /* Glibc versions <= 2.19: */ _BSD_SOURCE || _SVID_SOURCE
+       erff(), erfl():
+           _ISOC99_SOURCE || _POSIX_C_SOURCE >= 200112L
+               || /* Since glibc 2.19: */ _DEFAULT_SOURCE
+               || /* Glibc versions <= 2.19: */ _BSD_SOURCE || _SVID_SOURCE
+
+DESCRIPTION
+       These functions return the error function of x, defined as
+
+           erf(x) = 2/sqrt(pi)* integral from 0 to x of exp(-t*t) dt
+
+RETURN VALUE
+       On success, these functions return the error function of x, a value in the range [-1, 1].
+
+       If x is a NaN, a NaN is returned.
+
+       If x is +0 (-0), +0 (-0) is returned.
+
+       If x is positive infinity (negative infinity), +1 (-1) is returned.
+
+       If x is subnormal, a range error occurs, and the return value is 2*x/sqrt(pi).
+
+ERRORS
+       See math_error(7) for information on how to determine whether an error has occurred when calling these functions.
+
+       The following errors can occur:
+
+       Range error: result underflow (x is subnormal)
+              An underflow floating-point exception (FE_UNDERFLOW) is raised.
+
+       These functions do not set errno.
+
+ATTRIBUTES
+       For an explanation of the terms used in this section, see attributes(7).
+
+       ┌──────────────────────┬───────────────┬─────────┐
+       │Interface             │ Attribute     │ Value   │
+       ├──────────────────────┼───────────────┼─────────┤
+       │erf(), erff(), erfl() │ Thread safety │ MT-Safe │
+       └──────────────────────┴───────────────┴─────────┘
+CONFORMING TO
+       C99, POSIX.1-2001, POSIX.1-2008.
+
+       The variant returning double also conforms to SVr4, 4.3BSD.
+
+SEE ALSO
+       cerf(3), erfc(3), exp(3)
+
+COLOPHON
+       This  page  is  part  of  release 5.05 of the Linux man-pages project.  A description of the project, information
+       about reporting bugs, and the latest version of this page, can be found at https://www.kernel.org/doc/man-pages/.
+
+GNU                                                    2017-09-15                                                 ERF(3)

@@ -1,0 +1,48 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int O_RDONLY
+Open the file for read access. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int O_WRONLY
+Open the file for write access. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int O_RDWR
+Open the file for both reading and writing. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int O_PATH
+Obtain a file descriptor for the file, but do not open the file for reading or writing.  Permission checks for the file itself are skipped when the file is opened (but permission to access the directory that contains it is still needed), and permissions are checked when the descriptor is used later on. 
+For example, such descriptors can be used with the fexecve function (see Executing a File). 
+This access mode is specific to Linux.  On GNU/Hurd systems, it is possible to use O_EXEC explicitly, or specify no access modes at all (see below). 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int O_ACCMODE
+This macro is a mask that can be bitwise-ANDed with the file status flag value to recover the file access mode, assuming that a standard file access mode is in use. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int O_READ
+Open the file for reading.  Same as O_RDONLY; only defined on GNU/Hurd. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int O_WRITE
+Open the file for writing.  Same as O_WRONLY; only defined on GNU/Hurd. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int O_EXEC
+Open the file for executing.  Only defined on GNU/Hurd. 

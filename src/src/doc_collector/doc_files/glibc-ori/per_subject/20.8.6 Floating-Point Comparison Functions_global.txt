@@ -1,0 +1,9 @@
+The standard C comparison operators provoke exceptions when one or other of the operands is NaN.  For example, 
+
+EXAMPLE_BEGIN
+int v = a < 1.0;
+EXAMPLE_END
+
+will raise an exception if a is NaN.  (This does not happen with == and !=; those merely return false and true, respectively, when NaN is examined.)  Frequently this exception is undesirable.  ISO C99 therefore defines comparison functions that do not raise exceptions when NaN is examined.  All of the functions are implemented as macros which allow their arguments to be of any floating-point type.  The macros are guaranteed to evaluate their arguments only once.  TS 18661-1:2014 adds such a macro for an equality comparison that does raise an exception for a NaN argument; it also adds functions that provide a total ordering on all floating-point values, including NaNs, without raising any exceptions even for signaling NaNs. 
+Not all machines provide hardware support for these operations.  On machines that don’t, the macros can be very slow.  Therefore, you should not use these functions when NaN is not a concern. 
+NB: There are no macros isequal or isunequal. They are unnecessary, because the == and != operators do not throw an exception if one or both of the operands are NaN. 

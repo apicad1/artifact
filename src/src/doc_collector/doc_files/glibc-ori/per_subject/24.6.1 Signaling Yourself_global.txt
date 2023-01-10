@@ -1,0 +1,39 @@
+A process can send itself a signal with the raise function.  This function is declared in signal.h.  
+One convenient use for raise is to reproduce the default behavior of a signal that you have trapped.  For instance, suppose a user of your program types the SUSP character (usually C-z; see Special Characters) to send it an interactive stop signal (SIGTSTP), and you want to clean up some internal data buffers before stopping.  You might set this up like this: 
+
+EXAMPLE_BEGIN
+#include <signal.h>
+
+/* When a stop signal arrives, set the action back to the default
+   and then resend the signal after doing cleanup actions. */
+
+void
+tstp_handler (int sig)
+{
+  signal (SIGTSTP, SIG_DFL);
+  /* Do cleanup actions here. */
+  …
+  raise (SIGTSTP);
+}
+
+/* When the process is continued again, restore the signal handler. */
+
+void
+cont_handler (int sig)
+{
+  signal (SIGCONT, cont_handler);
+  signal (SIGTSTP, tstp_handler);
+}
+
+/* Enable both handlers during program initialization. */
+
+int
+main (void)
+{
+  signal (SIGCONT, cont_handler);
+  signal (SIGTSTP, tstp_handler);
+  …
+}
+EXAMPLE_END
+
+Portability note: raise was invented by the ISO C committee.  Older systems may not support it, so using kill may be more portable.  See Signaling Another Process. 

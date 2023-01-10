@@ -1,0 +1,2 @@
+This section describes functions for performing character- and line-oriented output. 
+These narrow stream functions are declared in the header file stdio.h and the wide stream functions in wchar.h.   

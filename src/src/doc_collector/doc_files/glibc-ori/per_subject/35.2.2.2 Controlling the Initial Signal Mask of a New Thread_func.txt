@@ -1,0 +1,20 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int pthread_attr_setsigmask_np (pthread_attr_t *attr, const sigset_t *sigmask)
+Preliminary: | MT-Safe  | AS-Unsafe heap | AC-Unsafe mem | See POSIX Safety Concepts. 
+Change the initial signal mask specified by attr.  If sigmask is not NULL, the initial signal mask for new threads created with attr is set to *sigmask.  If sigmask is NULL, attr will no longer specify an explicit signal mask, so that the initial signal mask of the new thread is inherited from the thread that calls pthread_create. 
+This function returns zero on success, and ENOMEM on memory allocation failure. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int pthread_attr_getsigmask_np (const pthread_attr_t *attr, sigset_t *sigmask)
+Preliminary: | MT-Safe  | AS-Unsafe heap | AC-Unsafe mem | See POSIX Safety Concepts. 
+Retrieve the signal mask stored in attr and copy it to *sigmask.  If the signal mask has not been set, return the special constant PTHREAD_ATTR_NO_SIGMASK_NP, otherwise return zero. 
+Obtaining the signal mask only works if it has been previously stored by pthread_attr_setsigmask_np.  For example, the pthread_getattr_np function does not obtain the current signal mask of the specified thread, and pthread_attr_getsigmask_np will subsequently report the signal mask as unset. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int PTHREAD_ATTR_NO_SIGMASK_NP
+The special value returned by pthread_attr_setsigmask_np to indicate that no signal mask has been set for the attribute. 

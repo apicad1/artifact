@@ -1,0 +1,11 @@
+This section describes how to read or set various options that modify the behavior of sockets and their underlying communications protocols. 
+When you are manipulating a socket option, you must specify which level the option pertains to.  This describes whether the option applies to the socket interface, or to a lower-level communications protocol interface. 
+
+TABLE_BEGIN
+ • Socket Option Functions    The basic functions for setting and getting
+                                 socket options.
+
+ • Socket-Level Options    Details of the options at the socket level.
+
+TABLE_END
+

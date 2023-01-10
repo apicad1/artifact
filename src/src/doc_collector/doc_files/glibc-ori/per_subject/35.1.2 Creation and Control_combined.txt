@@ -1,0 +1,77 @@
+The GNU C Library implements a set of functions that allow the user to easily create and use threads.  Additional functionality is provided to control the behavior of threads. 
+The following data types are defined for managing threads: 
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: thrd_t
+A unique object that identifies a thread. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: thrd_start_t
+This data type is an int (*) (void *) typedef that is passed to thrd_create when creating a new thread.  It should point to the first function that thread will run. 
+<<<<<<<<<<<<<<<<<<<<
+
+The following functions are used for working with threads: 
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int thrd_create (thrd_t *thr, thrd_start_t func, void *arg)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+thrd_create creates a new thread that will execute the function func.  The object pointed to by arg will be used as the argument to func.  If successful, thr is set to the new thread identifier. 
+This function may return thrd_success, thrd_nomem, or thrd_error. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: thrd_t thrd_current (void)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function returns the identifier of the calling thread. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int thrd_equal (thrd_t lhs, thrd_t rhs)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+thrd_equal checks whether lhs and rhs refer to the same thread.  If lhs and rhs are different threads, this function returns 0; otherwise, the return value is non-zero. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int thrd_sleep (const struct timespec *time_point, struct timespec *remaining)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+thrd_sleep blocks the execution of the current thread for at least until the elapsed time pointed to by time_point has been reached.  This function does not take an absolute time, but a duration that the thread is required to be blocked.  See Time Basics, and Time Types. 
+The thread may wake early if a signal that is not ignored is received. In such a case, if remaining is not NULL, the remaining time duration is stored in the object pointed to by remaining. 
+thrd_sleep returns 0 if it blocked for at least the amount of time in time_point, -1 if it was interrupted by a signal, or a negative number on failure. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void thrd_yield (void)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+thrd_yield provides a hint to the implementation to reschedule the execution of the current thread, allowing other threads to run. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: _Noreturn void thrd_exit (int res)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+thrd_exit terminates execution of the calling thread and sets its result code to res. 
+If this function is called from a single-threaded process, the call is equivalent to calling exit with EXIT_SUCCESS (see Normal Termination).  Also note that returning from a function that started a thread is equivalent to calling thrd_exit. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int thrd_detach (thrd_t thr)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+thrd_detach detaches the thread identified by thr from the current control thread.  The resources held by the detached thread will be freed automatically once the thread exits.  The parent thread will never be notified by any thr signal. 
+Calling thrd_detach on a thread that was previously detached or joined by another thread results in undefined behavior. 
+This function returns either thrd_success or thrd_error. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int thrd_join (thrd_t thr, int *res)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+thrd_join blocks the current thread until the thread identified by thr finishes execution.  If res is not NULL, the result code of the thread is put into the location pointed to by res.  The termination of the thread synchronizes-with the completion of this function, meaning both threads have arrived at a common point in their execution. 
+Calling thrd_join on a thread that was previously detached or joined by another thread results in undefined behavior. 
+This function returns either thrd_success or thrd_error. 

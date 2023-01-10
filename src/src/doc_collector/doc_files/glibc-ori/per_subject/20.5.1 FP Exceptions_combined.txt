@@ -1,0 +1,37 @@
+The IEEE 754 standard defines five exceptions that can occur during a calculation.  Each corresponds to a particular sort of error, such as overflow. 
+When exceptions occur (when exceptions are raised, in the language of the standard), one of two things can happen.  By default the exception is simply noted in the floating-point status word, and the program continues as if nothing had happened.  The operation produces a default value, which depends on the exception (see the table below).  Your program can check the status word to find out which exceptions happened. 
+Alternatively, you can enable traps for exceptions.  In that case, when an exception is raised, your program will receive the SIGFPE signal.  The default action for this signal is to terminate the program.  See Signal Handling, for how you can change the effect of the signal. 
+The exceptions defined in IEEE 754 are: 
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘Invalid Operation’
+This exception is raised if the given operands are invalid for the operation to be performed.  Examples are (see IEEE 754, section 7): 
+  Addition or subtraction: ∞ - ∞.  (But ∞ + ∞ = ∞).  Multiplication: 0 · ∞.  Division: 0/0 or ∞/∞.  Remainder: x REM y, where y is zero or x is infinite.  Square root if the operand is less than zero.  More generally, any mathematical function evaluated outside its domain produces this exception.  Conversion of a floating-point number to an integer or decimal string, when the number cannot be represented in the target format (due to overflow, infinity, or NaN).  Conversion of an unrecognizable input string.  Comparison via predicates involving < or >, when one or other of the operands is NaN.  You can prevent this exception by using the unordered comparison functions instead; see FP Comparison Functions. 
+If the exception does not trap, the result of the operation is NaN. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘Division by Zero’
+This exception is raised when a finite nonzero number is divided by zero.  If no trap occurs the result is either +∞ or -∞, depending on the signs of the operands. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘Overflow’
+This exception is raised whenever the result cannot be represented as a finite value in the precision format of the destination.  If no trap occurs the result depends on the sign of the intermediate result and the current rounding mode (IEEE 754, section 7.3): 
+  Round to nearest carries all overflows to ∞ with the sign of the intermediate result.  Round toward 0 carries all overflows to the largest representable finite number with the sign of the intermediate result.  Round toward -∞ carries positive overflows to the largest representable finite number and negative overflows to -∞.   Round toward ∞ carries negative overflows to the most negative representable finite number and positive overflows to ∞. 
+Whenever the overflow exception is raised, the inexact exception is also raised. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘Underflow’
+The underflow exception is raised when an intermediate result is too small to be calculated accurately, or if the operation’s result rounded to the destination precision is too small to be normalized. 
+When no trap is installed for the underflow exception, underflow is signaled (via the underflow flag) only when both tininess and loss of accuracy have been detected.  If no trap handler is installed the operation continues with an imprecise small value, or zero if the destination precision cannot hold the small exact result. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘Inexact’
+This exception is signalled if a rounded result is not exact (such as when calculating the square root of two) or a result overflows without an overflow trap. 

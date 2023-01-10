@@ -1,0 +1,148 @@
+The functions described in this section are primarily provided as a way to efficiently perform certain low-level manipulations on floating point numbers that are represented internally using a binary radix; see Floating Point Concepts.  These functions are required to have equivalent behavior even if the representation does not use a radix of 2, but of course they are unlikely to be particularly efficient in those cases. 
+All these functions are declared in math.h. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: double frexp (double value, int *exponent)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: float frexpf (float value, int *exponent)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: long double frexpl (long double value, int *exponent)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: _FloatN frexpfN (_FloatN value, int *exponent)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: _FloatNx frexpfNx (_FloatNx value, int *exponent)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+These functions are used to split the number value into a normalized fraction and an exponent. 
+If the argument value is not zero, the return value is value times a power of two, and its magnitude is always in the range 1/2 (inclusive) to 1 (exclusive).  The corresponding exponent is stored in *exponent; the return value multiplied by 2 raised to this exponent equals the original number value. 
+For example, frexp (12.8, &exponent) returns 0.8 and stores 4 in exponent. 
+If value is zero, then the return value is zero and zero is stored in *exponent. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: double ldexp (double value, int exponent)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: float ldexpf (float value, int exponent)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: long double ldexpl (long double value, int exponent)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: _FloatN ldexpfN (_FloatN value, int exponent)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: _FloatNx ldexpfNx (_FloatNx value, int exponent)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+These functions return the result of multiplying the floating-point number value by 2 raised to the power exponent.  (It can be used to reassemble floating-point numbers that were taken apart by frexp.) 
+For example, ldexp (0.8, 4) returns 12.8. 
+<<<<<<<<<<<<<<<<<<<<
+
+The following functions, which come from BSD, provide facilities equivalent to those of ldexp and frexp.  See also the ISO C function logb which originally also appeared in BSD. The _FloatN and _FloatN variants of the following functions come from TS 18661-3:2015. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: double scalb (double value, double exponent)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: float scalbf (float value, float exponent)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: long double scalbl (long double value, long double exponent)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The scalb function is the BSD name for ldexp. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: double scalbn (double x, int n)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: float scalbnf (float x, int n)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: long double scalbnl (long double x, int n)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: _FloatN scalbnfN (_FloatN x, int n)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: _FloatNx scalbnfNx (_FloatNx x, int n)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+scalbn is identical to scalb, except that the exponent n is an int instead of a floating-point number. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: double scalbln (double x, long int n)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: float scalblnf (float x, long int n)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: long double scalblnl (long double x, long int n)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: _FloatN scalblnfN (_FloatN x, long int n)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: _FloatNx scalblnfNx (_FloatNx x, long int n)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+scalbln is identical to scalb, except that the exponent n is a long int instead of a floating-point number. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: double significand (double x)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: float significandf (float x)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: long double significandl (long double x)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+significand returns the mantissa of x scaled to the range [1, 2). It is equivalent to scalb (x, (double) -ilogb (x)). 
+This function exists mainly for use in certain standardized tests of IEEE 754 conformance. 

@@ -1,0 +1,18 @@
+The simplest way to change the action for a signal is to use the signal function.  You can specify a built-in action (such as to ignore the signal), or you can establish a handler. 
+The GNU C Library also implements the more versatile sigaction facility.  This section describes both facilities and gives suggestions on which to use when. 
+
+TABLE_BEGIN
+ • Basic Signal Handling    The simple signal function.
+
+ • Advanced Signal Handling    The more powerful sigaction function.
+
+ • Signal and Sigaction    How those two functions interact.
+
+ • Sigaction Function Example    An example of using the sigaction function.
+
+ • Flags for Sigaction    Specifying options for signal handling.
+
+ • Initial Signal Actions    How programs inherit signal actions.
+
+TABLE_END
+

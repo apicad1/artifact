@@ -1,0 +1,1 @@
+These variables make it easy for user programs to implement the ‘--version’ option and provide a bug-reporting address in the ‘--help’ output.  These are implemented in argp by default. 

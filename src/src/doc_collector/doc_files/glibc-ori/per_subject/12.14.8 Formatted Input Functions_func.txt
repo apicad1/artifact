@@ -1,0 +1,44 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int scanf (const char *template, …)
+Preliminary: | MT-Safe locale | AS-Unsafe corrupt heap | AC-Unsafe mem lock corrupt | See POSIX Safety Concepts. 
+The scanf function reads formatted input from the stream stdin under the control of the template string template. The optional arguments are pointers to the places which receive the resulting values. 
+The return value is normally the number of successful assignments.  If an end-of-file condition is detected before any matches are performed, including matches against whitespace and literal characters in the template, then EOF is returned. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int wscanf (const wchar_t *template, …)
+Preliminary: | MT-Safe locale | AS-Unsafe corrupt heap | AC-Unsafe mem lock corrupt | See POSIX Safety Concepts. 
+The wscanf function reads formatted input from the stream stdin under the control of the template string template. The optional arguments are pointers to the places which receive the resulting values. 
+The return value is normally the number of successful assignments.  If an end-of-file condition is detected before any matches are performed, including matches against whitespace and literal characters in the template, then WEOF is returned. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int fscanf (FILE *stream, const char *template, …)
+Preliminary: | MT-Safe locale | AS-Unsafe corrupt heap | AC-Unsafe mem lock corrupt | See POSIX Safety Concepts. 
+This function is just like scanf, except that the input is read from the stream stream instead of stdin. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int fwscanf (FILE *stream, const wchar_t *template, …)
+Preliminary: | MT-Safe locale | AS-Unsafe corrupt heap | AC-Unsafe mem lock corrupt | See POSIX Safety Concepts. 
+This function is just like wscanf, except that the input is read from the stream stream instead of stdin. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int sscanf (const char *s, const char *template, …)
+Preliminary: | MT-Safe locale | AS-Unsafe heap | AC-Unsafe mem | See POSIX Safety Concepts. 
+This is like scanf, except that the characters are taken from the null-terminated string s instead of from a stream.  Reaching the end of the string is treated as an end-of-file condition. 
+The behavior of this function is undefined if copying takes place between objects that overlap—for example, if s is also given as an argument to receive a string read under control of the ‘%s’, ‘%S’, or ‘%[’ conversion. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int swscanf (const wchar_t *ws, const wchar_t *template, …)
+Preliminary: | MT-Safe locale | AS-Unsafe heap | AC-Unsafe mem | See POSIX Safety Concepts. 
+This is like wscanf, except that the characters are taken from the null-terminated string ws instead of from a stream.  Reaching the end of the string is treated as an end-of-file condition. 
+The behavior of this function is undefined if copying takes place between objects that overlap—for example, if ws is also given as an argument to receive a string read under control of the ‘%s’, ‘%S’, or ‘%[’ conversion. 

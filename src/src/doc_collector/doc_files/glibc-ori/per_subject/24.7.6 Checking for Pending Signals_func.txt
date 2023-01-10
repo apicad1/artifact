@@ -1,0 +1,6 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int sigpending (sigset_t *set)
+Preliminary: | MT-Safe  | AS-Unsafe lock/hurd | AC-Unsafe lock/hurd | See POSIX Safety Concepts. 
+The sigpending function stores information about pending signals in set.  If there is a pending signal that is blocked from delivery, then that signal is a member of the returned set.  (You can test whether a particular signal is a member of this set using sigismember; see Signal Sets.) 
+The return value is 0 if successful, and -1 on failure. 

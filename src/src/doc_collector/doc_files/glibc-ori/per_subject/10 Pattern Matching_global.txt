@@ -1,0 +1,15 @@
+The GNU C Library provides pattern matching facilities for two kinds of patterns: regular expressions and file-name wildcards.  The library also provides a facility for expanding variable and command references and parsing text into words in the way the shell does. 
+
+TABLE_BEGIN
+ • Wildcard Matching    Matching a wildcard pattern against a single string.
+
+ • Globbing    Finding the files that match a wildcard pattern.
+
+ • Regular Expressions    Matching regular expressions against strings.
+
+ • Word Expansion    Expanding shell variables, nested commands,
+			    arithmetic, and wildcards.
+			    This is what the shell does with shell commands.
+
+TABLE_END
+

@@ -1,0 +1,23 @@
+Programs that work with characters and strings often need to classify a character—is it alphabetic, is it a digit, is it whitespace, and so on—and perform case conversion operations on characters.  The functions in the header file ctype.h are provided for this purpose.  
+Since the choice of locale and character set can alter the classifications of particular character codes, all of these functions are affected by the current locale.  (More precisely, they are affected by the locale currently selected for character classification—the LC_CTYPE category; see Locale Categories.) 
+The ISO C standard specifies two different sets of functions.  The one set works on char type characters, the other one on wchar_t wide characters (see Extended Char Intro). 
+
+TABLE_BEGIN
+ • Classification of Characters    Testing whether characters are
+			                letters, digits, punctuation, etc.
+
+ 
+
+
+ • Case Conversion    Case mapping, and the like.
+
+ • Classification of Wide Characters    Character class determination for
+                                        wide characters.
+
+ • Using Wide Char Classes    Notes on using the wide character
+                                        classes.
+
+ • Wide Character Case Conversion    Mapping of wide characters.
+
+TABLE_END
+

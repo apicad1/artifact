@@ -1,0 +1,7 @@
+The open-time flags specify options affecting how open will behave. These options are not preserved once the file is open.  The exception to this is O_NONBLOCK, which is also an I/O operating mode and so it is saved.  See Opening and Closing Files, for how to call open. 
+There are two sorts of options specified by open-time flags. 
+  File name translation flags affect how open looks up the file name to locate the file, and whether the file can be created.     Open-time action flags specify extra operations that open will perform on the file once it is open.   
+Here are the file name translation flags. 
+The following three file name translation flags exist only on GNU/Hurd systems. 
+The open-time action flags tell open to do additional operations which are not really related to opening the file.  The reason to do them as part of open instead of in separate calls is that open can do them atomically. 
+The remaining operating modes are BSD extensions.  They exist only on some systems.  On other systems, these macros are not defined. 

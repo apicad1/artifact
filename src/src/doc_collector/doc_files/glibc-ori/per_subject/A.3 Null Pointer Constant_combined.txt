@@ -1,0 +1,9 @@
+The null pointer constant is guaranteed not to point to any real object. You can assign it to any pointer variable since it has type void *.  The preferred way to write a null pointer constant is with NULL. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: void * NULL
+This is a null pointer constant. 
+<<<<<<<<<<<<<<<<<<<<
+
+You can also use 0 or (void *)0 as a null pointer constant, but using NULL is cleaner because it makes the purpose of the constant more evident. 
+If you use the null pointer constant as a function argument, then for complete portability you should make sure that the function has a prototype declaration.  Otherwise, if the target machine has two different pointer representations, the compiler won’t know which representation to use for that argument.  You can avoid the problem by explicitly casting the constant to the proper pointer type, but we recommend instead adding a prototype for the function you are calling. 

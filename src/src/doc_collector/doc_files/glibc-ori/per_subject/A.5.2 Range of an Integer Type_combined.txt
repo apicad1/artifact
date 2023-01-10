@@ -1,0 +1,123 @@
+Suppose you need to store an integer value which can range from zero to one million.  Which is the smallest type you can use?  There is no general rule; it depends on the C compiler and target machine.  You can use the ‘MIN’ and ‘MAX’ macros in limits.h to determine which type will work. 
+Each signed integer type has a pair of macros which give the smallest and largest values that it can hold.  Each unsigned integer type has one such macro, for the maximum value; the minimum value is, of course, zero. 
+The values of these macros are all integer constant expressions.  The ‘MAX’ and ‘MIN’ macros for char and short int types have values of type int.  The ‘MAX’ and ‘MIN’ macros for the other types have values of the same type described by the macro—thus, ULONG_MAX has type unsigned long int. 
+
+>>>>>>>>>>>>>>>>>>>>
+- SCHAR_MIN  
+This is the minimum value that can be represented by a signed char. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- SCHAR_MAX  
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- UCHAR_MAX  
+These are the maximum values that can be represented by a signed char and unsigned char, respectively. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- CHAR_MIN  
+This is the minimum value that can be represented by a char. It’s equal to SCHAR_MIN if char is signed, or zero otherwise. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- CHAR_MAX  
+This is the maximum value that can be represented by a char. It’s equal to SCHAR_MAX if char is signed, or UCHAR_MAX otherwise. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- SHRT_MIN  
+This is the minimum value that can be represented by a signed short int.  On most machines that the GNU C Library runs on, short integers are 16-bit quantities. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- SHRT_MAX  
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- USHRT_MAX  
+These are the maximum values that can be represented by a signed short int and unsigned short int, respectively. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- INT_MIN  
+This is the minimum value that can be represented by a signed int.  On most machines that the GNU C Library runs on, an int is a 32-bit quantity. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- INT_MAX  
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- UINT_MAX  
+These are the maximum values that can be represented by, respectively, the type signed int and the type unsigned int. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- LONG_MIN  
+This is the minimum value that can be represented by a signed long int.  On most machines that the GNU C Library runs on, long integers are 32-bit quantities, the same size as int. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- LONG_MAX  
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ULONG_MAX  
+These are the maximum values that can be represented by a signed long int and unsigned long int, respectively. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- LLONG_MIN  
+This is the minimum value that can be represented by a signed long long int.  On most machines that the GNU C Library runs on, long long integers are 64-bit quantities. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- LLONG_MAX  
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ULLONG_MAX  
+These are the maximum values that can be represented by a signed long long int and unsigned long long int, respectively. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- LONG_LONG_MIN  
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- LONG_LONG_MAX  
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ULONG_LONG_MAX  
+These are obsolete names for LLONG_MIN, LLONG_MAX, and ULLONG_MAX.  They are only available if _GNU_SOURCE is defined (see Feature Test Macros).  In GCC versions prior to 3.0, these were the only names available. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- WCHAR_MAX  
+This is the maximum value that can be represented by a wchar_t. See Extended Char Intro. 
+<<<<<<<<<<<<<<<<<<<<
+
+The header file limits.h also defines some additional constants that parameterize various operating system and file system limits.  These constants are described in System Configuration. 

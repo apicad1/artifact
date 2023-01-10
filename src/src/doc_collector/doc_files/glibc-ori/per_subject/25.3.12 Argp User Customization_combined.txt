@@ -1,0 +1,71 @@
+The formatting of argp ‘--help’ output may be controlled to some extent by a program’s users, by setting the ARGP_HELP_FMT environment variable to a comma-separated list of tokens.  Whitespace is ignored: 
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘dup-args’
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘no-dup-args’
+These turn duplicate-argument-mode on or off.  In duplicate argument mode, if an option that accepts an argument has multiple names, the argument is shown for each name.  Otherwise, it is only shown for the first long option.  A note is subsequently printed so the user knows that it applies to other names as well.  The default is ‘no-dup-args’, which is less consistent, but prettier. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘dup-args-note’
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘no-dup-args-note’
+These will enable or disable the note informing the user of suppressed option argument duplication.  The default is ‘dup-args-note’. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘short-opt-col=n’
+This prints the first short option in column n.  The default is 2. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘long-opt-col=n’
+This prints the first long option in column n.  The default is 6. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘doc-opt-col=n’
+This prints ‘documentation options’ (see Argp Option Flags) in column n.  The default is 2. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘opt-doc-col=n’
+This prints the documentation for options starting in column n.  The default is 29. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘header-col=n’
+This will indent the group headers that document groups of options to column n.  The default is 1. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘usage-indent=n’
+This will indent continuation lines in ‘Usage:’ messages to column n.  The default is 12. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘rmargin=n’
+This will word wrap help output at or before column n.  The default is 79. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+TABLE_BEGIN
+ • Parsing of Suboptions    
+
+TABLE_END
+

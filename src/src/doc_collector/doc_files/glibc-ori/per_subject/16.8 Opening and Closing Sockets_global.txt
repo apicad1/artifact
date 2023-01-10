@@ -1,0 +1,11 @@
+This section describes the actual library functions for opening and closing sockets.  The same functions work for all namespaces and connection styles. 
+
+TABLE_BEGIN
+ • Creating a Socket    How to open a socket.
+
+ • Closing a Socket    How to close a socket.
+
+ • Socket Pairs    These are created like pipes.
+
+TABLE_END
+

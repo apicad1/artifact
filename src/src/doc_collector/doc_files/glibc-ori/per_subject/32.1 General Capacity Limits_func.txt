@@ -1,0 +1,50 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int ARG_MAX
+If defined, the unvarying maximum combined length of the argv and environ arguments that can be passed to the exec functions. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int CHILD_MAX
+If defined, the unvarying maximum number of processes that can exist with the same real user ID at any one time.  In BSD and GNU, this is controlled by the RLIMIT_NPROC resource limit; see Limits on Resources. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int OPEN_MAX
+If defined, the unvarying maximum number of files that a single process can have open simultaneously.  In BSD and GNU, this is controlled by the RLIMIT_NOFILE resource limit; see Limits on Resources. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int STREAM_MAX
+If defined, the unvarying maximum number of streams that a single process can have open simultaneously.  See Opening Streams. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int TZNAME_MAX
+If defined, the unvarying maximum length of a time zone name. See Time Zone Functions. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int NGROUPS_MAX
+The maximum number of supplementary group IDs that one process can have. 
+The value of this macro is actually a lower bound for the maximum.  That is, you can count on being able to have that many supplementary group IDs, but a particular machine might let you have even more.  You can use sysconf to see whether a particular machine will let you have more (see Sysconf). 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: ssize_t SSIZE_MAX
+The largest value that can fit in an object of type ssize_t. Effectively, this is the limit on the number of bytes that can be read or written in a single operation. 
+This macro is defined in all POSIX systems because this limit is never configurable. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int RE_DUP_MAX
+The largest number of repetitions you are guaranteed is allowed in the construct ‘\{min,max\}’ in a regular expression. 
+The value of this macro is actually a lower bound for the maximum.  That is, you can count on being able to have that many repetitions, but a particular machine might let you have even more.  You can use sysconf to see whether a particular machine will let you have more (see Sysconf).  And even the value that sysconf tells you is just a lower bound—larger values might work. 
+This macro is defined in all POSIX.2 systems, because POSIX.2 says it should always be defined even if there is no specific imposed limit. 

@@ -1,0 +1,1 @@
+It is often not necessary to scan the whole netgroup since often the only interesting question is whether a given entry is part of the selected netgroup. 

@@ -1,0 +1,16 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int _POSIX_CHOWN_RESTRICTED
+If this option is in effect, the chown function is restricted so that the only changes permitted to nonprivileged processes is to change the group owner of a file to either be the effective group ID of the process, or one of its supplementary group IDs.  See File Owner. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int _POSIX_NO_TRUNC
+If this option is in effect, file name components longer than NAME_MAX generate an ENAMETOOLONG error.  Otherwise, file name components that are too long are silently truncated. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: unsigned char _POSIX_VDISABLE
+This option is only meaningful for files that are terminal devices. If it is enabled, then handling for special control characters can be disabled individually.  See Special Characters. 

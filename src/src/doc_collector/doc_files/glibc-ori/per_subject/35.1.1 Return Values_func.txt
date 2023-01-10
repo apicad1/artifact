@@ -1,0 +1,28 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- thrd_timedout  
+A specified time was reached without acquiring the requested resource, usually a mutex or condition variable. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- thrd_success  
+The requested operation succeeded. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- thrd_busy  
+The requested operation failed because a requested resource is already in use. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- thrd_error  
+The requested operation failed. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- thrd_nomem  
+The requested operation failed because it was unable to allocate enough memory. 

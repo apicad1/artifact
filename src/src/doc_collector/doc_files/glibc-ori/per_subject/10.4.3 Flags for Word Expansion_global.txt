@@ -1,0 +1,1 @@
+This section describes the flags that you can specify in the flags argument to wordexp.  Choose the flags you want, and combine them with the C operator |. 

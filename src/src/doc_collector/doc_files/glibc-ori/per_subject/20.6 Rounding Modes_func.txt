@@ -1,0 +1,60 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Round to nearest.
+This is the default mode.  It should be used unless there is a specific need for one of the others.  In this mode results are rounded to the nearest representable value.  If the result is midway between two representable values, the even representable is chosen. Even here means the lowest-order bit is zero.  This rounding mode prevents statistical bias and guarantees numeric stability: round-off errors in a lengthy calculation will remain smaller than half of FLT_EPSILON. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Round toward plus Infinity.
+All results are rounded to the smallest representable value which is greater than the result. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Round toward minus Infinity.
+All results are rounded to the largest representable value which is less than the result. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Round toward zero.
+All results are rounded to the largest representable value whose magnitude is less than that of the result.  In other words, if the result is negative it is rounded up; if it is positive, it is rounded down. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- FE_TONEAREST  
+Round to nearest. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- FE_UPWARD  
+Round toward +∞. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- FE_DOWNWARD  
+Round toward -∞. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- FE_TOWARDZERO  
+Round toward zero. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int fegetround (void)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+Returns the currently selected rounding mode, represented by one of the values of the defined rounding mode macros. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int fesetround (int round)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+Changes the currently selected rounding mode to round.  If round does not correspond to one of the supported rounding modes nothing is changed.  fesetround returns zero if it changed the rounding mode, or a nonzero value if the mode is not supported. 

@@ -1,0 +1,86 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: struct flock
+This structure is used with the fcntl function to describe a file lock.  It has these members: 
+	short int l_type
+Specifies the type of the lock; one of F_RDLCK, F_WRLCK, or F_UNLCK.  
+	short int l_whence
+This corresponds to the whence argument to fseek or lseek, and specifies what the offset is relative to.  Its value can be one of SEEK_SET, SEEK_CUR, or SEEK_END.  
+	off_t l_start
+This specifies the offset of the start of the region to which the lock applies, and is given in bytes relative to the point specified by the l_whence member.  
+	off_t l_len
+This specifies the length of the region to be locked.  A value of 0 is treated specially; it means the region extends to the end of the file.  
+	pid_t l_pid
+This field is the process ID (see Process Creation Concepts) of the process holding the lock.  It is filled in by calling fcntl with the F_GETLK command, but is ignored when making a lock.  If the conflicting lock is an open file description lock (see Open File Description Locks), then this field will be set to -1. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int F_GETLK
+This macro is used as the command argument to fcntl, to specify that it should get information about a lock.  This command requires a third argument of type struct flock * to be passed to fcntl, so that the form of the call is: 
+
+EXAMPLE_BEGIN
+fcntl (filedes, F_GETLK, lockp)
+EXAMPLE_END
+
+If there is a lock already in place that would block the lock described by the lockp argument, information about that lock overwrites *lockp.  Existing locks are not reported if they are compatible with making a new lock as specified.  Thus, you should specify a lock type of F_WRLCK if you want to find out about both read and write locks, or F_RDLCK if you want to find out about write locks only. 
+There might be more than one lock affecting the region specified by the lockp argument, but fcntl only returns information about one of them.  The l_whence member of the lockp structure is set to SEEK_SET and the l_start and l_len fields set to identify the locked region. 
+If no lock applies, the only change to the lockp structure is to update the l_type to a value of F_UNLCK. 
+The normal return value from fcntl with this command is an unspecified value other than -1, which is reserved to indicate an error.  The following errno error conditions are defined for this command: 
+	EBADF
+The filedes argument is invalid.  
+	EINVAL
+Either the lockp argument doesn’t specify valid lock information, or the file associated with filedes doesn’t support locks. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int F_SETLK
+This macro is used as the command argument to fcntl, to specify that it should set or clear a lock.  This command requires a third argument of type struct flock * to be passed to fcntl, so that the form of the call is: 
+
+EXAMPLE_BEGIN
+fcntl (filedes, F_SETLK, lockp)
+EXAMPLE_END
+
+If the process already has a lock on any part of the region, the old lock on that part is replaced with the new lock.  You can remove a lock by specifying a lock type of F_UNLCK. 
+If the lock cannot be set, fcntl returns immediately with a value of -1.  This function does not block while waiting for other processes to release locks.  If fcntl succeeds, it returns a value other than -1. 
+The following errno error conditions are defined for this function: 
+	EAGAIN
+	EACCES
+The lock cannot be set because it is blocked by an existing lock on the file.  Some systems use EAGAIN in this case, and other systems use EACCES; your program should treat them alike, after F_SETLK.  (GNU/Linux and GNU/Hurd systems always use EAGAIN.)  
+	EBADF
+Either: the filedes argument is invalid; you requested a read lock but the filedes is not open for read access; or, you requested a write lock but the filedes is not open for write access.  
+	EINVAL
+Either the lockp argument doesn’t specify valid lock information, or the file associated with filedes doesn’t support locks.  
+	ENOLCK
+The system has run out of file lock resources; there are already too many file locks in place.  Well-designed file systems never report this error, because they have no limitation on the number of locks.  However, you must still take account of the possibility of this error, as it could result from network access to a file system on another machine. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int F_SETLKW
+This macro is used as the command argument to fcntl, to specify that it should set or clear a lock.  It is just like the F_SETLK command, but causes the process to block (or wait) until the request can be specified. 
+This command requires a third argument of type struct flock *, as for the F_SETLK command. 
+The fcntl return values and errors are the same as for the F_SETLK command, but these additional errno error conditions are defined for this command: 
+	EINTR
+The function was interrupted by a signal while it was waiting. See Interrupted Primitives.  
+	EDEADLK
+The specified region is being locked by another process.  But that process is waiting to lock a region which the current process has locked, so waiting for the lock would result in deadlock.  The system does not guarantee that it will detect all such conditions, but it lets you know if it notices one. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- F_RDLCK  
+This macro is used to specify a read (or shared) lock. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- F_WRLCK  
+This macro is used to specify a write (or exclusive) lock. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- F_UNLCK  
+This macro is used to specify that the region is unlocked. 

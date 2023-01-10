@@ -1,0 +1,114 @@
+This section describes functions in the GNU C Library for setting the absolute priority and scheduling policy of a process. 
+Portability Note:  On systems that have the functions in this section, the macro _POSIX_PRIORITY_SCHEDULING is defined in <unistd.h>. 
+For the case that the scheduling policy is traditional scheduling, more functions to fine tune the scheduling are in Traditional Scheduling. 
+Don’t try to make too much out of the naming and structure of these functions.  They don’t match the concepts described in this manual because the functions are as defined by POSIX.1b, but the implementation on systems that use the GNU C Library is the inverse of what the POSIX structure contemplates.  The POSIX scheme assumes that the primary scheduling parameter is the scheduling policy and that the priority value, if any, is a parameter of the scheduling policy.  In the implementation, though, the priority value is king and the scheduling policy, if anything, only fine tunes the effect of that priority. 
+The symbols in this section are declared by including file sched.h. 
+Portability Note: In POSIX, the pid_t arguments of the functions below refer to process IDs.  On Linux, they are actually thread IDs, and control how specific threads are scheduled with regards to the entire system.  The resulting behavior does not conform to POSIX.  This is why the following description refers to tasks and tasks IDs, and not processes and process IDs. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: struct sched_param
+This structure describes an absolute priority. 
+	int sched_priority
+absolute priority value 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int sched_setscheduler (pid_t pid, int policy, const struct sched_param *param)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function sets both the absolute priority and the scheduling policy for a task. 
+It assigns the absolute priority value given by param and the scheduling policy policy to the task with ID pid, or the calling task if pid is zero.  If policy is negative, sched_setscheduler keeps the existing scheduling policy. 
+The following macros represent the valid values for policy: 
+	SCHED_OTHER  
+Traditional Scheduling 
+	SCHED_FIFO  
+First In First Out 
+	SCHED_RR  
+Round Robin 
+On success, the return value is 0.  Otherwise, it is -1 and ERRNO is set accordingly.  The errno values specific to this function are: 
+	EPERM
+  The calling task does not have CAP_SYS_NICE permission and policy is not SCHED_OTHER (or it’s negative and the existing policy is not SCHED_OTHER.   The calling task does not have CAP_SYS_NICE permission and its owner is not the target task’s owner.  I.e., the effective uid of the calling task is neither the effective nor the real uid of task pid.   
+	ESRCH
+There is no task with pid pid and pid is not zero.  
+	EINVAL
+  policy does not identify an existing scheduling policy.   The absolute priority value identified by *param is outside the valid range for the scheduling policy policy (or the existing scheduling policy if policy is negative) or param is null.  sched_get_priority_max and sched_get_priority_min tell you what the valid range is.   pid is negative.  
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int sched_getscheduler (pid_t pid)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function returns the scheduling policy assigned to the task with ID pid, or the calling task if pid is zero. 
+The return value is the scheduling policy.  See sched_setscheduler for the possible values. 
+If the function fails, the return value is instead -1 and errno is set accordingly. 
+The errno values specific to this function are: 
+	ESRCH
+There is no task with pid pid and it is not zero.  
+	EINVAL
+pid is negative.  
+Note that this function is not an exact mate to sched_setscheduler because while that function sets the scheduling policy and the absolute priority, this function gets only the scheduling policy.  To get the absolute priority, use sched_getparam. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int sched_setparam (pid_t pid, const struct sched_param *param)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function sets a task’s absolute priority. 
+It is functionally identical to sched_setscheduler with policy = -1. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int sched_getparam (pid_t pid, struct sched_param *param)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function returns a task’s absolute priority. 
+pid is the task ID of the task whose absolute priority you want to know. 
+param is a pointer to a structure in which the function stores the absolute priority of the task. 
+On success, the return value is 0.  Otherwise, it is -1 and errno is set accordingly.  The errno values specific to this function are: 
+	ESRCH
+There is no task with ID pid and it is not zero.  
+	EINVAL
+pid is negative.  
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int sched_get_priority_min (int policy)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function returns the lowest absolute priority value that is allowable for a task with scheduling policy policy. 
+On Linux, it is 0 for SCHED_OTHER and 1 for everything else. 
+On success, the return value is 0.  Otherwise, it is -1 and ERRNO is set accordingly.  The errno values specific to this function are: 
+	EINVAL
+policy does not identify an existing scheduling policy. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int sched_get_priority_max (int policy)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function returns the highest absolute priority value that is allowable for a task that with scheduling policy policy. 
+On Linux, it is 0 for SCHED_OTHER and 99 for everything else. 
+On success, the return value is 0.  Otherwise, it is -1 and ERRNO is set accordingly.  The errno values specific to this function are: 
+	EINVAL
+policy does not identify an existing scheduling policy. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int sched_rr_get_interval (pid_t pid, struct timespec *interval)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function returns the length of the quantum (time slice) used with the Round Robin scheduling policy, if it is used, for the task with task ID pid. 
+It returns the length of time as interval. 
+With a Linux kernel, the round robin time slice is always 150 microseconds, and pid need not even be a real pid. 
+The return value is 0 on success and in the pathological case that it fails, the return value is -1 and errno is set accordingly.  There is nothing specific that can go wrong with this function, so there are no specific errno values. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int sched_yield (void)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function voluntarily gives up the task’s claim on the CPU. 
+Technically, sched_yield causes the calling task to be made immediately ready to run (as opposed to running, which is what it was before).  This means that if it has absolute priority higher than 0, it gets pushed onto the tail of the queue of tasks that share its absolute priority and are ready to run, and it will run again when its turn next arrives.  If its absolute priority is 0, it is more complicated, but still has the effect of yielding the CPU to other tasks. 
+If there are no other tasks that share the calling task’s absolute priority, this function doesn’t have any effect. 
+To the extent that the containing program is oblivious to what other processes in the system are doing and how fast it executes, this function appears as a no-op. 
+The return value is 0 on success and in the pathological case that it fails, the return value is -1 and errno is set accordingly.  There is nothing specific that can go wrong with this function, so there are no specific errno values. 

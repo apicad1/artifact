@@ -1,0 +1,2 @@
+The children field in a struct argp enables other argp parsers to be combined with the referencing one for the parsing of a single set of arguments.  This field should point to a vector of struct argp_child, which is terminated by an entry having a value of zero in the argp field. 
+Where conflicts between combined parsers arise, as when two specify an option with the same name, the parser conflicts are resolved in favor of the parent argp parser(s), or the earlier of the argp parsers in the list of children. 

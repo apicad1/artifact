@@ -1,0 +1,2 @@
+This section describes how to match a wildcard pattern against a particular string.  The result is a yes or no answer: does the string fit the pattern or not.  The symbols described here are all declared in fnmatch.h. 
+These are the available flags for the flags argument: 

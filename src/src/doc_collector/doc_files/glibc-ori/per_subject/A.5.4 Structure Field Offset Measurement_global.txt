@@ -1,0 +1,1 @@
+You can use offsetof to measure the location within a structure type of a particular structure member. 

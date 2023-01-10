@@ -1,0 +1,54 @@
+ISWBLANK(3)                                     Linux Programmer's Manual                                    ISWBLANK(3)
+
+NAME
+       iswblank - test for whitespace wide character
+
+SYNOPSIS
+       #include <wctype.h>
+
+       int iswblank(wint_t wc);
+
+   Feature Test Macro Requirements for glibc (see feature_test_macros(7)):
+
+       iswblank():
+           _ISOC99_SOURCE || _POSIX_C_SOURCE >= 200112L
+
+DESCRIPTION
+       The  iswblank()  function  is the wide-character equivalent of the isblank(3) function.  It tests whether wc is a
+       wide character belonging to the wide-character class "blank".
+
+       The wide-character class "blank" is a subclass of the wide-character class "space".
+
+       Being a subclass of the wide-character class "space", the wide-character class "blank" is disjoint from the wide-
+       character  class  "graph"  and  therefore  also  disjoint from its subclasses "alnum", "alpha", "upper", "lower",
+       "digit", "xdigit", "punct".
+
+       The wide-character class "blank" always contains at least the space character and the control character '\t'.
+
+RETURN VALUE
+       The iswblank() function returns nonzero if wc is a wide character belonging to the wide-character class  "blank".
+       Otherwise, it returns zero.
+
+ATTRIBUTES
+       For an explanation of the terms used in this section, see attributes(7).
+
+       ┌───────────────────────────────────────────────────────────────────────────────┬───────────────┬────────────────┐
+       │Interface                                                                      │ Attribute     │ Value          │
+       ├───────────────────────────────────────────────────────────────────────────────┼───────────────┼────────────────┤
+       │iswblank()                                                                     │ Thread safety │ MT-Safe locale │
+       └───────────────────────────────────────────────────────────────────────────────┴───────────────┴────────────────┘
+
+CONFORMING TO
+       POSIX.1-2001, POSIX.1-2008.
+
+NOTES
+       The behavior of iswblank() depends on the LC_CTYPE category of the current locale.
+
+SEE ALSO
+       isblank(3), iswctype(3)
+
+COLOPHON
+       This  page  is  part  of  release 5.13 of the Linux man-pages project.  A description of the project, information
+       about reporting bugs, and the latest version of this page, can be found at https://www.kernel.org/doc/man-pages/.
+
+GNU                                                    2021-03-22                                            ISWBLANK(3)

@@ -1,0 +1,4 @@
+This section describes the functions for mounting, unmounting, and remounting filesystems. 
+Only the superuser can mount, unmount, or remount a filesystem. 
+These functions do not access the fstab and mtab files.  You should maintain and use these separately.  See Mount Information. 
+The symbols in this section are declared in sys/mount.h. 

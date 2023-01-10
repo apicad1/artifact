@@ -1,0 +1,2 @@
+The mknod function is the primitive for making special files, such as files that correspond to devices.  The GNU C Library includes this function for compatibility with BSD. 
+The prototype for mknod is declared in sys/stat.h.  

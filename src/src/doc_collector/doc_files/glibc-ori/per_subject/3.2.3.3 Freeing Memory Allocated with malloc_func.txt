@@ -1,0 +1,5 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void free (void *ptr)
+Preliminary: | MT-Safe  | AS-Unsafe lock | AC-Unsafe lock fd mem | See POSIX Safety Concepts. 
+The free function deallocates the block of memory pointed at by ptr. 

@@ -1,0 +1,151 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: double drand48 (void)
+Preliminary: | MT-Unsafe race:drand48 | AS-Unsafe  | AC-Unsafe corrupt | See POSIX Safety Concepts. 
+This function returns a double value in the range of 0.0 to 1.0 (exclusive).  The random bits are determined by the global state of the random number generator in the C library. 
+Since the double type according to IEEE 754 has a 52-bit mantissa this means 4 bits are not initialized by the random number generator.  These are (of course) chosen to be the least significant bits and they are initialized to 0. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: double erand48 (unsigned short int xsubi[3])
+Preliminary: | MT-Unsafe race:drand48 | AS-Unsafe  | AC-Unsafe corrupt | See POSIX Safety Concepts. 
+This function returns a double value in the range of 0.0 to 1.0 (exclusive), similarly to drand48.  The argument is an array describing the state of the random number generator. 
+This function can be called subsequently since it updates the array to guarantee random numbers.  The array should have been initialized before initial use to obtain reproducible results. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: long int lrand48 (void)
+Preliminary: | MT-Unsafe race:drand48 | AS-Unsafe  | AC-Unsafe corrupt | See POSIX Safety Concepts. 
+The lrand48 function returns an integer value in the range of 0 to 2^31 (exclusive).  Even if the size of the long int type can take more than 32 bits, no higher numbers are returned. The random bits are determined by the global state of the random number generator in the C library. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: long int nrand48 (unsigned short int xsubi[3])
+Preliminary: | MT-Unsafe race:drand48 | AS-Unsafe  | AC-Unsafe corrupt | See POSIX Safety Concepts. 
+This function is similar to the lrand48 function in that it returns a number in the range of 0 to 2^31 (exclusive) but the state of the random number generator used to produce the random bits is determined by the array provided as the parameter to the function. 
+The numbers in the array are updated afterwards so that subsequent calls to this function yield different results (as is expected of a random number generator).  The array should have been initialized before the first call to obtain reproducible results. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: long int mrand48 (void)
+Preliminary: | MT-Unsafe race:drand48 | AS-Unsafe  | AC-Unsafe corrupt | See POSIX Safety Concepts. 
+The mrand48 function is similar to lrand48.  The only difference is that the numbers returned are in the range -2^31 to 2^31 (exclusive). 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: long int jrand48 (unsigned short int xsubi[3])
+Preliminary: | MT-Unsafe race:drand48 | AS-Unsafe  | AC-Unsafe corrupt | See POSIX Safety Concepts. 
+The jrand48 function is similar to nrand48.  The only difference is that the numbers returned are in the range -2^31 to 2^31 (exclusive).  For the xsubi parameter the same requirements are necessary. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void srand48 (long int seedval)
+Preliminary: | MT-Unsafe race:drand48 | AS-Unsafe  | AC-Unsafe corrupt | See POSIX Safety Concepts. 
+The srand48 function sets the most significant 32 bits of the internal state of the random number generator to the least significant 32 bits of the seedval parameter.  The lower 16 bits are initialized to the value 0x330E.  Even if the long int type contains more than 32 bits only the lower 32 bits are used. 
+Owing to this limitation, initialization of the state of this function is not very useful.  But it makes it easy to use a construct like srand48 (time (0)). 
+A side-effect of this function is that the values a and c from the internal state, which are used in the congruential formula, are reset to the default values given above.  This is of importance once the user has called the lcong48 function (see below). 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: unsigned short int * seed48 (unsigned short int seed16v[3])
+Preliminary: | MT-Unsafe race:drand48 | AS-Unsafe  | AC-Unsafe corrupt | See POSIX Safety Concepts. 
+The seed48 function initializes all 48 bits of the state of the internal random number generator from the contents of the parameter seed16v.  Here the lower 16 bits of the first element of seed16v initialize the least significant 16 bits of the internal state, the lower 16 bits of seed16v[1] initialize the mid-order 16 bits of the state and the 16 lower bits of seed16v[2] initialize the most significant 16 bits of the state. 
+Unlike srand48 this function lets the user initialize all 48 bits of the state. 
+The value returned by seed48 is a pointer to an array containing the values of the internal state before the change.  This might be useful to restart the random number generator at a certain state. Otherwise the value can simply be ignored. 
+As for srand48, the values a and c from the congruential formula are reset to the default values. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void lcong48 (unsigned short int param[7])
+Preliminary: | MT-Unsafe race:drand48 | AS-Unsafe  | AC-Unsafe corrupt | See POSIX Safety Concepts. 
+The lcong48 function allows the user to change the complete state of the random number generator.  Unlike srand48 and seed48, this function also changes the constants in the congruential formula. 
+From the seven elements in the array param the least significant 16 bits of the entries param[0] to param[2] determine the initial state, the least significant 16 bits of param[3] to param[5] determine the 48 bit constant a and param[6] determines the 16-bit value c. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int drand48_r (struct drand48_data *buffer, double *result)
+Preliminary: | MT-Safe race:buffer | AS-Safe  | AC-Unsafe corrupt | See POSIX Safety Concepts. 
+This function is equivalent to the drand48 function with the difference that it does not modify the global random number generator parameters but instead the parameters in the buffer supplied through the pointer buffer.  The random number is returned in the variable pointed to by result. 
+The return value of the function indicates whether the call succeeded. If the value is less than 0 an error occurred and errno is set to indicate the problem. 
+This function is a GNU extension and should not be used in portable programs. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int erand48_r (unsigned short int xsubi[3], struct drand48_data *buffer, double *result)
+Preliminary: | MT-Safe race:buffer | AS-Safe  | AC-Unsafe corrupt | See POSIX Safety Concepts. 
+The erand48_r function works like erand48, but in addition it takes an argument buffer which describes the random number generator.  The state of the random number generator is taken from the xsubi array, the parameters for the congruential formula from the global random number generator data.  The random number is returned in the variable pointed to by result. 
+The return value is non-negative if the call succeeded. 
+This function is a GNU extension and should not be used in portable programs. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int lrand48_r (struct drand48_data *buffer, long int *result)
+Preliminary: | MT-Safe race:buffer | AS-Safe  | AC-Unsafe corrupt | See POSIX Safety Concepts. 
+This function is similar to lrand48, but in addition it takes a pointer to a buffer describing the state of the random number generator just like drand48. 
+If the return value of the function is non-negative the variable pointed to by result contains the result.  Otherwise an error occurred. 
+This function is a GNU extension and should not be used in portable programs. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int nrand48_r (unsigned short int xsubi[3], struct drand48_data *buffer, long int *result)
+Preliminary: | MT-Safe race:buffer | AS-Safe  | AC-Unsafe corrupt | See POSIX Safety Concepts. 
+The nrand48_r function works like nrand48 in that it produces a random number in the range 0 to 2^31.  But instead of using the global parameters for the congruential formula it uses the information from the buffer pointed to by buffer.  The state is described by the values in xsubi. 
+If the return value is non-negative the variable pointed to by result contains the result. 
+This function is a GNU extension and should not be used in portable programs. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int mrand48_r (struct drand48_data *buffer, long int *result)
+Preliminary: | MT-Safe race:buffer | AS-Safe  | AC-Unsafe corrupt | See POSIX Safety Concepts. 
+This function is similar to mrand48 but like the other reentrant functions it uses the random number generator described by the value in the buffer pointed to by buffer. 
+If the return value is non-negative the variable pointed to by result contains the result. 
+This function is a GNU extension and should not be used in portable programs. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int jrand48_r (unsigned short int xsubi[3], struct drand48_data *buffer, long int *result)
+Preliminary: | MT-Safe race:buffer | AS-Safe  | AC-Unsafe corrupt | See POSIX Safety Concepts. 
+The jrand48_r function is similar to jrand48.  Like the other reentrant functions of this function family it uses the congruential formula parameters from the buffer pointed to by buffer. 
+If the return value is non-negative the variable pointed to by result contains the result. 
+This function is a GNU extension and should not be used in portable programs. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int srand48_r (long int seedval, struct drand48_data *buffer)
+Preliminary: | MT-Safe race:buffer | AS-Safe  | AC-Unsafe corrupt | See POSIX Safety Concepts. 
+The description of the random number generator represented by the information in buffer is initialized similarly to what the function srand48 does.  The state is initialized from the parameter seedval and the parameters for the congruential formula are initialized to their default values. 
+If the return value is non-negative the function call succeeded. 
+This function is a GNU extension and should not be used in portable programs. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int seed48_r (unsigned short int seed16v[3], struct drand48_data *buffer)
+Preliminary: | MT-Safe race:buffer | AS-Safe  | AC-Unsafe corrupt | See POSIX Safety Concepts. 
+This function is similar to srand48_r but like seed48 it initializes all 48 bits of the state from the parameter seed16v. 
+If the return value is non-negative the function call succeeded.  It does not return a pointer to the previous state of the random number generator like the seed48 function does.  If the user wants to preserve the state for a later re-run s/he can copy the whole buffer pointed to by buffer. 
+This function is a GNU extension and should not be used in portable programs. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int lcong48_r (unsigned short int param[7], struct drand48_data *buffer)
+Preliminary: | MT-Safe race:buffer | AS-Safe  | AC-Unsafe corrupt | See POSIX Safety Concepts. 
+This function initializes all aspects of the random number generator described in buffer with the data in param.  Here it is especially true that the function does more than just copying the contents of param and buffer.  More work is required and therefore it is important to use this function rather than initializing the random number generator directly. 
+If the return value is non-negative the function call succeeded. 
+This function is a GNU extension and should not be used in portable programs. 

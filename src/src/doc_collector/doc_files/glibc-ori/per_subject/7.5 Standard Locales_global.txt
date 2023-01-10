@@ -1,0 +1,3 @@
+The only locale names you can count on finding on all operating systems are these three standard ones: 
+Defining and installing named locales is normally a responsibility of the system administrator at your site (or the person who installed the GNU C Library).  It is also possible for the user to create private locales.  All this will be discussed later when describing the tool to do so. 
+If your program needs to use something other than the ‘C’ locale, it will be more portable if you use whatever locale the user specifies with the environment, rather than trying to specify some non-standard locale explicitly by name.  Remember, different machines might have different sets of locales installed. 

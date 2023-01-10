@@ -1,0 +1,40 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘-’
+Left-justify the result in the field.  Normally the result is right-justified. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘+’
+Always include a plus or minus sign in the result. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘ ’
+If the result doesn’t start with a plus or minus sign, prefix it with a space instead.  Since the ‘+’ flag ensures that the result includes a sign, this flag is ignored if you supply both of them. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘#’
+Specifies that the result should always include a decimal point, even if no digits follow it.  For the ‘%g’ and ‘%G’ conversions, this also forces trailing zeros after the decimal point to be left in place where they would otherwise be removed. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘'’
+Separate the digits of the integer part of the result into groups as specified by the locale specified for the LC_NUMERIC category; see General Numeric.  This flag is a GNU extension. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘0’
+Pad the field with zeros instead of spaces; the zeros are placed after any sign.  This flag is ignored if the ‘-’ flag is also specified. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘L’
+An uppercase ‘L’ specifies that the argument is a long double. 

@@ -1,0 +1,2 @@
+All the functions, constants and data types for word expansion are declared in the header file wordexp.h. 
+Word expansion produces a vector of words (strings).  To return this vector, wordexp uses a special data type, wordexp_t, which is a structure.  You pass wordexp the address of the structure, and it fills in the structure’s fields to tell you about the results. 

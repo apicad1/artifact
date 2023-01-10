@@ -1,0 +1,12 @@
+Total samples: 6, Total_reports: 1
+             TP: 0, FP: 1, FN: 6
+***** TP *****
+***** FN *****
+/mnt/e/Projects/api_misuse/my_tool_sym/database/APIMU4C/API_Misuse_Benchmark/CWE401_Memory_Leak/CWE401_Memory_Leak__twoIntsStruct_realloc_15/CWE401_Memory_Leak__twoIntsStruct_realloc_15.c:72
+/mnt/e/Projects/api_misuse/my_tool_sym/database/APIMU4C/API_Misuse_Benchmark/CWE401_Memory_Leak/CWE401_Memory_Leak__twoIntsStruct_realloc_15/CWE401_Memory_Leak__twoIntsStruct_realloc_15.c:87
+/mnt/e/Projects/api_misuse/my_tool_sym/database/APIMU4C/API_Misuse_Benchmark/CWE401_Memory_Leak/CWE401_Memory_Leak__twoIntsStruct_realloc_15/CWE401_Memory_Leak__twoIntsStruct_realloc_15.c:109
+/mnt/e/Projects/api_misuse/my_tool_sym/database/APIMU4C/API_Misuse_Benchmark/CWE401_Memory_Leak/CWE401_Memory_Leak__twoIntsStruct_realloc_15/CWE401_Memory_Leak__twoIntsStruct_realloc_15.c:142
+/mnt/e/Projects/api_misuse/my_tool_sym/database/APIMU4C/API_Misuse_Benchmark/CWE401_Memory_Leak/CWE401_Memory_Leak__twoIntsStruct_realloc_15/CWE401_Memory_Leak__twoIntsStruct_realloc_15.c:190
+/mnt/e/Projects/api_misuse/my_tool_sym/database/APIMU4C/API_Misuse_Benchmark/CWE401_Memory_Leak/CWE401_Memory_Leak__twoIntsStruct_realloc_15/CWE401_Memory_Leak__twoIntsStruct_realloc_15.c:223
+***** FP *****
+/mnt/e/Projects/api_misuse/my_tool_sym/test/compsac19/APIMU4C/API_Misuse_Benchmark/CWE401_Memory_Leak/CWE401_Memory_Leak__twoIntsStruct_realloc_15/CWE401_Memory_Leak__twoIntsStruct_realloc_15.c:74

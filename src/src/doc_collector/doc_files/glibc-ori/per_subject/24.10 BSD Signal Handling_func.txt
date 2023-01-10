@@ -1,0 +1,42 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int siginterrupt (int signum, int failflag)
+Preliminary: | MT-Unsafe const:sigintr | AS-Unsafe  | AC-Unsafe corrupt | See POSIX Safety Concepts. 
+This function specifies which approach to use when certain primitives are interrupted by handling signal signum.  If failflag is false, signal signum restarts primitives.  If failflag is true, handling signum causes these primitives to fail with error code EINTR.  See Interrupted Primitives. 
+This function has been replaced by the SA_RESTART flag of the sigaction function.  See Advanced Signal Handling. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int sigmask (int signum)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This macro returns a signal mask that has the bit for signal signum set.  You can bitwise-OR the results of several calls to sigmask together to specify more than one signal.  For example, 
+
+EXAMPLE_BEGIN
+(sigmask (SIGTSTP) | sigmask (SIGSTOP)
+ | sigmask (SIGTTIN) | sigmask (SIGTTOU))
+EXAMPLE_END
+
+specifies a mask that includes all the job-control stop signals. 
+This macro has been replaced by the sigset_t type and the associated signal set manipulation functions.  See Signal Sets. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int sigblock (int mask)
+Preliminary: | MT-Safe  | AS-Unsafe lock/hurd | AC-Unsafe lock/hurd | See POSIX Safety Concepts. 
+This function is equivalent to sigprocmask (see Process Signal Mask) with a how argument of SIG_BLOCK: it adds the signals specified by mask to the calling process’s set of blocked signals.  The return value is the previous set of blocked signals. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int sigsetmask (int mask)
+Preliminary: | MT-Safe  | AS-Unsafe lock/hurd | AC-Unsafe lock/hurd | See POSIX Safety Concepts. 
+This function is equivalent to sigprocmask (see Process Signal Mask) with a how argument of SIG_SETMASK: it sets the calling process’s signal mask to mask.  The return value is the previous set of blocked signals. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int sigpause (int mask)
+Preliminary: | MT-Unsafe race:sigprocmask/!bsd!linux | AS-Unsafe lock/hurd | AC-Unsafe lock/hurd | See POSIX Safety Concepts. 
+This function is the equivalent of sigsuspend (see Waiting for a Signal):  it sets the calling process’s signal mask to mask, and waits for a signal to arrive.  On return the previous set of blocked signals is restored. 

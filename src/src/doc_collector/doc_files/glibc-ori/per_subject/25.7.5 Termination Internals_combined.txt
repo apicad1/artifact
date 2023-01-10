@@ -1,0 +1,18 @@
+The _exit function is the primitive used for process termination by exit.  It is declared in the header file unistd.h.  
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void _exit (int status)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The _exit function is the primitive for causing a process to terminate with status status.  Calling this function does not execute cleanup functions registered with atexit or on_exit. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void _Exit (int status)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The _Exit function is the ISO C equivalent to _exit. The ISO C committee members were not sure whether the definitions of _exit and _Exit were compatible so they have not used the POSIX name. 
+This function was introduced in ISO C99 and is declared in stdlib.h. 
+<<<<<<<<<<<<<<<<<<<<
+
+When a process terminates for any reason—either because the program terminates, or as a result of a signal—the following things happen: 
+  All open file descriptors in the process are closed.  See Low-Level I/O. Note that streams are not flushed automatically when the process terminates; see I/O on Streams.   A process exit status is saved to be reported back to the parent process via wait or waitpid; see Process Completion.  If the program exited, this status includes as its low-order 8 bits the program exit status.    Any child processes of the process being terminated are assigned a new parent process.  (On most systems, including GNU, this is the init process, with process ID 1.)   A SIGCHLD signal is sent to the parent process.   If the process is a session leader that has a controlling terminal, then a SIGHUP signal is sent to each process in the foreground job, and the controlling terminal is disassociated from that session. See Job Control.   If termination of a process causes a process group to become orphaned, and any member of that process group is stopped, then a SIGHUP signal and a SIGCONT signal are sent to each process in the group.  See Job Control. 

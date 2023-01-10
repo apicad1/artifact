@@ -1,0 +1,10 @@
+The function below addresses the perennial programming quandary: “How do I take good data in string form and painlessly turn it into garbage?” This is not a difficult thing to code for oneself, but the authors of the GNU C Library wish to make it as convenient as possible. 
+To erase data, use explicit_bzero (see Erasing Sensitive Data); to obfuscate it reversibly, use memfrob (see Obfuscating Data). 
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: char * strfry (char *string)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+strfry performs an in-place shuffle on string.  Each character is swapped to a position selected at random, within the portion of the string starting with the character’s original position. (This is the Fisher-Yates algorithm for unbiased shuffling.) 
+Calling strfry will not disturb any of the random number generators that have global state (see Pseudo-Random Numbers). 
+The return value of strfry is always string. 
+Portability Note:  This function is unique to the GNU C Library. It is declared in string.h. 

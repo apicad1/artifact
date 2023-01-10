@@ -1,0 +1,87 @@
+To have better control of resources and how threads access them, the GNU C Library implements a mutex object, which can help avoid race conditions and other concurrency issues.  The term “mutex” refers to mutual exclusion. 
+The fundamental data type for a mutex is the mtx_t: 
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: mtx_t
+The mtx_t data type uniquely identifies a mutex object. 
+<<<<<<<<<<<<<<<<<<<<
+
+The ISO C standard defines several types of mutexes.  They are represented by the following symbolic constants: 
+
+>>>>>>>>>>>>>>>>>>>>
+- mtx_plain  
+A mutex that does not support timeout, or test and return. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- mtx_recursive  
+A mutex that supports recursive locking, which means that the owning thread can lock it more than once without causing deadlock. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- mtx_timed  
+A mutex that supports timeout. 
+<<<<<<<<<<<<<<<<<<<<
+
+The following functions are used for working with mutexes: 
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int mtx_init (mtx_t *mutex, int type)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+mtx_init creates a new mutex object with type type.  The object pointed to by mutex is set to the identifier of the newly created mutex. 
+Not all combinations of mutex types are valid for the type argument.  Valid uses of mutex types for the type argument are: 
+	mtx_plain
+A non-recursive mutex that does not support timeout.  
+	mtx_timed
+A non-recursive mutex that does support timeout.  
+	mtx_plain | mtx_recursive
+A recursive mutex that does not support timeout.  
+	mtx_timed | mtx_recursive
+A recursive mutex that does support timeout. 
+This function returns either thrd_success or thrd_error. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int mtx_lock (mtx_t *mutex)
+Preliminary: | MT-Safe  | AS-Unsafe lock | AC-Unsafe lock | See POSIX Safety Concepts. 
+mtx_lock blocks the current thread until the mutex pointed to by mutex is locked.  The behavior is undefined if the current thread has already locked the mutex and the mutex is not recursive. 
+Prior calls to mtx_unlock on the same mutex synchronize-with this operation (if this operation succeeds), and all lock/unlock operations on any given mutex form a single total order (similar to the modification order of an atomic). 
+This function returns either thrd_success or thrd_error. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int mtx_timedlock (mtx_t *restrict mutex, const struct timespec *restrict time_point)
+Preliminary: | MT-Safe  | AS-Unsafe lock | AC-Unsafe lock | See POSIX Safety Concepts. 
+mtx_timedlock blocks the current thread until the mutex pointed to by mutex is locked or until the calendar time pointed to by time_point has been reached.  Since this function takes an absolute time, if a duration is required, the calendar time must be calculated manually.  See Time Basics, and Calendar Time. 
+If the current thread has already locked the mutex and the mutex is not recursive, or if the mutex does not support timeout, the behavior of this function is undefined. 
+Prior calls to mtx_unlock on the same mutex synchronize-with this operation (if this operation succeeds), and all lock/unlock operations on any given mutex form a single total order (similar to the modification order of an atomic). 
+This function returns either thrd_success or thrd_error. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int mtx_trylock (mtx_t *mutex)
+Preliminary: | MT-Safe  | AS-Unsafe lock | AC-Unsafe lock | See POSIX Safety Concepts. 
+mtx_trylock tries to lock the mutex pointed to by mutex without blocking.  It returns immediately if the mutex is already locked. 
+Prior calls to mtx_unlock on the same mutex synchronize-with this operation (if this operation succeeds), and all lock/unlock operations on any given mutex form a single total order (similar to the modification order of an atomic). 
+This function returns thrd_success if the lock was obtained, thrd_busy if the mutex is already locked, and thrd_error on failure. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int mtx_unlock (mtx_t *mutex)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+mtx_unlock unlocks the mutex pointed to by mutex.  The behavior is undefined if the mutex is not locked by the calling thread. 
+This function synchronizes-with subsequent mtx_lock, mtx_trylock, and mtx_timedlock calls on the same mutex. All lock/unlock operations on any given mutex form a single total order (similar to the modification order of an atomic). 
+This function returns either thrd_success or thrd_error. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void mtx_destroy (mtx_t *mutex)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+mtx_destroy destroys the mutex pointed to by mutex.  If there are any threads waiting on the mutex, the behavior is undefined. 

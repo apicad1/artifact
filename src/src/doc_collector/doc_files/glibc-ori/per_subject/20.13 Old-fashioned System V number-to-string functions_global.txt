@@ -1,0 +1,6 @@
+The old System V C library provided three functions to convert numbers to strings, with unusual and hard-to-use semantics.  The GNU C Library also provides these functions and some natural extensions. 
+These functions are only available in the GNU C Library and on systems descended from AT&T Unix.  Therefore, unless these functions do precisely what you need, it is better to use sprintf, which is standard. 
+All these functions are defined in stdlib.h. 
+As extensions, the GNU C Library provides versions of these three functions that take long double arguments. 
+The ecvt and fcvt functions, and their long double equivalents, all return a string located in a static buffer which is overwritten by the next call to the function.  The GNU C Library provides another set of extended functions which write the converted string into a user-supplied buffer.  These have the conventional _r suffix. 
+gcvt_r is not necessary, because gcvt already uses a user-supplied buffer. 

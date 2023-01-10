@@ -1,0 +1,24 @@
+System administrators have to deal with lots of different kinds of messages from a plethora of subsystems within each system, and usually lots of systems as well.  For example, an FTP server might report every connection it gets.  The kernel might report hardware failures on a disk drive.  A DNS server might report usage statistics at regular intervals. 
+Some of these messages need to be brought to a system administrator’s attention immediately.  And it may not be just any system administrator – there may be a particular system administrator who deals with a particular kind of message.  Other messages just need to be recorded for future reference if there is a problem.  Still others may need to have information extracted from them by an automated process that generates monthly reports. 
+To deal with these messages, most Unix systems have a facility called "Syslog."  It is generally based on a daemon called “Syslogd” Syslogd listens for messages on a Unix domain socket named /dev/log.  Based on classification information in the messages and its configuration file (usually /etc/syslog.conf), Syslogd routes them in various ways.  Some of the popular routings are: 
+  Write to the system console  Mail to a specific user  Write to a log file  Pass to another daemon  Discard 
+Syslogd can also handle messages from other systems.  It listens on the syslog UDP port as well as the local socket for messages. 
+Syslog can handle messages from the kernel itself.  But the kernel doesn’t write to /dev/log; rather, another daemon (sometimes called “Klogd”) extracts messages from the kernel and passes them on to Syslog as any other process would (and it properly identifies them as messages from the kernel). 
+Syslog can even handle messages that the kernel issued before Syslogd or Klogd was running.  A Linux kernel, for example, stores startup messages in a kernel message ring and they are normally still there when Klogd later starts up.  Assuming Syslogd is running by the time Klogd starts, Klogd then passes everything in the message ring to it. 
+In order to classify messages for disposition, Syslog requires any process that submits a message to it to provide two pieces of classification information with it: 
+
+>>>>>>>>>>>>>>>>>>>>
+- facility
+This identifies who submitted the message.  There are a small number of facilities defined.  The kernel, the mail subsystem, and an FTP server are examples of recognized facilities.  For the complete list, See syslog; vsyslog.  Keep in mind that these are essentially arbitrary classifications.  "Mail subsystem" doesn’t have any more meaning than the system administrator gives to it. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- priority
+This tells how important the content of the message is.  Examples of defined priority values are: debug, informational, warning and critical. For the complete list, see syslog; vsyslog.  Except for the fact that the priorities have a defined order, the meaning of each of these priorities is entirely determined by the system administrator. 
+<<<<<<<<<<<<<<<<<<<<
+
+A “facility/priority” is a number that indicates both the facility and the priority. 
+Warning: This terminology is not universal.  Some people use “level” to refer to the priority and “priority” to refer to the combination of facility and priority.  A Linux kernel has a concept of a message “level,” which corresponds both to a Syslog priority and to a Syslog facility/priority (It can be both because the facility code for the kernel is zero, and that makes priority and facility/priority the same value). 
+The GNU C Library provides functions to submit messages to Syslog.  They do it by writing to the /dev/log socket.  See Submitting Syslog Messages. 
+The GNU C Library functions only work to submit messages to the Syslog facility on the same system.  To submit a message to the Syslog facility on another system, use the socket I/O functions to write a UDP datagram to the syslog UDP port on that system.  See Sockets. 

@@ -1,0 +1,6 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: pid_t wait3 (int *status-ptr, int options, struct rusage *usage)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+If usage is a null pointer, wait3 is equivalent to waitpid (-1, status-ptr, options). 
+If usage is not null, wait3 stores usage figures for the child process in *rusage (but only if the child has terminated, not if it has stopped).  See Resource Usage. 

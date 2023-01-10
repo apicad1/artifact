@@ -1,0 +1,84 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: size_t strlen (const char *s)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The strlen function returns the length of the string s in bytes.  (In other words, it returns the offset of the terminating null byte within the array.) 
+For example, 
+
+EXAMPLE_BEGIN
+strlen ("hello, world")
+    ⇒ 12
+EXAMPLE_END
+
+When applied to an array, the strlen function returns the length of the string stored there, not its allocated size.  You can get the allocated size of the array that holds a string using the sizeof operator: 
+
+EXAMPLE_BEGIN
+char string[32] = "hello, world";
+sizeof (string)
+    ⇒ 32
+strlen (string)
+    ⇒ 12
+EXAMPLE_END
+
+But beware, this will not work unless string is the array itself, not a pointer to it.  For example: 
+
+EXAMPLE_BEGIN
+char string[32] = "hello, world";
+char *ptr = string;
+sizeof (string)
+    ⇒ 32
+sizeof (ptr)
+    ⇒ 4  /* (on a machine with 4 byte pointers) */
+EXAMPLE_END
+
+This is an easy mistake to make when you are working with functions that take string arguments; those arguments are always pointers, not arrays. 
+It must also be noted that for multibyte encoded strings the return value does not have to correspond to the number of characters in the string.  To get this value the string can be converted to wide characters and wcslen can be used or something like the following code can be used: 
+
+EXAMPLE_BEGIN
+/* The input is in string.
+   The length is expected in n.  */
+{
+  mbstate_t t;
+  char *scopy = string;
+  /* In initial state.  */
+  memset (&t, '\0', sizeof (t));
+  /* Determine number of characters.  */
+  n = mbsrtowcs (NULL, &scopy, strlen (scopy), &t);
+}
+EXAMPLE_END
+
+This is cumbersome to do so if the number of characters (as opposed to bytes) is needed often it is better to work with wide characters. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: size_t wcslen (const wchar_t *ws)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The wcslen function is the wide character equivalent to strlen.  The return value is the number of wide characters in the wide string pointed to by ws (this is also the offset of the terminating null wide character of ws). 
+Since there are no multi wide character sequences making up one wide character the return value is not only the offset in the array, it is also the number of wide characters. 
+This function was introduced in Amendment 1 to ISO C90. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: size_t strnlen (const char *s, size_t maxlen)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+If the array s of size maxlen contains a null byte, the strnlen function returns the length of the string s in bytes.  Otherwise it returns maxlen.  Therefore this function is equivalent to (strlen (s) < maxlen ? strlen (s) : maxlen) but it is more efficient and works even if s is not null-terminated so long as maxlen does not exceed the size of s’s array. 
+
+EXAMPLE_BEGIN
+char string[32] = "hello, world";
+strnlen (string, 32)
+    ⇒ 12
+strnlen (string, 5)
+    ⇒ 5
+EXAMPLE_END
+
+This function is a GNU extension and is declared in string.h. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: size_t wcsnlen (const wchar_t *ws, size_t maxlen)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+wcsnlen is the wide character equivalent to strnlen.  The maxlen parameter specifies the maximum number of wide characters. 
+This function is a GNU extension and is declared in wchar.h. 

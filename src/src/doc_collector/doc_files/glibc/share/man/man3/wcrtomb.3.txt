@@ -1,0 +1,60 @@
+WCRTOMB(3)                                      Linux Programmer's Manual                                     WCRTOMB(3)
+
+NAME
+       wcrtomb - convert a wide character to a multibyte sequence
+
+SYNOPSIS
+       #include <wchar.h>
+
+       size_t wcrtomb(char *restrict s, wchar_t wc, mbstate_t *restrict ps);
+
+DESCRIPTION
+       The main case for this function is when s is not NULL and wc is not a null wide character (L'\0').  In this case,
+       the wcrtomb() function converts the wide character wc to its multibyte representation and stores it at the begin‐
+       ning  of  the  character  array  pointed to by s.  It updates the shift state *ps, and returns the length of said
+       multibyte representation, that is, the number of bytes written at s.
+
+       A different case is when s is not NULL, but wc is a null wide character (L'\0').  In  this  case,  the  wcrtomb()
+       function stores at the character array pointed to by s the shift sequence needed to bring *ps back to the initial
+       state, followed by a '\0' byte.  It updates the shift state *ps (i.e., brings it into the initial state), and re‐
+       turns the length of the shift sequence plus one, that is, the number of bytes written at s.
+
+       A third case is when s is NULL.  In this case, wc is ignored, and the function effectively returns
+
+           wcrtomb(buf, L'\0', ps)
+
+       where buf is an internal anonymous buffer.
+
+       In  all  of the above cases, if ps is NULL, a static anonymous state known only to the wcrtomb() function is used
+       instead.
+
+RETURN VALUE
+       The wcrtomb() function returns the number of bytes that have been or would have been written to the byte array at
+       s.   If  wc  can not be represented as a multibyte sequence (according to the current locale), (size_t) -1 is re‐
+       turned, and errno set to EILSEQ.
+
+ATTRIBUTES
+       For an explanation of the terms used in this section, see attributes(7).
+
+       ┌───────────────────────────────────────────────────────────────────┬───────────────┬────────────────────────────┐
+       │Interface                                                          │ Attribute     │ Value                      │
+       ├───────────────────────────────────────────────────────────────────┼───────────────┼────────────────────────────┤
+       │wcrtomb()                                                          │ Thread safety │ MT-Unsafe race:wcrtomb/!ps │
+       └───────────────────────────────────────────────────────────────────┴───────────────┴────────────────────────────┘
+
+CONFORMING TO
+       POSIX.1-2001, POSIX.1-2008, C99.
+
+NOTES
+       The behavior of wcrtomb() depends on the LC_CTYPE category of the current locale.
+
+       Passing NULL as ps is not multithread safe.
+
+SEE ALSO
+       mbsinit(3), wcsrtombs(3)
+
+COLOPHON
+       This page is part of release 5.13 of the Linux man-pages project.  A  description  of  the  project,  information
+       about reporting bugs, and the latest version of this page, can be found at https://www.kernel.org/doc/man-pages/.
+
+GNU                                                    2021-03-22                                             WCRTOMB(3)

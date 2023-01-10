@@ -1,0 +1,26 @@
+The send function is declared in the header file sys/socket.h.  If your flags argument is zero, you can just as well use write instead of send; see I/O Primitives.  If the socket was connected but the connection has broken, you get a SIGPIPE signal for any use of send or write (see Miscellaneous Signals). 
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: ssize_t send (int socket, const void *buffer, size_t size, int flags)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The send function is like write, but with the additional flags flags.  The possible values of flags are described in Socket Data Options. 
+This function returns the number of bytes transmitted, or -1 on failure.  If the socket is nonblocking, then send (like write) can return after sending just part of the data. See File Status Flags, for information about nonblocking mode. 
+Note, however, that a successful return value merely indicates that the message has been sent without error, not necessarily that it has been received without error. 
+The following errno error conditions are defined for this function: 
+	EBADF
+The socket argument is not a valid file descriptor.  
+	EINTR
+The operation was interrupted by a signal before any data was sent. See Interrupted Primitives.  
+	ENOTSOCK
+The descriptor socket is not a socket.  
+	EMSGSIZE
+The socket type requires that the message be sent atomically, but the message is too large for this to be possible.  
+	EWOULDBLOCK
+Nonblocking mode has been set on the socket, and the write operation would block.  (Normally send blocks until the operation can be completed.)  
+	ENOBUFS
+There is not enough internal buffer space available.  
+	ENOTCONN
+You never connected this socket.  
+	EPIPE
+This socket was connected but the connection is now broken.  In this case, send generates a SIGPIPE signal first; if that signal is ignored or blocked, or if its handler returns, then send fails with EPIPE. 
+This function is defined as a cancellation point in multi-threaded programs, so one has to be prepared for this and make sure that allocated resources (like memory, file descriptors, semaphores or whatever) are freed even if the thread is canceled. 

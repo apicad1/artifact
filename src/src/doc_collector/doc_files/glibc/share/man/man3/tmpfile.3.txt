@@ -1,0 +1,59 @@
+TMPFILE(3)                                      Linux Programmer's Manual                                     TMPFILE(3)
+
+NAME
+       tmpfile - create a temporary file
+
+SYNOPSIS
+       #include <stdio.h>
+
+       FILE *tmpfile(void);
+
+DESCRIPTION
+       The tmpfile() function opens a unique temporary file in binary read/write (w+b) mode.  The file will be automati‐
+       cally deleted when it is closed or the program terminates.
+
+RETURN VALUE
+       The tmpfile() function returns a stream descriptor, or NULL if a unique  filename  cannot  be  generated  or  the
+       unique file cannot be opened.  In the latter case, errno is set to indicate the error.
+
+ERRORS
+       EACCES Search permission denied for directory in file's path prefix.
+
+       EEXIST Unable to generate a unique filename.
+
+       EINTR  The call was interrupted by a signal; see signal(7).
+
+       EMFILE The per-process limit on the number of open file descriptors has been reached.
+
+       ENFILE The system-wide limit on the total number of open files has been reached.
+
+       ENOSPC There was no room in the directory to add the new filename.
+
+       EROFS  Read-only filesystem.
+
+ATTRIBUTES
+       For an explanation of the terms used in this section, see attributes(7).
+
+       ┌──────────────────────────────────────────────────────────────────────────────────────┬───────────────┬─────────┐
+       │Interface                                                                             │ Attribute     │ Value   │
+       ├──────────────────────────────────────────────────────────────────────────────────────┼───────────────┼─────────┤
+       │tmpfile()                                                                             │ Thread safety │ MT-Safe │
+       └──────────────────────────────────────────────────────────────────────────────────────┴───────────────┴─────────┘
+
+CONFORMING TO
+       POSIX.1-2001, POSIX.1-2008, C89, C99, SVr4, 4.3BSD, SUSv2.
+
+NOTES
+       POSIX.1-2001 specifies: an error message may be written to stdout if the stream cannot be opened.
+
+       The standard does not specify the directory that tmpfile() will use.  Glibc will try the path prefix P_tmpdir de‐
+       fined in <stdio.h>, and if that fails, then the directory /tmp.
+
+SEE ALSO
+       exit(3), mkstemp(3), mktemp(3), tempnam(3), tmpnam(3)
+
+COLOPHON
+       This page is part of release 5.13 of the Linux man-pages project.  A  description  of  the  project,  information
+       about reporting bugs, and the latest version of this page, can be found at https://www.kernel.org/doc/man-pages/.
+
+                                                       2021-03-22                                             TMPFILE(3)

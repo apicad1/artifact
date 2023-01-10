@@ -1,0 +1,22 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- a.b.c.d
+This specifies all four bytes of the address individually and is the commonly used representation. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- a.b.c
+The last part of the address, c, is interpreted as a 2-byte quantity. This is useful for specifying host addresses in a Class B network with network address number a.b. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- a.b
+The last part of the address, b, is interpreted as a 3-byte quantity. This is useful for specifying host addresses in a Class A network with network address number a. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- a
+If only one part is given, this corresponds directly to the host address number. 

@@ -1,0 +1,5 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void obstack_free (struct obstack *obstack-ptr, void *object)
+Preliminary: | MT-Safe race:obstack-ptr | AS-Safe  | AC-Unsafe corrupt | See POSIX Safety Concepts. 
+If object is a null pointer, everything allocated in the obstack is freed.  Otherwise, object must be the address of an object allocated in the obstack.  Then object is freed, along with everything allocated in obstack-ptr since object. 

@@ -1,0 +1,12 @@
+All files are in filesystems, and before you can access any file, its filesystem must be mounted.  Because of Unix’s concept of Everything is a file, mounting of filesystems is central to doing almost anything.  This section explains how to find out what filesystems are currently mounted and what filesystems are available for mounting, and how to change what is mounted. 
+The classic filesystem is the contents of a disk drive.  The concept is considerably more abstract, though, and lots of things other than disk drives can be mounted. 
+Some block devices don’t correspond to traditional devices like disk drives.  For example, a loop device is a block device whose driver uses a regular file in another filesystem as its medium.  So if that regular file contains appropriate data for a filesystem, you can by mounting the loop device essentially mount a regular file. 
+Some filesystems aren’t based on a device of any kind.  The “proc” filesystem, for example, contains files whose data is made up by the filesystem driver on the fly whenever you ask for it.  And when you write to it, the data you write causes changes in the system.  No data gets stored. 
+
+TABLE_BEGIN
+ • Mount Information    What is or could be mounted?
+
+ • Mount-Unmount-Remount    Controlling what is mounted and how
+
+TABLE_END
+

@@ -1,0 +1,48 @@
+These are the standard members of struct lconv; there may be others. 
+
+>>>>>>>>>>>>>>>>>>>>
+- char *decimal_point
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- char *mon_decimal_point
+These are the decimal-point separators used in formatting non-monetary and monetary quantities, respectively.  In the ‘C’ locale, the value of decimal_point is ".", and the value of mon_decimal_point is "".  
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- char *thousands_sep
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- char *mon_thousands_sep
+These are the separators used to delimit groups of digits to the left of the decimal point in formatting non-monetary and monetary quantities, respectively.  In the ‘C’ locale, both members have a value of "" (the empty string). 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- char *grouping
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- char *mon_grouping
+These are strings that specify how to group the digits to the left of the decimal point.  grouping applies to non-monetary quantities and mon_grouping applies to monetary quantities.  Use either thousands_sep or mon_thousands_sep to separate the digit groups.  
+Each member of these strings is to be interpreted as an integer value of type char.  Successive numbers (from left to right) give the sizes of successive groups (from right to left, starting at the decimal point.)  The last member is either 0, in which case the previous member is used over and over again for all the remaining groups, or CHAR_MAX, in which case there is no more grouping—or, put another way, any remaining digits form one large group without separators. 
+For example, if grouping is "\04\03\02", the correct grouping for the number 123456787654321 is ‘12’, ‘34’, ‘56’, ‘78’, ‘765’, ‘4321’.  This uses a group of 4 digits at the end, preceded by a group of 3 digits, preceded by groups of 2 digits (as many as needed).  With a separator of ‘,’, the number would be printed as ‘12,34,56,78,765,4321’. 
+A value of "\03" indicates repeated groups of three digits, as normally used in the U.S. 
+In the standard ‘C’ locale, both grouping and mon_grouping have a value of "".  This value specifies no grouping at all. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- char int_frac_digits
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- char frac_digits
+These are small integers indicating how many fractional digits (to the right of the decimal point) should be displayed in a monetary value in international and local formats, respectively.  (Most often, both members have the same value.) 
+In the standard ‘C’ locale, both of these members have the value CHAR_MAX, meaning “unspecified”.  The ISO standard doesn’t say what to do when you find this value; we recommend printing no fractional digits.  (This locale also specifies the empty string for mon_decimal_point, so printing any fractional digits would be confusing!) 

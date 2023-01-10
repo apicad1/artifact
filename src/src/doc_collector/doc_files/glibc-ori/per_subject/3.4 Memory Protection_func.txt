@@ -1,0 +1,109 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- PROT_WRITE  
+The memory can be written to. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- PROT_READ  
+The memory can be read.  On some architectures, this flag implies that the memory can be executed as well (as if PROT_EXEC had been specified at the same time). 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- PROT_EXEC  
+The memory can be used to store instructions which can then be executed. On most architectures, this flag implies that the memory can be read (as if PROT_READ had been specified). 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- PROT_NONE  
+This flag must be specified on its own. 
+The memory is reserved, but cannot be read, written, or executed.  If this flag is specified in a call to mmap, a virtual memory area will be set aside for future use in the process, and mmap calls without the MAP_FIXED flag will not use it for subsequent allocations.  For anonymous mappings, the kernel will not reserve any physical memory for the allocation at the time the mapping is created. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int mprotect (void *address, size_t length, int protection)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+A successful call to the mprotect function changes the protection flags of at least length bytes of memory, starting at address. 
+address must be aligned to the page size for the mapping.  The system page size can be obtained by calling sysconf with the _SC_PAGESIZE parameter (see Sysconf Definition).  The system page size is the granularity in which the page protection of anonymous memory mappings and most file mappings can be changed.  Memory which is mapped from special files or devices may have larger page granularity than the system page size and may require larger alignment. 
+length is the number of bytes whose protection flags must be changed.  It is automatically rounded up to the next multiple of the system page size. 
+protection is a combination of the PROT_* flags described above. 
+The mprotect function returns 0 on success and -1 on failure. 
+The following errno error conditions are defined for this function: 
+	ENOMEM
+The system was not able to allocate resources to fulfill the request. This can happen if there is not enough physical memory in the system for the allocation of backing storage.  The error can also occur if the new protection flags would cause the memory region to be split from its neighbors, and the process limit for the number of such distinct memory regions would be exceeded.  
+	EINVAL
+address is not properly aligned to a page boundary for the mapping, or length (after rounding up to the system page size) is not a multiple of the applicable page size for the mapping, or the combination of flags in protection is not valid.  
+	EACCES
+The file for a file-based mapping was not opened with open flags which are compatible with protection.  
+	EPERM
+The system security policy does not allow a mapping with the specified flags.  For example, mappings which are both PROT_EXEC and PROT_WRITE at the same time might not be allowed. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int pkey_alloc (unsigned int flags, unsigned int restrictions)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Unsafe corrupt | See POSIX Safety Concepts. 
+Allocate a new protection key.  The flags argument is reserved and must be zero.  The restrictions argument specifies access rights which are applied to the current thread (as if with pkey_set below).  Access rights of other threads are not changed. 
+The function returns the new protection key, a non-negative number, or -1 on error. 
+The following errno error conditions are defined for this function: 
+	ENOSYS
+The system does not implement memory protection keys.  
+	EINVAL
+The flags argument is not zero.  The restrictions argument is invalid.  The system does not implement memory protection keys or runs in a mode in which memory protection keys are disabled.  
+	ENOSPC
+All available protection keys already have been allocated.  The system does not implement memory protection keys or runs in a mode in which memory protection keys are disabled.  
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int pkey_free (int key)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+Deallocate the protection key, so that it can be reused by pkey_alloc. 
+Calling this function does not change the access rights of the freed protection key.  The calling thread and other threads may retain access to it, even if it is subsequently allocated again.  For this reason, it is not recommended to call the pkey_free function. 
+	ENOSYS
+The system does not implement memory protection keys.  
+	EINVAL
+The key argument is not a valid protection key. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int pkey_mprotect (void *address, size_t length, int protection, int key)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+Similar to mprotect, but also set the memory protection key for the memory region to key. 
+Some systems use memory protection keys to emulate certain combinations of protection flags.  Under such circumstances, specifying an explicit protection key may behave as if additional flags have been specified in protection, even though this does not happen with the default protection key.  For example, some systems can support PROT_EXEC-only mappings only with a default protection key, and memory with a key which was allocated using pkey_alloc will still be readable if PROT_EXEC is specified without PROT_READ. 
+If key is -1, the default protection key is applied to the mapping, just as if mprotect had been called. 
+The pkey_mprotect function returns 0 on success and -1 on failure.  The same errno error conditions as for mprotect are defined for this function, with the following addition: 
+	EINVAL
+The key argument is not -1 or a valid memory protection key allocated using pkey_alloc.  
+	ENOSYS
+The system does not implement memory protection keys, and key is not -1. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int pkey_set (int key, unsigned int rights)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+Change the access rights of the current thread for memory pages with the protection key key to rights.  If rights is zero, no additional access restrictions on top of the page protection flags are applied.  Otherwise, rights is a combination of the following flags: 
+	PKEY_DISABLE_WRITE  
+ Subsequent attempts to write to memory with the specified protection key will fault.  
+	PKEY_DISABLE_ACCESS  
+ Subsequent attempts to write to or read from memory with the specified protection key will fault. 
+Operations not specified as flags are not restricted.  In particular, this means that the memory region will remain executable if it was mapped with the PROT_EXEC protection flag and PKEY_DISABLE_ACCESS has been specified. 
+Calling the pkey_set function with a protection key which was not allocated by pkey_alloc results in undefined behavior.  This means that calling this function on systems which do not support memory protection keys is undefined. 
+The pkey_set function returns 0 on success and -1 on failure. 
+The following errno error conditions are defined for this function: 
+	EINVAL
+The system does not support the access rights restrictions expressed in the rights argument. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int pkey_get (int key)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+Return the access rights of the current thread for memory pages with protection key key.  The return value is zero or a combination of the PKEY_DISABLE_* flags; see the pkey_set function. 
+Calling the pkey_get function with a protection key which was not allocated by pkey_alloc results in undefined behavior.  This means that calling this function on systems which do not support memory protection keys is undefined. 

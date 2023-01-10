@@ -1,0 +1,42 @@
+ISO C and POSIX define several data types for representing elapsed times, simple calendar times, and broken-down times. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: clock_t
+clock_t is used to measure processor and CPU time. It may be an integer or a floating-point type. Its values are counts of clock ticks since some arbitrary event in the past. The number of clock ticks per second is system-specific. See Processor And CPU Time, for further detail.   
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: time_t
+time_t is the simplest data type used to represent simple calendar time. 
+In ISO C, time_t can be either an integer or a floating-point type, and the meaning of time_t values is not specified.  The only things a strictly conforming program can do with time_t values are: pass them to difftime to get the elapsed time between two simple calendar times (see Calculating Elapsed Time), and pass them to the functions that convert them to broken-down time (see Broken-down Time). 
+On POSIX-conformant systems, time_t is an integer type and its values represent the number of seconds elapsed since the epoch, which is 00:00:00 on January 1, 1970, Coordinated Universal Time. 
+The GNU C Library additionally guarantees that time_t is a signed type, and that all of its functions operate correctly on negative time_t values, which are interpreted as times before the epoch.  
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: struct timespec
+
+struct timespec represents a simple calendar time, or an elapsed time, with sub-second resolution.  It is declared in time.h and has the following members: 
+	time_t tv_sec
+The number of whole seconds elapsed since the epoch (for a simple calendar time) or since some other starting point (for an elapsed time).  
+	long int tv_nsec
+The number of nanoseconds elapsed since the time given by the tv_sec member.  When struct timespec values are produced by GNU C Library functions, the value in this field will always be greater than or equal to zero, and less than 1,000,000,000. When struct timespec values are supplied to GNU C Library functions, the value in this field must be in the same range. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: struct timeval
+
+struct timeval is an older type for representing a simple calendar time, or an elapsed time, with sub-second resolution. It is almost the same as struct timespec, but provides only microsecond resolution.  It is declared in sys/time.h and has the following members: 
+	time_t tv_sec
+The number of whole seconds elapsed since the epoch (for a simple calendar time) or since some other starting point (for an elapsed time).  
+	long int tv_usec
+The number of microseconds elapsed since the time given by the tv_sec member.  When struct timeval values are produced by GNU C Library functions, the value in this field will always be greater than or equal to zero, and less than 1,000,000. When struct timeval values are supplied to GNU C Library functions, the value in this field must be in the same range. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: struct tm
+This is the data type used to represent a broken-down time.  It has separate fields for year, month, day, and so on. See Broken-down Time, for further details. 

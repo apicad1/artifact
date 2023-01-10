@@ -1,0 +1,12 @@
+This section explains basic concepts of how signals are generated, what happens after a signal is delivered, and how programs can handle signals. 
+
+TABLE_BEGIN
+ • Kinds of Signals    Some examples of what can cause a signal.
+
+ • Signal Generation    Concepts of why and how signals occur.
+
+ • Delivery of Signal    Concepts of what a signal does to the
+                                 process.
+
+TABLE_END
+

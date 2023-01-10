@@ -1,0 +1,6 @@
+This section describes a set of random number generation functions that are derived from BSD.  There is no advantage to using these functions with the GNU C Library; we support them for BSD compatibility only. 
+The prototypes for these functions are in stdlib.h.  
+The four functions described so far in this section all work on a state which is shared by all threads.  The state is not directly accessible to the user and can only be modified by these functions.  This makes it hard to deal with situations where each thread should have its own pseudo-random number generator. 
+The GNU C Library contains four additional functions which contain the state as an explicit parameter and therefore make it possible to handle thread-local PRNGs.  Besides this there is no difference.  In fact, the four functions already discussed are implemented internally using the following interfaces. 
+The stdlib.h header contains a definition of the following type: 
+The functions modifying the state follow exactly the already described functions. 

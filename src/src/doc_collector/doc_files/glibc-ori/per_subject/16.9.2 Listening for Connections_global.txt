@@ -1,0 +1,5 @@
+Now let us consider what the server process must do to accept connections on a socket.  First it must use the listen function to enable connection requests on the socket, and then accept each incoming connection with a call to accept (see Accepting Connections).  Once connection requests are enabled on a server socket, the select function reports when the socket has a connection ready to be accepted (see Waiting for I/O). 
+The listen function is not allowed for sockets using connectionless communication styles. 
+You can write a network server that does not even start running until a connection to it is requested.  See Inetd Servers. 
+In the Internet namespace, there are no special protection mechanisms for controlling access to a port; any process on any machine can make a connection to your server.  If you want to restrict access to your server, make it examine the addresses associated with connection requests or implement some other handshaking or identification protocol. 
+In the local namespace, the ordinary file protection bits control who has access to connect to the socket. 

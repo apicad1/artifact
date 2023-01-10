@@ -1,0 +1,13 @@
+real    105m10.820s
+user    991m59.416s
+sys     94m15.187s
+
+proper count: 460590
+explored count: 3889204
+
+(base) @test:~/api_misuse/evaluation/real-world/httpd$ du -sh cad-output/traces/
+27G     cad-output/traces/
+(base) @test:~/api_misuse/evaluation/real-world/httpd$ du -sh cad-output/features/
+1.8G    cad-output/features/
+(base) @test:~/api_misuse/evaluation/real-world/httpd$ du -sh cad-output/slices/
+185M    cad-output/slices/

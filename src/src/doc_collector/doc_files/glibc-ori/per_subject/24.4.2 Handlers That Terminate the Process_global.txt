@@ -1,0 +1,34 @@
+Handler functions that terminate the program are typically used to cause orderly cleanup or recovery from program error signals and interactive interrupts. 
+The cleanest way for a handler to terminate the process is to raise the same signal that ran the handler in the first place.  Here is how to do this: 
+
+EXAMPLE_BEGIN
+volatile sig_atomic_t fatal_error_in_progress = 0;
+
+void
+fatal_error_signal (int sig)
+{
+  /* Since this handler is established for more than one kind of signal, 
+     it might still get invoked recursively by delivery of some other kind
+     of signal.  Use a static variable to keep track of that. */
+  if (fatal_error_in_progress)
+    raise (sig);
+  fatal_error_in_progress = 1;
+
+
+  /* Now do the clean up actions:
+     - reset terminal modes
+     - kill child processes
+     - remove lock files */
+  …
+
+
+  /* Now reraise the signal.  We reactivate the signal’s
+     default handling, which is to terminate the process.
+     We could just call exit or abort,
+     but reraising the signal sets the return status
+     from the process correctly. */
+  signal (sig, SIG_DFL);
+  raise (sig);
+}
+EXAMPLE_END
+

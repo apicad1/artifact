@@ -1,0 +1,14 @@
+In GNU C, you can replace most uses of alloca with an array of variable size.  Here is how open2 would look then: 
+
+EXAMPLE_BEGIN
+int open2 (char *str1, char *str2, int flags, int mode)
+{
+  char name[strlen (str1) + strlen (str2) + 1];
+  stpcpy (stpcpy (name, str1), str2);
+  return open (name, flags, mode);
+}
+EXAMPLE_END
+
+But alloca is not always equivalent to a variable-sized array, for several reasons: 
+  A variable size array’s space is freed at the end of the scope of the name of the array.  The space allocated with alloca remains until the end of the function.   It is possible to use alloca within a loop, allocating an additional block on each iteration.  This is impossible with variable-sized arrays. 
+NB: If you mix use of alloca and variable-sized arrays within one function, exiting a scope in which a variable-sized array was declared frees all blocks allocated with alloca during the execution of that scope. 

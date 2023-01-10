@@ -1,0 +1,1 @@
+You can adjust some parameters for dynamic memory allocation with the mallopt function.  This function is the general SVID/XPG interface, defined in malloc.h.  

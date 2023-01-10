@@ -1,0 +1,1 @@
+These signals are used for various other purposes.  In general, they will not affect your program unless it explicitly uses them for something. 

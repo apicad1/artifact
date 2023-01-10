@@ -1,0 +1,51 @@
+Each source file in which you plan to use the obstack functions must include the header file obstack.h, like this: 
+
+EXAMPLE_BEGIN
+#include <obstack.h>
+EXAMPLE_END
+
+Also, if the source file uses the macro obstack_init, it must declare or define two functions or macros that will be called by the obstack library.  One, obstack_chunk_alloc, is used to allocate the chunks of memory into which objects are packed.  The other, obstack_chunk_free, is used to return chunks when the objects in them are freed.  These macros should appear before any use of obstacks in the source file. 
+Usually these are defined to use malloc via the intermediary xmalloc (see Unconstrained Allocation).  This is done with the following pair of macro definitions: 
+
+EXAMPLE_BEGIN
+#define obstack_chunk_alloc xmalloc
+#define obstack_chunk_free free
+EXAMPLE_END
+
+Though the memory you get using obstacks really comes from malloc, using obstacks is faster because malloc is called less often, for larger blocks of memory.  See Obstack Chunks, for full details. 
+At run time, before the program can use a struct obstack object as an obstack, it must initialize the obstack by calling obstack_init. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int obstack_init (struct obstack *obstack-ptr)
+Preliminary: | MT-Safe race:obstack-ptr | AS-Safe  | AC-Safe mem | See POSIX Safety Concepts. 
+Initialize obstack obstack-ptr for allocation of objects.  This function calls the obstack’s obstack_chunk_alloc function.  If allocation of memory fails, the function pointed to by obstack_alloc_failed_handler is called.  The obstack_init function always returns 1 (Compatibility notice: Former versions of obstack returned 0 if allocation failed). 
+<<<<<<<<<<<<<<<<<<<<
+
+Here are two examples of how to allocate the space for an obstack and initialize it.  First, an obstack that is a static variable: 
+
+EXAMPLE_BEGIN
+static struct obstack myobstack;
+…
+obstack_init (&myobstack);
+EXAMPLE_END
+
+Second, an obstack that is itself dynamically allocated: 
+
+EXAMPLE_BEGIN
+struct obstack *myobstack_ptr
+  = (struct obstack *) xmalloc (sizeof (struct obstack));
+
+obstack_init (myobstack_ptr);
+EXAMPLE_END
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Variable: obstack_alloc_failed_handler
+The value of this variable is a pointer to a function that obstack uses when obstack_chunk_alloc fails to allocate memory.  The default action is to print a message and abort. You should supply a function that either calls exit (see Program Termination) or longjmp (see Non-Local Exits) and doesn’t return. 
+
+EXAMPLE_BEGIN
+void my_obstack_alloc_failed (void)
+…
+obstack_alloc_failed_handler = &my_obstack_alloc_failed;
+EXAMPLE_END
+

@@ -1,0 +1,14 @@
+This section describes library functions which perform various kinds of searching operations on strings and arrays.  These functions are declared in the header file string.h.    
+One useful, but unusual, use of the strchr function is when one wants to have a pointer pointing to the null byte terminating a string.  This is often written in this way: 
+
+EXAMPLE_BEGIN
+  s += strlen (s);
+EXAMPLE_END
+
+This is almost optimal but the addition operation duplicated a bit of the work already done in the strlen function.  A better solution is this: 
+
+EXAMPLE_BEGIN
+  s = strchr (s, '\0');
+EXAMPLE_END
+
+There is no restriction on the second parameter of strchr so it could very well also be zero.  Those readers thinking very hard about this might now point out that the strchr function is more expensive than the strlen function since we have two abort criteria.  This is right.  But in the GNU C Library the implementation of strchr is optimized in a special way so that strchr actually is faster. 

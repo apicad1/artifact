@@ -1,0 +1,36 @@
+To create a socket in the local namespace, use the constant PF_LOCAL as the namespace argument to socket or socketpair.  This constant is defined in sys/socket.h. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int PF_LOCAL
+This designates the local namespace, in which socket addresses are local names, and its associated family of protocols.  PF_LOCAL is the macro used by POSIX.1g. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int PF_UNIX
+This is a synonym for PF_LOCAL, for compatibility’s sake. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int PF_FILE
+This is a synonym for PF_LOCAL, for compatibility’s sake. 
+<<<<<<<<<<<<<<<<<<<<
+
+The structure for specifying socket names in the local namespace is defined in the header file sys/un.h:  
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: struct sockaddr_un
+This structure is used to specify local namespace socket addresses.  It has the following members: 
+	short int sun_family
+This identifies the address family or format of the socket address. You should store the value AF_LOCAL to designate the local namespace.  See Socket Addresses.  
+	char sun_path[108]
+This is the file name to use.  Incomplete:  Why is 108 a magic number?  RMS suggests making this a zero-length array and tweaking the following example to use alloca to allocate an appropriate amount of storage based on the length of the filename. 
+<<<<<<<<<<<<<<<<<<<<
+
+You should compute the length parameter for a socket address in the local namespace as the sum of the size of the sun_family component and the string length (not the allocation size!) of the file name string.  This can be done using the macro SUN_LEN: 
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int SUN_LEN (struct sockaddr_un * ptr)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This macro computes the length of the socket address in the local namespace. 

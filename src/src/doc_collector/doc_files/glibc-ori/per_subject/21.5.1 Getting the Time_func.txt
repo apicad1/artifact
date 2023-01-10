@@ -1,0 +1,55 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: time_t time (time_t *result)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This is the simplest function for getting the current calendar time. It returns the calendar time as a value of type time_t; on POSIX systems, that means it has a resolution of one second.  It uses the same clock as ‘clock_gettime (CLOCK_REALTIME_COARSE)’, when the clock is available or ‘clock_gettime (CLOCK_REALTIME)’ otherwise. 
+If the argument result is not a null pointer, the calendar time value is also stored in *result. 
+This function cannot fail. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: clockid_t
+The type clockid_t is used for constants that indicate which of several system clocks one wishes to use. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: clockid_t CLOCK_REALTIME
+This clock uses the POSIX epoch, 00:00:00 on January 1, 1970, Coordinated Universal Time. It is close to, but not necessarily in lock-step with, the clocks of time (above) and of gettimeofday (below). 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: clockid_t CLOCK_MONOTONIC
+System-wide clock that continuously measures the advancement of calendar time, ignoring discontinuous changes to the system’s setting for absolute calendar time. 
+The epoch for this clock is an unspecified point in the past. The epoch may change if the system is rebooted or suspended. Therefore, CLOCK_MONOTONIC cannot be used to measure absolute time, only elapsed time. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int clock_gettime (clockid_t clock, struct timespec *ts)
+Get the current time accoding to the clock identified by clock, storing it as seconds and nanoseconds in *ts. See Time Types, for a description of struct timespec. 
+The return value is 0 on success and -1 on failure.  The following errno error condition is defined for this function: 
+	EINVAL
+The clock identified by clock is not supported. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int clock_getres (clockid_t clock, struct timespec *res)
+Get the actual resolution of the clock identified by clock, storing it in *ts. 
+For instance, if the clock hardware for CLOCK_REALTIME uses a quartz crystal that oscillates at 32.768 kHz, then its resolution would be 30.518 microseconds, and ‘clock_getres (CLOCK_REALTIME, &r)’ would set r.tv_sec to 0 and r.tv_nsec to 30518. 
+The return value is 0 on success and -1 on failure.  The following errno error condition is defined for this function: 
+	EINVAL
+The clock identified by clock is not supported. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int gettimeofday (struct timeval *tp, void *tzp)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+Get the current calendar time, storing it as seconds and microseconds in *tp.  See Time Types, for a description of struct timeval.  The clock of gettimeofday is close to, but not necessarily in lock-step with, the clocks of time and of ‘clock_gettime (CLOCK_REALTIME)’ (see above). 
+On some historic systems, if tzp was not a null pointer, information about a system-wide time zone would be written to *tzp.  This feature is obsolete and not supported on GNU systems.  You should always supply a null pointer for this argument.  Instead, use the facilities described in Time Zone Functions and in Broken-down Time for working with time zones. 
+This function cannot fail, and its return value is always 0. 
+Portability Note: As of the 2008 revision of POSIX, this function is considered obsolete.  The GNU C Library will continue to provide this function indefinitely, but new programs should use clock_gettime instead. 

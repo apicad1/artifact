@@ -1,0 +1,17 @@
+The catgets functions are based on the simple scheme: 
+This means for the author of the program that s/he will have to make sure the meaning of the identifier in the program code and in the message catalogs is always the same. 
+Before a message can be translated the catalog file must be located. The user of the program must be able to guide the responsible function to find whatever catalog the user wants.  This is separated from what the programmer had in mind. 
+All the types, constants and functions for the catgets functions are defined/declared in the nl_types.h header file. 
+
+TABLE_BEGIN
+ • The catgets Functions    The catgets function family.
+
+ • The message catalog files    Format of the message catalog files.
+
+ • The gencat program    How to generate message catalogs files which
+                                can be used by the functions.
+
+ • Common Usage    How to use the catgets interface.
+
+TABLE_END
+

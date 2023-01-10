@@ -1,0 +1,23 @@
+This section lists the names for various standard kinds of signals and describes what kind of event they mean.  Each signal name is a macro which stands for a positive integer—the signal number for that kind of signal.  Your programs should never make assumptions about the numeric code for a particular kind of signal, but rather refer to them always by the names defined here.  This is because the number for a given kind of signal can vary from system to system, but the meanings of the names are standardized and fairly uniform. 
+The signal names are defined in the header file signal.h. 
+
+TABLE_BEGIN
+ • Program Error Signals    Used to report serious program errors.
+
+ • Termination Signals    Used to interrupt and/or terminate the
+                                 program.
+
+ • Alarm Signals    Used to indicate expiration of timers.
+
+ • Asynchronous I/O Signals    Used to indicate input is available.
+
+ • Job Control Signals    Signals used to support job control.
+
+ • Operation Error Signals    Used to report operational system errors.
+
+ • Miscellaneous Signals    Miscellaneous Signals.
+
+ • Signal Messages    Printing a message describing a signal.
+
+TABLE_END
+

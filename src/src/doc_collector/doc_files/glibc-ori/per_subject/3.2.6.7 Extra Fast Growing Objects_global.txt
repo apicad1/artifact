@@ -1,0 +1,35 @@
+The usual functions for growing objects incur overhead for checking whether there is room for the new growth in the current chunk.  If you are frequently constructing objects in small steps of growth, this overhead can be significant. 
+You can reduce the overhead by using special “fast growth” functions that grow the object without checking.  In order to have a robust program, you must do the checking yourself.  If you do this checking in the simplest way each time you are about to add data to the object, you have not saved anything, because that is what the ordinary growth functions do.  But if you can arrange to check less often, or check more efficiently, then you make the program faster. 
+The function obstack_room returns the amount of room available in the current chunk.  It is declared as follows: 
+While you know there is room, you can use these fast growth functions for adding data to a growing object: 
+When you check for space using obstack_room and there is not enough room for what you want to add, the fast growth functions are not safe.  In this case, simply use the corresponding ordinary growth function instead.  Very soon this will copy the object to a new chunk; then there will be lots of room available again. 
+So, each time you use an ordinary growth function, check afterward for sufficient space using obstack_room.  Once the object is copied to a new chunk, there will be plenty of space again, so the program will start using the fast growth functions again. 
+Here is an example: 
+
+EXAMPLE_BEGIN
+void
+add_string (struct obstack *obstack, const char *ptr, int len)
+{
+  while (len > 0)
+    {
+      int room = obstack_room (obstack);
+      if (room == 0)
+        {
+          /* Not enough room.  Add one character slowly,
+             which may copy to a new chunk and make room.  */
+          obstack_1grow (obstack, *ptr++);
+          len--;
+        }
+      else
+        {
+          if (room > len)
+            room = len;
+          /* Add fast as much as we have room for. */
+          len -= room;
+          while (room-- > 0)
+            obstack_1grow_fast (obstack, *ptr++);
+        }
+    }
+}
+EXAMPLE_END
+

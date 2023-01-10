@@ -1,0 +1,34 @@
+The following command prints a list of locales supported by the system: 
+
+EXAMPLE_BEGIN
+  locale -a
+EXAMPLE_END
+
+Portability Note: With the notable exception of the standard locale names ‘C’ and ‘POSIX’, locale names are system-specific. 
+Most locale names follow XPG syntax and consist of up to four parts: 
+
+EXAMPLE_BEGIN
+language[_territory[.codeset]][@modifier]
+EXAMPLE_END
+
+Beside the first part, all of them are allowed to be missing.  If the full specified locale is not found, less specific ones are looked for. The various parts will be stripped off, in the following order: 
+For example, the locale name ‘de_AT.iso885915@euro’ denotes a German-language locale for use in Austria, using the ISO-8859-15 (Latin-9) character set, and with the Euro as the currency symbol. 
+In addition to locale names which follow XPG syntax, systems may provide aliases such as ‘german’.  Both categories of names must not contain the slash character ‘/’. 
+If the locale name starts with a slash ‘/’, it is treated as a path relative to the configured locale directories; see LOCPATH below.  The specified path must not contain a component ‘..’, or the name is invalid, and setlocale will fail. 
+Portability Note: POSIX suggests that if a locale name starts with a slash ‘/’, it is resolved as an absolute path.  However, the GNU C Library treats it as a relative path under the directories listed in LOCPATH (or the default locale directory if LOCPATH is unset). 
+Locale names which are longer than an implementation-defined limit are invalid and cause setlocale to fail. 
+As a special case, locale names used with LC_ALL can combine several locales, reflecting different locale settings for different categories.  For example, you might want to use a U.S. locale with ISO A4 paper format, so you set LANG to ‘en_US.UTF-8’, and LC_PAPER to ‘de_DE.UTF-8’.  In this case, the LC_ALL-style combined locale name is 
+
+EXAMPLE_BEGIN
+LC_CTYPE=en_US.UTF-8;LC_TIME=en_US.UTF-8;LC_PAPER=de_DE.UTF-8;…
+EXAMPLE_END
+
+followed by other category settings not shown here. 
+The path used for finding locale data can be set using the LOCPATH environment variable.  This variable lists the directories in which to search for locale definitions, separated by a colon ‘:’. 
+The default path for finding locale data is system specific.  A typical value for the LOCPATH default is: 
+
+EXAMPLE_BEGIN
+/usr/share/locale
+EXAMPLE_END
+
+The value of LOCPATH is ignored by privileged programs for security reasons, and only the default directory is used. 

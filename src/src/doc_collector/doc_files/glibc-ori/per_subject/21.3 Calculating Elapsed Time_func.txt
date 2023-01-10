@@ -1,0 +1,7 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: double difftime (time_t end, time_t begin)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The difftime function returns the number of seconds of elapsed time from calendar time begin to calendar time end, as a value of type double. 
+On POSIX-conformant systems, the advantage of using ‘difftime (end, begin)’ over ‘end - begin’ is that it will produce the mathematically correct result even if end and begin are so far apart that a simple subtraction would overflow.  However, if they are so far apart that a double cannot exactly represent the difference, the result will be inexact. 
+On other systems, time_t values might be encoded in a way that prevents subtraction from working directly, and then difftime would be the only way to compute their difference. 

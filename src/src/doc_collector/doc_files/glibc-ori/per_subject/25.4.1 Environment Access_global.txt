@@ -1,0 +1,5 @@
+The value of an environment variable can be accessed with the getenv function.  This is declared in the header file stdlib.h.  
+Libraries should use secure_getenv instead of getenv, so that they do not accidentally use untrusted environment variables. Modifications of environment variables are not allowed in multi-threaded programs.  The getenv and secure_getenv functions can be safely used in multi-threaded programs. 
+There is one more function to modify the whole environment.  This function is said to be used in the POSIX.9 (POSIX bindings for Fortran 77) and so one should expect it did made it into POSIX.1.  But this never happened.  But we still provide this function as a GNU extension to enable writing standard compliant Fortran environments. 
+You can deal directly with the underlying representation of environment objects to add more variables to the environment (for example, to communicate with another program you are about to execute; see Executing a File). 
+Unix systems, and GNU systems, pass the initial value of environ as the third argument to main. See Program Arguments. 

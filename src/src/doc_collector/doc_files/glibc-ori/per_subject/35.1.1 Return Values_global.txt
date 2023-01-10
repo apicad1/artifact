@@ -1,0 +1,1 @@
+The ISO C thread specification provides the following enumeration constants for return values from functions in the API: 

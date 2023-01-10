@@ -1,0 +1,20 @@
+The function to unread a character is called ungetc, because it reverses the action of getc. 
+Here is an example showing the use of getc and ungetc to skip over whitespace characters.  When this function reaches a non-whitespace character, it unreads that character to be seen again on the next read operation on the stream. 
+
+EXAMPLE_BEGIN
+#include <stdio.h>
+#include <ctype.h>
+
+void
+skip_whitespace (FILE *stream)
+{
+  int c;
+  do
+    /* No need to check for EOF because it is not
+       isspace, and ungetc ignores EOF.  */
+    c = getc (stream);
+  while (isspace (c));
+  ungetc (c, stream);
+}
+EXAMPLE_END
+

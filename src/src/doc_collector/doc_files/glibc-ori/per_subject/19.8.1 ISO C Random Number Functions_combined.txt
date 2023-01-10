@@ -1,0 +1,30 @@
+This section describes the random number functions that are part of the ISO C standard. 
+To use these facilities, you should include the header file stdlib.h in your program.  
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int RAND_MAX
+The value of this macro is an integer constant representing the largest value the rand function can return.  In the GNU C Library, it is 2147483647, which is the largest signed integer representable in 32 bits.  In other libraries, it may be as low as 32767. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int rand (void)
+Preliminary: | MT-Safe  | AS-Unsafe lock | AC-Unsafe lock | See POSIX Safety Concepts. 
+The rand function returns the next pseudo-random number in the series.  The value ranges from 0 to RAND_MAX. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void srand (unsigned int seed)
+Preliminary: | MT-Safe  | AS-Unsafe lock | AC-Unsafe lock | See POSIX Safety Concepts. 
+This function establishes seed as the seed for a new series of pseudo-random numbers.  If you call rand before a seed has been established with srand, it uses the value 1 as a default seed. 
+To produce a different pseudo-random series each time your program is run, do srand (time (0)). 
+<<<<<<<<<<<<<<<<<<<<
+
+POSIX.1 extended the C standard functions to support reproducible random numbers in multi-threaded programs.  However, the extension is badly designed and unsuitable for serious work. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int rand_r (unsigned int *seed)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function returns a random number in the range 0 to RAND_MAX just as rand does.  However, all its state is stored in the seed argument.  This means the RNG’s state can only have as many bits as the type unsigned int has.  This is far too few to provide a good RNG. 
+If your program requires a reentrant RNG, we recommend you use the reentrant GNU extensions to the SVID random number generator.  The POSIX.1 interface should only be used when the GNU extensions are not available. 

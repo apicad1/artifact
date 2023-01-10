@@ -1,0 +1,17 @@
+Character sets used in the early days of computing had only six, seven, or eight bits for each character: there was never a case where more than eight bits (one byte) were used to represent a single character.  The limitations of this approach became more apparent as more people grappled with non-Roman character sets, where not all the characters that make up a language’s character set can be represented by 2^8 choices.  This chapter shows the functionality that was added to the C library to support multiple character sets. 
+
+TABLE_BEGIN
+ • Extended Char Intro    Introduction to Extended Characters.
+
+ • Charset Function Overview    Overview about Character Handling
+                                      Functions.
+
+ • Restartable multibyte conversion    Restartable multibyte conversion
+                                      Functions.
+
+ • Non-reentrant Conversion    Non-reentrant Conversion Function.
+
+ • Generic Charset Conversion    Generic Charset Conversion.
+
+TABLE_END
+

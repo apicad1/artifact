@@ -1,0 +1,14 @@
+Most of the time, if you choose the proper C data type for each object in your program, you need not be concerned with just how it is represented or how many bits it uses.  When you do need such information, the C language itself does not provide a way to get it. The header files limits.h and float.h contain macros which give you this information in full detail. 
+
+TABLE_BEGIN
+ • Width of Type    How many bits does an integer type hold?
+
+ • Range of Type    What are the largest and smallest values
+			     that an integer type can hold?
+
+ • Floating Type Macros    Parameters that measure the floating point types.
+
+ • Structure Measurement    Getting measurements on structure types.
+
+TABLE_END
+

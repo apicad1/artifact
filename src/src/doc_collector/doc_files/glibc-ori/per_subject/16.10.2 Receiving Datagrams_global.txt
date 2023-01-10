@@ -1,0 +1,2 @@
+The recvfrom function reads a packet from a datagram socket and also tells you where it was sent from.  This function is declared in sys/socket.h. 
+You can use plain recv (see Receiving Data) instead of recvfrom if you don’t need to find out who sent the packet (either because you know where it should come from or because you treat all possible senders alike).  Even read can be used if you don’t want to specify flags (see I/O Primitives). 

@@ -1,0 +1,10 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: printf_function
+This is the data type that a handler function should have. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: printf_arginfo_function
+This type is used to describe functions that return information about the number and type of arguments used by a conversion specifier. 

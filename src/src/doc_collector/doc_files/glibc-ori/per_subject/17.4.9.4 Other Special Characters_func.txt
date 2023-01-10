@@ -1,0 +1,27 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int VLNEXT
+
+This is the subscript for the LNEXT character in the special control character array.  termios.c_cc[VLNEXT] holds the character itself. 
+The LNEXT character is recognized only when IEXTEN is set, but in both canonical and noncanonical mode.  It disables any special significance of the next character the user types.  Even if the character would normally perform some editing function or generate a signal, it is read as a plain character.  This is the analogue of the C-q command in Emacs.  “LNEXT” stands for “literal next.” 
+The LNEXT character is usually C-v. 
+This character is available on BSD systems and GNU/Linux and GNU/Hurd systems. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int VDISCARD
+
+This is the subscript for the DISCARD character in the special control character array.  termios.c_cc[VDISCARD] holds the character itself. 
+The DISCARD character is recognized only when IEXTEN is set, but in both canonical and noncanonical mode.  Its effect is to toggle the discard-output flag.  When this flag is set, all program output is discarded.  Setting the flag also discards all output currently in the output buffer.  Typing any other character resets the flag. 
+This character is available on BSD systems and GNU/Linux and GNU/Hurd systems. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int VSTATUS
+
+This is the subscript for the STATUS character in the special control character array.  termios.c_cc[VSTATUS] holds the character itself. 
+The STATUS character’s effect is to print out a status message about how the current process is running. 
+The STATUS character is recognized only in canonical mode, and only if NOKERNINFO is not set. 
+This character is available only on BSD systems and GNU/Hurd systems. 

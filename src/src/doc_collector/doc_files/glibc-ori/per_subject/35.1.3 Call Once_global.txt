@@ -1,0 +1,1 @@
+In order to guarantee single access to a function, the GNU C Library implements a call once function to ensure a function is only called once in the presence of multiple, potentially calling threads. 

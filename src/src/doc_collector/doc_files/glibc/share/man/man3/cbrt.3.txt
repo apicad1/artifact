@@ -1,0 +1,59 @@
+CBRT(3)                                         Linux Programmer's Manual                                        CBRT(3)
+
+NAME
+       cbrt, cbrtf, cbrtl - cube root function
+
+SYNOPSIS
+       #include <math.h>
+
+       double cbrt(double x);
+       float cbrtf(float x);
+       long double cbrtl(long double x);
+
+       Link with -lm.
+
+   Feature Test Macro Requirements for glibc (see feature_test_macros(7)):
+
+       cbrt():
+           _ISOC99_SOURCE || _POSIX_C_SOURCE >= 200112L
+               || _XOPEN_SOURCE >= 500
+               || /* Since glibc 2.19: */ _DEFAULT_SOURCE
+               || /* Glibc <= 2.19: */ _BSD_SOURCE || _SVID_SOURCE
+
+       cbrtf(), cbrtl():
+           _ISOC99_SOURCE || _POSIX_C_SOURCE >= 200112L
+               || /* Since glibc 2.19: */ _DEFAULT_SOURCE
+               || /* Glibc <= 2.19: */ _BSD_SOURCE || _SVID_SOURCE
+
+DESCRIPTION
+       These  functions return the (real) cube root of x.  This function cannot fail; every representable real value has
+       a representable real cube root.
+
+RETURN VALUE
+       These functions return the cube root of x.
+
+       If x is +0, -0, positive infinity, negative infinity, or NaN, x is returned.
+
+ERRORS
+       No errors occur.
+
+ATTRIBUTES
+       For an explanation of the terms used in this section, see attributes(7).
+
+       ┌──────────────────────────────────────────────────────────────────────────────────────┬───────────────┬─────────┐
+       │Interface                                                                             │ Attribute     │ Value   │
+       ├──────────────────────────────────────────────────────────────────────────────────────┼───────────────┼─────────┤
+       │cbrt(), cbrtf(), cbrtl()                                                              │ Thread safety │ MT-Safe │
+       └──────────────────────────────────────────────────────────────────────────────────────┴───────────────┴─────────┘
+
+CONFORMING TO
+       C99, POSIX.1-2001, POSIX.1-2008.
+
+SEE ALSO
+       pow(3), sqrt(3)
+
+COLOPHON
+       This page is part of release 5.13 of the Linux man-pages project.  A  description  of  the  project,  information
+       about reporting bugs, and the latest version of this page, can be found at https://www.kernel.org/doc/man-pages/.
+
+GNU                                                    2021-03-22                                                CBRT(3)

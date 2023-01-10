@@ -1,0 +1,2 @@
+The function getrusage and the data type struct rusage are used to examine the resource usage of a process.  They are declared in sys/resource.h. 
+One way of getting resource usage for a particular child process is with the function wait4, which returns totals for a child when it terminates.  See BSD Wait Functions. 

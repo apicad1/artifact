@@ -1,0 +1,25 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int F_GETOWN
+This macro is used as the command argument to fcntl, to specify that it should get information about the process or process group to which SIGIO signals are sent.  (For a terminal, this is actually the foreground process group ID, which you can get using tcgetpgrp; see Terminal Access Functions.) 
+The return value is interpreted as a process ID; if negative, its absolute value is the process group ID. 
+The following errno error condition is defined for this command: 
+	EBADF
+The filedes argument is invalid. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int F_SETOWN
+This macro is used as the command argument to fcntl, to specify that it should set the process or process group to which SIGIO signals are sent.  This command requires a third argument of type pid_t to be passed to fcntl, so that the form of the call is: 
+
+EXAMPLE_BEGIN
+fcntl (filedes, F_SETOWN, pid)
+EXAMPLE_END
+
+The pid argument should be a process ID.  You can also pass a negative number whose absolute value is a process group ID. 
+The return value from fcntl with this command is -1 in case of error and some other value if successful.  The following errno error conditions are defined for this command: 
+	EBADF
+The filedes argument is invalid.  
+	ESRCH
+There is no process or process group corresponding to pid. 

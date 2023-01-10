@@ -1,0 +1,42 @@
+WCSCAT(3)                                       Linux Programmer's Manual                                      WCSCAT(3)
+
+NAME
+       wcscat - concatenate two wide-character strings
+
+SYNOPSIS
+       #include <wchar.h>
+
+       wchar_t *wcscat(wchar_t *restrict dest, const wchar_t *restrict src);
+
+DESCRIPTION
+       The  wcscat()  function is the wide-character equivalent of the strcat(3) function.  It copies the wide-character
+       string pointed to by src, including the terminating null wide character (L'\0'), to the end of the wide-character
+       string pointed to by dest.
+
+       The strings may not overlap.
+
+       The programmer must ensure that there is room for at least wcslen(dest)+wcslen(src)+1 wide characters at dest.
+
+RETURN VALUE
+       wcscat() returns dest.
+
+ATTRIBUTES
+       For an explanation of the terms used in this section, see attributes(7).
+
+       ┌──────────────────────────────────────────────────────────────────────────────────────┬───────────────┬─────────┐
+       │Interface                                                                             │ Attribute     │ Value   │
+       ├──────────────────────────────────────────────────────────────────────────────────────┼───────────────┼─────────┤
+       │wcscat()                                                                              │ Thread safety │ MT-Safe │
+       └──────────────────────────────────────────────────────────────────────────────────────┴───────────────┴─────────┘
+
+CONFORMING TO
+       POSIX.1-2001, POSIX.1-2008, C99.
+
+SEE ALSO
+       strcat(3), wcpcpy(3), wcscpy(3), wcsncat(3)
+
+COLOPHON
+       This  page  is  part  of  release 5.13 of the Linux man-pages project.  A description of the project, information
+       about reporting bugs, and the latest version of this page, can be found at https://www.kernel.org/doc/man-pages/.
+
+GNU                                                    2021-03-22                                              WCSCAT(3)

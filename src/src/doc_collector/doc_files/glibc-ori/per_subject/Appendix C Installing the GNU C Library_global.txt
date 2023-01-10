@@ -1,0 +1,17 @@
+Before you do anything else, you should read the FAQ at https://sourceware.org/glibc/wiki/FAQ.  It answers common questions and describes problems you may experience with compilation and installation. 
+You will need recent versions of several GNU tools: definitely GCC and GNU Make, and possibly others.  See Tools for Compilation, below. 
+
+TABLE_BEGIN
+ • Configuring and compiling    How to compile and test GNU libc.
+
+ • Running make install    How to install it once you’ve got it
+ compiled.
+
+ • Tools for Compilation    You’ll need these first.
+
+ • Linux    Specific advice for GNU/Linux systems.
+
+ • Reporting Bugs    So they’ll get fixed.
+
+TABLE_END
+

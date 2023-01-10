@@ -1,0 +1,5 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void * alloca (size_t size)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The return value of alloca is the address of a block of size bytes of memory, allocated in the stack frame of the calling function. 

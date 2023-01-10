@@ -1,0 +1,1 @@
+The following special values may be passed to an argp help filter function as the first argument in addition to key values for user options.  They specify which help text the text argument contains: 

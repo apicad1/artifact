@@ -1,0 +1,20 @@
+This chapter describes functions for searching and sorting arrays of arbitrary objects.  You pass the appropriate comparison function to be applied as an argument, along with the size of the objects in the array and the total number of elements. 
+
+TABLE_BEGIN
+ • Comparison Functions    Defining how to compare two objects.
+				 Since the sort and search facilities
+                                 are general, you have to specify the
+                                 ordering.
+
+ • Array Search Function    The bsearch function.
+
+ • Array Sort Function    The qsort function.
+
+ • Search/Sort Example    An example program.
+
+ • Hash Search Function    The hsearch function.
+
+ • Tree Search Function    The tsearch function.
+
+TABLE_END
+

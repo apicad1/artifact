@@ -1,0 +1,43 @@
+When a page is mapped using mmap, page protection flags can be specified using the protection flags argument.  See Memory-mapped I/O. 
+The following flags are available: 
+The operating system may keep track of these flags separately even if the underlying hardware treats them the same for the purposes of access checking (as happens with PROT_READ and PROT_EXEC on some platforms).  On GNU systems, PROT_EXEC always implies PROT_READ, so that users can view the machine code which is executing on their system. 
+Inappropriate access will cause a segfault (see Program Error Signals). 
+After allocation, protection flags can be changed using the mprotect function. 
+If the mprotect function is used to make a region of memory inaccessible by specifying the PROT_NONE protection flag and access is later restored, the memory retains its previous contents. 
+On some systems, it may not be possible to specify additional flags which were not present when the mapping was first created.  For example, an attempt to make a region of memory executable could fail if the initial protection flags were ‘PROT_READ | PROT_WRITE’. 
+In general, the mprotect function can be used to change any process memory, no matter how it was allocated.  However, portable use of the function requires that it is only used with memory regions returned by mmap or mmap64. 
+On some systems, further restrictions can be added to specific pages using memory protection keys.  These restrictions work as follows: 
+  All memory pages are associated with a protection key.  The default protection key does not cause any additional protections to be applied during memory accesses.  New keys can be allocated with the pkey_alloc function, and applied to pages using pkey_mprotect.   Each thread has a set of separate access right restriction for each protection key.  These access rights can be manipulated using the pkey_set and pkey_get functions.   During a memory access, the system obtains the protection key for the accessed page and uses that to determine the applicable access rights, as configured for the current thread.  If the access is restricted, a segmentation fault is the result ((see Program Error Signals). These checks happen in addition to the PROT_* protection flags set by mprotect or pkey_mprotect. 
+New threads and subprocesses inherit the access rights of the current thread.  If a protection key is allocated subsequently, existing threads (except the current) will use an unspecified system default for the access rights associated with newly allocated keys. 
+Upon entering a signal handler, the system resets the access rights of the current thread so that pages with the default key can be accessed, but the access rights for other protection keys are unspecified. 
+Applications are expected to allocate a key once using pkey_alloc, and apply the key to memory regions which need special protection with pkey_mprotect: 
+
+EXAMPLE_BEGIN
+  int key = pkey_alloc (0, PKEY_DISABLE_ACCESS);
+  if (key < 0)
+    /* Perform error checking, including fallback for lack of support.  */
+    ...;
+
+  /* Apply the key to a special memory region used to store critical
+     data.  */
+  if (pkey_mprotect (region, region_length,
+                     PROT_READ | PROT_WRITE, key) < 0)
+    ...; /* Perform error checking (generally fatal).  */
+EXAMPLE_END
+
+If the key allocation fails due to lack of support for memory protection keys, the pkey_mprotect call can usually be skipped.  In this case, the region will not be protected by default.  It is also possible to call pkey_mprotect with a key value of -1, in which case it will behave in the same way as mprotect. 
+After key allocation assignment to memory pages, pkey_set can be used to temporarily acquire access to the memory region and relinquish it again: 
+
+EXAMPLE_BEGIN
+  if (key >= 0 && pkey_set (key, 0) < 0)
+    ...; /* Perform error checking (generally fatal).  */
+  /* At this point, the current thread has read-write access to the
+     memory region.  */
+  ...
+  /* Revoke access again.  */
+  if (key >= 0 && pkey_set (key, PKEY_DISABLE_ACCESS) < 0)
+    ...; /* Perform error checking (generally fatal).  */
+EXAMPLE_END
+
+In this example, a negative key value indicates that no key had been allocated, which means that the system lacks support for memory protection keys and it is not necessary to change the the access rights of the current thread (because it always has access). 
+Compared to using mprotect to change the page protection flags, this approach has two advantages: It is thread-safe in the sense that the access rights are only changed for the current thread, so another thread which changes its own access rights concurrently to gain access to the mapping will not suddenly see its access rights revoked.  And pkey_set typically does not involve a call into the kernel and a context switch, so it is more efficient. 

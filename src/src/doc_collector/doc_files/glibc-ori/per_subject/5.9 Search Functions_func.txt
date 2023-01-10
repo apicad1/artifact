@@ -1,0 +1,233 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void * memchr (const void *block, int c, size_t size)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function finds the first occurrence of the byte c (converted to an unsigned char) in the initial size bytes of the object beginning at block.  The return value is a pointer to the located byte, or a null pointer if no match was found. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: wchar_t * wmemchr (const wchar_t *block, wchar_t wc, size_t size)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function finds the first occurrence of the wide character wc in the initial size wide characters of the object beginning at block.  The return value is a pointer to the located wide character, or a null pointer if no match was found. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void * rawmemchr (const void *block, int c)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+Often the memchr function is used with the knowledge that the byte c is available in the memory block specified by the parameters.  But this means that the size parameter is not really needed and that the tests performed with it at runtime (to check whether the end of the block is reached) are not needed. 
+The rawmemchr function exists for just this situation which is surprisingly frequent.  The interface is similar to memchr except that the size parameter is missing.  The function will look beyond the end of the block pointed to by block in case the programmer made an error in assuming that the byte c is present in the block. In this case the result is unspecified.  Otherwise the return value is a pointer to the located byte. 
+This function is of special interest when looking for the end of a string.  Since all strings are terminated by a null byte a call like 
+
+EXAMPLE_BEGIN
+   rawmemchr (str, '\0')
+EXAMPLE_END
+
+will never go beyond the end of the string. 
+This function is a GNU extension. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void * memrchr (const void *block, int c, size_t size)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The function memrchr is like memchr, except that it searches backwards from the end of the block defined by block and size (instead of forwards from the front). 
+This function is a GNU extension. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: char * strchr (const char *string, int c)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The strchr function finds the first occurrence of the byte c (converted to a char) in the string beginning at string.  The return value is a pointer to the located byte, or a null pointer if no match was found. 
+For example, 
+
+EXAMPLE_BEGIN
+strchr ("hello, world", 'l')
+    ⇒ "llo, world"
+strchr ("hello, world", '?')
+    ⇒ NULL
+EXAMPLE_END
+
+The terminating null byte is considered to be part of the string, so you can use this function get a pointer to the end of a string by specifying zero as the value of the c argument. 
+When strchr returns a null pointer, it does not let you know the position of the terminating null byte it has found.  If you need that information, it is better (but less portable) to use strchrnul than to search for it a second time. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: wchar_t * wcschr (const wchar_t *wstring, wchar_t wc)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The wcschr function finds the first occurrence of the wide character wc in the wide string beginning at wstring.  The return value is a pointer to the located wide character, or a null pointer if no match was found. 
+The terminating null wide character is considered to be part of the wide string, so you can use this function get a pointer to the end of a wide string by specifying a null wide character as the value of the wc argument.  It would be better (but less portable) to use wcschrnul in this case, though. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: char * strchrnul (const char *string, int c)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+strchrnul is the same as strchr except that if it does not find the byte, it returns a pointer to string’s terminating null byte rather than a null pointer. 
+This function is a GNU extension. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: wchar_t * wcschrnul (const wchar_t *wstring, wchar_t wc)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+wcschrnul is the same as wcschr except that if it does not find the wide character, it returns a pointer to the wide string’s terminating null wide character rather than a null pointer. 
+This function is a GNU extension. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: char * strrchr (const char *string, int c)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The function strrchr is like strchr, except that it searches backwards from the end of the string string (instead of forwards from the front). 
+For example, 
+
+EXAMPLE_BEGIN
+strrchr ("hello, world", 'l')
+    ⇒ "ld"
+EXAMPLE_END
+
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: wchar_t * wcsrchr (const wchar_t *wstring, wchar_t wc)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The function wcsrchr is like wcschr, except that it searches backwards from the end of the string wstring (instead of forwards from the front). 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: char * strstr (const char *haystack, const char *needle)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This is like strchr, except that it searches haystack for a substring needle rather than just a single byte.  It returns a pointer into the string haystack that is the first byte of the substring, or a null pointer if no match was found.  If needle is an empty string, the function returns haystack. 
+For example, 
+
+EXAMPLE_BEGIN
+strstr ("hello, world", "l")
+    ⇒ "llo, world"
+strstr ("hello, world", "wo")
+    ⇒ "world"
+EXAMPLE_END
+
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: wchar_t * wcsstr (const wchar_t *haystack, const wchar_t *needle)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This is like wcschr, except that it searches haystack for a substring needle rather than just a single wide character.  It returns a pointer into the string haystack that is the first wide character of the substring, or a null pointer if no match was found.  If needle is an empty string, the function returns haystack. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: wchar_t * wcswcs (const wchar_t *haystack, const wchar_t *needle)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+wcswcs is a deprecated alias for wcsstr.  This is the name originally used in the X/Open Portability Guide before the Amendment 1 to ISO C90 was published. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: char * strcasestr (const char *haystack, const char *needle)
+Preliminary: | MT-Safe locale | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This is like strstr, except that it ignores case in searching for the substring.   Like strcasecmp, it is locale dependent how uppercase and lowercase characters are related, and arguments are multibyte strings. 
+For example, 
+
+EXAMPLE_BEGIN
+strcasestr ("hello, world", "L")
+    ⇒ "llo, world"
+strcasestr ("hello, World", "wo")
+    ⇒ "World"
+EXAMPLE_END
+
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void * memmem (const void *haystack, size_t haystack-len,const void *needle, size_t needle-len)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This is like strstr, but needle and haystack are byte arrays rather than strings.  needle-len is the length of needle and haystack-len is the length of haystack. 
+This function is a GNU extension. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: size_t strspn (const char *string, const char *skipset)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The strspn (“string span”) function returns the length of the initial substring of string that consists entirely of bytes that are members of the set specified by the string skipset.  The order of the bytes in skipset is not important. 
+For example, 
+
+EXAMPLE_BEGIN
+strspn ("hello, world", "abcdefghijklmnopqrstuvwxyz")
+    ⇒ 5
+EXAMPLE_END
+
+In a multibyte string, characters consisting of more than one byte are not treated as single entities.  Each byte is treated separately.  The function is not locale-dependent. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: size_t wcsspn (const wchar_t *wstring, const wchar_t *skipset)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The wcsspn (“wide character string span”) function returns the length of the initial substring of wstring that consists entirely of wide characters that are members of the set specified by the string skipset.  The order of the wide characters in skipset is not important. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: size_t strcspn (const char *string, const char *stopset)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The strcspn (“string complement span”) function returns the length of the initial substring of string that consists entirely of bytes that are not members of the set specified by the string stopset. (In other words, it returns the offset of the first byte in string that is a member of the set stopset.) 
+For example, 
+
+EXAMPLE_BEGIN
+strcspn ("hello, world", " \t\n,.;!?")
+    ⇒ 5
+EXAMPLE_END
+
+In a multibyte string, characters consisting of more than one byte are not treated as a single entities.  Each byte is treated separately.  The function is not locale-dependent. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: size_t wcscspn (const wchar_t *wstring, const wchar_t *stopset)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The wcscspn (“wide character string complement span”) function returns the length of the initial substring of wstring that consists entirely of wide characters that are not members of the set specified by the string stopset.  (In other words, it returns the offset of the first wide character in string that is a member of the set stopset.) 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: char * strpbrk (const char *string, const char *stopset)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The strpbrk (“string pointer break”) function is related to strcspn, except that it returns a pointer to the first byte in string that is a member of the set stopset instead of the length of the initial substring.  It returns a null pointer if no such byte from stopset is found. 
+For example, 
+
+EXAMPLE_BEGIN
+strpbrk ("hello, world", " \t\n,.;!?")
+    ⇒ ", world"
+EXAMPLE_END
+
+In a multibyte string, characters consisting of more than one byte are not treated as single entities.  Each byte is treated separately.  The function is not locale-dependent. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: wchar_t * wcspbrk (const wchar_t *wstring, const wchar_t *stopset)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The wcspbrk (“wide character string pointer break”) function is related to wcscspn, except that it returns a pointer to the first wide character in wstring that is a member of the set stopset instead of the length of the initial substring.  It returns a null pointer if no such wide character from stopset is found. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: char * index (const char *string, int c)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+index is another name for strchr; they are exactly the same. New code should always use strchr since this name is defined in ISO C while index is a BSD invention which never was available on System V derived systems. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: char * rindex (const char *string, int c)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+rindex is another name for strrchr; they are exactly the same. New code should always use strrchr since this name is defined in ISO C while rindex is a BSD invention which never was available on System V derived systems. 

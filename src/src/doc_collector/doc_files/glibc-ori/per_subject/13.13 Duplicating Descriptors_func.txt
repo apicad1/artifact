@@ -1,0 +1,42 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int dup (int old)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function copies descriptor old to the first available descriptor number (the first number not currently open).  It is equivalent to fcntl (old, F_DUPFD, 0). 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int dup2 (int old, int new)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function copies the descriptor old to descriptor number new. 
+If old is an invalid descriptor, then dup2 does nothing; it does not close new.  Otherwise, the new duplicate of old replaces any previous meaning of descriptor new, as if new were closed first. 
+If old and new are different numbers, and old is a valid descriptor number, then dup2 is equivalent to: 
+
+EXAMPLE_BEGIN
+close (new);
+fcntl (old, F_DUPFD, new)
+EXAMPLE_END
+
+However, dup2 does this atomically; there is no instant in the middle of calling dup2 at which new is closed and not yet a duplicate of old. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int F_DUPFD
+This macro is used as the command argument to fcntl, to copy the file descriptor given as the first argument. 
+The form of the call in this case is: 
+
+EXAMPLE_BEGIN
+fcntl (old, F_DUPFD, next-filedes)
+EXAMPLE_END
+
+The next-filedes argument is of type int and specifies that the file descriptor returned should be the next available one greater than or equal to this value. 
+The return value from fcntl with this command is normally the value of the new file descriptor.  A return value of -1 indicates an error.  The following errno error conditions are defined for this command: 
+	EBADF
+The old argument is invalid.  
+	EINVAL
+The next-filedes argument is invalid.  
+	EMFILE
+There are no more file descriptors available—your program is already using the maximum.  In BSD and GNU, the maximum is controlled by a resource limit that can be changed; see Limits on Resources, for more information about the RLIMIT_NOFILE limit. 
+ENFILE is not a possible error code for dup2 because dup2 does not create a new opening of a file; duplicate descriptors do not count toward the limit which ENFILE indicates.  EMFILE is possible because it refers to the limit on distinct descriptor numbers in use in one process. 

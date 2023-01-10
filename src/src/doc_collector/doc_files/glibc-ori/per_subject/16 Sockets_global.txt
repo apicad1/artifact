@@ -1,0 +1,36 @@
+This chapter describes the GNU facilities for interprocess communication using sockets. 
+A socket is a generalized interprocess communication channel. Like a pipe, a socket is represented as a file descriptor.  Unlike pipes sockets support communication between unrelated processes, and even between processes running on different machines that communicate over a network.  Sockets are the primary means of communicating with other machines; telnet, rlogin, ftp, talk and the other familiar network programs use sockets. 
+Not all operating systems support sockets.  In the GNU C Library, the header file sys/socket.h exists regardless of the operating system, and the socket functions always exist, but if the system does not really support sockets these functions always fail. 
+Incomplete: We do not currently document the facilities for broadcast messages or for configuring Internet interfaces.  The reentrant functions and some newer functions that are related to IPv6 aren’t documented either so far. 
+
+TABLE_BEGIN
+ • Socket Concepts    Basic concepts you need to know about.
+
+ • Communication Styles    Stream communication, datagrams and other styles.
+
+ • Socket Addresses    How socket names (“addresses”) work.
+
+ • Interface Naming    Identifying specific network interfaces.
+
+ • Local Namespace    Details about the local namespace.
+
+ • Internet Namespace    Details about the Internet namespace.
+
+ • Misc Namespaces    Other namespaces not documented fully here.
+
+ • Open/Close Sockets    Creating sockets and destroying them.
+
+ • Connections    Operations on sockets with connection state.
+
+ • Datagrams    Operations on datagram sockets.
+
+ • Inetd    Inetd is a daemon that starts servers on request.
+			   The most convenient way to write a server
+			   is to make it work with Inetd.
+
+ • Socket Options    Miscellaneous low-level socket options.
+
+ • Networks Database    Accessing the database of network names.
+
+TABLE_END
+

@@ -1,0 +1,50 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int F_OFD_GETLK
+This macro is used as the command argument to fcntl, to specify that it should get information about a lock.  This command requires a third argument of type struct flock * to be passed to fcntl, so that the form of the call is: 
+
+EXAMPLE_BEGIN
+fcntl (filedes, F_OFD_GETLK, lockp)
+EXAMPLE_END
+
+If there is a lock already in place that would block the lock described by the lockp argument, information about that lock is written to *lockp.  Existing locks are not reported if they are compatible with making a new lock as specified.  Thus, you should specify a lock type of F_WRLCK if you want to find out about both read and write locks, or F_RDLCK if you want to find out about write locks only. 
+There might be more than one lock affecting the region specified by the lockp argument, but fcntl only returns information about one of them. Which lock is returned in this situation is undefined. 
+The l_whence member of the lockp structure are set to SEEK_SET and the l_start and l_len fields are set to identify the locked region. 
+If no conflicting lock exists, the only change to the lockp structure is to update the l_type field to the value F_UNLCK. 
+The normal return value from fcntl with this command is either 0 on success or -1, which indicates an error. The following errno error conditions are defined for this command: 
+	EBADF
+The filedes argument is invalid.  
+	EINVAL
+Either the lockp argument doesn’t specify valid lock information, the operating system kernel doesn’t support open file description locks, or the file associated with filedes doesn’t support locks. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int F_OFD_SETLK
+This macro is used as the command argument to fcntl, to specify that it should set or clear a lock.  This command requires a third argument of type struct flock * to be passed to fcntl, so that the form of the call is: 
+
+EXAMPLE_BEGIN
+fcntl (filedes, F_OFD_SETLK, lockp)
+EXAMPLE_END
+
+If the open file already has a lock on any part of the region, the old lock on that part is replaced with the new lock.  You can remove a lock by specifying a lock type of F_UNLCK. 
+If the lock cannot be set, fcntl returns immediately with a value of -1.  This command does not wait for other tasks to release locks.  If fcntl succeeds, it returns 0. 
+The following errno error conditions are defined for this command: 
+	EAGAIN
+The lock cannot be set because it is blocked by an existing lock on the file.  
+	EBADF
+Either: the filedes argument is invalid; you requested a read lock but the filedes is not open for read access; or, you requested a write lock but the filedes is not open for write access.  
+	EINVAL
+Either the lockp argument doesn’t specify valid lock information, the operating system kernel doesn’t support open file description locks, or the file associated with filedes doesn’t support locks.  
+	ENOLCK
+The system has run out of file lock resources; there are already too many file locks in place.  Well-designed file systems never report this error, because they have no limitation on the number of locks.  However, you must still take account of the possibility of this error, as it could result from network access to a file system on another machine. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int F_OFD_SETLKW
+This macro is used as the command argument to fcntl, to specify that it should set or clear a lock.  It is just like the F_OFD_SETLK command, but causes the process to wait until the request can be completed. 
+This command requires a third argument of type struct flock *, as for the F_OFD_SETLK command. 
+The fcntl return values and errors are the same as for the F_OFD_SETLK command, but these additional errno error conditions are defined for this command: 
+	EINTR
+The function was interrupted by a signal while it was waiting. See Interrupted Primitives.  

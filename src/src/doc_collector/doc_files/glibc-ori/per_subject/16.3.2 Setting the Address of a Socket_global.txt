@@ -1,0 +1,1 @@
+Use the bind function to assign an address to a socket.  The prototype for bind is in the header file sys/socket.h. For examples of use, see Local Socket Example, or see Inet Example. 

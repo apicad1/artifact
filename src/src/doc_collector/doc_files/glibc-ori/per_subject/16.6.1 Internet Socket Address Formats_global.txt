@@ -1,0 +1,3 @@
+In the Internet namespace, for both IPv4 (AF_INET) and IPv6 (AF_INET6), a socket address consists of a host address and a port on that host.  In addition, the protocol you choose serves effectively as a part of the address because local port numbers are meaningful only within a particular protocol. 
+The data types for representing socket addresses in the Internet namespace are defined in the header file netinet/in.h.  
+When you call bind or getsockname, you should specify sizeof (struct sockaddr_in) as the length parameter if you are using an IPv4 Internet namespace socket address. 

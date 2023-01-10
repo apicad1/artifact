@@ -1,0 +1,3 @@
+This section describes the random number functions that are part of the ISO C standard. 
+To use these facilities, you should include the header file stdlib.h in your program.  
+POSIX.1 extended the C standard functions to support reproducible random numbers in multi-threaded programs.  However, the extension is badly designed and unsuitable for serious work. 

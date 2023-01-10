@@ -1,0 +1,61 @@
+Argp is an interface for parsing unix-style argument vectors. See Program Arguments. 
+Argp provides features unavailable in the more commonly used getopt interface.  These features include automatically producing output in response to the ‘--help’ and ‘--version’ options, as described in the GNU coding standards.  Using argp makes it less likely that programmers will neglect to implement these additional options or keep them up to date. 
+Argp also provides the ability to merge several independently defined option parsers into one, mediating conflicts between them and making the result appear seamless.  A library can export an argp option parser that user programs might employ in conjunction with their own option parsers, resulting in less work for the user programs.  Some programs may use only argument parsers exported by libraries, thereby achieving consistent and efficient option-parsing for abstractions implemented by the libraries. 
+The header file <argp.h> should be included to use argp. 
+
+TABLE_BEGIN
+ • Argp Global Variables    
+
+ • Specifying Argp Parsers    
+
+ • Specifying Options in an Argp Parser    
+
+ • Argp Parser Functions    
+
+ • Combining Multiple Argp Parsers    
+
+ • Flags for argp_parse    
+
+ • Customizing Argp Help Output    
+
+ • The argp_help Function    
+
+ • Flags for the argp_help Function    
+
+ • Argp Examples    
+
+ • Argp User Customization    
+
+ • Parsing of Suboptions Example    
+
+TABLE_END
+
+The main interface to argp is the argp_parse function.  In many cases, calling argp_parse is the only argument-parsing code needed in main. See Program Arguments. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: error_t argp_parse (const struct argp *argp, int argc, char **argv, unsigned flags, int *arg_index, void *input)
+Preliminary: | MT-Unsafe race:argpbuf locale env | AS-Unsafe heap i18n lock corrupt | AC-Unsafe mem lock corrupt | See POSIX Safety Concepts. 
+The argp_parse function parses the arguments in argv, of length argc, using the argp parser argp.  See Argp Parsers.  Passing a null pointer for argp is the same as using a struct argp containing all zeros. 
+flags is a set of flag bits that modify the parsing behavior. See Argp Flags.  input is passed through to the argp parser argp, and has meaning defined by argp.  A typical usage is to pass a pointer to a structure which is used for specifying parameters to the parser and passing back the results. 
+Unless the ARGP_NO_EXIT or ARGP_NO_HELP flags are included in flags, calling argp_parse may result in the program exiting.  This behavior is true if an error is detected, or when an unknown option is encountered.  See Program Termination. 
+If arg_index is non-null, the index of the first unparsed option in argv is returned as a value. 
+The return value is zero for successful parsing, or an error code (see Error Codes) if an error is detected.  Different argp parsers may return arbitrary error codes, but the standard error codes are: ENOMEM if a memory allocation error occurred, or EINVAL if an unknown option or option argument is encountered. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+TABLE_BEGIN
+ • Globals    Global argp parameters.
+
+ • Parsers    Defining parsers for use with argp_parse.
+
+ • Flags    Flags that modify the behavior of argp_parse.
+
+ • Help    Printing help messages when not parsing.
+
+ • Examples    Simple examples of programs using argp.
+
+ • Customization    
+                                Users may control the ‘--help’ output format.
+
+TABLE_END
+

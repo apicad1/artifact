@@ -1,0 +1,63 @@
+The function pointed to by the parser field in a struct argp (see Argp Parsers) defines what actions take place in response to each option or argument parsed.  It is also used as a hook, allowing a parser to perform tasks at certain other points during parsing. 
+Argp parser functions have the following type signature: 
+
+EXAMPLE_BEGIN
+error_t parser (int key, char *arg, struct argp_state *state)
+EXAMPLE_END
+
+where the arguments are as follows: 
+
+>>>>>>>>>>>>>>>>>>>>
+- key
+For each option that is parsed, parser is called with a value of key from that option’s key field in the option vector.  See Argp Option Vectors.  parser is also called at other times with special reserved keys, such as ARGP_KEY_ARG for non-option arguments.  See Argp Special Keys. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- arg
+If key is an option, arg is its given value.  This defaults to zero if no value is specified.  Only options that have a non-zero arg field can ever have a value.  These must always have a value unless the OPTION_ARG_OPTIONAL flag is specified.  If the input being parsed specifies a value for an option that doesn’t allow one, an error results before parser ever gets called. 
+If key is ARGP_KEY_ARG, arg is a non-option argument.  Other special keys always have a zero arg. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- state
+state points to a struct argp_state, containing useful information about the current parsing state for use by parser.  See Argp Parsing State. 
+<<<<<<<<<<<<<<<<<<<<
+
+When parser is called, it should perform whatever action is appropriate for key, and return 0 for success, ARGP_ERR_UNKNOWN if the value of key is not handled by this parser function, or a unix error code if a real error occurred.  See Error Codes. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int ARGP_ERR_UNKNOWN
+Argp parser functions should return ARGP_ERR_UNKNOWN for any key value they do not recognize, or for non-option arguments (key == ARGP_KEY_ARG) that they are not equipped to handle. 
+<<<<<<<<<<<<<<<<<<<<
+
+A typical parser function uses a switch statement on key: 
+
+EXAMPLE_BEGIN
+error_t
+parse_opt (int key, char *arg, struct argp_state *state)
+{
+  switch (key)
+    {
+    case option_key:
+      action
+      break;
+    …
+    default:
+      return ARGP_ERR_UNKNOWN;
+    }
+  return 0;
+}
+EXAMPLE_END
+
+
+TABLE_BEGIN
+ • Keys    Special values for the key argument.
+
+ • State    What the state argument refers to.
+
+ • Functions    Functions to help during argp parsing.
+
+TABLE_END
+

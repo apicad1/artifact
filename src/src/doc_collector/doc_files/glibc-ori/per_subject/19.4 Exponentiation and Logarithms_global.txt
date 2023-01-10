@@ -1,0 +1,24 @@
+Since integers cannot represent infinity and NaN, ilogb instead returns an integer that can’t be the exponent of a normal floating-point number.  math.h defines constants so you can check for this. 
+These values are system specific.  They might even be the same.  The proper way to test the result of ilogb is as follows: 
+
+EXAMPLE_BEGIN
+i = ilogb (f);
+if (i == FP_ILOGB0 || i == FP_ILOGBNAN)
+  {
+    if (isnan (f))
+      {
+        /* Handle NaN.  */
+      }
+    else if (f  == 0.0)
+      {
+        /* Handle 0.0.  */
+      }
+    else
+      {
+        /* Some other value with large exponent,
+           perhaps +Inf.  */
+      }
+  }
+EXAMPLE_END
+
+ISO C99 defines complex variants of some of the exponentiation and logarithm functions. 

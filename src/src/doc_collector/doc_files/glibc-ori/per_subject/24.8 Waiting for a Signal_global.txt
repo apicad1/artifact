@@ -1,0 +1,11 @@
+If your program is driven by external events, or uses signals for synchronization, then when it has nothing to do it should probably wait until a signal arrives. 
+
+TABLE_BEGIN
+ • Using Pause    The simple way, using pause.
+
+ • Pause Problems    Why the simple way is often not very good.
+
+ • Sigsuspend    Reliably waiting for a specific signal.
+
+TABLE_END
+

@@ -1,0 +1,64 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: wint_t btowc (int c)
+Preliminary: | MT-Safe  | AS-Unsafe corrupt heap lock dlopen | AC-Unsafe corrupt lock mem fd | See POSIX Safety Concepts. 
+The btowc function (“byte to wide character”) converts a valid single byte character c in the initial shift state into the wide character equivalent using the conversion rules from the currently selected locale of the LC_CTYPE category. 
+If (unsigned char) c is no valid single byte multibyte character or if c is EOF, the function returns WEOF. 
+Please note the restriction of c being tested for validity only in the initial shift state.  No mbstate_t object is used from which the state information is taken, and the function also does not use any static state. 
+
+The btowc function was introduced in Amendment 1 to ISO C90 and is declared in wchar.h. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int wctob (wint_t c)
+Preliminary: | MT-Safe  | AS-Unsafe corrupt heap lock dlopen | AC-Unsafe corrupt lock mem fd | See POSIX Safety Concepts. 
+The wctob function (“wide character to byte”) takes as the parameter a valid wide character.  If the multibyte representation for this character in the initial state is exactly one byte long, the return value of this function is this character.  Otherwise the return value is EOF. 
+
+wctob was introduced in Amendment 1 to ISO C90 and is declared in wchar.h. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: size_t mbrtowc (wchar_t *restrict pwc, const char *restrict s, size_t n, mbstate_t *restrict ps)
+Preliminary: | MT-Unsafe race:mbrtowc/!ps | AS-Unsafe corrupt heap lock dlopen | AC-Unsafe corrupt lock mem fd | See POSIX Safety Concepts. 
+
+The mbrtowc function (“multibyte restartable to wide character”) converts the next multibyte character in the string pointed to by s into a wide character and stores it in the location pointed to by pwc.  The conversion is performed according to the locale currently selected for the LC_CTYPE category.  If the conversion for the character set used in the locale requires a state, the multibyte string is interpreted in the state represented by the object pointed to by ps.  If ps is a null pointer, a static, internal state variable used only by the mbrtowc function is used. 
+If the next multibyte character corresponds to the null wide character, the return value of the function is 0 and the state object is afterwards in the initial state.  If the next n or fewer bytes form a correct multibyte character, the return value is the number of bytes starting from s that form the multibyte character.  The conversion state is updated according to the bytes consumed in the conversion.  In both cases the wide character (either the L'\0' or the one found in the conversion) is stored in the string pointed to by pwc if pwc is not null. 
+If the first n bytes of the multibyte string possibly form a valid multibyte character but there are more than n bytes needed to complete it, the return value of the function is (size_t) -2 and no value is stored in *pwc.  The conversion state is updated and all n input bytes are consumed and should not be submitted again.  Please note that this can happen even if n has a value greater than or equal to MB_CUR_MAX since the input might contain redundant shift sequences. 
+If the first n bytes of the multibyte string cannot possibly form a valid multibyte character, no value is stored, the global variable errno is set to the value EILSEQ, and the function returns (size_t) -1.  The conversion state is afterwards undefined. 
+As specified, the mbrtowc function could deal with multibyte sequences which contain embedded null bytes (which happens in Unicode encodings such as UTF-16), but the GNU C Library does not support such multibyte encodings.  When encountering a null input byte, the function will either return zero, or return (size_t) -1) and report a EILSEQ error.  The iconv function can be used for converting between arbitrary encodings.  See Generic Conversion Interface. 
+
+mbrtowc was introduced in Amendment 1 to ISO C90 and is declared in wchar.h. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: size_t mbrlen (const char *restrict s, size_t n, mbstate_t *ps)
+Preliminary: | MT-Unsafe race:mbrlen/!ps | AS-Unsafe corrupt heap lock dlopen | AC-Unsafe corrupt lock mem fd | See POSIX Safety Concepts. 
+The mbrlen function (“multibyte restartable length”) computes the number of at most n bytes starting at s, which form the next valid and complete multibyte character. 
+If the next multibyte character corresponds to the NUL wide character, the return value is 0.  If the next n bytes form a valid multibyte character, the number of bytes belonging to this multibyte character byte sequence is returned. 
+If the first n bytes possibly form a valid multibyte character but the character is incomplete, the return value is (size_t) -2.  Otherwise the multibyte character sequence is invalid and the return value is (size_t) -1. 
+The multibyte sequence is interpreted in the state represented by the object pointed to by ps.  If ps is a null pointer, a state object local to mbrlen is used. 
+
+mbrlen was introduced in Amendment 1 to ISO C90 and is declared in wchar.h. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: size_t wcrtomb (char *restrict s, wchar_t wc, mbstate_t *restrict ps)
+Preliminary: | MT-Unsafe race:wcrtomb/!ps | AS-Unsafe corrupt heap lock dlopen | AC-Unsafe corrupt lock mem fd | See POSIX Safety Concepts. 
+The wcrtomb function (“wide character restartable to multibyte”) converts a single wide character into a multibyte string corresponding to that wide character. 
+If s is a null pointer, the function resets the state stored in the object pointed to by ps (or the internal mbstate_t object) to the initial state.  This can also be achieved by a call like this: 
+
+EXAMPLE_BEGIN
+wcrtombs (temp_buf, L'\0', ps)
+EXAMPLE_END
+
+since, if s is a null pointer, wcrtomb performs as if it writes into an internal buffer, which is guaranteed to be large enough. 
+If wc is the NUL wide character, wcrtomb emits, if necessary, a shift sequence to get the state ps into the initial state followed by a single NUL byte, which is stored in the string s. 
+Otherwise a byte sequence (possibly including shift sequences) is written into the string s.  This only happens if wc is a valid wide character (i.e., it has a multibyte representation in the character set selected by locale of the LC_CTYPE category).  If wc is no valid wide character, nothing is stored in the strings s, errno is set to EILSEQ, the conversion state in ps is undefined and the return value is (size_t) -1. 
+If no error occurred the function returns the number of bytes stored in the string s.  This includes all bytes representing shift sequences. 
+One word about the interface of the function: there is no parameter specifying the length of the array s.  Instead the function assumes that there are at least MB_CUR_MAX bytes available since this is the maximum length of any byte sequence representing a single character.  So the caller has to make sure that there is enough space available, otherwise buffer overruns can occur. 
+
+wcrtomb was introduced in Amendment 1 to ISO C90 and is declared in wchar.h. 

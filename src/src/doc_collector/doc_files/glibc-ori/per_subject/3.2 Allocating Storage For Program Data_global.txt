@@ -1,0 +1,24 @@
+This section covers how ordinary programs manage storage for their data, including the famous malloc function and some fancier facilities special to the GNU C Library and GNU Compiler. 
+
+TABLE_BEGIN
+ • Memory Allocation and C    How to get different kinds of allocation in C.
+
+ • The GNU Allocator    An overview of the GNU malloc
+				implementation.
+
+ • Unconstrained Allocation    The malloc facility allows fully general
+		 		 dynamic allocation.
+
+ • Allocation Debugging    Finding memory leaks and not freed memory.
+
+ • Replacing malloc    Using your own malloc-style allocator.
+
+ • Obstacks    Obstacks are less general than malloc
+				 but more efficient and convenient.
+
+ • Variable Size Automatic    Allocation of variable-sized blocks
+				 of automatic storage that are freed when the
+				 calling function returns.
+
+TABLE_END
+

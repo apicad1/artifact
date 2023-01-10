@@ -1,0 +1,2 @@
+Beside the flags described in the last section, the GNU implementation of glob allows a few more flags which are also defined in the glob.h file.  Some of the extensions implement functionality which is available in modern shell implementations. 
+Calling glob will in most cases allocate resources which are used to represent the result of the function call.  If the same object of type glob_t is used in multiple call to glob the resources are freed or reused so that no leaks appear.  But this does not include the time when all glob calls are done. 

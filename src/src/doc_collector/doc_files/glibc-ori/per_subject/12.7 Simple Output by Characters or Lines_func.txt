@@ -1,0 +1,147 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int fputc (int c, FILE *stream)
+Preliminary: | MT-Safe  | AS-Unsafe corrupt | AC-Unsafe corrupt lock | See POSIX Safety Concepts. 
+The fputc function converts the character c to type unsigned char, and writes it to the stream stream. EOF is returned if a write error occurs; otherwise the character c is returned. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: wint_t fputwc (wchar_t wc, FILE *stream)
+Preliminary: | MT-Safe  | AS-Unsafe corrupt | AC-Unsafe corrupt lock | See POSIX Safety Concepts. 
+The fputwc function writes the wide character wc to the stream stream.  WEOF is returned if a write error occurs; otherwise the character wc is returned. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int fputc_unlocked (int c, FILE *stream)
+Preliminary: | MT-Safe race:stream | AS-Unsafe corrupt | AC-Unsafe corrupt | See POSIX Safety Concepts. 
+The fputc_unlocked function is equivalent to the fputc function except that it does not implicitly lock the stream. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: wint_t fputwc_unlocked (wchar_t wc, FILE *stream)
+Preliminary: | MT-Safe race:stream | AS-Unsafe corrupt | AC-Unsafe corrupt | See POSIX Safety Concepts. 
+The fputwc_unlocked function is equivalent to the fputwc function except that it does not implicitly lock the stream. 
+This function is a GNU extension. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int putc (int c, FILE *stream)
+Preliminary: | MT-Safe  | AS-Unsafe corrupt | AC-Unsafe corrupt lock | See POSIX Safety Concepts. 
+This is just like fputc, except that most systems implement it as a macro, making it faster.  One consequence is that it may evaluate the stream argument more than once, which is an exception to the general rule for macros.  putc is usually the best function to use for writing a single character. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: wint_t putwc (wchar_t wc, FILE *stream)
+Preliminary: | MT-Safe  | AS-Unsafe corrupt | AC-Unsafe corrupt lock | See POSIX Safety Concepts. 
+This is just like fputwc, except that it can be implement as a macro, making it faster.  One consequence is that it may evaluate the stream argument more than once, which is an exception to the general rule for macros.  putwc is usually the best function to use for writing a single wide character. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int putc_unlocked (int c, FILE *stream)
+Preliminary: | MT-Safe race:stream | AS-Unsafe corrupt | AC-Unsafe corrupt | See POSIX Safety Concepts. 
+The putc_unlocked function is equivalent to the putc function except that it does not implicitly lock the stream. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: wint_t putwc_unlocked (wchar_t wc, FILE *stream)
+Preliminary: | MT-Safe race:stream | AS-Unsafe corrupt | AC-Unsafe corrupt | See POSIX Safety Concepts. 
+The putwc_unlocked function is equivalent to the putwc function except that it does not implicitly lock the stream. 
+This function is a GNU extension. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int putchar (int c)
+Preliminary: | MT-Safe  | AS-Unsafe corrupt | AC-Unsafe corrupt lock | See POSIX Safety Concepts. 
+The putchar function is equivalent to putc with stdout as the value of the stream argument. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: wint_t putwchar (wchar_t wc)
+Preliminary: | MT-Safe  | AS-Unsafe corrupt | AC-Unsafe corrupt lock | See POSIX Safety Concepts. 
+The putwchar function is equivalent to putwc with stdout as the value of the stream argument. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int putchar_unlocked (int c)
+Preliminary: | MT-Unsafe race:stdout | AS-Unsafe corrupt | AC-Unsafe corrupt | See POSIX Safety Concepts. 
+The putchar_unlocked function is equivalent to the putchar function except that it does not implicitly lock the stream. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: wint_t putwchar_unlocked (wchar_t wc)
+Preliminary: | MT-Unsafe race:stdout | AS-Unsafe corrupt | AC-Unsafe corrupt | See POSIX Safety Concepts. 
+The putwchar_unlocked function is equivalent to the putwchar function except that it does not implicitly lock the stream. 
+This function is a GNU extension. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int fputs (const char *s, FILE *stream)
+Preliminary: | MT-Safe  | AS-Unsafe corrupt | AC-Unsafe corrupt lock | See POSIX Safety Concepts. 
+The function fputs writes the string s to the stream stream.  The terminating null character is not written. This function does not add a newline character, either. It outputs only the characters in the string. 
+This function returns EOF if a write error occurs, and otherwise a non-negative value. 
+For example: 
+
+EXAMPLE_BEGIN
+fputs ("Are ", stdout);
+fputs ("you ", stdout);
+fputs ("hungry?\n", stdout);
+EXAMPLE_END
+
+outputs the text ‘Are you hungry?’ followed by a newline. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int fputws (const wchar_t *ws, FILE *stream)
+Preliminary: | MT-Safe  | AS-Unsafe corrupt | AC-Unsafe corrupt lock | See POSIX Safety Concepts. 
+The function fputws writes the wide character string ws to the stream stream.  The terminating null character is not written. This function does not add a newline character, either.  It outputs only the characters in the string. 
+This function returns WEOF if a write error occurs, and otherwise a non-negative value. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int fputs_unlocked (const char *s, FILE *stream)
+Preliminary: | MT-Safe race:stream | AS-Unsafe corrupt | AC-Unsafe corrupt | See POSIX Safety Concepts. 
+The fputs_unlocked function is equivalent to the fputs function except that it does not implicitly lock the stream. 
+This function is a GNU extension. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int fputws_unlocked (const wchar_t *ws, FILE *stream)
+Preliminary: | MT-Safe race:stream | AS-Unsafe corrupt | AC-Unsafe corrupt | See POSIX Safety Concepts. 
+The fputws_unlocked function is equivalent to the fputws function except that it does not implicitly lock the stream. 
+This function is a GNU extension. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int puts (const char *s)
+Preliminary: | MT-Safe  | AS-Unsafe corrupt | AC-Unsafe lock corrupt | See POSIX Safety Concepts. 
+The puts function writes the string s to the stream stdout followed by a newline.  The terminating null character of the string is not written.  (Note that fputs does not write a newline as this function does.) 
+puts is the most convenient function for printing simple messages.  For example: 
+
+EXAMPLE_BEGIN
+puts ("This is a message.");
+EXAMPLE_END
+
+outputs the text ‘This is a message.’ followed by a newline. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int putw (int w, FILE *stream)
+Preliminary: | MT-Safe  | AS-Unsafe corrupt | AC-Unsafe lock corrupt | See POSIX Safety Concepts. 
+This function writes the word w (that is, an int) to stream.  It is provided for compatibility with SVID, but we recommend you use fwrite instead (see Block Input/Output). 

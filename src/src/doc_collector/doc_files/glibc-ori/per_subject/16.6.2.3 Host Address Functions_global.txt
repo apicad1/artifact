@@ -1,0 +1,1 @@
+These additional functions for manipulating Internet addresses are declared in the header file arpa/inet.h.  They represent Internet addresses in network byte order, and network numbers and local-address-within-network numbers in host byte order.  See Byte Order, for an explanation of network and host byte order. 

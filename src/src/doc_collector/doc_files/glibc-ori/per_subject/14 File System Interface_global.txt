@@ -1,0 +1,31 @@
+This chapter describes the GNU C Library’s functions for manipulating files.  Unlike the input and output functions (see I/O on Streams; see Low-Level I/O), these functions are concerned with operating on the files themselves rather than on their contents. 
+Among the facilities described in this chapter are functions for examining or modifying directories, functions for renaming and deleting files, and functions for examining and setting file attributes such as access permissions and modification times. 
+
+TABLE_BEGIN
+ • Working Directory    This is used to resolve relative
+				 file names.
+
+ • Accessing Directories    Finding out what files a directory
+				 contains.
+
+ • Working with Directory Trees    Apply actions to all files or a selectable
+                                 subset of a directory hierarchy.
+
+ • Hard Links    Adding alternate names to a file.
+
+ • Symbolic Links    A file that “points to” a file name.
+
+ • Deleting Files    How to delete a file, and what that means.
+
+ • Renaming Files    Changing a file’s name.
+
+ • Creating Directories    A system call just for creating a directory.
+
+ • File Attributes    Attributes of individual files.
+
+ • Making Special Files    How to create special files.
+
+ • Temporary Files    Naming and creating temporary files.
+
+TABLE_END
+

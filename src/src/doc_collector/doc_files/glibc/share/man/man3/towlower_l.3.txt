@@ -1,0 +1,66 @@
+TOWLOWER(3)                                     Linux Programmer's Manual                                    TOWLOWER(3)
+
+NAME
+       towlower, towlower_l - convert a wide character to lowercase
+
+SYNOPSIS
+       #include <wctype.h>
+
+       wint_t towlower(wint_t wc);
+
+       wint_t towlower_l(wint_t wc, locale_t locale);
+
+   Feature Test Macro Requirements for glibc (see feature_test_macros(7)):
+
+       towlower_l():
+           Since glibc 2.10:
+                  _XOPEN_SOURCE >= 700
+           Before glibc 2.10:
+                  _GNU_SOURCE
+
+DESCRIPTION
+       The  towlower() function is the wide-character equivalent of the tolower(3) function.  If wc is an uppercase wide
+       character, and there exists a lowercase equivalent in the current locale, it returns the lowercase equivalent  of
+       wc.  In all other cases, wc is returned unchanged.
+
+       The  towlower_l() function performs the same task, but performs the conversion based on the character type infor‐
+       mation in the locale specified by locale.  The behavior of towlower_l() is undefined if locale is the special lo‐
+       cale object LC_GLOBAL_LOCALE (see duplocale(3)) or is not a valid locale object handle.
+
+       The argument wc must be representable as a wchar_t and be a valid character in the locale or be the value WEOF.
+
+RETURN VALUE
+       If wc was convertible to lowercase, towlower() returns its lowercase equivalent; otherwise it returns wc.
+
+VERSIONS
+       The towlower_l() function first appeared in glibc 2.3.
+
+ATTRIBUTES
+       For an explanation of the terms used in this section, see attributes(7).
+
+       ┌─────────────┬───────────────┬────────────────┐
+       │Interface    │ Attribute     │ Value          │
+       ├─────────────┼───────────────┼────────────────┤
+       │towlower()   │ Thread safety │ MT-Safe locale │
+       ├─────────────┼───────────────┼────────────────┤
+       │towlower_l() │ Thread safety │ MT-Safe        │
+       └─────────────┴───────────────┴────────────────┘
+CONFORMING TO
+       towlower(): C99, POSIX.1-2001 (XSI); present as an XSI extension in POSIX.1-2008, but marked obsolete.
+
+       towlower_l(): POSIX.1-2008.
+
+NOTES
+       The behavior of these functions depends on the LC_CTYPE category of the locale.
+
+       These  functions  are not very appropriate for dealing with Unicode characters, because Unicode knows about three
+       cases: upper, lower and title case.
+
+SEE ALSO
+       iswlower(3), towctrans(3), towupper(3), locale(7)
+
+COLOPHON
+       This page is part of release 5.05 of the Linux man-pages project.  A  description  of  the  project,  information
+       about reporting bugs, and the latest version of this page, can be found at https://www.kernel.org/doc/man-pages/.
+
+GNU                                                    2017-09-15                                            TOWLOWER(3)

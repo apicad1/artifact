@@ -1,0 +1,5 @@
+In POSIX systems, one file can have many names at the same time.  All of the names are equally real, and no one of them is preferred to the others. 
+To add a name to a file, use the link function.  (The new name is also called a hard link to the file.)  Creating a new link to a file does not copy the contents of the file; it simply makes a new name by which the file can be known, in addition to the file’s existing name or names. 
+One file can have names in several directories, so the organization of the file system is not a strict hierarchy or tree. 
+In most implementations, it is not possible to have hard links to the same file in multiple file systems.  link reports an error if you try to make a hard link to the file from another file system when this cannot be done. 
+The prototype for the link function is declared in the header file unistd.h.  

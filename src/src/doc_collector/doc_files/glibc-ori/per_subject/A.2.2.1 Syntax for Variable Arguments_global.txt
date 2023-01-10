@@ -1,0 +1,12 @@
+A function that accepts a variable number of arguments must be declared with a prototype that says so.   You write the fixed arguments as usual, and then tack on ‘…’ to indicate the possibility of additional arguments.  The syntax of ISO C requires at least one fixed argument before the ‘…’.  For example, 
+
+EXAMPLE_BEGIN
+int
+func (const char *a, int b, …)
+{
+  …
+}
+EXAMPLE_END
+
+defines a function func which returns an int and takes two required arguments, a const char * and an int.  These are followed by any number of anonymous arguments. 
+Portability note: For some C compilers, the last required argument must not be declared register in the function definition.  Furthermore, this argument’s type must be self-promoting: that is, the default promotions must not change its type.  This rules out array and function types, as well as float, char (whether signed or not) and short int (whether signed or not).  This is actually an ISO C requirement. 

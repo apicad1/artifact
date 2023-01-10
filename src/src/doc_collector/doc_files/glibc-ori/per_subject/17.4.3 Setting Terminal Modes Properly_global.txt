@@ -1,0 +1,33 @@
+When you set terminal modes, you should call tcgetattr first to get the current modes of the particular terminal device, modify only those modes that you are really interested in, and store the result with tcsetattr. 
+It’s a bad idea to simply initialize a struct termios structure to a chosen set of attributes and pass it directly to tcsetattr. Your program may be run years from now, on systems that support members not documented in this manual.  The way to avoid setting these members to unreasonable values is to avoid changing them. 
+What’s more, different terminal devices may require different mode settings in order to function properly.  So you should avoid blindly copying attributes from one terminal device to another. 
+When a member contains a collection of independent flags, as the c_iflag, c_oflag and c_cflag members do, even setting the entire member is a bad idea, because particular operating systems have their own flags.  Instead, you should start with the current value of the member and alter only the flags whose values matter in your program, leaving any other flags unchanged. 
+Here is an example of how to set one flag (ISTRIP) in the struct termios structure while properly preserving all the other data in the structure: 
+
+EXAMPLE_BEGIN
+int
+set_istrip (int desc, int value)
+{
+  struct termios settings;
+  int result;
+
+
+  result = tcgetattr (desc, &settings);
+  if (result < 0)
+    {
+      perror ("error in tcgetattr");
+      return 0;
+    }
+  settings.c_iflag &= ~ISTRIP;
+  if (value)
+    settings.c_iflag |= ISTRIP;
+  result = tcsetattr (desc, TCSANOW, &settings);
+  if (result < 0)
+    {
+      perror ("error in tcsetattr");
+      return 0;
+   }
+  return 1;
+}
+EXAMPLE_END
+

@@ -1,0 +1,98 @@
+Here is a table summarizing what all the different conversions do: 
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘%d’, ‘%i’
+Print an integer as a signed decimal number.  See Integer Conversions, for details.  ‘%d’ and ‘%i’ are synonymous for output, but are different when used with scanf for input (see Table of Input Conversions). 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘%o’
+Print an integer as an unsigned octal number.  See Integer Conversions, for details. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘%u’
+Print an integer as an unsigned decimal number.  See Integer Conversions, for details. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘%x’, ‘%X’
+Print an integer as an unsigned hexadecimal number.  ‘%x’ uses lower-case letters and ‘%X’ uses upper-case.  See Integer Conversions, for details. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘%f’
+Print a floating-point number in normal (fixed-point) notation. See Floating-Point Conversions, for details. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘%e’, ‘%E’
+Print a floating-point number in exponential notation.  ‘%e’ uses lower-case letters and ‘%E’ uses upper-case.  See Floating-Point Conversions, for details. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘%g’, ‘%G’
+Print a floating-point number in either normal or exponential notation, whichever is more appropriate for its magnitude.  ‘%g’ uses lower-case letters and ‘%G’ uses upper-case.  See Floating-Point Conversions, for details. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘%a’, ‘%A’
+Print a floating-point number in a hexadecimal fractional notation with the exponent to base 2 represented in decimal digits.  ‘%a’ uses lower-case letters and ‘%A’ uses upper-case.  See Floating-Point Conversions, for details. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘%c’
+Print a single character.  See Other Output Conversions. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘%C’
+This is an alias for ‘%lc’ which is supported for compatibility with the Unix standard. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘%s’
+Print a string.  See Other Output Conversions. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘%S’
+This is an alias for ‘%ls’ which is supported for compatibility with the Unix standard. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘%p’
+Print the value of a pointer.  See Other Output Conversions. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘%n’
+Get the number of characters printed so far.  See Other Output Conversions. Note that this conversion specification never produces any output. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘%m’
+Print the string corresponding to the value of errno. (This is a GNU extension.) See Other Output Conversions. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘%%’
+Print a literal ‘%’ character.  See Other Output Conversions. 
+<<<<<<<<<<<<<<<<<<<<
+
+If the syntax of a conversion specification is invalid, unpredictable things will happen, so don’t do this.  If there aren’t enough function arguments provided to supply values for all the conversion specifications in the template string, or if the arguments are not of the correct types, the results are unpredictable.  If you supply more arguments than conversion specifications, the extra argument values are simply ignored; this is sometimes useful. 

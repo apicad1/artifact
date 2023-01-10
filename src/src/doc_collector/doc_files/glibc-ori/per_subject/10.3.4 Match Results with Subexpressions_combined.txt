@@ -1,0 +1,20 @@
+When regexec matches parenthetical subexpressions of pattern, it records which parts of string they match.  It returns that information by storing the offsets into an array whose elements are structures of type regmatch_t.  The first element of the array (index 0) records the part of the string that matched the entire regular expression.  Each other element of the array records the beginning and end of the part that matched a single parenthetical subexpression. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: regmatch_t
+This is the data type of the matchptr array that you pass to regexec.  It contains two structure fields, as follows: 
+	rm_so
+The offset in string of the beginning of a substring.  Add this value to string to get the address of that part.  
+	rm_eo
+The offset in string of the end of the substring. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: regoff_t
+regoff_t is an alias for another signed integer type. The fields of regmatch_t have type regoff_t. 
+<<<<<<<<<<<<<<<<<<<<
+
+The regmatch_t elements correspond to subexpressions positionally; the first element (index 1) records where the first subexpression matched, the second element records the second subexpression, and so on.  The order of the subexpressions is the order in which they begin. 
+When you call regexec, you specify how long the matchptr array is, with the nmatch argument.  This tells regexec how many elements to store.  If the actual regular expression has more than nmatch subexpressions, then you won’t get offset information about the rest of them.  But this doesn’t alter whether the pattern matches a particular string or not. 
+If you don’t want regexec to return any information about where the subexpressions matched, you can either supply 0 for nmatch, or use the flag REG_NOSUB when you compile the pattern with regcomp. 

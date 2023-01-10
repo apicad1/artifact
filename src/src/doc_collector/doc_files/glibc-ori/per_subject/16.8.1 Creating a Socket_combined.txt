@@ -1,0 +1,21 @@
+The primitive for creating a socket is the socket function, declared in sys/socket.h.  
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int socket (int namespace, int style, int protocol)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe fd | See POSIX Safety Concepts. 
+This function creates a socket and specifies communication style style, which should be one of the socket styles listed in Communication Styles.  The namespace argument specifies the namespace; it must be PF_LOCAL (see Local Namespace) or PF_INET (see Internet Namespace).  protocol designates the specific protocol (see Socket Concepts); zero is usually right for protocol. 
+The return value from socket is the file descriptor for the new socket, or -1 in case of error.  The following errno error conditions are defined for this function: 
+	EPROTONOSUPPORT
+The protocol or style is not supported by the namespace specified.  
+	EMFILE
+The process already has too many file descriptors open.  
+	ENFILE
+The system already has too many file descriptors open.  
+	EACCES
+The process does not have the privilege to create a socket of the specified style or protocol.  
+	ENOBUFS
+The system ran out of internal buffer space. 
+The file descriptor returned by the socket function supports both read and write operations.  However, like pipes, sockets do not support file positioning operations. 
+<<<<<<<<<<<<<<<<<<<<
+
+For examples of how to call the socket function, see Local Socket Example, or Inet Example. 

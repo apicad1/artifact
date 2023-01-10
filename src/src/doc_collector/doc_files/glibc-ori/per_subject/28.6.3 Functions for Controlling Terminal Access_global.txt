@@ -1,0 +1,2 @@
+These are the functions for reading or setting the foreground process group of a terminal.  You should include the header files sys/types.h and unistd.h in your application to use these functions.   
+Although these functions take a file descriptor argument to specify the terminal device, the foreground job is associated with the terminal file itself and not a particular open file descriptor. 

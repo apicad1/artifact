@@ -1,0 +1,23 @@
+You can duplicate a file descriptor, or allocate another file descriptor that refers to the same open file as the original.  Duplicate descriptors share one file position and one set of file status flags (see File Status Flags), but each has its own set of file descriptor flags (see Descriptor Flags). 
+The major use of duplicating a file descriptor is to implement redirection of input or output:  that is, to change the file or pipe that a particular file descriptor corresponds to. 
+You can perform this operation using the fcntl function with the F_DUPFD command, but there are also convenient functions dup and dup2 for duplicating descriptors. 
+The fcntl function and flags are declared in fcntl.h, while prototypes for dup and dup2 are in the header file unistd.h. 
+Here is an example showing how to use dup2 to do redirection. Typically, redirection of the standard streams (like stdin) is done by a shell or shell-like program before calling one of the exec functions (see Executing a File) to execute a new program in a child process.  When the new program is executed, it creates and initializes the standard streams to point to the corresponding file descriptors, before its main function is invoked. 
+So, to redirect standard input to a file, the shell could do something like: 
+
+EXAMPLE_BEGIN
+pid = fork ();
+if (pid == 0)
+  {
+    char *filename;
+    char *program;
+    int file;
+    …
+    file = TEMP_FAILURE_RETRY (open (filename, O_RDONLY));
+    dup2 (file, STDIN_FILENO);
+    TEMP_FAILURE_RETRY (close (file));
+    execv (program, NULL);
+  }
+EXAMPLE_END
+
+There is also a more detailed example showing how to implement redirection in the context of a pipeline of processes in Launching Jobs. 

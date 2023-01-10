@@ -1,0 +1,23 @@
+A special function is provided to copy data between two files on the same file system.  The system can optimize such copy operations.  This is particularly important on network file systems, where the data would otherwise have to be transferred twice over the network. 
+Note that this function only copies file data, but not metadata such as file permissions or extended attributes. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: ssize_t copy_file_range (int inputfd, off64_t *inputpos, int outputfd, off64_t *outputpos, ssize_t length, unsigned int flags)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function copies up to length bytes from the file descriptor inputfd to the file descriptor outputfd. 
+The function can operate on both the current file position (like read and write) and an explicit offset (like pread and pwrite).  If the inputpos pointer is null, the file position of inputfd is used as the starting point of the copy operation, and the file position is advanced during it.  If inputpos is not null, then *inputpos is used as the starting point of the copy operation, and *inputpos is incremented by the number of copied bytes, but the file position remains unchanged.  Similar rules apply to outputfd and outputpos for the output file position. 
+The flags argument is currently reserved and must be zero. 
+The copy_file_range function returns the number of bytes copied. This can be less than the specified length in case the input file contains fewer remaining bytes than length, or if a read or write failure occurs.  The return value is zero if the end of the input file is encountered immediately. 
+If no bytes can be copied, to report an error, copy_file_range returns the value -1 and sets errno.  The table below lists some of the error conditions for this function. 
+	ENOSYS
+The kernel does not implement the required functionality.  
+	EISDIR
+At least one of the descriptors inputfd or outputfd refers to a directory.  
+	EINVAL
+At least one of the descriptors inputfd or outputfd refers to a non-regular, non-directory file (such as a socket or a FIFO).  The input or output positions before are after the copy operations are outside of an implementation-defined limit.  The flags argument is not zero.  
+	EFBIG
+The new file size would exceed the process file size limit. See Limits on Resources.  The input or output positions before are after the copy operations are outside of an implementation-defined limit.  This can happen if the file was not opened with large file support (LFS) on 32-bit machines, and the copy operation would create a file which is larger than what off_t could represent.  
+	EBADF
+The argument inputfd is not a valid file descriptor open for reading.  The argument outputfd is not a valid file descriptor open for writing, or outputfd has been opened with O_APPEND. 
+In addition, copy_file_range can fail with the error codes which are used by read, pread, write, and pwrite. 
+The copy_file_range function is a cancellation point.  In case of cancellation, the input location (the file position or the value at *inputpos) is indeterminate. 

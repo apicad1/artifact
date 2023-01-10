@@ -1,0 +1,53 @@
+WCTOMB(3)                                       Linux Programmer's Manual                                      WCTOMB(3)
+
+NAME
+       wctomb - convert a wide character to a multibyte sequence
+
+SYNOPSIS
+       #include <stdlib.h>
+
+       int wctomb(char *s, wchar_t wc);
+
+DESCRIPTION
+       If s is not NULL, the wctomb() function converts the wide character wc to its multibyte representation and stores
+       it at the beginning of the character array pointed to by s.  It updates the shift state, which  is  stored  in  a
+       static anonymous variable known only to the wctomb() function, and returns the length of said multibyte represen‐
+       tation, that is, the number of bytes written at s.
+
+       The programmer must ensure that there is room for at least MB_CUR_MAX bytes at s.
+
+       If s is NULL, the wctomb() function resets the shift state, known only to this function, to  the  initial  state,
+       and returns nonzero if the encoding has nontrivial shift state, or zero if the encoding is stateless.
+
+RETURN VALUE
+       If  s  is not NULL, the wctomb() function returns the number of bytes that have been written to the byte array at
+       s.  If wc can not be represented as a multibyte sequence (according to the current locale), -1 is returned.
+
+       If s is NULL, the wctomb() function returns nonzero if the encoding has nontrivial shift state, or  zero  if  the
+       encoding is stateless.
+
+ATTRIBUTES
+       For an explanation of the terms used in this section, see attributes(7).
+
+       ┌───────────────────────────────────────────────────────────────────────────────┬───────────────┬────────────────┐
+       │Interface                                                                      │ Attribute     │ Value          │
+       ├───────────────────────────────────────────────────────────────────────────────┼───────────────┼────────────────┤
+       │wctomb()                                                                       │ Thread safety │ MT-Unsafe race │
+       └───────────────────────────────────────────────────────────────────────────────┴───────────────┴────────────────┘
+
+CONFORMING TO
+       POSIX.1-2001, POSIX.1-2008, C99.
+
+NOTES
+       The behavior of wctomb() depends on the LC_CTYPE category of the current locale.
+
+       The function wcrtomb(3) provides a better interface to the same functionality.
+
+SEE ALSO
+       MB_CUR_MAX(3), mblen(3), mbstowcs(3), mbtowc(3), wcrtomb(3), wcstombs(3)
+
+COLOPHON
+       This  page  is  part  of  release 5.13 of the Linux man-pages project.  A description of the project, information
+       about reporting bugs, and the latest version of this page, can be found at https://www.kernel.org/doc/man-pages/.
+
+GNU                                                    2021-03-22                                              WCTOMB(3)

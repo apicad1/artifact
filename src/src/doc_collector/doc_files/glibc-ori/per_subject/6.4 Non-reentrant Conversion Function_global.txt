@@ -1,0 +1,14 @@
+The functions described in the previous chapter are defined in Amendment 1 to ISO C90, but the original ISO C90 standard also contained functions for character set conversion.  The reason that these original functions are not described first is that they are almost entirely useless. 
+The problem is that all the conversion functions described in the original ISO C90 use a local state.  Using a local state implies that multiple conversions at the same time (not only when using threads) cannot be done, and that you cannot first convert single characters and then strings since you cannot tell the conversion functions which state to use. 
+These original functions are therefore usable only in a very limited set of situations.  One must complete converting the entire string before starting a new one, and each string/text must be converted with the same function (there is no problem with the library itself; it is guaranteed that no library function changes the state of any of these functions). For the above reasons it is highly requested that the functions described in the previous section be used in place of non-reentrant conversion functions. 
+
+TABLE_BEGIN
+ • Non-reentrant Character Conversion    Non-reentrant Conversion of Single
+                                         Characters.
+
+ • Non-reentrant String Conversion    Non-reentrant Conversion of Strings.
+
+ • Shift State    States in Non-reentrant Functions.
+
+TABLE_END
+

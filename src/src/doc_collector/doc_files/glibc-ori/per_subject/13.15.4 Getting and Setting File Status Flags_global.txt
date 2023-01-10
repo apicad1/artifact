@@ -1,0 +1,25 @@
+The fcntl function can fetch or change file status flags. 
+If you want to modify the file status flags, you should get the current flags with F_GETFL and modify the value.  Don’t assume that the flags listed here are the only ones that are implemented; your program may be run years from now and more flags may exist then.  For example, here is a function to set or clear the flag O_NONBLOCK without altering any other flags: 
+
+EXAMPLE_BEGIN
+/* Set the O_NONBLOCK flag of desc if value is nonzero,
+   or clear the flag if value is 0.
+   Return 0 on success, or -1 on error with errno set. */
+
+int
+set_nonblock_flag (int desc, int value)
+{
+  int oldflags = fcntl (desc, F_GETFL, 0);
+  /* If reading the flags failed, return error indication now. */
+  if (oldflags == -1)
+    return -1;
+  /* Set just the flag we want to set. */
+  if (value != 0)
+    oldflags |= O_NONBLOCK;
+  else
+    oldflags &= ~O_NONBLOCK;
+  /* Store modified flag word in the descriptor. */
+  return fcntl (desc, F_SETFL, oldflags);
+}
+EXAMPLE_END
+

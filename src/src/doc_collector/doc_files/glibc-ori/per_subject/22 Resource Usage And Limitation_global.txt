@@ -1,0 +1,15 @@
+This chapter describes functions for examining how much of various kinds of resources (CPU time, memory, etc.) a process has used and getting and setting limits on future usage. 
+
+TABLE_BEGIN
+ • Resource Usage    Measuring various resources used.
+
+ • Limits on Resources    Specifying limits on resource usage.
+
+ • Priority    Reading or setting process run priority.
+
+ • Memory Resources    Querying memory available resources.
+
+ • Processor Resources    Learn about the processors available.
+
+TABLE_END
+

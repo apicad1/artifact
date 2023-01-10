@@ -1,0 +1,18 @@
+Processes are the primitive units for allocation of system resources.  Each process has its own address space and (usually) one thread of control.  A process executes a program; you can have multiple processes executing the same program, but each process has its own copy of the program within its own address space and executes it independently of the other copies.  Though it may have multiple threads of control within the same program and a program may be composed of multiple logically separate modules, a process always executes exactly one program. 
+Note that we are using a specific definition of “program” for the purposes of this manual, which corresponds to a common definition in the context of Unix systems.  In popular usage, “program” enjoys a much broader definition; it can refer for example to a system’s kernel, an editor macro, a complex package of software, or a discrete section of code executing within a process. 
+Writing the program is what this manual is all about.  This chapter explains the most basic interface between your program and the system that runs, or calls, it.  This includes passing of parameters (arguments and environment) from the system, requesting basic services from the system, and telling the system the program is done. 
+A program starts another program with the exec family of system calls. This chapter looks at program startup from the execee’s point of view.  To see the event from the execor’s point of view, see Executing a File. 
+
+TABLE_BEGIN
+ • Program Arguments    Parsing your program’s command-line arguments
+
+ • Environment Variables    Less direct parameters affecting your program
+
+ • Auxiliary Vector    Least direct parameters affecting your program
+
+ • System Calls    Requesting service from the system
+
+ • Program Termination    Telling the system you’re done; return status
+
+TABLE_END
+

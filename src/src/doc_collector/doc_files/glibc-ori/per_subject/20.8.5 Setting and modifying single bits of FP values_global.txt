@@ -1,0 +1,1 @@
+There are some operations that are too complicated or expensive to perform by hand on floating-point numbers.  ISO C99 defines functions to do these operations, which mostly involve changing single bits. 

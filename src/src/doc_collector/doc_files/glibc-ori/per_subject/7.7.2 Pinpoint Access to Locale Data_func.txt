@@ -1,0 +1,150 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: char * nl_langinfo (nl_item item)
+Preliminary: | MT-Safe locale | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The nl_langinfo function can be used to access individual elements of the locale categories.  Unlike the localeconv function, which returns all the information, nl_langinfo lets the caller select what information it requires.  This is very fast and it is not a problem to call this function multiple times. 
+A second advantage is that in addition to the numeric and monetary formatting information, information from the LC_TIME and LC_MESSAGES categories is available. 
+
+The type nl_item is defined in nl_types.h.  The argument item is a numeric value defined in the header langinfo.h. The X/Open standard defines the following values: 
+	CODESET  
+nl_langinfo returns a string with the name of the coded character set used in the selected locale.  
+	ABDAY_1  
+	ABDAY_2  
+	ABDAY_3  
+	ABDAY_4  
+	ABDAY_5  
+	ABDAY_6  
+	ABDAY_7  
+nl_langinfo returns the abbreviated weekday name.  ABDAY_1 corresponds to Sunday. 
+	DAY_1  
+	DAY_2  
+	DAY_3  
+	DAY_4  
+	DAY_5  
+	DAY_6  
+	DAY_7  
+Similar to ABDAY_1, etc., but here the return value is the unabbreviated weekday name. 
+	ABMON_1  
+	ABMON_2  
+	ABMON_3  
+	ABMON_4  
+	ABMON_5  
+	ABMON_6  
+	ABMON_7  
+	ABMON_8  
+	ABMON_9  
+	ABMON_10  
+	ABMON_11  
+	ABMON_12  
+The return value is the abbreviated name of the month, in the grammatical form used when the month forms part of a complete date. ABMON_1 corresponds to January. 
+	MON_1  
+	MON_2  
+	MON_3  
+	MON_4  
+	MON_5  
+	MON_6  
+	MON_7  
+	MON_8  
+	MON_9  
+	MON_10  
+	MON_11  
+	MON_12  
+Similar to ABMON_1, etc., but here the month names are not abbreviated.  Here the first value MON_1 also corresponds to January. 
+	ALTMON_1  
+	ALTMON_2  
+	ALTMON_3  
+	ALTMON_4  
+	ALTMON_5  
+	ALTMON_6  
+	ALTMON_7  
+	ALTMON_8  
+	ALTMON_9  
+	ALTMON_10  
+	ALTMON_11  
+	ALTMON_12  
+Similar to MON_1, etc., but here the month names are in the grammatical form used when the month is named by itself.  The strftime functions use these month names for the conversion specifier %OB (see Formatting Calendar Time).  Note that not all languages need two different forms of the month names, so the strings returned for MON_… and ALTMON_… may or may not be the same, depending on the locale.  NB: ABALTMON_… constants corresponding to the %Ob conversion specifier are not currently provided, but are expected to be in a future release.  In the meantime, it is possible to use _NL_ABALTMON_…. 
+	AM_STR  
+	PM_STR  
+The return values are strings which can be used in the representation of time as an hour from 1 to 12 plus an am/pm specifier.  Note that in locales which do not use this time representation these strings might be empty, in which case the am/pm format cannot be used at all. 
+	D_T_FMT  
+The return value can be used as a format string for strftime to represent time and date in a locale-specific way. 
+	D_FMT  
+The return value can be used as a format string for strftime to represent a date in a locale-specific way. 
+	T_FMT  
+The return value can be used as a format string for strftime to represent time in a locale-specific way. 
+	T_FMT_AMPM  
+The return value can be used as a format string for strftime to represent time in the am/pm format.  Note that if the am/pm format does not make any sense for the selected locale, the return value might be the same as the one for T_FMT. 
+	ERA  
+The return value represents the era used in the current locale.  Most locales do not define this value.  An example of a locale which does define this value is the Japanese one.  In Japan, the traditional representation of dates includes the name of the era corresponding to the then-emperor’s reign.  Normally it should not be necessary to use this value directly. Specifying the E modifier in their format strings causes the strftime functions to use this information.  The format of the returned string is not specified, and therefore you should not assume knowledge of it on different systems. 
+	ERA_YEAR  
+The return value gives the year in the relevant era of the locale. As for ERA it should not be necessary to use this value directly. 
+	ERA_D_T_FMT  
+This return value can be used as a format string for strftime to represent dates and times in a locale-specific era-based way. 
+	ERA_D_FMT  
+This return value can be used as a format string for strftime to represent a date in a locale-specific era-based way. 
+	ERA_T_FMT  
+This return value can be used as a format string for strftime to represent time in a locale-specific era-based way. 
+	ALT_DIGITS  
+The return value is a representation of up to 100 values used to represent the values 0 to 99.  As for ERA this value is not intended to be used directly, but instead indirectly through the strftime function.  When the modifier O is used in a format which would otherwise use numerals to represent hours, minutes, seconds, weekdays, months, or weeks, the appropriate value for the locale is used instead. 
+	INT_CURR_SYMBOL  
+The same as the value returned by localeconv in the int_curr_symbol element of the struct lconv. 
+	CURRENCY_SYMBOL  
+	CRNCYSTR  
+The same as the value returned by localeconv in the currency_symbol element of the struct lconv.  CRNCYSTR is a deprecated alias still required by Unix98. 
+	MON_DECIMAL_POINT  
+The same as the value returned by localeconv in the mon_decimal_point element of the struct lconv. 
+	MON_THOUSANDS_SEP  
+The same as the value returned by localeconv in the mon_thousands_sep element of the struct lconv. 
+	MON_GROUPING  
+The same as the value returned by localeconv in the mon_grouping element of the struct lconv. 
+	POSITIVE_SIGN  
+The same as the value returned by localeconv in the positive_sign element of the struct lconv. 
+	NEGATIVE_SIGN  
+The same as the value returned by localeconv in the negative_sign element of the struct lconv. 
+	INT_FRAC_DIGITS  
+The same as the value returned by localeconv in the int_frac_digits element of the struct lconv. 
+	FRAC_DIGITS  
+The same as the value returned by localeconv in the frac_digits element of the struct lconv. 
+	P_CS_PRECEDES  
+The same as the value returned by localeconv in the p_cs_precedes element of the struct lconv. 
+	P_SEP_BY_SPACE  
+The same as the value returned by localeconv in the p_sep_by_space element of the struct lconv. 
+	N_CS_PRECEDES  
+The same as the value returned by localeconv in the n_cs_precedes element of the struct lconv. 
+	N_SEP_BY_SPACE  
+The same as the value returned by localeconv in the n_sep_by_space element of the struct lconv. 
+	P_SIGN_POSN  
+The same as the value returned by localeconv in the p_sign_posn element of the struct lconv. 
+	N_SIGN_POSN  
+The same as the value returned by localeconv in the n_sign_posn element of the struct lconv.  
+	INT_P_CS_PRECEDES  
+The same as the value returned by localeconv in the int_p_cs_precedes element of the struct lconv. 
+	INT_P_SEP_BY_SPACE  
+The same as the value returned by localeconv in the int_p_sep_by_space element of the struct lconv. 
+	INT_N_CS_PRECEDES  
+The same as the value returned by localeconv in the int_n_cs_precedes element of the struct lconv. 
+	INT_N_SEP_BY_SPACE  
+The same as the value returned by localeconv in the int_n_sep_by_space element of the struct lconv. 
+	INT_P_SIGN_POSN  
+The same as the value returned by localeconv in the int_p_sign_posn element of the struct lconv. 
+	INT_N_SIGN_POSN  
+The same as the value returned by localeconv in the int_n_sign_posn element of the struct lconv.  
+	DECIMAL_POINT  
+	RADIXCHAR  
+The same as the value returned by localeconv in the decimal_point element of the struct lconv.  The name RADIXCHAR is a deprecated alias still used in Unix98. 
+	THOUSANDS_SEP  
+	THOUSEP  
+The same as the value returned by localeconv in the thousands_sep element of the struct lconv.  The name THOUSEP is a deprecated alias still used in Unix98. 
+	GROUPING  
+The same as the value returned by localeconv in the grouping element of the struct lconv. 
+	YESEXPR  
+The return value is a regular expression which can be used with the regex function to recognize a positive response to a yes/no question.  The GNU C Library provides the rpmatch function for easier handling in applications. 
+	NOEXPR  
+The return value is a regular expression which can be used with the regex function to recognize a negative response to a yes/no question. 
+	YESSTR  
+The return value is a locale-specific translation of the positive response to a yes/no question.  Using this value is deprecated since it is a very special case of message translation, and is better handled by the message translation functions (see Message Translation).  The use of this symbol is deprecated.  Instead message translation should be used. 
+	NOSTR  
+The return value is a locale-specific translation of the negative response to a yes/no question.  What is said for YESSTR is also true here.  The use of this symbol is deprecated.  Instead message translation should be used. 
+The file langinfo.h defines a lot more symbols but none of them are official.  Using them is not portable, and the format of the return values might change.  Therefore we recommended you not use them. 
+Note that the return value for any valid argument can be used in all situations (with the possible exception of the am/pm time formatting codes).  If the user has not selected any locale for the appropriate category, nl_langinfo returns the information from the "C" locale.  It is therefore possible to use this function as shown in the example below. 
+If the argument item is not valid, a pointer to an empty string is returned. 

@@ -1,0 +1,27 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int chown (const char *filename, uid_t owner, gid_t group)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The chown function changes the owner of the file filename to owner, and its group owner to group. 
+Changing the owner of the file on certain systems clears the set-user-ID and set-group-ID permission bits.  (This is because those bits may not be appropriate for the new owner.)  Other file permission bits are not changed. 
+The return value is 0 on success and -1 on failure. In addition to the usual file name errors (see File Name Errors), the following errno error conditions are defined for this function: 
+	EPERM
+This process lacks permission to make the requested change.  Only privileged users or the file’s owner can change the file’s group. On most file systems, only privileged users can change the file owner; some file systems allow you to change the owner if you are currently the owner.  When you access a remote file system, the behavior you encounter is determined by the system that actually holds the file, not by the system your program is running on.  See Options for Files, for information about the _POSIX_CHOWN_RESTRICTED macro.  
+	EROFS
+The file is on a read-only file system. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int fchown (int filedes, uid_t owner, gid_t group)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This is like chown, except that it changes the owner of the open file with descriptor filedes. 
+The return value from fchown is 0 on success and -1 on failure.  The following errno error codes are defined for this function: 
+	EBADF
+The filedes argument is not a valid file descriptor.  
+	EINVAL
+The filedes argument corresponds to a pipe or socket, not an ordinary file.  
+	EPERM
+This process lacks permission to make the requested change.  For details see chmod above.  
+	EROFS
+The file resides on a read-only file system. 

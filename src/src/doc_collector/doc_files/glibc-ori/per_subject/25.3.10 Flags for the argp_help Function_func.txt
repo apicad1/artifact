@@ -1,0 +1,82 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- ARGP_HELP_USAGE  
+A unix ‘Usage:’ message that explicitly lists all options. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ARGP_HELP_SHORT_USAGE  
+A unix ‘Usage:’ message that displays an appropriate placeholder to indicate where the options go; useful for showing the non-option argument syntax. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ARGP_HELP_SEE  
+A ‘Try … for more help’ message; ‘…’ contains the program name and ‘--help’. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ARGP_HELP_LONG  
+A verbose option help message that gives each option available along with its documentation string. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ARGP_HELP_PRE_DOC  
+The part of the argp parser doc string preceding the verbose option help. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ARGP_HELP_POST_DOC  
+The part of the argp parser doc string that following the verbose option help. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ARGP_HELP_DOC  
+(ARGP_HELP_PRE_DOC | ARGP_HELP_POST_DOC) 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ARGP_HELP_BUG_ADDR  
+A message that prints where to report bugs for this program, if the argp_program_bug_address variable contains this information. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ARGP_HELP_LONG_ONLY  
+This will modify any output to reflect the ARGP_LONG_ONLY mode. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ARGP_HELP_EXIT_ERR  
+This will terminate the program with exit (argp_err_exit_status). 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ARGP_HELP_EXIT_OK  
+This will terminate the program with exit (0). 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ARGP_HELP_STD_ERR  
+Assuming that an error message for a parsing error has printed, this prints a message on how to get help, and terminates the program with an error. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ARGP_HELP_STD_USAGE  
+This prints a standard usage message and terminates the program with an error.  This is used when no other specific error messages are appropriate or available. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ARGP_HELP_STD_HELP  
+This prints the standard response for a ‘--help’ option, and terminates the program successfully. 

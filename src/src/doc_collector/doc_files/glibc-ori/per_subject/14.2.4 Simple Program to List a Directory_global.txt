@@ -1,0 +1,31 @@
+Here’s a simple program that prints the names of the files in the current working directory: 
+
+EXAMPLE_BEGIN
+
+
+#include <stdio.h>
+#include <sys/types.h>
+#include <dirent.h>
+
+
+int
+main (void)
+{
+  DIR *dp;
+  struct dirent *ep;
+
+  dp = opendir ("./");
+  if (dp != NULL)
+    {
+      while (ep = readdir (dp))
+        puts (ep->d_name);
+      (void) closedir (dp);
+    }
+  else
+    perror ("Couldn't open the directory");
+
+  return 0;
+}
+EXAMPLE_END
+
+The order in which files appear in a directory tends to be fairly random.  A more useful program would sort the entries (perhaps by alphabetizing them) before printing them; see Scanning Directory Content, and Array Sort Function. 

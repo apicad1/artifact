@@ -1,0 +1,6 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: size_t offsetof (type, member)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This expands to an integer constant expression that is the offset of the structure member named member in the structure type type. For example, offsetof (struct s, elem) is the offset, in bytes, of the member elem in a struct s. 
+This macro won’t work if member is a bit field; you get an error from the C compiler in that case. 

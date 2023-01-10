@@ -1,0 +1,61 @@
+AIO_ERROR(3)                                    Linux Programmer's Manual                                   AIO_ERROR(3)
+
+NAME
+       aio_error - get error status of asynchronous I/O operation
+
+SYNOPSIS
+       #include <aio.h>
+
+       int aio_error(const struct aiocb *aiocbp);
+
+       Link with -lrt.
+
+DESCRIPTION
+       The  aio_error() function returns the error status for the asynchronous I/O request with control block pointed to
+       by aiocbp.  (See aio(7) for a description of the aiocb structure.)
+
+RETURN VALUE
+       This function returns one of the following:
+
+       *  EINPROGRESS, if the request has not been completed yet.
+
+       *  ECANCELED, if the request was canceled.
+
+       *  0, if the request completed successfully.
+
+       *  A positive error number, if the asynchronous I/O operation failed.  This is the same  value  that  would  have
+          been  stored  in  the errno variable in the case of a synchronous read(2), write(2), fsync(2), or fdatasync(2)
+          call.
+
+ERRORS
+       EINVAL aiocbp does not point at a control block for an asynchronous I/O request of which the return  status  (see
+              aio_return(3)) has not been retrieved yet.
+
+       ENOSYS aio_error() is not implemented.
+
+VERSIONS
+       The aio_error() function is available since glibc 2.1.
+
+ATTRIBUTES
+       For an explanation of the terms used in this section, see attributes(7).
+
+       ┌──────────────────────────────────────────────────────────────────────────────────────┬───────────────┬─────────┐
+       │Interface                                                                             │ Attribute     │ Value   │
+       ├──────────────────────────────────────────────────────────────────────────────────────┼───────────────┼─────────┤
+       │aio_error()                                                                           │ Thread safety │ MT-Safe │
+       └──────────────────────────────────────────────────────────────────────────────────────┴───────────────┴─────────┘
+
+CONFORMING TO
+       POSIX.1-2001, POSIX.1-2008.
+
+EXAMPLES
+       See aio(7).
+
+SEE ALSO
+       aio_cancel(3), aio_fsync(3), aio_read(3), aio_return(3), aio_suspend(3), aio_write(3), lio_listio(3), aio(7)
+
+COLOPHON
+       This  page  is  part  of  release 5.13 of the Linux man-pages project.  A description of the project, information
+       about reporting bugs, and the latest version of this page, can be found at https://www.kernel.org/doc/man-pages/.
+
+                                                       2021-03-22                                           AIO_ERROR(3)

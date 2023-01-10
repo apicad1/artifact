@@ -1,0 +1,33 @@
+The functions described in this section (printf and related functions) provide a convenient way to perform formatted output.  You call printf with a format string or template string that specifies how to format the values of the remaining arguments. 
+Unless your program is a filter that specifically performs line- or character-oriented processing, using printf or one of the other related functions described in this section is usually the easiest and most concise way to perform output.  These functions are especially useful for printing error messages, tables of data, and the like. 
+
+TABLE_BEGIN
+ • Formatted Output Basics    Some examples to get you started.
+
+ • Output Conversion Syntax    General syntax of conversion
+				 specifications.
+
+ • Table of Output Conversions    Summary of output conversions and
+				 what they do.
+
+ • Integer Conversions    Details about formatting of integers.
+
+ • Floating-Point Conversions    Details about formatting of
+				 floating-point numbers.
+
+ • Other Output Conversions    Details about formatting of strings,
+				 characters, pointers, and the like.
+
+ • Formatted Output Functions    Descriptions of the actual functions.
+
+ • Dynamic Output    Functions that allocate memory for the output.
+
+ • Variable Arguments Output    vprintf and friends.
+
+ • Parsing a Template String    What kinds of args does a given template
+				 call for?
+
+ • Example of Parsing    Sample program using parse_printf_format.
+
+TABLE_END
+

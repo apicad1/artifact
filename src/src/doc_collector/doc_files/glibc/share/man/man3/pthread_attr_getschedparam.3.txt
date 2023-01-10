@@ -1,0 +1,75 @@
+PTHREAD_ATTR_SETSCHEDPARAM(3)                   Linux Programmer's Manual                  PTHREAD_ATTR_SETSCHEDPARAM(3)
+
+NAME
+       pthread_attr_setschedparam,  pthread_attr_getschedparam  -  set/get scheduling parameter attributes in thread at‐
+       tributes object
+
+SYNOPSIS
+       #include <pthread.h>
+
+       int pthread_attr_setschedparam(pthread_attr_t *attr,
+                                      const struct sched_param *param);
+       int pthread_attr_getschedparam(const pthread_attr_t *attr,
+                                      struct sched_param *param);
+
+       Compile and link with -pthread.
+
+DESCRIPTION
+       The pthread_attr_setschedparam() function sets the scheduling parameter attributes of the thread  attributes  ob‐
+       ject  referred  to by attr to the values specified in the buffer pointed to by param.  These attributes determine
+       the scheduling parameters of a thread created using the thread attributes object attr.
+
+       The pthread_attr_getschedparam() returns the scheduling parameter attributes of the thread attributes object attr
+       in the buffer pointed to by param.
+
+       Scheduling parameters are maintained in the following structure:
+
+           struct sched_param {
+               int sched_priority;     /* Scheduling priority */
+           };
+
+       As  can  be seen, only one scheduling parameter is supported.  For details of the permitted ranges for scheduling
+       priorities in each scheduling policy, see sched(7).
+
+       In order for the parameter setting made by pthread_attr_setschedparam() to have effect when calling  pthread_cre‐
+       ate(3),  the  caller  must  use pthread_attr_setinheritsched(3) to set the inherit-scheduler attribute of the at‐
+       tributes object attr to PTHREAD_EXPLICIT_SCHED.
+
+RETURN VALUE
+       On success, these functions return 0; on error, they return a nonzero error number.
+
+ERRORS
+       pthread_attr_setschedparam() can fail with the following error:
+
+       EINVAL The priority specified in param does not make sense for the current scheduling policy of attr.
+
+       POSIX.1 also documents an ENOTSUP error for pthread_attr_setschedparam().  This value is never returned on  Linux
+       (but portable and future-proof applications should nevertheless handle this error return value).
+
+ATTRIBUTES
+       For an explanation of the terms used in this section, see attributes(7).
+
+       ┌──────────────────────────────┬───────────────┬─────────┐
+       │Interface                     │ Attribute     │ Value   │
+       ├──────────────────────────────┼───────────────┼─────────┤
+       │pthread_attr_setschedparam(), │ Thread safety │ MT-Safe │
+       │pthread_attr_getschedparam()  │               │         │
+       └──────────────────────────────┴───────────────┴─────────┘
+CONFORMING TO
+       POSIX.1-2001, POSIX.1-2008.
+
+NOTES
+       See pthread_attr_setschedpolicy(3) for a list of the thread scheduling policies supported on Linux.
+
+EXAMPLE
+       See pthread_setschedparam(3).
+
+SEE ALSO
+       sched_get_priority_min(2), pthread_attr_init(3), pthread_attr_setinheritsched(3), pthread_attr_setschedpolicy(3),
+       pthread_create(3), pthread_setschedparam(3), pthread_setschedprio(3), pthreads(7), sched(7)
+
+COLOPHON
+       This page is part of release 5.05 of the Linux man-pages project.  A description of the project, information
+       about reporting bugs, and the latest version of this page, can be found at https://www.kernel.org/doc/man-pages/.
+
+Linux                                                  2017-09-15                          PTHREAD_ATTR_SETSCHEDPARAM(3)

@@ -1,0 +1,60 @@
+It’s fairly common for programs to have a need to do some simple kinds of lexical analysis and parsing, such as splitting a command string up into tokens.  You can do this with the strtok function, declared in the header file string.h.  
+Warning: Since strtok and wcstok alter the string they is parsing, you should always copy the string to a temporary buffer before parsing it with strtok/wcstok (see Copying Strings and Arrays).  If you allow strtok or wcstok to modify a string that came from another part of your program, you are asking for trouble; that string might be used for other purposes after strtok or wcstok has modified it, and it would not have the expected value. 
+The string that you are operating on might even be a constant.  Then when strtok or wcstok tries to modify it, your program will get a fatal signal for writing in read-only memory.  See Program Error Signals.  Even if the operation of strtok or wcstok would not require a modification of the string (e.g., if there is exactly one token) the string can (and in the GNU C Library case will) be modified. 
+This is a special case of a general principle: if a part of a program does not have as its purpose the modification of a certain data structure, then it is error-prone to modify the data structure temporarily. 
+The function strtok is not reentrant, whereas wcstok is. See Nonreentrancy, for a discussion of where and why reentrancy is important. 
+Here is a simple example showing the use of strtok. 
+
+EXAMPLE_BEGIN
+#include <string.h>
+#include <stddef.h>
+
+…
+
+const char string[] = "words separated by spaces -- and, punctuation!";
+const char delimiters[] = " .,;:!-";
+char *token, *cp;
+
+…
+
+cp = strdupa (string);                /* Make writable copy.  */
+token = strtok (cp, delimiters);      /* token => "words" */
+token = strtok (NULL, delimiters);    /* token => "separated" */
+token = strtok (NULL, delimiters);    /* token => "by" */
+token = strtok (NULL, delimiters);    /* token => "spaces" */
+token = strtok (NULL, delimiters);    /* token => "and" */
+token = strtok (NULL, delimiters);    /* token => "punctuation" */
+token = strtok (NULL, delimiters);    /* token => NULL */
+EXAMPLE_END
+
+The GNU C Library contains two more functions for tokenizing a string which overcome the limitation of non-reentrancy.  They are not available available for wide strings. 
+Here is how the above example looks like when strsep is used. 
+
+EXAMPLE_BEGIN
+#include <string.h>
+#include <stddef.h>
+
+…
+
+const char string[] = "words separated by spaces -- and, punctuation!";
+const char delimiters[] = " .,;:!-";
+char *running;
+char *token;
+
+…
+
+running = strdupa (string);
+token = strsep (&running, delimiters);    /* token => "words" */
+token = strsep (&running, delimiters);    /* token => "separated" */
+token = strsep (&running, delimiters);    /* token => "by" */
+token = strsep (&running, delimiters);    /* token => "spaces" */
+token = strsep (&running, delimiters);    /* token => "" */
+token = strsep (&running, delimiters);    /* token => "" */
+token = strsep (&running, delimiters);    /* token => "" */
+token = strsep (&running, delimiters);    /* token => "and" */
+token = strsep (&running, delimiters);    /* token => "" */
+token = strsep (&running, delimiters);    /* token => "punctuation" */
+token = strsep (&running, delimiters);    /* token => "" */
+token = strsep (&running, delimiters);    /* token => NULL */
+EXAMPLE_END
+

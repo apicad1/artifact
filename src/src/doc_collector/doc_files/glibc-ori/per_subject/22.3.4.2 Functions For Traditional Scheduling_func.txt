@@ -1,0 +1,79 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- PRIO_MIN  
+The lowest valid nice value. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- PRIO_MAX  
+The highest valid nice value. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int getpriority (int class, int id)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+Return the nice value of a set of processes; class and id specify which ones (see below).  If the processes specified do not all have the same nice value, this returns the lowest value that any of them has. 
+On success, the return value is 0.  Otherwise, it is -1 and errno is set accordingly.  The errno values specific to this function are: 
+	ESRCH
+The combination of class and id does not match any existing process.  
+	EINVAL
+The value of class is not valid. 
+If the return value is -1, it could indicate failure, or it could be the nice value.  The only way to make certain is to set errno = 0 before calling getpriority, then use errno != 0 afterward as the criterion for failure. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int setpriority (int class, int id, int niceval)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+Set the nice value of a set of processes to niceval; class and id specify which ones (see below). 
+The return value is 0 on success, and -1 on failure.  The following errno error condition are possible for this function: 
+	ESRCH
+The combination of class and id does not match any existing process.  
+	EINVAL
+The value of class is not valid.  
+	EPERM
+The call would set the nice value of a process which is owned by a different user than the calling process (i.e., the target process’ real or effective uid does not match the calling process’ effective uid) and the calling process does not have CAP_SYS_NICE permission.  
+	EACCES
+The call would lower the process’ nice value and the process does not have CAP_SYS_NICE permission. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- PRIO_PROCESS  
+One particular process.  The argument id is a process ID (pid). 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- PRIO_PGRP  
+All the processes in a particular process group.  The argument id is a process group ID (pgid). 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- PRIO_USER  
+All the processes owned by a particular user (i.e., whose real uid indicates the user).  The argument id is a user ID (uid). 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int nice (int increment)
+Preliminary: | MT-Unsafe race:setpriority | AS-Unsafe  | AC-Safe  | See POSIX Safety Concepts. 
+Increment the nice value of the calling process by increment. The return value is the new nice value on success, and -1 on failure.  In the case of failure, errno will be set to the same values as for setpriority. 
+Here is an equivalent definition of nice: 
+
+EXAMPLE_BEGIN
+int
+nice (int increment)
+{
+  int result, old = getpriority (PRIO_PROCESS, 0);
+  result = setpriority (PRIO_PROCESS, 0, old + increment);
+  if (result != -1)
+      return old + increment;
+  else
+      return -1;
+}
+EXAMPLE_END
+

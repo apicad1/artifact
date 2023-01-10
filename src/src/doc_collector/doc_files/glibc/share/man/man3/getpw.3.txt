@@ -1,0 +1,72 @@
+GETPW(3)                                        Linux Programmer's Manual                                       GETPW(3)
+
+NAME
+       getpw - reconstruct password line entry
+
+SYNOPSIS
+       #define _GNU_SOURCE             /* See feature_test_macros(7) */
+       #include <sys/types.h>
+       #include <pwd.h>
+
+       int getpw(uid_t uid, char *buf);
+
+DESCRIPTION
+       The  getpw()  function reconstructs the password line entry for the given user ID uid in the buffer buf.  The re‐
+       turned buffer contains a line of format
+
+           name:passwd:uid:gid:gecos:dir:shell
+
+       The passwd structure is defined in <pwd.h> as follows:
+
+           struct passwd {
+               char   *pw_name;       /* username */
+               char   *pw_passwd;     /* user password */
+               uid_t   pw_uid;        /* user ID */
+               gid_t   pw_gid;        /* group ID */
+               char   *pw_gecos;      /* user information */
+               char   *pw_dir;        /* home directory */
+               char   *pw_shell;      /* shell program */
+           };
+
+       For more information about the fields of this structure, see passwd(5).
+
+RETURN VALUE
+       The getpw() function returns 0 on success; on error, it returns -1, and errno is set to indicate the error.
+
+       If uid is not found in the password database, getpw() returns -1, sets errno to 0, and leaves buf unchanged.
+
+ERRORS
+       0 or ENOENT
+              No user corresponding to uid.
+
+       EINVAL buf is NULL.
+
+       ENOMEM Insufficient memory to allocate passwd structure.
+
+FILES
+       /etc/passwd
+              password database file
+
+ATTRIBUTES
+       For an explanation of the terms used in this section, see attributes(7).
+
+       ┌───────────────────────────────────────────────────────────────────────────────┬───────────────┬────────────────┐
+       │Interface                                                                      │ Attribute     │ Value          │
+       ├───────────────────────────────────────────────────────────────────────────────┼───────────────┼────────────────┤
+       │getpw()                                                                        │ Thread safety │ MT-Safe locale │
+       └───────────────────────────────────────────────────────────────────────────────┴───────────────┴────────────────┘
+
+CONFORMING TO
+       SVr2.
+
+BUGS
+       The getpw() function is dangerous as it may overflow the provided buffer buf.  It is obsoleted by getpwuid(3).
+
+SEE ALSO
+       endpwent(3), fgetpwent(3), getpwent(3), getpwnam(3), getpwuid(3), putpwent(3), setpwent(3), passwd(5)
+
+COLOPHON
+       This page is part of release 5.13 of the Linux man-pages project.  A  description  of  the  project,  information
+       about reporting bugs, and the latest version of this page, can be found at https://www.kernel.org/doc/man-pages/.
+
+GNU                                                    2021-03-22                                               GETPW(3)

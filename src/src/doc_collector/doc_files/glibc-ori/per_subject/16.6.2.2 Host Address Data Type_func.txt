@@ -1,0 +1,46 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: struct in_addr
+This data type is used in certain contexts to contain an IPv4 Internet host address.  It has just one field, named s_addr, which records the host address number as an uint32_t. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: uint32_t INADDR_LOOPBACK
+You can use this constant to stand for “the address of this machine,” instead of finding its actual address.  It is the IPv4 Internet address ‘127.0.0.1’, which is usually called ‘localhost’.  This special constant saves you the trouble of looking up the address of your own machine.  Also, the system usually implements INADDR_LOOPBACK specially, avoiding any network traffic for the case of one machine talking to itself. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: uint32_t INADDR_ANY
+You can use this constant to stand for “any incoming address” when binding to an address.  See Setting Address.  This is the usual address to give in the sin_addr member of struct sockaddr_in when you want to accept Internet connections. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: uint32_t INADDR_BROADCAST
+This constant is the address you use to send a broadcast message. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: uint32_t INADDR_NONE
+This constant is returned by some functions to indicate an error. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: struct in6_addr
+This data type is used to store an IPv6 address.  It stores 128 bits of data, which can be accessed (via a union) in a variety of ways. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Constant: struct in6_addr in6addr_loopback
+This constant is the IPv6 address ‘::1’, the loopback address.  See above for a description of what this means.  The macro IN6ADDR_LOOPBACK_INIT is provided to allow you to initialize your own variables to this value. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Constant: struct in6_addr in6addr_any
+This constant is the IPv6 address ‘::’, the unspecified address.  See above for a description of what this means.  The macro IN6ADDR_ANY_INIT is provided to allow you to initialize your own variables to this value. 

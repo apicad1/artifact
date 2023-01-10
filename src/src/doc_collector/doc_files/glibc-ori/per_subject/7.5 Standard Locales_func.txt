@@ -1,0 +1,16 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- "C"
+This is the standard C locale.  The attributes and behavior it provides are specified in the ISO C standard.  When your program starts up, it initially uses this locale by default. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- "POSIX"
+This is the standard POSIX locale.  Currently, it is an alias for the standard C locale. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ""
+The empty name says to select a locale based on environment variables. See Locale Categories. 

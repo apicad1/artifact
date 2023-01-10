@@ -1,0 +1,11 @@
+There are several ways to access locale information.  The simplest way is to let the C library itself do the work.  Several of the functions in this library implicitly access the locale data, and use what information is provided by the currently selected locale.  This is how the locale model is meant to work normally. 
+As an example take the strftime function, which is meant to nicely format date and time information (see Formatting Calendar Time). Part of the standard information contained in the LC_TIME category is the names of the months.  Instead of requiring the programmer to take care of providing the translations the strftime function does this all by itself.  %A in the format string is replaced by the appropriate weekday name of the locale currently selected by LC_TIME.  This is an easy example, and wherever possible functions do things automatically in this way. 
+But there are quite often situations when there is simply no function to perform the task, or it is simply not possible to do the work automatically.  For these cases it is necessary to access the information in the locale directly.  To do this the C library provides two functions: localeconv and nl_langinfo.  The former is part of ISO C and therefore portable, but has a brain-damaged interface.  The second is part of the Unix interface and is portable in as far as the system follows the Unix standards. 
+
+TABLE_BEGIN
+ • The Lame Way to Locale Data    ISO C’s localeconv.
+
+ • The Elegant and Fast Way    X/Open’s nl_langinfo.
+
+TABLE_END
+

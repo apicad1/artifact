@@ -1,0 +1,32 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int VMIN
+
+This is the subscript for the MIN slot in the c_cc array.  Thus, termios.c_cc[VMIN] is the value itself. 
+The MIN slot is only meaningful in noncanonical input mode; it specifies the minimum number of bytes that must be available in the input queue in order for read to return. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int VTIME
+
+This is the subscript for the TIME slot in the c_cc array.  Thus, termios.c_cc[VTIME] is the value itself. 
+The TIME slot is only meaningful in noncanonical input mode; it specifies how long to wait for input before returning, in units of 0.1 seconds. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void cfmakeraw (struct termios *termios-p)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function provides an easy way to set up *termios-p for what has traditionally been called “raw mode” in BSD.  This uses noncanonical input, and turns off most processing to give an unmodified channel to the terminal. 
+It does exactly this: 
+
+EXAMPLE_BEGIN
+  termios-p->c_iflag &= ~(IGNBRK|BRKINT|PARMRK|ISTRIP
+                                |INLCR|IGNCR|ICRNL|IXON);
+  termios-p->c_oflag &= ~OPOST;
+  termios-p->c_lflag &= ~(ECHO|ECHONL|ICANON|ISIG|IEXTEN);
+  termios-p->c_cflag &= ~(CSIZE|PARENB);
+  termios-p->c_cflag |= CS8;
+EXAMPLE_END
+

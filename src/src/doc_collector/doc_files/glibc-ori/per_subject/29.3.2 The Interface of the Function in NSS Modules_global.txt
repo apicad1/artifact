@@ -1,0 +1,43 @@
+Now we know about the functions contained in the modules.  It is now time to describe the types.  When we mentioned the reentrant versions of the functions above, this means there are some additional arguments (compared with the standard, non-reentrant versions).  The prototypes for the non-reentrant and reentrant versions of our function above are: 
+
+EXAMPLE_BEGIN
+struct hostent *gethostbyname (const char *name)
+
+int gethostbyname_r (const char *name, struct hostent *result_buf,
+                     char *buf, size_t buflen, struct hostent **result,
+                     int *h_errnop)
+EXAMPLE_END
+
+The actual prototype of the function in the NSS modules in this case is 
+
+EXAMPLE_BEGIN
+enum nss_status _nss_files_gethostbyname_r (const char *name,
+                                            struct hostent *result_buf,
+                                            char *buf, size_t buflen,
+                                            int *errnop, int *h_errnop)
+EXAMPLE_END
+
+I.e., the interface function is in fact the reentrant function with the change of the return value, the omission of the result parameter, and the addition of the errnop parameter.  While the user-level function returns a pointer to the result the reentrant function return an enum nss_status value: 
+Now you see where the action items of the /etc/nsswitch.conf file are used. 
+If you study the source code you will find there is a fifth value: NSS_STATUS_RETURN.  This is an internal use only value, used by a few functions in places where none of the above value can be used.  If necessary the source code should be examined to learn about the details. 
+In case the interface function has to return an error it is important that the correct error code is stored in *errnop.  Some return status values have only one associated error code, others have more. 
+
+TABLE_BEGIN
+ NSS_STATUS_TRYAGAIN EAGAIN One of the functions used ran temporarily out of
+resources or a service is currently not available.
+  ERANGE The provided buffer is not large enough.
+The function should be called again with a larger buffer.
+ NSS_STATUS_UNAVAIL ENOENT A necessary input file cannot be found.
+ NSS_STATUS_NOTFOUND ENOENT The requested entry is not available.
+ NSS_STATUS_NOTFOUND SUCCESS There are no entries.
+Use this to avoid returning errors for inactive services which may
+be enabled at a later time. This is not the same as the service
+being temporarily unavailable.
+TABLE_END
+
+These are proposed values.  There can be other error codes and the described error codes can have different meaning.  With one exception: when returning NSS_STATUS_TRYAGAIN the error code ERANGE must mean that the user provided buffer is too small.  Everything else is non-critical. 
+In statically linked programs, the main application and NSS modules do not share the same thread-local variable errno, which is the reason why there is an explicit errnop function argument. 
+The above function has something special which is missing for almost all the other module functions.  There is an argument h_errnop.  This points to a variable which will be filled with the error code in case the execution of the function fails for some reason.  (In statically linked programs, the thread-local variable h_errno is not shared with the main application.) 
+The getXXXbyYYY functions are the most important functions in the NSS modules.  But there are others which implement the other ways to access system databases (say for the user database, there are setpwent, getpwent, and endpwent).  These will be described in more detail later. Here we give a general way to determine the signature of the module function: 
+  the return value is enum nss_status;  the name (see NSS Module Names);  the first arguments are identical to the arguments of the non-reentrant function;  the next four arguments are:   STRUCT_TYPE *result_buf pointer to buffer where the result is stored.  STRUCT_TYPE is normally a struct which corresponds to the database.  char *buffer pointer to a buffer where the function can store additional data for the result etc.  size_t buflen length of the buffer pointed to by buffer.  int *errnop the low-level error code to return to the application.  If the return value is not NSS_STATUS_SUCCESS, *errnop needs to be set to a non-zero value.  An NSS module should never set *errnop to zero.  The value ERANGE is special, as described above.     possibly a last argument h_errnop, for the host name and network name lookup functions.  If the return value is not NSS_STATUS_SUCCESS, *h_errnop needs to be set to a non-zero value.  A generic error code is NETDB_INTERNAL, which instructs the caller to examine *errnop for further details.  (This includes the ERANGE special case.) 
+This table is correct for all functions but the set…ent and end…ent functions. 

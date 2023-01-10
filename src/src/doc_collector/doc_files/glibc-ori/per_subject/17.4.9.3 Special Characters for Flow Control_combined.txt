@@ -1,0 +1,17 @@
+These special characters may be active in either canonical or noncanonical input mode, but their use is controlled by the flags IXON and IXOFF (see Input Modes). 
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int VSTART
+
+This is the subscript for the START character in the special control character array.  termios.c_cc[VSTART] holds the character itself. 
+The START character is used to support the IXON and IXOFF input modes.  If IXON is set, receiving a START character resumes suspended output; the START character itself is discarded.  If IXANY is set, receiving any character at all resumes suspended output; the resuming character is not discarded unless it is the START character.  If IXOFF is set, the system may also transmit START characters to the terminal. 
+The usual value for the START character is C-q.  You may not be able to change this value—the hardware may insist on using C-q regardless of what you specify. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int VSTOP
+
+This is the subscript for the STOP character in the special control character array.  termios.c_cc[VSTOP] holds the character itself. 
+The STOP character is used to support the IXON and IXOFF input modes.  If IXON is set, receiving a STOP character causes output to be suspended; the STOP character itself is discarded.  If IXOFF is set, the system may also transmit STOP characters to the terminal, to prevent the input queue from overflowing. 
+The usual value for the STOP character is C-s.  You may not be able to change this value—the hardware may insist on using C-s regardless of what you specify. 

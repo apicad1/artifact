@@ -1,0 +1,116 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: struct stat
+The stat structure type is used to return information about the attributes of a file.  It contains at least the following members: 
+	mode_t st_mode
+Specifies the mode of the file.  This includes file type information (see Testing File Type) and the file permission bits (see Permission Bits).  
+	ino_t st_ino
+The file serial number, which distinguishes this file from all other files on the same device.  
+	dev_t st_dev
+Identifies the device containing the file.  The st_ino and st_dev, taken together, uniquely identify the file.  The st_dev value is not necessarily consistent across reboots or system crashes, however.  
+	nlink_t st_nlink
+The number of hard links to the file.  This count keeps track of how many directories have entries for this file.  If the count is ever decremented to zero, then the file itself is discarded as soon as no process still holds it open.  Symbolic links are not counted in the total.  
+	uid_t st_uid
+The user ID of the file’s owner.  See File Owner.  
+	gid_t st_gid
+The group ID of the file.  See File Owner.  
+	off_t st_size
+This specifies the size of a regular file in bytes.  For files that are really devices this field isn’t usually meaningful.  For symbolic links this specifies the length of the file name the link refers to.  
+	time_t st_atime
+This is the last access time for the file.  See File Times.  
+	unsigned long int st_atime_usec
+This is the fractional part of the last access time for the file. See File Times.  
+	time_t st_mtime
+This is the time of the last modification to the contents of the file. See File Times.  
+	unsigned long int st_mtime_usec
+This is the fractional part of the time of the last modification to the contents of the file.  See File Times.  
+	time_t st_ctime
+This is the time of the last modification to the attributes of the file. See File Times.  
+	unsigned long int st_ctime_usec
+This is the fractional part of the time of the last modification to the attributes of the file.  See File Times.  
+	blkcnt_t st_blocks
+This is the amount of disk space that the file occupies, measured in units of 512-byte blocks.  The number of disk blocks is not strictly proportional to the size of the file, for two reasons: the file system may use some blocks for internal record keeping; and the file may be sparse—it may have “holes” which contain zeros but do not actually take up space on the disk.  You can tell (approximately) whether a file is sparse by comparing this value with st_size, like this:   (st.st_blocks * 512 < st.st_size)   This test is not perfect because a file that is just slightly sparse might not be detected as sparse at all.  For practical applications, this is not a problem.  
+	unsigned int st_blksize
+The optimal block size for reading or writing this file, in bytes.  You might use this size for allocating the buffer space for reading or writing the file.  (This is unrelated to st_blocks.) 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: struct stat64
+The members of this type are the same and have the same names as those in struct stat.  The only difference is that the members st_ino, st_size, and st_blocks have a different type to support larger values. 
+	mode_t st_mode
+Specifies the mode of the file.  This includes file type information (see Testing File Type) and the file permission bits (see Permission Bits).  
+	ino64_t st_ino
+The file serial number, which distinguishes this file from all other files on the same device.  
+	dev_t st_dev
+Identifies the device containing the file.  The st_ino and st_dev, taken together, uniquely identify the file.  The st_dev value is not necessarily consistent across reboots or system crashes, however.  
+	nlink_t st_nlink
+The number of hard links to the file.  This count keeps track of how many directories have entries for this file.  If the count is ever decremented to zero, then the file itself is discarded as soon as no process still holds it open.  Symbolic links are not counted in the total.  
+	uid_t st_uid
+The user ID of the file’s owner.  See File Owner.  
+	gid_t st_gid
+The group ID of the file.  See File Owner.  
+	off64_t st_size
+This specifies the size of a regular file in bytes.  For files that are really devices this field isn’t usually meaningful.  For symbolic links this specifies the length of the file name the link refers to.  
+	time_t st_atime
+This is the last access time for the file.  See File Times.  
+	unsigned long int st_atime_usec
+This is the fractional part of the last access time for the file. See File Times.  
+	time_t st_mtime
+This is the time of the last modification to the contents of the file. See File Times.  
+	unsigned long int st_mtime_usec
+This is the fractional part of the time of the last modification to the contents of the file.  See File Times.  
+	time_t st_ctime
+This is the time of the last modification to the attributes of the file. See File Times.  
+	unsigned long int st_ctime_usec
+This is the fractional part of the time of the last modification to the attributes of the file.  See File Times.  
+	blkcnt64_t st_blocks
+This is the amount of disk space that the file occupies, measured in units of 512-byte blocks.  
+	unsigned int st_blksize
+The optimal block size for reading of writing this file, in bytes.  You might use this size for allocating the buffer space for reading of writing the file.  (This is unrelated to st_blocks.) 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: mode_t
+This is an integer data type used to represent file modes.  In the GNU C Library, this is an unsigned type no narrower than unsigned int. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: ino_t
+This is an unsigned integer type used to represent file serial numbers. (In Unix jargon, these are sometimes called inode numbers.) In the GNU C Library, this type is no narrower than unsigned int. 
+If the source is compiled with _FILE_OFFSET_BITS == 64 this type is transparently replaced by ino64_t. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: ino64_t
+This is an unsigned integer type used to represent file serial numbers for the use in LFS.  In the GNU C Library, this type is no narrower than unsigned int. 
+When compiling with _FILE_OFFSET_BITS == 64 this type is available under the name ino_t. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: dev_t
+This is an arithmetic data type used to represent file device numbers. In the GNU C Library, this is an integer type no narrower than int. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: nlink_t
+This is an integer type used to represent file link counts. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: blkcnt_t
+This is a signed integer type used to represent block counts. In the GNU C Library, this type is no narrower than int. 
+If the source is compiled with _FILE_OFFSET_BITS == 64 this type is transparently replaced by blkcnt64_t. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: blkcnt64_t
+This is a signed integer type used to represent block counts for the use in LFS.  In the GNU C Library, this type is no narrower than int. 
+When compiling with _FILE_OFFSET_BITS == 64 this type is available under the name blkcnt_t. 

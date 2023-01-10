@@ -1,0 +1,30 @@
+You can find out which signals are pending at any time by calling sigpending.  This function is declared in signal.h.  
+Testing whether a signal is pending is not often useful.  Testing when that signal is not blocked is almost certainly bad design. 
+Here is an example. 
+
+EXAMPLE_BEGIN
+#include <signal.h>
+#include <stddef.h>
+
+sigset_t base_mask, waiting_mask;
+
+sigemptyset (&base_mask);
+sigaddset (&base_mask, SIGINT);
+sigaddset (&base_mask, SIGTSTP);
+
+/* Block user interrupts while doing other processing. */
+sigprocmask (SIG_SETMASK, &base_mask, NULL);
+…
+
+/* After a while, check to see whether any signals are pending. */
+sigpending (&waiting_mask);
+if (sigismember (&waiting_mask, SIGINT)) {
+  /* User has tried to kill the process. */
+}
+else if (sigismember (&waiting_mask, SIGTSTP)) {
+  /* User has tried to stop the process. */
+}
+EXAMPLE_END
+
+Remember that if there is a particular signal pending for your process, additional signals of that same type that arrive in the meantime might be discarded.  For example, if a SIGINT signal is pending when another SIGINT signal arrives, your program will probably only see one of them when you unblock this signal. 
+Portability Note: The sigpending function is new in POSIX.1.  Older systems have no equivalent facility. 

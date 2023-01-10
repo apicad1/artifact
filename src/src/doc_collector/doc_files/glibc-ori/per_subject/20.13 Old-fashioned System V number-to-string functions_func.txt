@@ -1,0 +1,79 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: char * ecvt (double value, int ndigit, int *decpt, int *neg)
+Preliminary: | MT-Unsafe race:ecvt | AS-Unsafe  | AC-Safe  | See POSIX Safety Concepts. 
+The function ecvt converts the floating-point number value to a string with at most ndigit decimal digits.  The returned string contains no decimal point or sign.  The first digit of the string is non-zero (unless value is actually zero) and the last digit is rounded to nearest.  *decpt is set to the index in the string of the first digit after the decimal point. *neg is set to a nonzero value if value is negative, zero otherwise. 
+If ndigit decimal digits would exceed the precision of a double it is reduced to a system-specific value. 
+The returned string is statically allocated and overwritten by each call to ecvt. 
+If value is zero, it is implementation defined whether *decpt is 0 or 1. 
+For example: ecvt (12.3, 5, &d, &n) returns "12300" and sets d to 2 and n to 0. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: char * fcvt (double value, int ndigit, int *decpt, int *neg)
+Preliminary: | MT-Unsafe race:fcvt | AS-Unsafe heap | AC-Unsafe mem | See POSIX Safety Concepts. 
+The function fcvt is like ecvt, but ndigit specifies the number of digits after the decimal point.  If ndigit is less than zero, value is rounded to the ndigit+1’th place to the left of the decimal point.  For example, if ndigit is -1, value will be rounded to the nearest 10.  If ndigit is negative and larger than the number of digits to the left of the decimal point in value, value will be rounded to one significant digit. 
+If ndigit decimal digits would exceed the precision of a double it is reduced to a system-specific value. 
+The returned string is statically allocated and overwritten by each call to fcvt. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: char * gcvt (double value, int ndigit, char *buf)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+gcvt is functionally equivalent to ‘sprintf(buf, "%*g", ndigit, value)’.  It is provided only for compatibility’s sake.  It returns buf. 
+If ndigit decimal digits would exceed the precision of a double it is reduced to a system-specific value. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: char * qecvt (long double value, int ndigit, int *decpt, int *neg)
+Preliminary: | MT-Unsafe race:qecvt | AS-Unsafe  | AC-Safe  | See POSIX Safety Concepts. 
+This function is equivalent to ecvt except that it takes a long double for the first parameter and that ndigit is restricted by the precision of a long double. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: char * qfcvt (long double value, int ndigit, int *decpt, int *neg)
+Preliminary: | MT-Unsafe race:qfcvt | AS-Unsafe heap | AC-Unsafe mem | See POSIX Safety Concepts. 
+This function is equivalent to fcvt except that it takes a long double for the first parameter and that ndigit is restricted by the precision of a long double. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: char * qgcvt (long double value, int ndigit, char *buf)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function is equivalent to gcvt except that it takes a long double for the first parameter and that ndigit is restricted by the precision of a long double. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int ecvt_r (double value, int ndigit, int *decpt, int *neg, char *buf, size_t len)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The ecvt_r function is the same as ecvt, except that it places its result into the user-specified buffer pointed to by buf, with length len.  The return value is -1 in case of an error and zero otherwise. 
+This function is a GNU extension. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int fcvt_r (double value, int ndigit, int *decpt, int *neg, char *buf, size_t len)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The fcvt_r function is the same as fcvt, except that it places its result into the user-specified buffer pointed to by buf, with length len.  The return value is -1 in case of an error and zero otherwise. 
+This function is a GNU extension. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int qecvt_r (long double value, int ndigit, int *decpt, int *neg, char *buf, size_t len)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The qecvt_r function is the same as qecvt, except that it places its result into the user-specified buffer pointed to by buf, with length len.  The return value is -1 in case of an error and zero otherwise. 
+This function is a GNU extension. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int qfcvt_r (long double value, int ndigit, int *decpt, int *neg, char *buf, size_t len)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The qfcvt_r function is the same as qfcvt, except that it places its result into the user-specified buffer pointed to by buf, with length len.  The return value is -1 in case of an error and zero otherwise. 
+This function is a GNU extension. 

@@ -1,0 +1,34 @@
+In some multibyte character codes, the meaning of any particular byte sequence is not fixed; it depends on what other sequences have come earlier in the same string.  Typically there are just a few sequences that can change the meaning of other sequences; these few are called shift sequences and we say that they set the shift state for other sequences that follow. 
+To illustrate shift state and shift sequences, suppose we decide that the sequence 0200 (just one byte) enters Japanese mode, in which pairs of bytes in the range from 0240 to 0377 are single characters, while 0201 enters Latin-1 mode, in which single bytes in the range from 0240 to 0377 are characters, and interpreted according to the ISO Latin-1 character set.  This is a multibyte code that has two alternative shift states (“Japanese mode” and “Latin-1 mode”), and two shift sequences that specify particular shift states. 
+When the multibyte character code in use has shift states, then mblen, mbtowc, and wctomb must maintain and update the current shift state as they scan the string.  To make this work properly, you must follow these rules: 
+  Before starting to scan a string, call the function with a null pointer for the multibyte character address—for example, mblen (NULL, 0).  This initializes the shift state to its standard initial value.   Scan the string one character at a time, in order.  Do not “back up” and rescan characters already scanned, and do not intersperse the processing of different strings. 
+Here is an example of using mblen following these rules: 
+
+EXAMPLE_BEGIN
+void
+scan_string (char *s)
+{
+  int length = strlen (s);
+
+  /* Initialize shift state.  */
+  mblen (NULL, 0);
+
+  while (1)
+    {
+      int thischar = mblen (s, length);
+      /* Deal with end of string and invalid characters.  */
+      if (thischar == 0)
+        break;
+      if (thischar == -1)
+        {
+          error ("invalid multibyte character");
+          break;
+        }
+      /* Advance past this character.  */
+      s += thischar;
+      length -= thischar;
+    }
+}
+EXAMPLE_END
+
+The functions mblen, mbtowc and wctomb are not reentrant when using a multibyte code that uses a shift state.  However, no other library functions call these functions, so you don’t have to worry that the shift state will be changed mysteriously. 

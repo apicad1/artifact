@@ -1,0 +1,1 @@
+The default behavior of argp_parse is designed to be convenient for the most common case of parsing program command line argument.  To modify these defaults, the following flags may be or’d together in the flags argument to argp_parse: 

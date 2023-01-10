@@ -1,0 +1,3 @@
+One of the attributes of a process is its controlling terminal.  Child processes created with fork inherit the controlling terminal from their parent process.  In this way, all the processes in a session inherit the controlling terminal from the session leader.  A session leader that has control of a terminal is called the controlling process of that terminal. 
+You generally do not need to worry about the exact mechanism used to allocate a controlling terminal to a session, since it is done for you by the system when you log in. 
+An individual process disconnects from its controlling terminal when it calls setsid to become the leader of a new session. See Process Group Functions. 

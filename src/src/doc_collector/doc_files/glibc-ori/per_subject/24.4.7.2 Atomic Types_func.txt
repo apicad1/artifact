@@ -1,0 +1,4 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: sig_atomic_t
+This is an integer data type.  Objects of this type are always accessed atomically. 

@@ -1,0 +1,13 @@
+Because memory in obstack chunks is used sequentially, it is possible to build up an object step by step, adding one or more bytes at a time to the end of the object.  With this technique, you do not need to know how much data you will put in the object until you come to the end of it.  We call this the technique of growing objects.  The special functions for adding data to the growing object are described in this section. 
+You don’t need to do anything special when you start to grow an object. Using one of the functions to add data to the object automatically starts it.  However, it is necessary to say explicitly when the object is finished.  This is done with the function obstack_finish. 
+The actual address of the object thus built up is not known until the object is finished.  Until then, it always remains possible that you will add so much data that the object must be copied into a new chunk. 
+While the obstack is in use for a growing object, you cannot use it for ordinary allocation of another object.  If you try to do so, the space already added to the growing object will become part of the other object. 
+When you build an object by growing it, you will probably need to know afterward how long it became.  You need not keep track of this as you grow the object, because you can find out the length from the obstack just before finishing the object with the function obstack_object_size, declared as follows: 
+If you have started growing an object and wish to cancel it, you should finish it and then free it, like this: 
+
+EXAMPLE_BEGIN
+obstack_free (obstack_ptr, obstack_finish (obstack_ptr));
+EXAMPLE_END
+
+This has no effect if no object was growing. 
+You can use obstack_blank with a negative size argument to make the current object smaller.  Just don’t try to shrink it beyond zero length—there’s no telling what will happen if you do that. 

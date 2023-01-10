@@ -1,0 +1,199 @@
+These macro definitions can be accessed by including the header file float.h in your program. 
+Macro names starting with ‘FLT_’ refer to the float type, while names beginning with ‘DBL_’ refer to the double type and names beginning with ‘LDBL_’ refer to the long double type.  (If GCC does not support long double as a distinct data type on a target machine then the values for the ‘LDBL_’ constants are equal to the corresponding constants for the double type.) 
+Of these macros, only FLT_RADIX is guaranteed to be a constant expression.  The other macros listed here cannot be reliably used in places that require constant expressions, such as ‘#if’ preprocessing directives or in the dimensions of static arrays. 
+Although the ISO C standard specifies minimum and maximum values for most of these parameters, the GNU C implementation uses whatever values describe the floating point representation of the target machine.  So in principle GNU C actually satisfies the ISO C requirements only if the target machine is suitable.  In practice, all the machines currently supported are suitable. 
+
+>>>>>>>>>>>>>>>>>>>>
+- FLT_ROUNDS  
+This value characterizes the rounding mode for floating point addition. The following values indicate standard rounding modes: 
+	-1
+The mode is indeterminable. 
+	0
+Rounding is towards zero. 
+	1
+Rounding is to the nearest number. 
+	2
+Rounding is towards positive infinity. 
+	3
+Rounding is towards negative infinity. 
+Any other value represents a machine-dependent nonstandard rounding mode. 
+On most machines, the value is 1, in accordance with the IEEE standard for floating point. 
+Here is a table showing how certain values round for each possible value of FLT_ROUNDS, if the other aspects of the representation match the IEEE single-precision standard. 
+
+EXAMPLE_BEGIN
+                0      1             2             3
+ 1.00000003    1.0    1.0           1.00000012    1.0
+ 1.00000007    1.0    1.00000012    1.00000012    1.0
+-1.00000003   -1.0   -1.0          -1.0          -1.00000012
+-1.00000007   -1.0   -1.00000012   -1.0          -1.00000012
+EXAMPLE_END
+
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- FLT_RADIX  
+This is the value of the base, or radix, of the exponent representation. This is guaranteed to be a constant expression, unlike the other macros described in this section.  The value is 2 on all machines we know of except the IBM 360 and derivatives. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- FLT_MANT_DIG  
+This is the number of base-FLT_RADIX digits in the floating point mantissa for the float data type.  The following expression yields 1.0 (even though mathematically it should not) due to the limited number of mantissa digits: 
+
+EXAMPLE_BEGIN
+float radix = FLT_RADIX;
+
+1.0f + 1.0f / radix / radix / … / radix
+EXAMPLE_END
+
+where radix appears FLT_MANT_DIG times. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- DBL_MANT_DIG  
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- LDBL_MANT_DIG  
+This is the number of base-FLT_RADIX digits in the floating point mantissa for the data types double and long double, respectively. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- FLT_DIG  
+This is the number of decimal digits of precision for the float data type.  Technically, if p and b are the precision and base (respectively) for the representation, then the decimal precision q is the maximum number of decimal digits such that any floating point number with q base 10 digits can be rounded to a floating point number with p base b digits and back again, without change to the q decimal digits. 
+The value of this macro is supposed to be at least 6, to satisfy ISO C. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- DBL_DIG  
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- LDBL_DIG  
+These are similar to FLT_DIG, but for the data types double and long double, respectively.  The values of these macros are supposed to be at least 10. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- FLT_MIN_EXP  
+This is the smallest possible exponent value for type float. More precisely, it is the minimum negative integer such that the value FLT_RADIX raised to this power minus 1 can be represented as a normalized floating point number of type float. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- DBL_MIN_EXP  
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- LDBL_MIN_EXP  
+These are similar to FLT_MIN_EXP, but for the data types double and long double, respectively. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- FLT_MIN_10_EXP  
+This is the minimum negative integer such that 10 raised to this power minus 1 can be represented as a normalized floating point number of type float.  This is supposed to be -37 or even less. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- DBL_MIN_10_EXP  
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- LDBL_MIN_10_EXP  
+These are similar to FLT_MIN_10_EXP, but for the data types double and long double, respectively. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- FLT_MAX_EXP  
+This is the largest possible exponent value for type float.  More precisely, this is the maximum positive integer such that value FLT_RADIX raised to this power minus 1 can be represented as a floating point number of type float. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- DBL_MAX_EXP  
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- LDBL_MAX_EXP  
+These are similar to FLT_MAX_EXP, but for the data types double and long double, respectively. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- FLT_MAX_10_EXP  
+This is the maximum positive integer such that 10 raised to this power minus 1 can be represented as a normalized floating point number of type float.  This is supposed to be at least 37. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- DBL_MAX_10_EXP  
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- LDBL_MAX_10_EXP  
+These are similar to FLT_MAX_10_EXP, but for the data types double and long double, respectively. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- FLT_MAX  
+The value of this macro is the maximum number representable in type float.  It is supposed to be at least 1E+37.  The value has type float. 
+The smallest representable number is - FLT_MAX. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- DBL_MAX  
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- LDBL_MAX  
+These are similar to FLT_MAX, but for the data types double and long double, respectively.  The type of the macro’s value is the same as the type it describes. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- FLT_MIN  
+The value of this macro is the minimum normalized positive floating point number that is representable in type float.  It is supposed to be no more than 1E-37. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- DBL_MIN  
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- LDBL_MIN  
+These are similar to FLT_MIN, but for the data types double and long double, respectively.  The type of the macro’s value is the same as the type it describes. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- FLT_EPSILON  
+This is the difference between 1 and the smallest floating point number of type float that is greater than 1.  It’s supposed to be no greater than 1E-5. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- DBL_EPSILON  
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- LDBL_EPSILON  
+These are similar to FLT_EPSILON, but for the data types double and long double, respectively.  The type of the macro’s value is the same as the type it describes.  The values are not supposed to be greater than 1E-9. 

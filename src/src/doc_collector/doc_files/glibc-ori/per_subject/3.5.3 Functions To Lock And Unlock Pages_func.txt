@@ -1,0 +1,71 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int mlock (const void *addr, size_t len)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+mlock locks a range of the calling process’ virtual pages. 
+The range of memory starts at address addr and is len bytes long.  Actually, since you must lock whole pages, it is the range of pages that include any part of the specified range. 
+When the function returns successfully, each of those pages is backed by (connected to) a real frame (is resident) and is marked to stay that way.  This means the function may cause page-ins and have to wait for them. 
+When the function fails, it does not affect the lock status of any pages. 
+The return value is zero if the function succeeds.  Otherwise, it is -1 and errno is set accordingly.  errno values specific to this function are: 
+	ENOMEM
+  At least some of the specified address range does not exist in the calling process’ virtual address space.  The locking would cause the process to exceed its locked page limit.   
+	EPERM
+The calling process is not superuser.  
+	EINVAL
+len is not positive.  
+	ENOSYS
+The kernel does not provide mlock capability.  
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int mlock2 (const void *addr, size_t len, unsigned int flags)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function is similar to mlock.  If flags is zero, a call to mlock2 behaves exactly as the equivalent call to mlock. 
+The flags argument must be a combination of zero or more of the following flags: 
+	MLOCK_ONFAULT  
+ Only those pages in the specified address range which are already in memory are locked immediately.  Additional pages in the range are automatically locked in case of a page fault and allocation of memory. 
+Like mlock, mlock2 returns zero on success and -1 on failure, setting errno accordingly.  Additional errno values defined for mlock2 are: 
+	EINVAL
+The specified (non-zero) flags argument is not supported by this system. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int munlock (const void *addr, size_t len)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+munlock unlocks a range of the calling process’ virtual pages. 
+munlock is the inverse of mlock and functions completely analogously to mlock, except that there is no EPERM failure. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int mlockall (int flags)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+mlockall locks all the pages in a process’ virtual memory address space, and/or any that are added to it in the future.  This includes the pages of the code, data and stack segment, as well as shared libraries, user space kernel data, shared memory, and memory mapped files. 
+flags is a string of single bit flags represented by the following macros.  They tell mlockall which of its functions you want.  All other bits must be zero. 
+	MCL_CURRENT  
+Lock all pages which currently exist in the calling process’ virtual address space.  
+	MCL_FUTURE  
+Set a mode such that any pages added to the process’ virtual address space in the future will be locked from birth.  This mode does not affect future address spaces owned by the same process so exec, which replaces a process’ address space, wipes out MCL_FUTURE. See Executing a File.  
+When the function returns successfully, and you specified MCL_CURRENT, all of the process’ pages are backed by (connected to) real frames (they are resident) and are marked to stay that way. This means the function may cause page-ins and have to wait for them. 
+When the process is in MCL_FUTURE mode because it successfully executed this function and specified MCL_CURRENT, any system call by the process that requires space be added to its virtual address space fails with errno = ENOMEM if locking the additional space would cause the process to exceed its locked page limit.  In the case that the address space addition that can’t be accommodated is stack expansion, the stack expansion fails and the kernel sends a SIGSEGV signal to the process. 
+When the function fails, it does not affect the lock status of any pages or the future locking mode. 
+The return value is zero if the function succeeds.  Otherwise, it is -1 and errno is set accordingly.  errno values specific to this function are: 
+	ENOMEM
+  At least some of the specified address range does not exist in the calling process’ virtual address space.  The locking would cause the process to exceed its locked page limit.   
+	EPERM
+The calling process is not superuser.  
+	EINVAL
+Undefined bits in flags are not zero.  
+	ENOSYS
+The kernel does not provide mlockall capability.  
+You can lock just specific pages with mlock.  You unlock pages with munlockall and munlock. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int munlockall (void)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+munlockall unlocks every page in the calling process’ virtual address space and turns off MCL_FUTURE future locking mode. 
+The return value is zero if the function succeeds.  Otherwise, it is -1 and errno is set accordingly.  The only way this function can fail is for generic reasons that all functions and system calls can fail, so there are no specific errno values. 

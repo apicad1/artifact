@@ -1,0 +1,1 @@
+If the exit status value (see Program Termination) of the child process is zero, then the status value reported by waitpid or wait is also zero.  You can test for other kinds of information encoded in the returned status value using the following macros. These macros are defined in the header file sys/wait.h.  

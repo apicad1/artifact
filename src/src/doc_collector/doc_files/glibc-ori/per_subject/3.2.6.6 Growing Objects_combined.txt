@@ -1,0 +1,71 @@
+Because memory in obstack chunks is used sequentially, it is possible to build up an object step by step, adding one or more bytes at a time to the end of the object.  With this technique, you do not need to know how much data you will put in the object until you come to the end of it.  We call this the technique of growing objects.  The special functions for adding data to the growing object are described in this section. 
+You don’t need to do anything special when you start to grow an object. Using one of the functions to add data to the object automatically starts it.  However, it is necessary to say explicitly when the object is finished.  This is done with the function obstack_finish. 
+The actual address of the object thus built up is not known until the object is finished.  Until then, it always remains possible that you will add so much data that the object must be copied into a new chunk. 
+While the obstack is in use for a growing object, you cannot use it for ordinary allocation of another object.  If you try to do so, the space already added to the growing object will become part of the other object. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void obstack_blank (struct obstack *obstack-ptr, int size)
+Preliminary: | MT-Safe race:obstack-ptr | AS-Safe  | AC-Unsafe corrupt mem | See POSIX Safety Concepts. 
+The most basic function for adding to a growing object is obstack_blank, which adds space without initializing it. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void obstack_grow (struct obstack *obstack-ptr, void *data, int size)
+Preliminary: | MT-Safe race:obstack-ptr | AS-Safe  | AC-Unsafe corrupt mem | See POSIX Safety Concepts. 
+To add a block of initialized space, use obstack_grow, which is the growing-object analogue of obstack_copy.  It adds size bytes of data to the growing object, copying the contents from data. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void obstack_grow0 (struct obstack *obstack-ptr, void *data, int size)
+Preliminary: | MT-Safe race:obstack-ptr | AS-Safe  | AC-Unsafe corrupt mem | See POSIX Safety Concepts. 
+This is the growing-object analogue of obstack_copy0.  It adds size bytes copied from data, followed by an additional null character. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void obstack_1grow (struct obstack *obstack-ptr, char c)
+Preliminary: | MT-Safe race:obstack-ptr | AS-Safe  | AC-Unsafe corrupt mem | See POSIX Safety Concepts. 
+To add one character at a time, use the function obstack_1grow. It adds a single byte containing c to the growing object. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void obstack_ptr_grow (struct obstack *obstack-ptr, void *data)
+Preliminary: | MT-Safe race:obstack-ptr | AS-Safe  | AC-Unsafe corrupt mem | See POSIX Safety Concepts. 
+Adding the value of a pointer one can use the function obstack_ptr_grow.  It adds sizeof (void *) bytes containing the value of data. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void obstack_int_grow (struct obstack *obstack-ptr, int data)
+Preliminary: | MT-Safe race:obstack-ptr | AS-Safe  | AC-Unsafe corrupt mem | See POSIX Safety Concepts. 
+A single value of type int can be added by using the obstack_int_grow function.  It adds sizeof (int) bytes to the growing object and initializes them with the value of data. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void * obstack_finish (struct obstack *obstack-ptr)
+Preliminary: | MT-Safe race:obstack-ptr | AS-Safe  | AC-Unsafe corrupt | See POSIX Safety Concepts. 
+When you are finished growing the object, use the function obstack_finish to close it off and return its final address. 
+Once you have finished the object, the obstack is available for ordinary allocation or for growing another object. 
+This function can return a null pointer under the same conditions as obstack_alloc (see Allocation in an Obstack). 
+<<<<<<<<<<<<<<<<<<<<
+
+When you build an object by growing it, you will probably need to know afterward how long it became.  You need not keep track of this as you grow the object, because you can find out the length from the obstack just before finishing the object with the function obstack_object_size, declared as follows: 
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int obstack_object_size (struct obstack *obstack-ptr)
+Preliminary: | MT-Safe race:obstack-ptr | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function returns the current size of the growing object, in bytes. Remember to call this function before finishing the object. After it is finished, obstack_object_size will return zero. 
+<<<<<<<<<<<<<<<<<<<<
+
+If you have started growing an object and wish to cancel it, you should finish it and then free it, like this: 
+
+EXAMPLE_BEGIN
+obstack_free (obstack_ptr, obstack_finish (obstack_ptr));
+EXAMPLE_END
+
+This has no effect if no object was growing. 
+You can use obstack_blank with a negative size argument to make the current object smaller.  Just don’t try to shrink it beyond zero length—there’s no telling what will happen if you do that. 

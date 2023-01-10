@@ -1,0 +1,3 @@
+This section describes functions for performing integer division.  These functions are redundant when GNU CC is used, because in GNU C the ‘/’ operator always rounds towards zero.  But in other C implementations, ‘/’ may round differently with negative arguments. div and ldiv are useful because they specify how to round the quotient: towards zero.  The remainder has the same sign as the numerator. 
+These functions are specified to return a result r such that the value r.quot*denominator + r.rem equals numerator. 
+To use these facilities, you should include the header file stdlib.h in your program. 

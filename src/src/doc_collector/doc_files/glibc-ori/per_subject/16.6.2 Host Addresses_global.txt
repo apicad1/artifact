@@ -1,0 +1,15 @@
+Each computer on the Internet has one or more Internet addresses, numbers which identify that computer among all those on the Internet. Users typically write IPv4 numeric host addresses as sequences of four numbers, separated by periods, as in ‘128.52.46.32’, and IPv6 numeric host addresses as sequences of up to eight numbers separated by colons, as in ‘5f03:1200:836f:c100::1’. 
+Each computer also has one or more host names, which are strings of words separated by periods, as in ‘www.gnu.org’. 
+Programs that let the user specify a host typically accept both numeric addresses and host names.  To open a connection a program needs a numeric address, and so must convert a host name to the numeric address it stands for. 
+
+TABLE_BEGIN
+ • Abstract Host Addresses    What a host number consists of.
+
+ • Data type    Data type for a host number.
+
+ • Functions    Functions to operate on them.
+
+ • Names    Translating host names to host numbers.
+
+TABLE_END
+

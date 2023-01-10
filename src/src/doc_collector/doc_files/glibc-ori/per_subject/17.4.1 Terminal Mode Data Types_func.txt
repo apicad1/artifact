@@ -1,0 +1,33 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: struct termios
+A struct termios records all the I/O attributes of a terminal.  The structure includes at least the following members: 
+	tcflag_t c_iflag
+A bit mask specifying flags for input modes; see Input Modes.  
+	tcflag_t c_oflag
+A bit mask specifying flags for output modes; see Output Modes.  
+	tcflag_t c_cflag
+A bit mask specifying flags for control modes; see Control Modes.  
+	tcflag_t c_lflag
+A bit mask specifying flags for local modes; see Local Modes.  
+	cc_t c_cc[NCCS]
+An array specifying which characters are associated with various control functions; see Special Characters. 
+The struct termios structure also contains members which encode input and output transmission speeds, but the representation is not specified.  See Line Speed, for how to examine and store the speed values. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: tcflag_t
+This is an unsigned integer type used to represent the various bit masks for terminal flags. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: cc_t
+This is an unsigned integer type used to represent characters associated with various terminal control functions. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int NCCS
+The value of this macro is the number of elements in the c_cc array. 

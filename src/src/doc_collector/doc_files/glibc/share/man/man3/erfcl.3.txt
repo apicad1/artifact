@@ -1,0 +1,79 @@
+ERFC(3)                                         Linux Programmer's Manual                                        ERFC(3)
+
+NAME
+       erfc, erfcf, erfcl - complementary error function
+
+SYNOPSIS
+       #include <math.h>
+
+       double erfc(double x);
+       float erfcf(float x);
+       long double erfcl(long double x);
+
+       Link with -lm.
+
+   Feature Test Macro Requirements for glibc (see feature_test_macros(7)):
+
+       erfc():
+           _ISOC99_SOURCE || _POSIX_C_SOURCE >= 200112L || _XOPEN_SOURCE
+               || /* Since glibc 2.19: */ _DEFAULT_SOURCE
+               || /* Glibc versions <= 2.19: */ _BSD_SOURCE || _SVID_SOURCE
+       erfcf(), erfcl():
+           _ISOC99_SOURCE || _POSIX_C_SOURCE >= 200112L
+               || /* Since glibc 2.19: */ _DEFAULT_SOURCE
+               || /* Glibc versions <= 2.19: */ _BSD_SOURCE || _SVID_SOURCE
+
+DESCRIPTION
+       These functions return the complementary error function of x, that is, 1.0 - erf(x).
+
+RETURN VALUE
+       On success, these functions return the complementary error function of x, a value in the range [0,2].
+
+       If x is a NaN, a NaN is returned.
+
+       If x is +0 or -0, 1 is returned.
+
+       If x is positive infinity, +0 is returned.
+
+       If x is negative infinity, +2 is returned.
+
+       If the function result underflows and produces an unrepresentable value, the return value is 0.0.
+
+       If  the  function result underflows but produces a representable (i.e., subnormal) value, that value is returned,
+       and a range error occurs.
+
+ERRORS
+       See math_error(7) for information on how to determine whether an error has occurred when calling these functions.
+
+       The following errors can occur:
+
+       Range error: result underflow (result is subnormal)
+              An underflow floating-point exception (FE_UNDERFLOW) is raised.
+
+       These functions do not set errno.
+
+ATTRIBUTES
+       For an explanation of the terms used in this section, see attributes(7).
+
+       ┌─────────────────────────┬───────────────┬─────────┐
+       │Interface                │ Attribute     │ Value   │
+       ├─────────────────────────┼───────────────┼─────────┤
+       │erfc(), erfcf(), erfcl() │ Thread safety │ MT-Safe │
+       └─────────────────────────┴───────────────┴─────────┘
+CONFORMING TO
+       C99, POSIX.1-2001, POSIX.1-2008.
+
+       The variant returning double also conforms to SVr4, 4.3BSD.
+
+NOTES
+       The erfc(), erfcf(), and erfcl() functions are provided to avoid the loss accuracy that would occur for the  cal‐
+       culation 1-erf(x) for large values of x (for which the value of erf(x) approaches 1).
+
+SEE ALSO
+       cerf(3), erf(3), exp(3)
+
+COLOPHON
+       This  page  is  part  of  release 5.05 of the Linux man-pages project.  A description of the project, information
+       about reporting bugs, and the latest version of this page, can be found at https://www.kernel.org/doc/man-pages/.
+
+GNU                                                    2017-09-15                                                ERFC(3)

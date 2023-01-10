@@ -1,0 +1,29 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int asprintf (char **ptr, const char *template, …)
+Preliminary: | MT-Safe locale | AS-Unsafe heap | AC-Unsafe mem | See POSIX Safety Concepts. 
+This function is similar to sprintf, except that it dynamically allocates a string (as with malloc; see Unconstrained Allocation) to hold the output, instead of putting the output in a buffer you allocate in advance.  The ptr argument should be the address of a char * object, and a successful call to asprintf stores a pointer to the newly allocated string at that location. 
+The return value is the number of characters allocated for the buffer, or less than zero if an error occurred.  Usually this means that the buffer could not be allocated. 
+Here is how to use asprintf to get the same result as the snprintf example, but more easily: 
+
+EXAMPLE_BEGIN
+/* Construct a message describing the value of a variable
+   whose name is name and whose value is value. */
+char *
+make_message (char *name, char *value)
+{
+  char *result;
+  if (asprintf (&result, "value of %s is %s", name, value) < 0)
+    return NULL;
+  return result;
+}
+EXAMPLE_END
+
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int obstack_printf (struct obstack *obstack, const char *template, …)
+Preliminary: | MT-Safe race:obstack locale | AS-Unsafe corrupt heap | AC-Unsafe corrupt mem | See POSIX Safety Concepts. 
+This function is similar to asprintf, except that it uses the obstack obstack to allocate the space.  See Obstacks. 
+The characters are written onto the end of the current object. To get at them, you must finish the object with obstack_finish (see Growing Objects). 

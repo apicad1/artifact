@@ -1,0 +1,3 @@
+The memfrob function reversibly obfuscates an array of binary data.  This is not true encryption; the obfuscated data still bears a clear relationship to the original, and no secret key is required to undo the obfuscation.  It is analogous to the “Rot13” cipher used on Usenet for obscuring offensive jokes, spoilers for works of fiction, and so on, but it can be applied to arbitrary binary data. 
+Programs that need true encryption—a transformation that completely obscures the original and cannot be reversed without knowledge of a secret key—should use a dedicated cryptography library, such as libgcrypt. 
+Programs that need to destroy data should use explicit_bzero (see Erasing Sensitive Data), or possibly strfry (see Shuffling Bytes). 

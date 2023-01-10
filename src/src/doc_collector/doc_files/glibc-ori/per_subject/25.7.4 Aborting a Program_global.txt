@@ -1,0 +1,1 @@
+You can abort your program using the abort function.  The prototype for this function is in stdlib.h.  

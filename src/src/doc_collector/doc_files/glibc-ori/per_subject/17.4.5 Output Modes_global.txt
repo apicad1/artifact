@@ -1,0 +1,3 @@
+This section describes the terminal flags and fields that control how output characters are translated and padded for display.  All of these are contained in the c_oflag member of the struct termios structure. 
+The c_oflag member itself is an integer, and you change the flags and fields using the operators &, |, and ^.  Don’t try to specify the entire value for c_oflag—instead, change only specific flags and leave the rest untouched (see Setting Modes). 
+The following three bits are effective only if OPOST is set. 

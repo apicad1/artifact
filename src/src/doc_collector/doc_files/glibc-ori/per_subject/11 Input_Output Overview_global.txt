@@ -1,0 +1,11 @@
+Most programs need to do either input (reading data) or output (writing data), or most frequently both, in order to do anything useful.  The GNU C Library provides such a large selection of input and output functions that the hardest part is often deciding which function is most appropriate! 
+This chapter introduces concepts and terminology relating to input and output.  Other chapters relating to the GNU I/O facilities are: 
+  I/O on Streams, which covers the high-level functions that operate on streams, including formatted input and output.   Low-Level I/O, which covers the basic I/O and control functions on file descriptors.   File System Interface, which covers functions for operating on directories and for manipulating file attributes such as access modes and ownership.   Pipes and FIFOs, which includes information on the basic interprocess communication facilities.   Sockets, which covers a more complicated interprocess communication facility with support for networking.   Low-Level Terminal Interface, which covers functions for changing how input and output to terminals or other serial devices are processed. 
+
+TABLE_BEGIN
+ • I/O Concepts    Some basic information and terminology.
+
+ • File Names    How to refer to a file.
+
+TABLE_END
+

@@ -1,0 +1,25 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: double HUGE_VAL
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: float HUGE_VALF
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: long double HUGE_VALL
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: _FloatN HUGE_VAL_FN
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: _FloatNx HUGE_VAL_FNx
+An expression representing a particular very large number.  On machines that use IEEE 754 floating point format, HUGE_VAL is infinity. On other machines, it’s typically the largest positive number that can be represented. 
+Mathematical functions return the appropriately typed version of HUGE_VAL or -HUGE_VAL when the result is too large to be represented. 

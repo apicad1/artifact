@@ -1,0 +1,51 @@
+This section describes how to open a directory stream.  All the symbols are declared in the header file dirent.h. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: DIR
+The DIR data type represents a directory stream. 
+<<<<<<<<<<<<<<<<<<<<
+
+You shouldn’t ever allocate objects of the struct dirent or DIR data types, since the directory access functions do that for you.  Instead, you refer to these objects using the pointers returned by the following functions. 
+Directory streams are a high-level interface.  On Linux, alternative interfaces for accessing directories using file descriptors are available.  See Low-level Directory Access. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: DIR * opendir (const char *dirname)
+Preliminary: | MT-Safe  | AS-Unsafe heap | AC-Unsafe mem fd | See POSIX Safety Concepts. 
+The opendir function opens and returns a directory stream for reading the directory whose file name is dirname.  The stream has type DIR *. 
+If unsuccessful, opendir returns a null pointer.  In addition to the usual file name errors (see File Name Errors), the following errno error conditions are defined for this function: 
+	EACCES
+Read permission is denied for the directory named by dirname.  
+	EMFILE
+The process has too many files open.  
+	ENFILE
+The entire system, or perhaps the file system which contains the directory, cannot support any additional open files at the moment. (This problem cannot happen on GNU/Hurd systems.)  
+	ENOMEM
+Not enough memory available. 
+The DIR type is typically implemented using a file descriptor, and the opendir function in terms of the open function. See Low-Level I/O.  Directory streams and the underlying file descriptors are closed on exec (see Executing a File). 
+<<<<<<<<<<<<<<<<<<<<
+
+The directory which is opened for reading by opendir is identified by the name.  In some situations this is not sufficient. Or the way opendir implicitly creates a file descriptor for the directory is not the way a program might want it.  In these cases an alternative interface can be used. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: DIR * fdopendir (int fd)
+Preliminary: | MT-Safe  | AS-Unsafe heap | AC-Unsafe mem fd | See POSIX Safety Concepts. 
+The fdopendir function works just like opendir but instead of taking a file name and opening a file descriptor for the directory the caller is required to provide a file descriptor.  This file descriptor is then used in subsequent uses of the returned directory stream object. 
+The caller must make sure the file descriptor is associated with a directory and it allows reading. 
+If the fdopendir call returns successfully the file descriptor is now under the control of the system.  It can be used in the same way the descriptor implicitly created by opendir can be used but the program must not close the descriptor. 
+In case the function is unsuccessful it returns a null pointer and the file descriptor remains to be usable by the program.  The following errno error conditions are defined for this function: 
+	EBADF
+The file descriptor is not valid.  
+	ENOTDIR
+The file descriptor is not associated with a directory.  
+	EINVAL
+The descriptor does not allow reading the directory content.  
+	ENOMEM
+Not enough memory available. 
+<<<<<<<<<<<<<<<<<<<<
+
+In some situations it can be desirable to get hold of the file descriptor which is created by the opendir call.  For instance, to switch the current working directory to the directory just read the fchdir function could be used.  Historically the DIR type was exposed and programs could access the fields.  This does not happen in the GNU C Library.  Instead a separate function is provided to allow access. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int dirfd (DIR *dirstream)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The function dirfd returns the file descriptor associated with the directory stream dirstream.  This descriptor can be used until the directory is closed with closedir.  If the directory stream implementation is not using file descriptors the return value is -1. 

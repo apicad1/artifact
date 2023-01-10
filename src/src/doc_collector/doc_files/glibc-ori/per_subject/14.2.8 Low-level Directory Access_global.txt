@@ -1,0 +1,2 @@
+The stream-based directory functions are not AS-Safe and cannot be used after vfork.  See POSIX Safety Concepts.  The functions below provide an alternative that can be used in these contexts. 
+Directory data is obtained from a file descriptor, as created by the open function, with or without the O_DIRECTORY flag. See Opening and Closing Files. 

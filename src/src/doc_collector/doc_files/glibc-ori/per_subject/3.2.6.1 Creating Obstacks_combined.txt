@@ -1,0 +1,11 @@
+The utilities for manipulating obstacks are declared in the header file obstack.h.  
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: struct obstack
+An obstack is represented by a data structure of type struct obstack.  This structure has a small fixed size; it records the status of the obstack and how to find the space in which objects are allocated. It does not contain any of the objects themselves.  You should not try to access the contents of the structure directly; use only the functions described in this chapter. 
+<<<<<<<<<<<<<<<<<<<<
+
+You can declare variables of type struct obstack and use them as obstacks, or you can allocate obstacks dynamically like any other kind of object.  Dynamic allocation of obstacks allows your program to have a variable number of different stacks.  (You can even allocate an obstack structure in another obstack, but this is rarely useful.) 
+All the functions that work with obstacks require you to specify which obstack to use.  You do this with a pointer of type struct obstack *.  In the following, we often say “an obstack” when strictly speaking the object at hand is such a pointer. 
+The objects in the obstack are packed into large blocks called chunks.  The struct obstack structure points to a chain of the chunks currently in use. 
+The obstack library obtains a new chunk whenever you allocate an object that won’t fit in the previous chunk.  Since the obstack library manages chunks automatically, you don’t need to pay much attention to them, but you do need to supply a function which the obstack library should use to get a chunk.  Usually you supply a function which uses malloc directly or indirectly.  You must also supply a function to free a chunk. These matters are described in the following section. 

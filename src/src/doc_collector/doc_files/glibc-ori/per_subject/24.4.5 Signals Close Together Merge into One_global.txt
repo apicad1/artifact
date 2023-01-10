@@ -1,0 +1,119 @@
+If multiple signals of the same type are delivered to your process before your signal handler has a chance to be invoked at all, the handler may only be invoked once, as if only a single signal had arrived.  In effect, the signals merge into one.  This situation can arise when the signal is blocked, or in a multiprocessing environment where the system is busy running some other processes while the signals are delivered.  This means, for example, that you cannot reliably use a signal handler to count signals.  The only distinction you can reliably make is whether at least one signal has arrived since a given time in the past. 
+Here is an example of a handler for SIGCHLD that compensates for the fact that the number of signals received may not equal the number of child processes that generate them.  It assumes that the program keeps track of all the child processes with a chain of structures as follows: 
+
+EXAMPLE_BEGIN
+struct process
+{
+  struct process *next;
+  /* The process ID of this child.  */
+  int pid;
+  /* The descriptor of the pipe or pseudo terminal
+     on which output comes from this child.  */
+  int input_descriptor;
+  /* Nonzero if this process has stopped or terminated.  */
+  sig_atomic_t have_status;
+  /* The status of this child; 0 if running,
+     otherwise a status value from waitpid.  */
+  int status;
+};
+
+struct process *process_list;
+EXAMPLE_END
+
+This example also uses a flag to indicate whether signals have arrived since some time in the past—whenever the program last cleared it to zero. 
+
+EXAMPLE_BEGIN
+/* Nonzero means some child’s status has changed
+   so look at process_list for the details.  */
+int process_status_change;
+EXAMPLE_END
+
+Here is the handler itself: 
+
+EXAMPLE_BEGIN
+void
+sigchld_handler (int signo)
+{
+  int old_errno = errno;
+
+  while (1) {
+    register int pid;
+    int w;
+    struct process *p;
+
+    /* Keep asking for a status until we get a definitive result.  */
+    do
+      {
+        errno = 0;
+        pid = waitpid (WAIT_ANY, &w, WNOHANG | WUNTRACED);
+      }
+    while (pid <= 0 && errno == EINTR);
+
+    if (pid <= 0) {
+      /* A real failure means there are no more
+         stopped or terminated child processes, so return.  */
+      errno = old_errno;
+      return;
+    }
+
+    /* Find the process that signaled us, and record its status.  */
+
+    for (p = process_list; p; p = p->next)
+      if (p->pid == pid) {
+        p->status = w;
+        /* Indicate that the status field
+           has data to look at.  We do this only after storing it.  */
+        p->have_status = 1;
+
+        /* If process has terminated, stop waiting for its output.  */
+        if (WIFSIGNALED (w) || WIFEXITED (w))
+          if (p->input_descriptor)
+            FD_CLR (p->input_descriptor, &input_wait_mask);
+
+        /* The program should check this flag from time to time
+           to see if there is any news in process_list.  */
+        ++process_status_change;
+      }
+
+    /* Loop around to handle all the processes
+       that have something to tell us.  */
+  }
+}
+EXAMPLE_END
+
+Here is the proper way to check the flag process_status_change: 
+
+EXAMPLE_BEGIN
+if (process_status_change) {
+  struct process *p;
+  process_status_change = 0;
+  for (p = process_list; p; p = p->next)
+    if (p->have_status) {
+      … Examine p->status …
+    }
+}
+EXAMPLE_END
+
+It is vital to clear the flag before examining the list; otherwise, if a signal were delivered just before the clearing of the flag, and after the appropriate element of the process list had been checked, the status change would go unnoticed until the next signal arrived to set the flag again.  You could, of course, avoid this problem by blocking the signal while scanning the list, but it is much more elegant to guarantee correctness by doing things in the right order. 
+The loop which checks process status avoids examining p->status until it sees that status has been validly stored.  This is to make sure that the status cannot change in the middle of accessing it.  Once p->have_status is set, it means that the child process is stopped or terminated, and in either case, it cannot stop or terminate again until the program has taken notice.  See Atomic Usage, for more information about coping with interruptions during accesses of a variable. 
+Here is another way you can test whether the handler has run since the last time you checked.  This technique uses a counter which is never changed outside the handler.  Instead of clearing the count, the program remembers the previous value and sees whether it has changed since the previous check.  The advantage of this method is that different parts of the program can check independently, each part checking whether there has been a signal since that part last checked. 
+
+EXAMPLE_BEGIN
+sig_atomic_t process_status_change;
+
+sig_atomic_t last_process_status_change;
+
+…
+{
+  sig_atomic_t prev = last_process_status_change;
+  last_process_status_change = process_status_change;
+  if (last_process_status_change != prev) {
+    struct process *p;
+    for (p = process_list; p; p = p->next)
+      if (p->have_status) {
+        … Examine p->status …
+      }
+  }
+}
+EXAMPLE_END
+

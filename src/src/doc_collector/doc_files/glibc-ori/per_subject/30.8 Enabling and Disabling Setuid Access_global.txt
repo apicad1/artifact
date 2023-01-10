@@ -1,0 +1,39 @@
+A typical setuid program does not need its special access all of the time.  It’s a good idea to turn off this access when it isn’t needed, so it can’t possibly give unintended access. 
+If the system supports the _POSIX_SAVED_IDS feature, you can accomplish this with seteuid.  When the game program starts, its real user ID is jdoe, its effective user ID is games, and its saved user ID is also games.  The program should record both user ID values once at the beginning, like this: 
+
+EXAMPLE_BEGIN
+user_user_id = getuid ();
+game_user_id = geteuid ();
+EXAMPLE_END
+
+Then it can turn off game file access with 
+
+EXAMPLE_BEGIN
+seteuid (user_user_id);
+EXAMPLE_END
+
+and turn it on with 
+
+EXAMPLE_BEGIN
+seteuid (game_user_id);
+EXAMPLE_END
+
+Throughout this process, the real user ID remains jdoe and the file user ID remains games, so the program can always set its effective user ID to either one. 
+On other systems that don’t support file user IDs, you can turn setuid access on and off by using setreuid to swap the real and effective user IDs of the process, as follows: 
+
+EXAMPLE_BEGIN
+setreuid (geteuid (), getuid ());
+EXAMPLE_END
+
+This special case is always allowed—it cannot fail. 
+Why does this have the effect of toggling the setuid access?  Suppose a game program has just started, and its real user ID is jdoe while its effective user ID is games.  In this state, the game can write the scores file.  If it swaps the two uids, the real becomes games and the effective becomes jdoe; now the program has only jdoe access.  Another swap brings games back to the effective user ID and restores access to the scores file. 
+In order to handle both kinds of systems, test for the saved user ID feature with a preprocessor conditional, like this: 
+
+EXAMPLE_BEGIN
+#ifdef _POSIX_SAVED_IDS
+  seteuid (user_user_id);
+#else
+  setreuid (geteuid (), getuid ());
+#endif
+EXAMPLE_END
+

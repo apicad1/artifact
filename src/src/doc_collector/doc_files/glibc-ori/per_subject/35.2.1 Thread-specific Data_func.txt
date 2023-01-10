@@ -1,0 +1,27 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int pthread_key_create (pthread_key_t *key, void (*destructor)(void*))
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+Create a thread-specific data key for the calling thread, referenced by key. 
+Objects declared with the C++11 thread_local keyword are destroyed before thread-specific data, so they should not be used in thread-specific data destructors or even as members of the thread-specific data, since the latter is passed as an argument to the destructor function. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int pthread_key_delete (pthread_key_t key)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+Destroy the thread-specific data key in the calling thread.  The destructor for the thread-specific data is not called during destruction, nor is it called during thread exit. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void *pthread_getspecific (pthread_key_t key)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+Return the thread-specific data associated with key in the calling thread. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int pthread_setspecific (pthread_key_t key, const void *value)
+Preliminary: | MT-Safe  | AS-Unsafe corrupt heap | AC-Unsafe corrupt mem | See POSIX Safety Concepts. 
+Associate the thread-specific value with key in the calling thread. 

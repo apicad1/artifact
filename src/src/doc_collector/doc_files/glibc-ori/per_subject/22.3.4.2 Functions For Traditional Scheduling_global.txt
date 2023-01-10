@@ -1,0 +1,5 @@
+This section describes how you can read and set the nice value of a process.  All these symbols are declared in sys/resource.h. 
+The function and macro names are defined by POSIX, and refer to "priority," but the functions actually have to do with nice values, as the terms are used both in the manual and POSIX. 
+The range of valid nice values depends on the kernel, but typically it runs from -20 to 20.  A lower nice value corresponds to higher priority for the process.  These constants describe the range of priority values: 
+The arguments class and id together specify a set of processes in which you are interested.  These are the possible values of class: 
+If the argument id is 0, it stands for the calling process, its process group, or its owner (real uid), according to class. 

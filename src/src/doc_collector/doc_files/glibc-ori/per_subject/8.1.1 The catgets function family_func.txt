@@ -1,0 +1,77 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: nl_catd catopen (const char *cat_name, int flag)
+Preliminary: | MT-Safe env | AS-Unsafe heap | AC-Unsafe mem | See POSIX Safety Concepts. 
+The catopen function tries to locate the message data file named cat_name and loads it when found.  The return value is of an opaque type and can be used in calls to the other functions to refer to this loaded catalog. 
+The return value is (nl_catd) -1 in case the function failed and no catalog was loaded.  The global variable errno contains a code for the error causing the failure.  But even if the function call succeeded this does not mean that all messages can be translated. 
+Locating the catalog file must happen in a way which lets the user of the program influence the decision.  It is up to the user to decide about the language to use and sometimes it is useful to use alternate catalog files.  All this can be specified by the user by setting some environment variables. 
+The first problem is to find out where all the message catalogs are stored.  Every program could have its own place to keep all the different files but usually the catalog files are grouped by languages and the catalogs for all programs are kept in the same place. 
+
+To tell the catopen function where the catalog for the program can be found the user can set the environment variable NLSPATH to a value which describes her/his choice.  Since this value must be usable for different languages and locales it cannot be a simple string. Instead it is a format string (similar to printf’s).  An example is 
+
+EXAMPLE_BEGIN
+/usr/share/locale/%L/%N:/usr/share/locale/%L/LC_MESSAGES/%N
+EXAMPLE_END
+
+First one can see that more than one directory can be specified (with the usual syntax of separating them by colons).  The next things to observe are the format string, %L and %N in this case. The catopen function knows about several of them and the replacement for all of them is of course different. 
+	%N
+This format element is substituted with the name of the catalog file. This is the value of the cat_name argument given to catgets.  
+	%L
+This format element is substituted with the name of the currently selected locale for translating messages.  How this is determined is explained below.  
+	%l
+(This is the lowercase ell.) This format element is substituted with the language element of the locale name.  The string describing the selected locale is expected to have the form lang[_terr[.codeset]] and this format uses the first part lang.  
+	%t
+This format element is substituted by the territory part terr of the name of the currently selected locale.  See the explanation of the format above.  
+	%c
+This format element is substituted by the codeset part codeset of the name of the currently selected locale.  See the explanation of the format above.  
+	%%
+Since % is used as a meta character there must be a way to express the % character in the result itself.  Using %% does this just like it works for printf. 
+Using NLSPATH allows arbitrary directories to be searched for message catalogs while still allowing different languages to be used. If the NLSPATH environment variable is not set, the default value is 
+
+EXAMPLE_BEGIN
+prefix/share/locale/%L/%N:prefix/share/locale/%L/LC_MESSAGES/%N
+EXAMPLE_END
+
+where prefix is given to configure while installing the GNU C Library (this value is in many cases /usr or the empty string). 
+The remaining problem is to decide which must be used.  The value decides about the substitution of the format elements mentioned above. First of all the user can specify a path in the message catalog name (i.e., the name contains a slash character).  In this situation the NLSPATH environment variable is not used.  The catalog must exist as specified in the program, perhaps relative to the current working directory.  This situation in not desirable and catalogs names never should be written this way.  Beside this, this behavior is not portable to all other platforms providing the catgets interface. 
+
+
+
+Otherwise the values of environment variables from the standard environment are examined (see Standard Environment).  Which variables are examined is decided by the flag parameter of catopen.  If the value is NL_CAT_LOCALE (which is defined in nl_types.h) then the catopen function uses the name of the locale currently selected for the LC_MESSAGES category. 
+If flag is zero the LANG environment variable is examined. This is a left-over from the early days when the concept of locales had not even reached the level of POSIX locales. 
+The environment variable and the locale name should have a value of the form lang[_terr[.codeset]] as explained above. If no environment variable is set the "C" locale is used which prevents any translation. 
+The return value of the function is in any case a valid string.  Either it is a translation from a message catalog or it is the same as the string parameter.  So a piece of code to decide whether a translation actually happened must look like this: 
+
+EXAMPLE_BEGIN
+{
+  char *trans = catgets (desc, set, msg, input_string);
+  if (trans == input_string)
+    {
+      /* Something went wrong.  */
+    }
+}
+EXAMPLE_END
+
+When an error occurs the global variable errno is set to 
+	EBADF
+The catalog does not exist. 
+	ENOMSG
+The set/message tuple does not name an existing element in the message catalog. 
+While it sometimes can be useful to test for errors programs normally will avoid any test.  If the translation is not available it is no big problem if the original, untranslated message is printed.  Either the user understands this as well or s/he will look for the reason why the messages are not translated. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: char * catgets (nl_catd catalog_desc, int set, int message, const char *string)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The function catgets has to be used to access the message catalog previously opened using the catopen function.  The catalog_desc parameter must be a value previously returned by catopen. 
+The next two parameters, set and message, reflect the internal organization of the message catalog files.  This will be explained in detail below.  For now it is interesting to know that a catalog can consist of several sets and the messages in each thread are individually numbered using numbers.  Neither the set number nor the message number must be consecutive.  They can be arbitrarily chosen. But each message (unless equal to another one) must have its own unique pair of set and message numbers. 
+Since it is not guaranteed that the message catalog for the language selected by the user exists the last parameter string helps to handle this case gracefully.  If no matching string can be found string is returned.  This means for the programmer that 
+  the string parameters should contain reasonable text (this also helps to understand the program seems otherwise there would be no hint on the string which is expected to be returned.  all string arguments should be written in the same language. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int catclose (nl_catd catalog_desc)
+Preliminary: | MT-Safe  | AS-Unsafe heap | AC-Unsafe corrupt mem | See POSIX Safety Concepts. 
+The catclose function can be used to free the resources associated with a message catalog which previously was opened by a call to catopen.  If the resources can be successfully freed the function returns 0.  Otherwise it returns -1 and the global variable errno is set.  Errors can occur if the catalog descriptor catalog_desc is not valid in which case errno is set to EBADF. 

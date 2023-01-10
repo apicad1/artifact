@@ -1,0 +1,14 @@
+The first argument to the argp_parse function is a pointer to a struct argp, which is known as an argp parser: 
+Of the above group, options, parser, args_doc, and the doc fields are usually all that are needed.  If an argp parser is defined as an initialized C variable, only the fields used need be specified in the initializer.  The rest will default to zero due to the way C structure initialization works.  This design is exploited in most argp structures; the most-used fields are grouped near the beginning, the unused fields left unspecified. 
+
+TABLE_BEGIN
+ • Options    Specifying options in an argp parser.
+
+ • Argp Parser Functions    Defining actions for an argp parser.
+
+ • Children    Combining multiple argp parsers.
+
+ • Help Filtering    Customizing help output for an argp parser.
+
+TABLE_END
+

@@ -1,0 +1,13 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- __TIMESIZE == 32
+These dual-time configurations have both 32-bit and 64-bit time support.  32-bit time support provides type time_t and cannot handle dates beyond Y2038.  64-bit time support provides type __time64_t and can handle dates beyond Y2038. 
+In these configurations, time-related types have two declarations, a 64-bit one, and a 32-bit one; and time-related functions generally have two definitions: a 64-bit one, and a 32-bit one which is a wrapper around the former.  Therefore, for every time_t-related symbol, there is a corresponding __time64_t-related symbol, the name of which is usually the 32-bit symbol’s name with __ (a double underscore) prepended and 64 appended.  For instance, the 64-bit-time counterpart of clock_gettime is __clock_gettime64. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- __TIMESIZE == 64
+These single-time configurations only have a 64-bit time_t and related functions, which can handle dates beyond 2038-01-19 03:14:07 (aka Y2038). 
+In these configurations, time-related types only have a 64-bit declaration; and time-related functions only have one 64-bit definition. However, for every time_t-related symbol, there is a corresponding __time64_t-related macro, the name of which is derived as in the dual-time configuration case, and which expands to the symbol’s name.  For instance, the macro __clock_gettime64 expands to clock_gettime. 
+These macros are purely internal to the GNU C Library and exist only so that a single definition of the 64-bit time functions can be used on both single-time and dual-time configurations, and so that glibc code can freely call the 64-bit functions internally in all configurations. 

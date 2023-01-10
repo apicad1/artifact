@@ -1,0 +1,54 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: struct itimerval
+This structure is used to specify when a timer should expire.  It contains the following members: 
+	struct timeval it_interval
+This is the period between successive timer interrupts.  If zero, the alarm will only be sent once.  
+	struct timeval it_value
+This is the period between now and the first timer interrupt.  If zero, the alarm is disabled. 
+The struct timeval data type is described in Time Types. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int setitimer (int which, const struct itimerval *new, struct itimerval *old)
+Preliminary: | MT-Safe timer | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The setitimer function sets the timer specified by which according to new.  The which argument can have a value of ITIMER_REAL, ITIMER_VIRTUAL, or ITIMER_PROF. 
+If old is not a null pointer, setitimer returns information about any previous unexpired timer of the same kind in the structure it points to. 
+The return value is 0 on success and -1 on failure.  The following errno error conditions are defined for this function: 
+	EINVAL
+The timer period is too large. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int getitimer (int which, struct itimerval *old)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The getitimer function stores information about the timer specified by which in the structure pointed at by old. 
+The return value and error conditions are the same as for setitimer. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ITIMER_REAL  
+This constant can be used as the which argument to the setitimer and getitimer functions to specify the real-time timer. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ITIMER_VIRTUAL  
+This constant can be used as the which argument to the setitimer and getitimer functions to specify the virtual timer. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ITIMER_PROF  
+This constant can be used as the which argument to the setitimer and getitimer functions to specify the profiling timer. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: unsigned int alarm (unsigned int seconds)
+Preliminary: | MT-Safe timer | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The alarm function sets the real-time timer to expire in seconds seconds.  If you want to cancel any existing alarm, you can do this by calling alarm with a seconds argument of zero. 
+The return value indicates how many seconds remain before the previous alarm would have been sent.  If there was no previous alarm, alarm returns zero. 

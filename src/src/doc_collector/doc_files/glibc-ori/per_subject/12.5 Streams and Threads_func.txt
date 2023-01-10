@@ -1,0 +1,34 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void flockfile (FILE *stream)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Unsafe lock | See POSIX Safety Concepts. 
+The flockfile function acquires the internal locking object associated with the stream stream.  This ensures that no other thread can explicitly through flockfile/ftrylockfile or implicitly through the call of a stream function lock the stream.  The thread will block until the lock is acquired.  An explicit call to funlockfile has to be used to release the lock. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int ftrylockfile (FILE *stream)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Unsafe lock | See POSIX Safety Concepts. 
+The ftrylockfile function tries to acquire the internal locking object associated with the stream stream just like flockfile.  But unlike flockfile this function does not block if the lock is not available.  ftrylockfile returns zero if the lock was successfully acquired.  Otherwise the stream is locked by another thread. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void funlockfile (FILE *stream)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Unsafe lock | See POSIX Safety Concepts. 
+The funlockfile function releases the internal locking object of the stream stream.  The stream must have been locked before by a call to flockfile or a successful call of ftrylockfile. The implicit locking performed by the stream operations do not count. The funlockfile function does not return an error status and the behavior of a call for a stream which is not locked by the current thread is undefined. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int __fsetlocking (FILE *stream, int type)
+Preliminary: | MT-Safe race:stream | AS-Unsafe lock | AC-Safe  | See POSIX Safety Concepts. 
+The __fsetlocking function can be used to select whether the stream operations will implicitly acquire the locking object of the stream stream.  By default this is done but it can be disabled and reinstated using this function.  There are three values defined for the type parameter. 
+	FSETLOCKING_INTERNAL  
+The stream stream will from now on use the default internal locking.  Every stream operation with exception of the _unlocked variants will implicitly lock the stream.  
+	FSETLOCKING_BYCALLER  
+After the __fsetlocking function returns, the user is responsible for locking the stream.  None of the stream operations will implicitly do this anymore until the state is set back to FSETLOCKING_INTERNAL.  
+	FSETLOCKING_QUERY  
+__fsetlocking only queries the current locking state of the stream.  The return value will be FSETLOCKING_INTERNAL or FSETLOCKING_BYCALLER depending on the state. 
+The return value of __fsetlocking is either FSETLOCKING_INTERNAL or FSETLOCKING_BYCALLER depending on the state of the stream before the call. 
+This function and the values for the type parameter are declared in stdio_ext.h. 

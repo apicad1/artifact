@@ -1,0 +1,37 @@
+This subsection describes functions for allocating a pseudo-terminal, and for making this pseudo-terminal available for actual use.  These functions are declared in the header file stdlib.h. 
+Typical usage of these functions is illustrated by the following example: 
+
+EXAMPLE_BEGIN
+int
+open_pty_pair (int *amaster, int *aslave)
+{
+  int master, slave;
+  char *name;
+
+  master = getpt ();
+  if (master < 0)
+    return 0;
+
+  if (grantpt (master) < 0 || unlockpt (master) < 0)
+    goto close_master;
+  name = ptsname (master);
+  if (name == NULL)
+    goto close_master;
+
+  slave = open (name, O_RDWR);
+  if (slave == -1)
+    goto close_master;
+
+  *amaster = master;
+  *aslave = slave;
+  return 1;
+
+close_slave:
+  close (slave);
+
+close_master:
+  close (master);
+  return 0;
+}
+EXAMPLE_END
+

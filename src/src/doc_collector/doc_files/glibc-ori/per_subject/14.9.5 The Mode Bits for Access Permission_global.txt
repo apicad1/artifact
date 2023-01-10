@@ -1,0 +1,5 @@
+The file mode, stored in the st_mode field of the file attributes, contains two kinds of information: the file type code, and the access permission bits.  This section discusses only the access permission bits, which control who can read or write the file. See Testing File Type, for information about the file type code. 
+All of the symbols listed in this section are defined in the header file sys/stat.h.  
+These symbolic constants are defined for the file mode bits that control access permission for the file: 
+The actual bit values of the symbols are listed in the table above so you can decode file mode values when debugging your programs. These bit values are correct for most systems, but they are not guaranteed. 
+Warning: Writing explicit numbers for file permissions is bad practice.  Not only is it not portable, it also requires everyone who reads your program to remember what the bits mean.  To make your program clean use the symbolic names. 

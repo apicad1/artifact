@@ -1,0 +1,15 @@
+The use of threads or processes with shared memory allows an application to take advantage of all the processing power a system can provide.  If the task can be parallelized the optimal way to write an application is to have at any time as many processes running as there are processors. To determine the number of processors available to the system one can run 
+
+EXAMPLE_BEGIN
+  sysconf (_SC_NPROCESSORS_CONF)
+EXAMPLE_END
+
+which returns the number of processors the operating system configured. But it might be possible for the operating system to disable individual processors and so the call 
+
+EXAMPLE_BEGIN
+  sysconf (_SC_NPROCESSORS_ONLN)
+EXAMPLE_END
+
+returns the number of processors which are currently online (i.e., available). 
+For these two pieces of information the GNU C Library also provides functions to get the information directly.  The functions are declared in sys/sysinfo.h. 
+Before starting more threads it should be checked whether the processors are not already overused.  Unix systems calculate something called the load average.  This is a number indicating how many processes were running.  This number is an average over different periods of time (normally 1, 5, and 15 minutes). 

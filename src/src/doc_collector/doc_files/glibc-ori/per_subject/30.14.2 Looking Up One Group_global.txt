@@ -1,0 +1,1 @@
+You can search the group database for information about a specific group using getgrgid or getgrnam.  These functions are declared in grp.h. 

@@ -1,0 +1,5 @@
+The sa_flags member of the sigaction structure is a catch-all for special features.  Most of the time, SA_RESTART is a good value to use for this field. 
+The value of sa_flags is interpreted as a bit mask.  Thus, you should choose the flags you want to set, OR those flags together, and store the result in the sa_flags member of your sigaction structure. 
+Each signal number has its own set of flags.  Each call to sigaction affects one particular signal number, and the flags that you specify apply only to that particular signal. 
+In the GNU C Library, establishing a handler with signal sets all the flags to zero except for SA_RESTART, whose value depends on the settings you have made with siginterrupt.  See Interrupted Primitives, to see what this is about. 
+These macros are defined in the header file signal.h. 

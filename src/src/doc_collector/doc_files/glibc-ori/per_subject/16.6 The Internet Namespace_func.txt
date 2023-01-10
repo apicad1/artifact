@@ -1,0 +1,10 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int PF_INET
+This designates the IPv4 Internet namespace and associated family of protocols. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int PF_INET6
+This designates the IPv6 Internet namespace and associated family of protocols. 

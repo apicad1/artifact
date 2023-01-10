@@ -1,0 +1,4 @@
+In addition to key values corresponding to user options, the key argument to argp parser functions may have a number of other special values.  In the following example arg and state refer to parser function arguments.  See Argp Parser Functions. 
+In all cases, ARGP_KEY_INIT is the first key seen by parser functions, and ARGP_KEY_FINI the last, unless an error was returned by the parser for ARGP_KEY_INIT.  Other keys can occur in one the following orders.  opt refers to an arbitrary option key: 
+In all cases, if a non-null value for arg_index gets passed to argp_parse, the index of the first unparsed command-line argument is passed back in that value. 
+If an error occurs and is either detected by argp or because a parser function returned an error value, each parser is called with ARGP_KEY_ERROR.  No further calls are made, except the final call with ARGP_KEY_FINI. 

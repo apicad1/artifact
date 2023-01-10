@@ -1,0 +1,13 @@
+If you’re trying to optimize your program or measure its efficiency, it’s very useful to know how much processor time it uses.  For that, calendar time and elapsed times are useless because a process may spend time waiting for I/O or for other processes to use the CPU.  However, you can get the information with the functions in this section. 
+CPU time (see Time Basics) is represented by the data type clock_t, which is a number of clock ticks.  It gives the total amount of time a process has actively used a CPU since some arbitrary event.  On GNU systems, that event is the creation of the process.  While arbitrary in general, the event is always the same event for any particular process, so you can always measure how much time on the CPU a particular computation takes by examining the process’ CPU time before and after the computation.    
+On GNU/Linux and GNU/Hurd systems, clock_t is equivalent to long int and CLOCKS_PER_SEC is an integer value.  But in other systems, both clock_t and the macro CLOCKS_PER_SEC can be either integer or floating-point types.  Casting CPU time values to double, as in the example above, makes sure that operations such as arithmetic and printing work properly and consistently no matter what the underlying representation is. 
+Note that the clock can wrap around.  On a 32bit system with CLOCKS_PER_SEC set to one million this function will return the same value approximately every 72 minutes. 
+For additional functions to examine a process’ use of processor time, and to control it, see Resource Usage And Limitation. 
+
+TABLE_BEGIN
+ • CPU Time    The clock function.
+
+ • Processor Time    The times function.
+
+TABLE_END
+

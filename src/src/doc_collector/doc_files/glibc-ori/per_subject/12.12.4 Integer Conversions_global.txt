@@ -1,0 +1,34 @@
+This section describes the options for the ‘%d’, ‘%i’, ‘%o’, ‘%u’, ‘%x’, and ‘%X’ conversion specifications.  These conversions print integers in various formats. 
+The ‘%d’ and ‘%i’ conversion specifications both print an int argument as a signed decimal number; while ‘%o’, ‘%u’, and ‘%x’ print the argument as an unsigned octal, decimal, or hexadecimal number (respectively).  The ‘%X’ conversion specification is just like ‘%x’ except that it uses the characters ‘ABCDEF’ as digits instead of ‘abcdef’. 
+The following flags are meaningful: 
+If a precision is supplied, it specifies the minimum number of digits to appear; leading zeros are produced if necessary.  If you don’t specify a precision, the number is printed with as many digits as it needs.  If you convert a value of zero with an explicit precision of zero, then no characters at all are produced. 
+Without a type modifier, the corresponding argument is treated as an int (for the signed conversions ‘%i’ and ‘%d’) or unsigned int (for the unsigned conversions ‘%o’, ‘%u’, ‘%x’, and ‘%X’).  Recall that since printf and friends are variadic, any char and short arguments are automatically converted to int by the default argument promotions.  For arguments of other integer types, you can use these modifiers: 
+Here is an example.  Using the template string: 
+
+EXAMPLE_BEGIN
+"|%5d|%-5d|%+5d|%+-5d|% 5d|%05d|%5.0d|%5.2d|%d|\n"
+EXAMPLE_END
+
+to print numbers using the different options for the ‘%d’ conversion gives results like: 
+
+EXAMPLE_BEGIN
+|    0|0    |   +0|+0   |    0|00000|     |   00|0|
+|    1|1    |   +1|+1   |    1|00001|    1|   01|1|
+|   -1|-1   |   -1|-1   |   -1|-0001|   -1|  -01|-1|
+|100000|100000|+100000|+100000| 100000|100000|100000|100000|100000|
+EXAMPLE_END
+
+In particular, notice what happens in the last case where the number is too large to fit in the minimum field width specified. 
+Here are some more examples showing how unsigned integers print under various format options, using the template string: 
+
+EXAMPLE_BEGIN
+"|%5u|%5o|%5x|%5X|%#5o|%#5x|%#5X|%#10.8x|\n"
+EXAMPLE_END
+
+
+EXAMPLE_BEGIN
+|    0|    0|    0|    0|    0|    0|    0|  00000000|
+|    1|    1|    1|    1|   01|  0x1|  0X1|0x00000001|
+|100000|303240|186a0|186A0|0303240|0x186a0|0X186A0|0x000186a0|
+EXAMPLE_END
+

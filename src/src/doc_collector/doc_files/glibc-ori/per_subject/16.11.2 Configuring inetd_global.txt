@@ -1,0 +1,20 @@
+The file /etc/inetd.conf tells inetd which ports to listen to and what server programs to run for them.  Normally each entry in the file is one line, but you can split it onto multiple lines provided all but the first line of the entry start with whitespace.  Lines that start with ‘#’ are comments. 
+Here are two standard entries in /etc/inetd.conf: 
+
+EXAMPLE_BEGIN
+ftp	stream	tcp	nowait	root	/libexec/ftpd	ftpd
+talk	dgram	udp	wait	root	/libexec/talkd	talkd
+EXAMPLE_END
+
+An entry has this format: 
+
+EXAMPLE_BEGIN
+service style protocol wait username program arguments
+EXAMPLE_END
+
+The service field says which service this program provides.  It should be the name of a service defined in /etc/services. inetd uses service to decide which port to listen on for this entry. 
+The fields style and protocol specify the communication style and the protocol to use for the listening socket.  The style should be the name of a communication style, converted to lower case and with ‘SOCK_’ deleted—for example, ‘stream’ or ‘dgram’.  protocol should be one of the protocols listed in /etc/protocols.  The typical protocol names are ‘tcp’ for byte stream connections and ‘udp’ for unreliable datagrams. 
+The wait field should be either ‘wait’ or ‘nowait’. Use ‘wait’ if style is a connectionless style and the server, once started, handles multiple requests as they come in. Use ‘nowait’ if inetd should start a new process for each message or request that comes in.  If style uses connections, then wait must be ‘nowait’. 
+user is the user name that the server should run as.  inetd runs as root, so it can set the user ID of its children arbitrarily.  It’s best to avoid using ‘root’ for user if you can; but some servers, such as Telnet and FTP, read a username and passphrase themselves.  These servers need to be root initially so they can log in as commanded by the data coming over the network. 
+program together with arguments specifies the command to run to start the server.  program should be an absolute file name specifying the executable file to run.  arguments consists of any number of whitespace-separated words, which become the command-line arguments of program.  The first word in arguments is argument zero, which should by convention be the program name itself (sans directories). 
+If you edit /etc/inetd.conf, you can tell inetd to reread the file and obey its new contents by sending the inetd process the SIGHUP signal.  You’ll have to use ps to determine the process ID of the inetd process as it is not fixed. 

@@ -1,0 +1,10 @@
+This section describes functions for “reading” integer and floating-point numbers from a string.  It may be more convenient in some cases to use sscanf or one of the related functions; see Formatted Input.  But often you can make a program more robust by finding the tokens in the string by hand, then converting the numbers one by one. 
+
+TABLE_BEGIN
+ • Parsing of Integers    Functions for conversion of integer values.
+
+ • Parsing of Floats    Functions for conversion of floating-point
+				 values.
+
+TABLE_END
+

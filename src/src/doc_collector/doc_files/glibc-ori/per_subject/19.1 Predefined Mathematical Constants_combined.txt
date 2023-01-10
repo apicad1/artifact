@@ -1,0 +1,83 @@
+The header math.h defines several useful mathematical constants. All values are defined as preprocessor macros starting with M_. The values provided are: 
+
+>>>>>>>>>>>>>>>>>>>>
+- M_E  
+The base of natural logarithms. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- M_LOG2E  
+The logarithm to base 2 of M_E. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- M_LOG10E  
+The logarithm to base 10 of M_E. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- M_LN2  
+The natural logarithm of 2. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- M_LN10  
+The natural logarithm of 10. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- M_PI  
+Pi, the ratio of a circle’s circumference to its diameter. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- M_PI_2  
+Pi divided by two. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- M_PI_4  
+Pi divided by four. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- M_1_PI  
+The reciprocal of pi (1/pi) 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- M_2_PI  
+Two times the reciprocal of pi. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- M_2_SQRTPI  
+Two times the reciprocal of the square root of pi. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- M_SQRT2  
+The square root of two. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- M_SQRT1_2  
+The reciprocal of the square root of two (also the square root of 1/2). 
+<<<<<<<<<<<<<<<<<<<<
+
+These constants come from the Unix98 standard and were also available in 4.4BSD; therefore they are only defined if _XOPEN_SOURCE=500, or a more general feature select macro, is defined.  The default set of features includes these constants. See Feature Test Macros. 
+All values are of type double.  As an extension, the GNU C Library also defines these constants with type long double.  The long double macros have a lowercase ‘l’ appended to their names: M_El, M_PIl, and so forth.  These are only available if _GNU_SOURCE is defined. 
+Likewise, the GNU C Library also defines these constants with the types _FloatN and _FloatNx for the machines that have support for such types enabled (see Mathematics) and if _GNU_SOURCE is defined.  When available, the macros names are appended with ‘fN’ or ‘fNx’, such as ‘f128’ for the type _Float128. 
+Note: Some programs use a constant named PI which has the same value as M_PI.  This constant is not standard; it may have appeared in some old AT&T headers, and is mentioned in Stroustrup’s book on C++.  It infringes on the user’s name space, so the GNU C Library does not define it.  Fixing programs written to expect it is simple: replace PI with M_PI throughout, or put ‘-DPI=M_PI’ on the compiler command line. 

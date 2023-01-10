@@ -1,0 +1,28 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int isatty (int filedes)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function returns 1 if filedes is a file descriptor associated with an open terminal device, and 0 otherwise. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: char * ttyname (int filedes)
+Preliminary: | MT-Unsafe race:ttyname | AS-Unsafe heap lock | AC-Unsafe lock fd mem | See POSIX Safety Concepts. 
+If the file descriptor filedes is associated with a terminal device, the ttyname function returns a pointer to a statically-allocated, null-terminated string containing the file name of the terminal file.  The value is a null pointer if the file descriptor isn’t associated with a terminal, or the file name cannot be determined. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int ttyname_r (int filedes, char *buf, size_t len)
+Preliminary: | MT-Safe  | AS-Unsafe heap | AC-Unsafe mem fd | See POSIX Safety Concepts. 
+The ttyname_r function is similar to the ttyname function except that it places its result into the user-specified buffer starting at buf with length len. 
+The normal return value from ttyname_r is 0.  Otherwise an error number is returned to indicate the error.  The following errno error conditions are defined for this function: 
+	EBADF
+The filedes argument is not a valid file descriptor.  
+	ENOTTY
+The filedes is not associated with a terminal.  
+	ERANGE
+The buffer length len is too small to store the string to be returned.  
+	ENODEV
+The filedes is associated with a terminal device that is a slave pseudo-terminal, but the file name associated with that device could not be determined.  This is a GNU extension. 

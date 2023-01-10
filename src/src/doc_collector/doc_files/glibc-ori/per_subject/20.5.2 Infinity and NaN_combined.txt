@@ -1,0 +1,60 @@
+IEEE 754 floating point numbers can represent positive or negative infinity, and NaN (not a number).  These three values arise from calculations whose result is undefined or cannot be represented accurately.  You can also deliberately set a floating-point variable to any of them, which is sometimes useful.  Some examples of calculations that produce infinity or NaN: 
+
+EXAMPLE_BEGIN
+1/0 = ∞
+log (0) = -∞
+sqrt (-1) = NaN
+EXAMPLE_END
+
+When a calculation produces any of these values, an exception also occurs; see FP Exceptions. 
+The basic operations and math functions all accept infinity and NaN and produce sensible output.  Infinities propagate through calculations as one would expect: for example, 2 + ∞ = ∞, 4/∞ = 0, atan (∞) = π/2.  NaN, on the other hand, infects any calculation that involves it.  Unless the calculation would produce the same result no matter what real value replaced NaN, the result is NaN. 
+In comparison operations, positive infinity is larger than all values except itself and NaN, and negative infinity is smaller than all values except itself and NaN.  NaN is unordered: it is not equal to, greater than, or less than anything, including itself. x == x is false if the value of x is NaN.  You can use this to test whether a value is NaN or not, but the recommended way to test for NaN is with the isnan function (see Floating Point Classes).  In addition, <, >, <=, and >= will raise an exception when applied to NaNs. 
+math.h defines macros that allow you to explicitly set a variable to infinity or NaN. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: float INFINITY
+An expression representing positive infinity.  It is equal to the value produced  by mathematical operations like 1.0 / 0.0. -INFINITY represents negative infinity. 
+You can test whether a floating-point value is infinite by comparing it to this macro.  However, this is not recommended; you should use the isfinite macro instead.  See Floating Point Classes. 
+This macro was introduced in the ISO C99 standard. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: float NAN
+An expression representing a value which is “not a number”.  This macro is a GNU extension, available only on machines that support the “not a number” value—that is to say, on all machines that support IEEE floating point. 
+You can use ‘#ifdef NAN’ to test whether the machine supports NaN.  (Of course, you must arrange for GNU extensions to be visible, such as by defining _GNU_SOURCE, and then you must include math.h.) 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: float SNANF
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: double SNAN
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: long double SNANL
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: _FloatN SNANFN
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: _FloatNx SNANFNx
+These macros, defined by TS 18661-1:2014 and TS 18661-3:2015, are constant expressions for signaling NaNs. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int FE_SNANS_ALWAYS_SIGNAL
+This macro, defined by TS 18661-1:2014, is defined to 1 in fenv.h to indicate that functions and operations with signaling NaN inputs and floating-point results always raise the invalid exception and return a quiet NaN, even in cases (such as fmax, hypot and pow) where a quiet NaN input can produce a non-NaN result.  Because some compiler optimizations may not handle signaling NaNs correctly, this macro is only defined if compiler support for signaling NaNs is enabled.  That support can be enabled with the GCC option -fsignaling-nans. 
+<<<<<<<<<<<<<<<<<<<<
+
+IEEE 754 also allows for another unusual value: negative zero.  This value is produced when you divide a positive number by negative infinity, or when a negative result is smaller than the limits of representation. 

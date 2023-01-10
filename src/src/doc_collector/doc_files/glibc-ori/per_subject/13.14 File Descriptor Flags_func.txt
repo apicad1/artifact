@@ -1,0 +1,27 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int F_GETFD
+This macro is used as the command argument to fcntl, to specify that it should return the file descriptor flags associated with the filedes argument. 
+The normal return value from fcntl with this command is a nonnegative number which can be interpreted as the bitwise OR of the individual flags (except that currently there is only one flag to use). 
+In case of an error, fcntl returns -1.  The following errno error conditions are defined for this command: 
+	EBADF
+The filedes argument is invalid. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int F_SETFD
+This macro is used as the command argument to fcntl, to specify that it should set the file descriptor flags associated with the filedes argument.  This requires a third int argument to specify the new flags, so the form of the call is: 
+
+EXAMPLE_BEGIN
+fcntl (filedes, F_SETFD, new-flags)
+EXAMPLE_END
+
+The normal return value from fcntl with this command is an unspecified value other than -1, which indicates an error. The flags and error conditions are the same as for the F_GETFD command. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int FD_CLOEXEC
+
+This flag specifies that the file descriptor should be closed when an exec function is invoked; see Executing a File.  When a file descriptor is allocated (as with open or dup), this bit is initially cleared on the new file descriptor, meaning that descriptor will survive into the new program after exec. 

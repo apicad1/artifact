@@ -1,0 +1,30 @@
+This section describes the various terminal attributes that control how input and output are done.  The functions, data structures, and symbolic constants are all declared in the header file termios.h. 
+Don’t confuse terminal attributes with file attributes.  A device special file which is associated with a terminal has file attributes as described in File Attributes.  These are unrelated to the attributes of the terminal device itself, which are discussed in this section. 
+
+TABLE_BEGIN
+ • Mode Data Types    The data type struct termios and
+                                 related types.
+
+ • Mode Functions    Functions to read and set the terminal
+                                 attributes.
+
+ • Setting Modes    The right way to set terminal attributes
+                                 reliably.
+
+ • Input Modes    Flags controlling low-level input handling.
+
+ • Output Modes    Flags controlling low-level output handling.
+
+ • Control Modes    Flags controlling serial port behavior.
+
+ • Local Modes    Flags controlling high-level input handling.
+
+ • Line Speed    How to read and set the terminal line speed.
+
+ • Special Characters    Characters that have special effects,
+			         and how to change them.
+
+ • Noncanonical Input    Controlling how long to wait for input.
+
+TABLE_END
+

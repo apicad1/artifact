@@ -1,0 +1,32 @@
+You can get information about dynamic memory allocation by calling the mallinfo2 function.  This function and its associated data type are declared in malloc.h; they are an extension of the standard SVID/XPG version.  
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: struct mallinfo2
+This structure type is used to return information about the dynamic memory allocator.  It contains the following members: 
+	size_t arena
+This is the total size of memory allocated with sbrk by malloc, in bytes.  
+	size_t ordblks
+This is the number of chunks not in use.  (The memory allocator size_ternally gets chunks of memory from the operating system, and then carves them up to satisfy individual malloc requests; see The GNU Allocator.)  
+	size_t smblks
+This field is unused.  
+	size_t hblks
+This is the total number of chunks allocated with mmap.  
+	size_t hblkhd
+This is the total size of memory allocated with mmap, in bytes.  
+	size_t usmblks
+This field is unused and always 0.  
+	size_t fsmblks
+This field is unused.  
+	size_t uordblks
+This is the total size of memory occupied by chunks handed out by malloc.  
+	size_t fordblks
+This is the total size of memory occupied by free (not in use) chunks.  
+	size_t keepcost
+This is the size of the top-most releasable chunk that normally borders the end of the heap (i.e., the high end of the virtual address space’s data segment).  
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: struct mallinfo2 mallinfo2 (void)
+Preliminary: | MT-Unsafe init const:mallopt | AS-Unsafe init lock | AC-Unsafe init lock | See POSIX Safety Concepts. 
+This function returns information about the current dynamic memory usage in a structure of type struct mallinfo2. 

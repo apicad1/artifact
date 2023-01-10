@@ -1,0 +1,8 @@
+Applications are usually debugged using dedicated debugger programs. But sometimes this is not possible and, in any case, it is useful to provide the developer with as much information as possible at the time the problems are experienced.  For this reason a few functions are provided which a program can use to help the developer more easily locate the problem. 
+
+TABLE_BEGIN
+ • Backtraces    Obtaining and printing a back trace of the
+                               current stack.
+
+TABLE_END
+

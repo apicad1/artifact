@@ -1,0 +1,27 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void regfree (regex_t *compiled)
+Preliminary: | MT-Safe  | AS-Unsafe heap | AC-Unsafe mem | See POSIX Safety Concepts. 
+Calling regfree frees all the storage that *compiled points to.  This includes various internal fields of the regex_t structure that aren’t documented in this manual. 
+regfree does not free the object *compiled itself. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: size_t regerror (int errcode, const regex_t *restrict compiled, char *restrict buffer, size_t length)
+Preliminary: | MT-Safe env | AS-Unsafe corrupt heap lock dlopen | AC-Unsafe corrupt lock fd mem | See POSIX Safety Concepts. 
+This function produces an error message string for the error code errcode, and stores the string in length bytes of memory starting at buffer.  For the compiled argument, supply the same compiled regular expression structure that regcomp or regexec was working with when it got the error.  Alternatively, you can supply NULL for compiled; you will still get a meaningful error message, but it might not be as detailed. 
+If the error message can’t fit in length bytes (including a terminating null character), then regerror truncates it. The string that regerror stores is always null-terminated even if it has been truncated. 
+The return value of regerror is the minimum length needed to store the entire error message.  If this is less than length, then the error message was not truncated, and you can use it.  Otherwise, you should call regerror again with a larger buffer. 
+Here is a function which uses regerror, but always dynamically allocates a buffer for the error message: 
+
+EXAMPLE_BEGIN
+char *get_regerror (int errcode, regex_t *compiled)
+{
+  size_t length = regerror (errcode, compiled, NULL, 0);
+  char *buffer = xmalloc (length);
+  (void) regerror (errcode, compiled, buffer, length);
+  return buffer;
+}
+EXAMPLE_END
+

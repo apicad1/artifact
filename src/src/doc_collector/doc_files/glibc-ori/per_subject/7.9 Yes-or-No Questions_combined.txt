@@ -1,0 +1,45 @@
+Some non GUI programs ask a yes-or-no question.  If the messages (especially the questions) are translated into foreign languages, be sure that you localize the answers too.  It would be very bad habit to ask a question in one language and request the answer in another, often English. 
+The GNU C Library contains rpmatch to give applications easy access to the corresponding locale definitions. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int rpmatch (const char *response)
+Preliminary: | MT-Safe locale | AS-Unsafe corrupt heap lock dlopen | AC-Unsafe corrupt lock mem fd | See POSIX Safety Concepts. 
+The function rpmatch checks the string in response for whether or not it is a correct yes-or-no answer and if yes, which one.  The check uses the YESEXPR and NOEXPR data in the LC_MESSAGES category of the currently selected locale.  The return value is as follows: 
+	1
+The user entered an affirmative answer.  
+	0
+The user entered a negative answer.  
+	-1
+The answer matched neither the YESEXPR nor the NOEXPR regular expression. 
+This function is not standardized but available beside in the GNU C Library at least also in the IBM AIX library. 
+<<<<<<<<<<<<<<<<<<<<
+
+This function would normally be used like this: 
+
+EXAMPLE_BEGIN
+  …
+  /* Use a safe default.  */
+  _Bool doit = false;
+
+  fputs (gettext ("Do you really want to do this? "), stdout);
+  fflush (stdout);
+  /* Prepare the getline call.  */
+  line = NULL;
+  len = 0;
+  while (getline (&line, &len, stdin) >= 0)
+    {
+      /* Check the response.  */
+      int res = rpmatch (line);
+      if (res >= 0)
+        {
+          /* We got a definitive answer.  */
+          if (res > 0)
+            doit = true;
+          break;
+        }
+    }
+  /* Free what getline allocated.  */
+  free (line);
+EXAMPLE_END
+
+Note that the loop continues until a read error is detected or until a definitive (positive or negative) answer is read. 

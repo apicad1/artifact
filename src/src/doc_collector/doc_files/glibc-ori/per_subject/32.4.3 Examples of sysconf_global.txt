@@ -1,0 +1,36 @@
+We recommend that you first test for a macro definition for the parameter you are interested in, and call sysconf only if the macro is not defined.  For example, here is how to test whether job control is supported: 
+
+EXAMPLE_BEGIN
+int
+have_job_control (void)
+{
+#ifdef _POSIX_JOB_CONTROL
+  return 1;
+#else
+  int value = sysconf (_SC_JOB_CONTROL);
+  if (value < 0)
+    /* If the system is that badly wedged,
+       there’s no use trying to go on.  */
+    fatal (strerror (errno));
+  return value;
+#endif
+}
+EXAMPLE_END
+
+Here is how to get the value of a numeric limit: 
+
+EXAMPLE_BEGIN
+int
+get_child_max ()
+{
+#ifdef CHILD_MAX
+  return CHILD_MAX;
+#else
+  int value = sysconf (_SC_CHILD_MAX);
+  if (value < 0)
+    fatal (strerror (errno));
+  return value;
+#endif
+}
+EXAMPLE_END
+

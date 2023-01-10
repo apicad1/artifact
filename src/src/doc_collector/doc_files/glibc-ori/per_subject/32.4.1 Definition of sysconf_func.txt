@@ -1,0 +1,9 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: long int sysconf (int parameter)
+Preliminary: | MT-Safe env | AS-Unsafe lock heap | AC-Unsafe lock mem fd | See POSIX Safety Concepts. 
+This function is used to inquire about runtime system parameters.  The parameter argument should be one of the ‘_SC_’ symbols listed below. 
+The normal return value from sysconf is the value you requested. A value of -1 is returned both if the implementation does not impose a limit, and in case of an error. 
+The following errno error conditions are defined for this function: 
+	EINVAL
+The value of the parameter is invalid. 

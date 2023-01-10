@@ -1,0 +1,12 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: char * ctermid (char *string)
+Preliminary: | MT-Safe !posix/!string | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The ctermid function returns a string containing the file name of the controlling terminal for the current process.  If string is not a null pointer, it should be an array that can hold at least L_ctermid characters; the string is returned in this array. Otherwise, a pointer to a string in a static area is returned, which might get overwritten on subsequent calls to this function. 
+An empty string is returned if the file name cannot be determined for any reason.  Even if a file name is returned, access to the file it represents is not guaranteed. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int L_ctermid
+The value of this macro is an integer constant expression that represents the size of a string large enough to hold the file name returned by ctermid. 

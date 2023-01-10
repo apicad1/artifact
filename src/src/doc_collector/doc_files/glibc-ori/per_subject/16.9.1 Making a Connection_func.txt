@@ -1,0 +1,30 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int connect (int socket, struct sockaddr *addr, socklen_t length)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The connect function initiates a connection from the socket with file descriptor socket to the socket whose address is specified by the addr and length arguments.  (This socket is typically on another machine, and it must be already set up as a server.)  See Socket Addresses, for information about how these arguments are interpreted. 
+Normally, connect waits until the server responds to the request before it returns.  You can set nonblocking mode on the socket socket to make connect return immediately without waiting for the response.  See File Status Flags, for information about nonblocking mode. 
+The normal return value from connect is 0.  If an error occurs, connect returns -1.  The following errno error conditions are defined for this function: 
+	EBADF
+The socket socket is not a valid file descriptor.  
+	ENOTSOCK
+File descriptor socket is not a socket.  
+	EADDRNOTAVAIL
+The specified address is not available on the remote machine.  
+	EAFNOSUPPORT
+The namespace of the addr is not supported by this socket.  
+	EISCONN
+The socket socket is already connected.  
+	ETIMEDOUT
+The attempt to establish the connection timed out.  
+	ECONNREFUSED
+The server has actively refused to establish the connection.  
+	ENETUNREACH
+The network of the given addr isn’t reachable from this host.  
+	EADDRINUSE
+The socket address of the given addr is already in use.  
+	EINPROGRESS
+The socket socket is non-blocking and the connection could not be established immediately.  You can determine when the connection is completely established with select; see Waiting for I/O. Another connect call on the same socket, before the connection is completely established, will fail with EALREADY.  
+	EALREADY
+The socket socket is non-blocking and already has a pending connection in progress (see EINPROGRESS above). 
+This function is defined as a cancellation point in multi-threaded programs, so one has to be prepared for this and make sure that allocated resources (like memory, file descriptors, semaphores or whatever) are freed even if the thread is canceled. 

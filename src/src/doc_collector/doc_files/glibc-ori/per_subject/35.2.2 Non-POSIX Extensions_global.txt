@@ -1,0 +1,15 @@
+In addition to implementing the POSIX API for threads, the GNU C Library provides additional functions and interfaces to provide functionality not specified in the standard. 
+
+TABLE_BEGIN
+ • Default Thread Attributes    Setting default attributes for
+					  threads in a process.
+
+ • Initial Thread Signal Mask    Setting the initial mask of threads.
+
+ • Waiting with Explicit Clocks    Functions for waiting with an
+                                          explicit clock specification.
+
+ • Single-Threaded    Detecting single-threaded execution.
+
+TABLE_END
+

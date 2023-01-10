@@ -1,0 +1,50 @@
+Argp is an interface for parsing unix-style argument vectors. See Program Arguments. 
+Argp provides features unavailable in the more commonly used getopt interface.  These features include automatically producing output in response to the ‘--help’ and ‘--version’ options, as described in the GNU coding standards.  Using argp makes it less likely that programmers will neglect to implement these additional options or keep them up to date. 
+Argp also provides the ability to merge several independently defined option parsers into one, mediating conflicts between them and making the result appear seamless.  A library can export an argp option parser that user programs might employ in conjunction with their own option parsers, resulting in less work for the user programs.  Some programs may use only argument parsers exported by libraries, thereby achieving consistent and efficient option-parsing for abstractions implemented by the libraries. 
+The header file <argp.h> should be included to use argp. 
+
+TABLE_BEGIN
+ • Argp Global Variables    
+
+ • Specifying Argp Parsers    
+
+ • Specifying Options in an Argp Parser    
+
+ • Argp Parser Functions    
+
+ • Combining Multiple Argp Parsers    
+
+ • Flags for argp_parse    
+
+ • Customizing Argp Help Output    
+
+ • The argp_help Function    
+
+ • Flags for the argp_help Function    
+
+ • Argp Examples    
+
+ • Argp User Customization    
+
+ • Parsing of Suboptions Example    
+
+TABLE_END
+
+The main interface to argp is the argp_parse function.  In many cases, calling argp_parse is the only argument-parsing code needed in main. See Program Arguments. 
+
+TABLE_BEGIN
+ • Globals    Global argp parameters.
+
+ • Parsers    Defining parsers for use with argp_parse.
+
+ • Flags    Flags that modify the behavior of argp_parse.
+
+ • Help    Printing help messages when not parsing.
+
+ • Examples    Simple examples of programs using argp.
+
+ • Customization    
+                                Users may control the ‘--help’ output format.
+
+TABLE_END
+

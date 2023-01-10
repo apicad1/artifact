@@ -1,0 +1,34 @@
+When you issue an ‘ls -l’ shell command on a file, it gives you information about the size of the file, who owns it, when it was last modified, etc.  These are called the file attributes, and are associated with the file itself and not a particular one of its names. 
+This section contains information about how you can inquire about and modify the attributes of a file. 
+
+TABLE_BEGIN
+ • Attribute Meanings    The names of the file attributes,
+                                 and what their values mean.
+
+ • Reading Attributes    How to read the attributes of a file.
+
+ • Testing File Type    Distinguishing ordinary files,
+                                 directories, links…
+
+ • File Owner    How ownership for new files is determined,
+			         and how to change it.
+
+ • Permission Bits    How information about a file’s access
+                                 mode is stored.
+
+ • Access Permission    How the system decides who can access a file.
+
+ • Setting Permissions    How permissions for new files are assigned,
+			         and how to change them.
+
+ • Testing File Access    How to find out if your process can
+                                 access a file.
+
+ • File Times    About the time attributes of a file.
+
+ • File Size    Manually changing the size of a file.
+
+ • Storage Allocation    Allocate backing storage for files.
+
+TABLE_END
+

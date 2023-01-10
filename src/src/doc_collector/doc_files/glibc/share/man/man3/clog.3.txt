@@ -1,0 +1,49 @@
+CLOG(3)                                         Linux Programmer's Manual                                        CLOG(3)
+
+NAME
+       clog, clogf, clogl - natural logarithm of a complex number
+
+SYNOPSIS
+       #include <complex.h>
+
+       double complex clog(double complex z);
+       float complex clogf(float complex z);
+       long double complex clogl(long double complex z);
+
+       Link with -lm.
+
+DESCRIPTION
+       These functions calculate the complex natural logarithm of z, with a branch cut along the negative real axis.
+
+       The logarithm clog() is the inverse function of the exponential cexp(3).  Thus, if y = clog(z), then z = cexp(y).
+       The imaginary part of y is chosen in the interval [-pi,pi].
+
+       One has:
+
+           clog(z) = log(cabs(z)) + I * carg(z)
+
+       Note that z close to zero will cause an overflow.
+
+VERSIONS
+       These functions first appeared in glibc in version 2.1.
+
+ATTRIBUTES
+       For an explanation of the terms used in this section, see attributes(7).
+
+       ┌──────────────────────────────────────────────────────────────────────────────────────┬───────────────┬─────────┐
+       │Interface                                                                             │ Attribute     │ Value   │
+       ├──────────────────────────────────────────────────────────────────────────────────────┼───────────────┼─────────┤
+       │clog(), clogf(), clogl()                                                              │ Thread safety │ MT-Safe │
+       └──────────────────────────────────────────────────────────────────────────────────────┴───────────────┴─────────┘
+
+CONFORMING TO
+       C99, POSIX.1-2001, POSIX.1-2008.
+
+SEE ALSO
+       cabs(3), cexp(3), clog10(3), clog2(3), complex(7)
+
+COLOPHON
+       This page is part of release 5.13 of the Linux man-pages project.  A  description  of  the  project,  information
+       about reporting bugs, and the latest version of this page, can be found at https://www.kernel.org/doc/man-pages/.
+
+                                                       2021-03-22                                                CLOG(3)

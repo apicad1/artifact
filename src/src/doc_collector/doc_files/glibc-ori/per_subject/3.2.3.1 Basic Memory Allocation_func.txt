@@ -1,0 +1,5 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void * malloc (size_t size)
+Preliminary: | MT-Safe  | AS-Unsafe lock | AC-Unsafe lock fd mem | See POSIX Safety Concepts. 
+This function returns a pointer to a newly allocated block size bytes long, or a null pointer (setting errno) if the block could not be allocated. 

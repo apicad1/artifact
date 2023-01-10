@@ -1,0 +1,22 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int get_nprocs_conf (void)
+Preliminary: | MT-Safe  | AS-Unsafe heap lock | AC-Unsafe lock fd mem | See POSIX Safety Concepts. 
+The get_nprocs_conf function returns the number of processors the operating system configured. 
+This function is a GNU extension. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int get_nprocs (void)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe fd | See POSIX Safety Concepts. 
+The get_nprocs function returns the number of available processors. 
+This function is a GNU extension. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int getloadavg (double loadavg[], int nelem)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe fd | See POSIX Safety Concepts. 
+This function gets the 1, 5 and 15 minute load averages of the system.  The values are placed in loadavg.  getloadavg will place at most nelem elements into the array but never more than three elements.  The return value is the number of elements written to loadavg, or -1 on error. 
+This function is declared in stdlib.h. 

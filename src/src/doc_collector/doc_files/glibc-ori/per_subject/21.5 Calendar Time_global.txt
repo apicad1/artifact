@@ -1,0 +1,25 @@
+This section describes the functions for getting, setting, and manipulating calendar times. 
+
+TABLE_BEGIN
+ • Getting the Time    Functions for finding out what time it is.
+
+ • Setting and Adjusting the Time    
+                                Functions for setting and adjusting
+                                  the system clock.
+
+ • Broken-down Time    Facilities for manipulating local time.
+
+ • Formatting Calendar Time    Converting times to strings.
+
+ • Parsing Date and Time    Convert textual time and date information back
+                                 into broken-down time values.
+
+ • TZ Variable    How users specify the time zone.
+
+ • Time Zone Functions    Functions to examine or specify the time zone.
+
+ • Time Functions Example    An example program showing use of some of
+				 the time functions.
+
+TABLE_END
+

@@ -1,0 +1,4 @@
+To have better control of resources and how threads access them, the GNU C Library implements a mutex object, which can help avoid race conditions and other concurrency issues.  The term “mutex” refers to mutual exclusion. 
+The fundamental data type for a mutex is the mtx_t: 
+The ISO C standard defines several types of mutexes.  They are represented by the following symbolic constants: 
+The following functions are used for working with mutexes: 

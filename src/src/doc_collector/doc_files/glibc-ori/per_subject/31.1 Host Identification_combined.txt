@@ -1,0 +1,77 @@
+This section explains how to identify the particular system on which your program is running.  First, let’s review the various ways computer systems are named, which is a little complicated because of the history of the development of the Internet. 
+Every Unix system (also known as a host) has a host name, whether it’s connected to a network or not.  In its simplest form, as used before computer networks were an issue, it’s just a word like ‘chicken’.  
+But any system attached to the Internet or any network like it conforms to a more rigorous naming convention as part of the Domain Name System (DNS).  In the DNS, every host name is composed of two parts:   
+You will note that “hostname” looks a lot like “host name”, but is not the same thing, and that people often incorrectly refer to entire host names as “domain names.” 
+In the DNS, the full host name is properly called the FQDN (Fully Qualified Domain Name) and consists of the hostname, then a period, then the domain name.  The domain name itself usually has multiple components separated by periods.  So for example, a system’s hostname may be ‘chicken’ and its domain name might be ‘ai.mit.edu’, so its FQDN (which is its host name) is ‘chicken.ai.mit.edu’.  
+Adding to the confusion, though, is that the DNS is not the only name space in which a computer needs to be known.  Another name space is the NIS (aka YP) name space.  For NIS purposes, there is another domain name, which is called the NIS domain name or the YP domain name.  It need not have anything to do with the DNS domain name.     
+Confusing things even more is the fact that in the DNS, it is possible for multiple FQDNs to refer to the same system.  However, there is always exactly one of them that is the true host name, and it is called the canonical FQDN. 
+In some contexts, the host name is called a “node name.” 
+For more information on DNS host naming, see Host Names. 
+Prototypes for these functions appear in unistd.h. 
+The programs hostname, hostid, and domainname work by calling these functions. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int gethostname (char *name, size_t size)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function returns the host name of the system on which it is called, in the array name.  The size argument specifies the size of this array, in bytes.  Note that this is not the DNS hostname. If the system participates in the DNS, this is the FQDN (see above). 
+The return value is 0 on success and -1 on failure.  In the GNU C Library, gethostname fails if size is not large enough; then you can try again with a larger array.  The following errno error condition is defined for this function: 
+	ENAMETOOLONG
+The size argument is less than the size of the host name plus one. 
+
+On some systems, there is a symbol for the maximum possible host name length: MAXHOSTNAMELEN.  It is defined in sys/param.h. But you can’t count on this to exist, so it is cleaner to handle failure and try again. 
+gethostname stores the beginning of the host name in name even if the host name won’t entirely fit.  For some purposes, a truncated host name is good enough.  If it is, you can ignore the error code. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int sethostname (const char *name, size_t length)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The sethostname function sets the host name of the system that calls it to name, a string with length length.  Only privileged processes are permitted to do this. 
+Usually sethostname gets called just once, at system boot time. Often, the program that calls it sets it to the value it finds in the file /etc/hostname.  
+Be sure to set the host name to the full host name, not just the DNS hostname (see above). 
+The return value is 0 on success and -1 on failure. The following errno error condition is defined for this function: 
+	EPERM
+This process cannot set the host name because it is not privileged. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int getdomainnname (char *name, size_t length)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+
+
+getdomainname returns the NIS (aka YP) domain name of the system on which it is called.  Note that this is not the more popular DNS domain name.  Get that with gethostname. 
+The specifics of this function are analogous to gethostname, above. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int setdomainname (const char *name, size_t length)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+
+
+setdomainname sets the NIS (aka YP) domain name of the system on which it is called.  Note that this is not the more popular DNS domain name.  Set that with sethostname. 
+The specifics of this function are analogous to sethostname, above. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: long int gethostid (void)
+Preliminary: | MT-Safe hostid env locale | AS-Unsafe dlopen plugin corrupt heap lock | AC-Unsafe lock corrupt mem fd | See POSIX Safety Concepts. 
+This function returns the “host ID” of the machine the program is running on.  By convention, this is usually the primary Internet IP address of that machine, converted to a long int.  However, on some systems it is a meaningless but unique number which is hard-coded for each machine. 
+This is not widely used.  It arose in BSD 4.2, but was dropped in BSD 4.4. It is not required by POSIX. 
+The proper way to query the IP address is to use gethostbyname on the results of gethostname.  For more information on IP addresses, See Host Addresses. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int sethostid (long int id)
+Preliminary: | MT-Unsafe const:hostid | AS-Unsafe  | AC-Unsafe corrupt fd | See POSIX Safety Concepts. 
+The sethostid function sets the “host ID” of the host machine to id.  Only privileged processes are permitted to do this.  Usually it happens just once, at system boot time. 
+The proper way to establish the primary IP address of a system is to configure the IP address resolver to associate that IP address with the system’s host name as returned by gethostname.  For example, put a record for the system in /etc/hosts. 
+See gethostid above for more information on host ids. 
+The return value is 0 on success and -1 on failure. The following errno error conditions are defined for this function: 
+	EPERM
+This process cannot set the host name because it is not privileged.  
+	ENOSYS
+The operating system does not support setting the host ID.  On some systems, the host ID is a meaningless but unique number hard-coded for each machine. 

@@ -1,0 +1,22 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int aio_cancel (int fildes, struct aiocb *aiocbp)
+Preliminary: | MT-Safe  | AS-Unsafe lock heap | AC-Unsafe lock mem | See POSIX Safety Concepts. 
+The aio_cancel function can be used to cancel one or more outstanding requests.  If the aiocbp parameter is NULL, the function tries to cancel all of the outstanding requests which would process the file descriptor fildes (i.e., whose aio_fildes member is fildes).  If aiocbp is not NULL, aio_cancel attempts to cancel the specific request pointed to by aiocbp. 
+For requests which were successfully canceled, the normal notification about the termination of the request should take place.  I.e., depending on the struct sigevent object which controls this, nothing happens, a signal is sent or a thread is started.  If the request cannot be canceled, it terminates the usual way after performing the operation. 
+After a request is successfully canceled, a call to aio_error with a reference to this request as the parameter will return ECANCELED and a call to aio_return will return -1. If the request wasn’t canceled and is still running the error status is still EINPROGRESS. 
+The return value of the function is AIO_CANCELED if there were requests which haven’t terminated and which were successfully canceled. If there is one or more requests left which couldn’t be canceled, the return value is AIO_NOTCANCELED.  In this case aio_error must be used to find out which of the, perhaps multiple, requests (if aiocbp is NULL) weren’t successfully canceled.  If all requests already terminated at the time aio_cancel is called the return value is AIO_ALLDONE. 
+If an error occurred during the execution of aio_cancel the function returns -1 and sets errno to one of the following values. 
+	EBADF
+The file descriptor fildes is not valid. 
+	ENOSYS
+aio_cancel is not implemented. 
+When the sources are compiled with _FILE_OFFSET_BITS == 64, this function is in fact aio_cancel64 since the LFS interface transparently replaces the normal implementation. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int aio_cancel64 (int fildes, struct aiocb64 *aiocbp)
+Preliminary: | MT-Safe  | AS-Unsafe lock heap | AC-Unsafe lock mem | See POSIX Safety Concepts. 
+This function is similar to aio_cancel with the only difference that the argument is a reference to a variable of type struct aiocb64. 
+When the sources are compiled with _FILE_OFFSET_BITS == 64, this function is available under the name aio_cancel and so transparently replaces the interface for small files on 32 bit machines. 

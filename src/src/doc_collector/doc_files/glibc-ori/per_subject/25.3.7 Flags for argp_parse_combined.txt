@@ -1,0 +1,47 @@
+The default behavior of argp_parse is designed to be convenient for the most common case of parsing program command line argument.  To modify these defaults, the following flags may be or’d together in the flags argument to argp_parse: 
+
+>>>>>>>>>>>>>>>>>>>>
+- ARGP_PARSE_ARGV0  
+Don’t ignore the first element of the argv argument to argp_parse.  Unless ARGP_NO_ERRS is set, the first element of the argument vector is skipped for option parsing purposes, as it corresponds to the program name in a command line. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ARGP_NO_ERRS  
+Don’t print error messages for unknown options to stderr; unless this flag is set, ARGP_PARSE_ARGV0 is ignored, as argv[0] is used as the program name in the error messages.  This flag implies ARGP_NO_EXIT.  This is based on the assumption that silent exiting upon errors is bad behavior. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ARGP_NO_ARGS  
+Don’t parse any non-option args.  Normally these are parsed by calling the parse functions with a key of ARGP_KEY_ARG, the actual argument being the value.  This flag needn’t normally be set, as the default behavior is to stop parsing as soon as an argument fails to be parsed.  See Argp Parser Functions. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ARGP_IN_ORDER  
+Parse options and arguments in the same order they occur on the command line.  Normally they’re rearranged so that all options come first. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ARGP_NO_HELP  
+Don’t provide the standard long option ‘--help’, which ordinarily causes usage and option help information to be output to stdout and exit (0). 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ARGP_NO_EXIT  
+Don’t exit on errors, although they may still result in error messages. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ARGP_LONG_ONLY  
+Use the GNU getopt ‘long-only’ rules for parsing arguments.  This allows long-options to be recognized with only a single ‘-’ (i.e., ‘-help’).  This results in a less useful interface, and its use is discouraged as it conflicts with the way most GNU programs work as well as the GNU coding standards. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ARGP_SILENT  
+Turns off any message-printing/exiting options, specifically ARGP_NO_EXIT, ARGP_NO_ERRS, and ARGP_NO_HELP. 

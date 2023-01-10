@@ -1,0 +1,14 @@
+Argp provides a number of functions available to the user of argp (see Argp Parser Functions), mostly for producing error messages. These take as their first argument the state argument to the parser function.  See Argp Parsing State. 
+Error output is sent to state->err_stream, and the program name printed is state->name. 
+The output or program termination behavior of these functions may be suppressed if the ARGP_NO_EXIT or ARGP_NO_ERRS flags are passed to argp_parse.  See Argp Flags. 
+This behavior is useful if an argp parser is exported for use by other programs (e.g., by a library), and may be used in a context where it is not desirable to terminate the program in response to parsing errors.  In argp parsers intended for such general use, and for the case where the program doesn’t terminate, calls to any of these functions should be followed by code that returns the appropriate error code: 
+
+EXAMPLE_BEGIN
+if (bad argument syntax)
+  {
+     argp_usage (state);
+     return EINVAL;
+  }
+EXAMPLE_END
+
+If a parser function will only be used when ARGP_NO_EXIT is not set, the return may be omitted. 

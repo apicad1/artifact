@@ -1,0 +1,31 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int seteuid (uid_t neweuid)
+Preliminary: | MT-Safe  | AS-Unsafe lock | AC-Unsafe lock | See POSIX Safety Concepts. 
+This function sets the effective user ID of a process to neweuid, provided that the process is allowed to change its effective user ID.  A privileged process (effective user ID zero) can change its effective user ID to any legal value.  An unprivileged process with a file user ID can change its effective user ID to its real user ID or to its file user ID.  Otherwise, a process may not change its effective user ID at all. 
+The seteuid function returns a value of 0 to indicate successful completion, and a value of -1 to indicate an error. The following errno error conditions are defined for this function: 
+	EINVAL
+The value of the neweuid argument is invalid.  
+	EPERM
+The process may not change to the specified ID. 
+Older systems (those without the _POSIX_SAVED_IDS feature) do not have this function. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int setuid (uid_t newuid)
+Preliminary: | MT-Safe  | AS-Unsafe lock | AC-Unsafe lock | See POSIX Safety Concepts. 
+If the calling process is privileged, this function sets both the real and effective user IDs of the process to newuid.  It also deletes the file user ID of the process, if any.  newuid may be any legal value.  (Once this has been done, there is no way to recover the old effective user ID.) 
+If the process is not privileged, and the system supports the _POSIX_SAVED_IDS feature, then this function behaves like seteuid. 
+The return values and error conditions are the same as for seteuid. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int setreuid (uid_t ruid, uid_t euid)
+Preliminary: | MT-Safe  | AS-Unsafe lock | AC-Unsafe lock | See POSIX Safety Concepts. 
+This function sets the real user ID of the process to ruid and the effective user ID to euid.  If ruid is -1, it means not to change the real user ID; likewise if euid is -1, it means not to change the effective user ID. 
+The setreuid function exists for compatibility with 4.3 BSD Unix, which does not support file IDs.  You can use this function to swap the effective and real user IDs of the process.  (Privileged processes are not limited to this particular usage.)  If file IDs are supported, you should use that feature instead of this function.  See Enable/Disable Setuid. 
+The return value is 0 on success and -1 on failure. The following errno error conditions are defined for this function: 
+	EPERM
+The process does not have the appropriate privileges; you do not have permission to change to the specified ID. 

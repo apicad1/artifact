@@ -1,0 +1,17 @@
+To store or transfer binary data in environments which only support text one has to encode the binary data by mapping the input bytes to bytes in the range allowed for storing or transferring.  SVID systems (and nowadays XPG compliant systems) provide minimal support for this task. 
+To decode data produced with l64a the following function should be used. 
+The l64a and a64l functions use a base 64 encoding, in which each byte of an encoded string represents six bits of an input word.  These symbols are used for the base 64 digits: 
+
+TABLE_BEGIN
+  0 1 2 3 4 5 6 7
+ 0 . / 0 1 2 3 4 5
+ 8 6 7 8 9 A B C D
+ 16 E F G H I J K L
+ 24 M N O P Q R S T
+ 32 U V W X Y Z a b
+ 40 c d e f g h i j
+ 48 k l m n o p q r
+ 56 s t u v w x y z
+TABLE_END
+
+This encoding scheme is not standard.  There are some other encoding methods which are much more widely used (UU encoding, MIME encoding). Generally, it is better to use one of these encodings. 

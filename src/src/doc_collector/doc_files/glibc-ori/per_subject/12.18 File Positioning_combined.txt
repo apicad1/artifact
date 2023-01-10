@@ -1,0 +1,101 @@
+The file position of a stream describes where in the file the stream is currently reading or writing.  I/O on the stream advances the file position through the file.  On GNU systems, the file position is represented as an integer, which counts the number of bytes from the beginning of the file.  See File Position. 
+During I/O to an ordinary disk file, you can change the file position whenever you wish, so as to read or write any portion of the file.  Some other kinds of files may also permit this.  Files which support changing the file position are sometimes referred to as random-access files. 
+You can use the functions in this section to examine or modify the file position indicator associated with a stream.  The symbols listed below are declared in the header file stdio.h.  
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: long int ftell (FILE *stream)
+Preliminary: | MT-Safe  | AS-Unsafe corrupt | AC-Unsafe lock corrupt | See POSIX Safety Concepts. 
+This function returns the current file position of the stream stream. 
+This function can fail if the stream doesn’t support file positioning, or if the file position can’t be represented in a long int, and possibly for other reasons as well.  If a failure occurs, a value of -1 is returned. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: off_t ftello (FILE *stream)
+Preliminary: | MT-Safe  | AS-Unsafe corrupt | AC-Unsafe lock corrupt | See POSIX Safety Concepts. 
+The ftello function is similar to ftell, except that it returns a value of type off_t.  Systems which support this type use it to describe all file positions, unlike the POSIX specification which uses a long int.  The two are not necessarily the same size. Therefore, using ftell can lead to problems if the implementation is written on top of a POSIX compliant low-level I/O implementation, and using ftello is preferable whenever it is available. 
+If this function fails it returns (off_t) -1.  This can happen due to missing support for file positioning or internal errors.  Otherwise the return value is the current file position. 
+The function is an extension defined in the Unix Single Specification version 2. 
+When the sources are compiled with _FILE_OFFSET_BITS == 64 on a 32 bit system this function is in fact ftello64.  I.e., the LFS interface transparently replaces the old interface. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: off64_t ftello64 (FILE *stream)
+Preliminary: | MT-Safe  | AS-Unsafe corrupt | AC-Unsafe lock corrupt | See POSIX Safety Concepts. 
+This function is similar to ftello with the only difference that the return value is of type off64_t.  This also requires that the stream stream was opened using either fopen64, freopen64, or tmpfile64 since otherwise the underlying file operations to position the file pointer beyond the 2^31 bytes limit might fail. 
+If the sources are compiled with _FILE_OFFSET_BITS == 64 on a 32 bits machine this function is available under the name ftello and so transparently replaces the old interface. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int fseek (FILE *stream, long int offset, int whence)
+Preliminary: | MT-Safe  | AS-Unsafe corrupt | AC-Unsafe lock corrupt | See POSIX Safety Concepts. 
+The fseek function is used to change the file position of the stream stream.  The value of whence must be one of the constants SEEK_SET, SEEK_CUR, or SEEK_END, to indicate whether the offset is relative to the beginning of the file, the current file position, or the end of the file, respectively. 
+This function returns a value of zero if the operation was successful, and a nonzero value to indicate failure.  A successful call also clears the end-of-file indicator of stream and discards any characters that were “pushed back” by the use of ungetc. 
+fseek either flushes any buffered output before setting the file position or else remembers it so it will be written later in its proper place in the file. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int fseeko (FILE *stream, off_t offset, int whence)
+Preliminary: | MT-Safe  | AS-Unsafe corrupt | AC-Unsafe lock corrupt | See POSIX Safety Concepts. 
+This function is similar to fseek but it corrects a problem with fseek in a system with POSIX types.  Using a value of type long int for the offset is not compatible with POSIX. fseeko uses the correct type off_t for the offset parameter. 
+For this reason it is a good idea to prefer ftello whenever it is available since its functionality is (if different at all) closer the underlying definition. 
+The functionality and return value are the same as for fseek. 
+The function is an extension defined in the Unix Single Specification version 2. 
+When the sources are compiled with _FILE_OFFSET_BITS == 64 on a 32 bit system this function is in fact fseeko64.  I.e., the LFS interface transparently replaces the old interface. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int fseeko64 (FILE *stream, off64_t offset, int whence)
+Preliminary: | MT-Safe  | AS-Unsafe corrupt | AC-Unsafe lock corrupt | See POSIX Safety Concepts. 
+This function is similar to fseeko with the only difference that the offset parameter is of type off64_t.  This also requires that the stream stream was opened using either fopen64, freopen64, or tmpfile64 since otherwise the underlying file operations to position the file pointer beyond the 2^31 bytes limit might fail. 
+If the sources are compiled with _FILE_OFFSET_BITS == 64 on a 32 bits machine this function is available under the name fseeko and so transparently replaces the old interface. 
+<<<<<<<<<<<<<<<<<<<<
+
+Portability Note: In non-POSIX systems, ftell, ftello, fseek and fseeko might work reliably only on binary streams.  See Binary Streams. 
+The following symbolic constants are defined for use as the whence argument to fseek.  They are also used with the lseek function (see I/O Primitives) and to specify offsets for file locks (see Control Operations). 
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int SEEK_SET
+This is an integer constant which, when used as the whence argument to the fseek or fseeko functions, specifies that the offset provided is relative to the beginning of the file. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int SEEK_CUR
+This is an integer constant which, when used as the whence argument to the fseek or fseeko functions, specifies that the offset provided is relative to the current file position. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int SEEK_END
+This is an integer constant which, when used as the whence argument to the fseek or fseeko functions, specifies that the offset provided is relative to the end of the file. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void rewind (FILE *stream)
+Preliminary: | MT-Safe  | AS-Unsafe corrupt | AC-Unsafe lock corrupt | See POSIX Safety Concepts. 
+The rewind function positions the stream stream at the beginning of the file.  It is equivalent to calling fseek or fseeko on the stream with an offset argument of 0L and a whence argument of SEEK_SET, except that the return value is discarded and the error indicator for the stream is reset. 
+<<<<<<<<<<<<<<<<<<<<
+
+These three aliases for the ‘SEEK_…’ constants exist for the sake of compatibility with older BSD systems.  They are defined in two different header files: fcntl.h and sys/file.h. 
+
+>>>>>>>>>>>>>>>>>>>>
+- L_SET  
+An alias for SEEK_SET. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- L_INCR  
+An alias for SEEK_CUR. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- L_XTND  
+An alias for SEEK_END. 

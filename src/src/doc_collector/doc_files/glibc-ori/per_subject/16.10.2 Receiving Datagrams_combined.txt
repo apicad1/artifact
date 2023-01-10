@@ -1,0 +1,13 @@
+The recvfrom function reads a packet from a datagram socket and also tells you where it was sent from.  This function is declared in sys/socket.h. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: ssize_t recvfrom (int socket, void *buffer, size_t size, int flags, struct sockaddr *addr, socklen_t *length-ptr)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The recvfrom function reads one packet from the socket socket into the buffer buffer.  The size argument specifies the maximum number of bytes to be read. 
+If the packet is longer than size bytes, then you get the first size bytes of the packet and the rest of the packet is lost. There’s no way to read the rest of the packet.  Thus, when you use a packet protocol, you must always know how long a packet to expect. 
+The addr and length-ptr arguments are used to return the address where the packet came from.  See Socket Addresses.  For a socket in the local domain the address information won’t be meaningful, since you can’t read the address of such a socket (see Local Namespace).  You can specify a null pointer as the addr argument if you are not interested in this information. 
+The flags are interpreted the same way as for recv (see Socket Data Options).  The return value and error conditions are also the same as for recv. 
+This function is defined as a cancellation point in multi-threaded programs, so one has to be prepared for this and make sure that allocated resources (like memory, file descriptors, semaphores or whatever) are freed even if the thread is canceled. 
+<<<<<<<<<<<<<<<<<<<<
+
+You can use plain recv (see Receiving Data) instead of recvfrom if you don’t need to find out who sent the packet (either because you know where it should come from or because you treat all possible senders alike).  Even read can be used if you don’t want to specify flags (see I/O Primitives). 

@@ -1,0 +1,112 @@
+This section explains the library functions for classifying characters. For example, isalpha is the function to test for an alphabetic character.  It takes one argument, the character to test, and returns a nonzero integer if the character is alphabetic, and zero otherwise.  You would use it like this: 
+
+EXAMPLE_BEGIN
+if (isalpha (c))
+  printf ("The character `%c' is alphabetic.\n", c);
+EXAMPLE_END
+
+Each of the functions in this section tests for membership in a particular class of characters; each has a name starting with ‘is’. Each of them takes one argument, which is a character to test, and returns an int which is treated as a boolean value.  The character argument is passed as an int, and it may be the constant value EOF instead of a real character. 
+The attributes of any given character can vary between locales. See Locales, for more information on locales. 
+These functions are declared in the header file ctype.h.  
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int islower (int c)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+Returns true if c is a lower-case letter.  The letter need not be from the Latin alphabet, any alphabet representable is valid. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int isupper (int c)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+Returns true if c is an upper-case letter.  The letter need not be from the Latin alphabet, any alphabet representable is valid. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int isalpha (int c)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+Returns true if c is an alphabetic character (a letter).  If islower or isupper is true of a character, then isalpha is also true. 
+In some locales, there may be additional characters for which isalpha is true—letters which are neither upper case nor lower case.  But in the standard "C" locale, there are no such additional characters. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int isdigit (int c)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+Returns true if c is a decimal digit (‘0’ through ‘9’). 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int isalnum (int c)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+Returns true if c is an alphanumeric character (a letter or number); in other words, if either isalpha or isdigit is true of a character, then isalnum is also true. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int isxdigit (int c)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+Returns true if c is a hexadecimal digit. Hexadecimal digits include the normal decimal digits ‘0’ through ‘9’ and the letters ‘A’ through ‘F’ and ‘a’ through ‘f’. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int ispunct (int c)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+Returns true if c is a punctuation character. This means any printing character that is not alphanumeric or a space character. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int isspace (int c)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+Returns true if c is a whitespace character.  In the standard "C" locale, isspace returns true for only the standard whitespace characters: 
+	' '
+space  
+	'\f'
+formfeed  
+	'\n'
+newline  
+	'\r'
+carriage return  
+	'\t'
+horizontal tab  
+	'\v'
+vertical tab 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int isblank (int c)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+Returns true if c is a blank character; that is, a space or a tab. This function was originally a GNU extension, but was added in ISO C99. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int isgraph (int c)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+Returns true if c is a graphic character; that is, a character that has a glyph associated with it.  The whitespace characters are not considered graphic. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int isprint (int c)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+Returns true if c is a printing character.  Printing characters include all the graphic characters, plus the space (‘ ’) character. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int iscntrl (int c)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+Returns true if c is a control character (that is, a character that is not a printing character). 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int isascii (int c)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+Returns true if c is a 7-bit unsigned char value that fits into the US/UK ASCII character set.  This function is a BSD extension and is also an SVID extension. 

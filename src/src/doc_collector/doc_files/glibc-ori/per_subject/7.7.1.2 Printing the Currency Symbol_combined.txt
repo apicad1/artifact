@@ -1,0 +1,62 @@
+These members of the struct lconv structure specify how to print the symbol to identify a monetary value—the international analog of ‘$’ for US dollars. 
+Each country has two standard currency symbols.  The local currency symbol is used commonly within the country, while the international currency symbol is used internationally to refer to that country’s currency when it is necessary to indicate the country unambiguously. 
+For example, many countries use the dollar as their monetary unit, and when dealing with international currencies it’s important to specify that one is dealing with (say) Canadian dollars instead of U.S. dollars or Australian dollars.  But when the context is known to be Canada, there is no need to make this explicit—dollar amounts are implicitly assumed to be in Canadian dollars. 
+
+>>>>>>>>>>>>>>>>>>>>
+- char *currency_symbol
+The local currency symbol for the selected locale. 
+In the standard ‘C’ locale, this member has a value of "" (the empty string), meaning “unspecified”.  The ISO standard doesn’t say what to do when you find this value; we recommend you simply print the empty string as you would print any other string pointed to by this variable. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- char *int_curr_symbol
+The international currency symbol for the selected locale. 
+The value of int_curr_symbol should normally consist of a three-letter abbreviation determined by the international standard ISO 4217 Codes for the Representation of Currency and Funds, followed by a one-character separator (often a space). 
+In the standard ‘C’ locale, this member has a value of "" (the empty string), meaning “unspecified”.  We recommend you simply print the empty string as you would print any other string pointed to by this variable. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- char p_cs_precedes
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- char n_cs_precedes
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- char int_p_cs_precedes
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- char int_n_cs_precedes
+These members are 1 if the currency_symbol or int_curr_symbol strings should precede the value of a monetary amount, or 0 if the strings should follow the value.  The p_cs_precedes and int_p_cs_precedes members apply to positive amounts (or zero), and the n_cs_precedes and int_n_cs_precedes members apply to negative amounts. 
+In the standard ‘C’ locale, all of these members have a value of CHAR_MAX, meaning “unspecified”.  The ISO standard doesn’t say what to do when you find this value.  We recommend printing the currency symbol before the amount, which is right for most countries. In other words, treat all nonzero values alike in these members. 
+The members with the int_ prefix apply to the int_curr_symbol while the other two apply to currency_symbol. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- char p_sep_by_space
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- char n_sep_by_space
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- char int_p_sep_by_space
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- char int_n_sep_by_space
+These members are 1 if a space should appear between the currency_symbol or int_curr_symbol strings and the amount, or 0 if no space should appear.  The p_sep_by_space and int_p_sep_by_space members apply to positive amounts (or zero), and the n_sep_by_space and int_n_sep_by_space members apply to negative amounts. 
+In the standard ‘C’ locale, all of these members have a value of CHAR_MAX, meaning “unspecified”.  The ISO standard doesn’t say what you should do when you find this value; we suggest you treat it as 1 (print a space).  In other words, treat all nonzero values alike in these members. 
+The members with the int_ prefix apply to the int_curr_symbol while the other two apply to currency_symbol.  There is one specialty with the int_curr_symbol, though.  Since all legal values contain a space at the end of the string one either prints this space (if the currency symbol must appear in front and must be separated) or one has to avoid printing this character at all (especially when at the end of the string). 

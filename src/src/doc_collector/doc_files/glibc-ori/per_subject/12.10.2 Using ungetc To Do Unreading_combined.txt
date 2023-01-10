@@ -1,0 +1,39 @@
+The function to unread a character is called ungetc, because it reverses the action of getc. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int ungetc (int c, FILE *stream)
+Preliminary: | MT-Safe  | AS-Unsafe corrupt | AC-Unsafe lock corrupt | See POSIX Safety Concepts. 
+The ungetc function pushes back the character c onto the input stream stream.  So the next input from stream will read c before anything else. 
+If c is EOF, ungetc does nothing and just returns EOF.  This lets you call ungetc with the return value of getc without needing to check for an error from getc. 
+The character that you push back doesn’t have to be the same as the last character that was actually read from the stream.  In fact, it isn’t necessary to actually read any characters from the stream before unreading them with ungetc!  But that is a strange way to write a program; usually ungetc is used only to unread a character that was just read from the same stream.  The GNU C Library supports this even on files opened in binary mode, but other systems might not. 
+The GNU C Library only supports one character of pushback—in other words, it does not work to call ungetc twice without doing input in between.  Other systems might let you push back multiple characters; then reading from the stream retrieves the characters in the reverse order that they were pushed. 
+Pushing back characters doesn’t alter the file; only the internal buffering for the stream is affected.  If a file positioning function (such as fseek, fseeko or rewind; see File Positioning) is called, any pending pushed-back characters are discarded. 
+Unreading a character on a stream that is at end of file clears the end-of-file indicator for the stream, because it makes the character of input available.  After you read that character, trying to read again will encounter end of file. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: wint_t ungetwc (wint_t wc, FILE *stream)
+Preliminary: | MT-Safe  | AS-Unsafe corrupt | AC-Unsafe lock corrupt | See POSIX Safety Concepts. 
+The ungetwc function behaves just like ungetc just that it pushes back a wide character. 
+<<<<<<<<<<<<<<<<<<<<
+
+Here is an example showing the use of getc and ungetc to skip over whitespace characters.  When this function reaches a non-whitespace character, it unreads that character to be seen again on the next read operation on the stream. 
+
+EXAMPLE_BEGIN
+#include <stdio.h>
+#include <ctype.h>
+
+void
+skip_whitespace (FILE *stream)
+{
+  int c;
+  do
+    /* No need to check for EOF because it is not
+       isspace, and ungetc ignores EOF.  */
+    c = getc (stream);
+  while (isspace (c));
+  ungetc (c, stream);
+}
+EXAMPLE_END
+

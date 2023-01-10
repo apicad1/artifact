@@ -1,0 +1,1 @@
+Here are the details about how to call the getopt function.  To use this facility, your program must include the header file unistd.h.  

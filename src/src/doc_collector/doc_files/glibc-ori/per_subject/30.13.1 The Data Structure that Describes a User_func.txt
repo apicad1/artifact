@@ -1,0 +1,18 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: struct passwd
+The passwd data structure is used to hold information about entries in the system user data base.  It has at least the following members: 
+	char *pw_name
+The user’s login name.  
+	char *pw_passwd
+Historically, this field would hold the one-way hash of the user’s passphrase.  Nowadays, it will almost always be the single character ‘x’, indicating that the hash is in the shadow database.  
+	uid_t pw_uid
+The user ID number.  
+	gid_t pw_gid
+The user’s default group ID number.  
+	char *pw_gecos
+A string typically containing the user’s real name, and possibly other information such as a phone number.  
+	char *pw_dir
+The user’s home directory, or initial working directory.  This might be a null pointer, in which case the interpretation is system-dependent.  
+	char *pw_shell
+The user’s default shell, or the initial program run when the user logs in. This might be a null pointer, indicating that the system default should be used. 

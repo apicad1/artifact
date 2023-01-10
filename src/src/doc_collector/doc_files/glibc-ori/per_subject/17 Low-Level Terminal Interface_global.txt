@@ -1,0 +1,28 @@
+This chapter describes functions that are specific to terminal devices. You can use these functions to do things like turn off input echoing; set serial line characteristics such as line speed and flow control; and change which characters are used for end-of-file, command-line editing, sending signals, and similar control functions. 
+Most of the functions in this chapter operate on file descriptors. See Low-Level I/O, for more information about what a file descriptor is and how to open a file descriptor for a terminal device. 
+
+TABLE_BEGIN
+ • Is It a Terminal    How to determine if a file is a terminal
+			         device, and what its name is.
+
+ • I/O Queues    About flow control and typeahead.
+
+ • Canonical or Not    Two basic styles of input processing.
+
+ • Terminal Modes    How to examine and modify flags controlling
+			         details of terminal I/O: echoing,
+                                 signals, editing.  Posix.
+
+ • BSD Terminal Modes    BSD compatible terminal mode setting
+
+ • Line Control    Sending break sequences, clearing
+                                 terminal buffers …
+
+ • Noncanon Example    How to read single characters without echo.
+
+ • getpass    Prompting the user for a passphrase.
+
+ • Pseudo-Terminals    How to open a pseudo-terminal.
+
+TABLE_END
+

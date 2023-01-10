@@ -1,0 +1,75 @@
+CATAN(3)                                        Linux Programmer's Manual                                       CATAN(3)
+
+NAME
+       catan, catanf, catanl - complex arc tangents
+
+SYNOPSIS
+       #include <complex.h>
+
+       double complex catan(double complex z);
+       float complex catanf(float complex z);
+       long double complex catanl(long double complex z);
+
+       Link with -lm.
+
+DESCRIPTION
+       These  functions  calculate the complex arc tangent of z.  If y = catan(z), then z = ctan(y).  The real part of y
+       is chosen in the interval [-pi/2,pi/2].
+
+       One has:
+
+           catan(z) = (clog(1 + i * z) - clog(1 - i * z)) / (2 * i)
+
+VERSIONS
+       These functions first appeared in glibc in version 2.1.
+
+ATTRIBUTES
+       For an explanation of the terms used in this section, see attributes(7).
+
+       ┌──────────────────────────────────────────────────────────────────────────────────────┬───────────────┬─────────┐
+       │Interface                                                                             │ Attribute     │ Value   │
+       ├──────────────────────────────────────────────────────────────────────────────────────┼───────────────┼─────────┤
+       │catan(), catanf(), catanl()                                                           │ Thread safety │ MT-Safe │
+       └──────────────────────────────────────────────────────────────────────────────────────┴───────────────┴─────────┘
+
+CONFORMING TO
+       C99, POSIX.1-2001, POSIX.1-2008.
+
+EXAMPLES
+       /* Link with "-lm" */
+
+       #include <complex.h>
+       #include <stdlib.h>
+       #include <unistd.h>
+       #include <stdio.h>
+
+       int
+       main(int argc, char *argv[])
+       {
+           double complex z, c, f;
+           double complex i = I;
+
+           if (argc != 3) {
+               fprintf(stderr, "Usage: %s <real> <imag>\n", argv[0]);
+               exit(EXIT_FAILURE);
+           }
+
+           z = atof(argv[1]) + atof(argv[2]) * I;
+
+           c = catan(z);
+           printf("catan() = %6.3f %6.3f*i\n", creal(c), cimag(c));
+
+           f = (clog(1 + i * z) - clog(1 - i * z)) / (2 * i);
+           printf("formula = %6.3f %6.3f*i\n", creal(f2), cimag(f2));
+
+           exit(EXIT_SUCCESS);
+       }
+
+SEE ALSO
+       ccos(3), clog(3), ctan(3), complex(7)
+
+COLOPHON
+       This page is part of release 5.13 of the Linux man-pages project.  A  description  of  the  project,  information
+       about reporting bugs, and the latest version of this page, can be found at https://www.kernel.org/doc/man-pages/.
+
+                                                       2021-03-22                                               CATAN(3)

@@ -1,0 +1,170 @@
+The most fundamental of the conversion functions are those dealing with single characters.  Please note that this does not always mean single bytes.  But since there is very often a subset of the multibyte character set that consists of single byte sequences, there are functions to help with converting bytes.  Frequently, ASCII is a subset of the multibyte character set.  In such a scenario, each ASCII character stands for itself, and all other characters have at least a first byte that is beyond the range 0 to 127. 
+Despite the limitation that the single byte value is always interpreted in the initial state, this function is actually useful most of the time. Most characters are either entirely single-byte character sets or they are extensions to ASCII.  But then it is possible to write code like this (not that this specific example is very useful): 
+
+EXAMPLE_BEGIN
+wchar_t *
+itow (unsigned long int val)
+{
+  static wchar_t buf[30];
+  wchar_t *wcp = &buf[29];
+  *wcp = L'\0';
+  while (val != 0)
+    {
+      *--wcp = btowc ('0' + val % 10);
+      val /= 10;
+    }
+  if (wcp == &buf[29])
+    *--wcp = L'0';
+  return wcp;
+}
+EXAMPLE_END
+
+Why is it necessary to use such a complicated implementation and not simply cast '0' + val % 10 to a wide character?  The answer is that there is no guarantee that one can perform this kind of arithmetic on the character of the character set used for wchar_t representation.  In other situations the bytes are not constant at compile time and so the compiler cannot do the work.  In situations like this, using btowc is required. 
+There is also a function for the conversion in the other direction. 
+There are more general functions to convert single characters from multibyte representation to wide characters and vice versa.  These functions pose no limit on the length of the multibyte representation and they also do not require it to be in the initial state. 
+A function that copies a multibyte string into a wide character string while at the same time converting all lowercase characters into uppercase could look like this: 
+
+EXAMPLE_BEGIN
+wchar_t *
+mbstouwcs (const char *s)
+{
+  /* Include the null terminator in the conversion. */
+  size_t len = strlen (s) + 1;
+  wchar_t *result = reallocarray (NULL, len, sizeof (wchar_t));
+  if (result == NULL)
+    return NULL;
+
+  wchar_t *wcp = result;
+  mbstate_t state;
+  memset (&state, '\0', sizeof (state));
+
+  while (true)
+    {
+      wchar_t wc;
+      size_t nbytes = mbrtowc (&wc, s, len, &state);
+      if (nbytes == 0)
+        {
+          /* Terminate the result string. */
+          *wcp = L'\0';
+          break;
+        }
+      else if (nbytes == (size_t) -2)
+        {
+          /* Truncated input string. */
+          errno = EILSEQ;
+          free (result);
+          return NULL;
+        }
+      else if (nbytes == (size_t) -1)
+        {
+          /* Some other error (including EILSEQ). */
+          free (result);
+          return NULL;
+        }
+      else
+        {
+          /* A character was converted. */
+          *wcp++ = towupper (wc);
+          len -= nbytes;
+          s += nbytes;
+        }
+    }
+  return result;
+}
+EXAMPLE_END
+
+In the inner loop, a single wide character is stored in wc, and the number of consumed bytes is stored in the variable nbytes. If the conversion is successful, the uppercase variant of the wide character is stored in the result array and the pointer to the input string and the number of available bytes is adjusted.  If the mbrtowc function returns zero, the null input byte has not been converted, so it must be stored explicitly in the result. 
+The above code uses the fact that there can never be more wide characters in the converted result than there are bytes in the multibyte input string.  This method yields a pessimistic guess about the size of the result, and if many wide character strings have to be constructed this way or if the strings are long, the extra memory required to be allocated because the input string contains multibyte characters might be significant.  The allocated memory block can be resized to the correct size before returning it, but a better solution might be to allocate just the right amount of space for the result right away. Unfortunately there is no function to compute the length of the wide character string directly from the multibyte string.  There is, however, a function that does part of the work. 
+The attentive reader now will note that mbrlen can be implemented as 
+
+EXAMPLE_BEGIN
+mbrtowc (NULL, s, n, ps != NULL ? ps : &internal)
+EXAMPLE_END
+
+This is true and in fact is mentioned in the official specification. How can this function be used to determine the length of the wide character string created from a multibyte character string?  It is not directly usable, but we can define a function mbslen using it: 
+
+EXAMPLE_BEGIN
+size_t
+mbslen (const char *s)
+{
+  mbstate_t state;
+  size_t result = 0;
+  size_t nbytes;
+  memset (&state, '\0', sizeof (state));
+  while ((nbytes = mbrlen (s, MB_LEN_MAX, &state)) > 0)
+    {
+      if (nbytes >= (size_t) -2)
+        /* Something is wrong.  */
+        return (size_t) -1;
+      s += nbytes;
+      ++result;
+    }
+  return result;
+}
+EXAMPLE_END
+
+This function simply calls mbrlen for each multibyte character in the string and counts the number of function calls.  Please note that we here use MB_LEN_MAX as the size argument in the mbrlen call.  This is acceptable since a) this value is larger than the length of the longest multibyte character sequence and b) we know that the string s ends with a NUL byte, which cannot be part of any other multibyte character sequence but the one representing the NUL wide character. Therefore, the mbrlen function will never read invalid memory. 
+Now that this function is available (just to make this clear, this function is not part of the GNU C Library) we can compute the number of wide characters required to store the converted multibyte character string s using 
+
+EXAMPLE_BEGIN
+wcs_bytes = (mbslen (s) + 1) * sizeof (wchar_t);
+EXAMPLE_END
+
+Please note that the mbslen function is quite inefficient.  The implementation of mbstouwcs with mbslen would have to perform the conversion of the multibyte character input string twice, and this conversion might be quite expensive.  So it is necessary to think about the consequences of using the easier but imprecise method before doing the work twice. 
+Using wcrtomb is as easy as using mbrtowc.  The following example appends a wide character string to a multibyte character string. Again, the code is not really useful (or correct), it is simply here to demonstrate the use and some problems. 
+
+EXAMPLE_BEGIN
+char *
+mbscatwcs (char *s, size_t len, const wchar_t *ws)
+{
+  mbstate_t state;
+  /* Find the end of the existing string.  */
+  char *wp = strchr (s, '\0');
+  len -= wp - s;
+  memset (&state, '\0', sizeof (state));
+  do
+    {
+      size_t nbytes;
+      if (len < MB_CUR_LEN)
+        {
+          /* We cannot guarantee that the next
+             character fits into the buffer, so
+             return an error.  */
+          errno = E2BIG;
+          return NULL;
+        }
+      nbytes = wcrtomb (wp, *ws, &state);
+      if (nbytes == (size_t) -1)
+        /* Error in the conversion.  */
+        return NULL;
+      len -= nbytes;
+      wp += nbytes;
+    }
+  while (*ws++ != L'\0');
+  return s;
+}
+EXAMPLE_END
+
+First the function has to find the end of the string currently in the array s.  The strchr call does this very efficiently since a requirement for multibyte character representations is that the NUL byte is never used except to represent itself (and in this context, the end of the string). 
+After initializing the state object the loop is entered where the first task is to make sure there is enough room in the array s.  We abort if there are not at least MB_CUR_LEN bytes available.  This is not always optimal but we have no other choice.  We might have less than MB_CUR_LEN bytes available but the next multibyte character might also be only one byte long.  At the time the wcrtomb call returns it is too late to decide whether the buffer was large enough.  If this solution is unsuitable, there is a very slow but more accurate solution. 
+
+EXAMPLE_BEGIN
+  …
+  if (len < MB_CUR_LEN)
+    {
+      mbstate_t temp_state;
+      memcpy (&temp_state, &state, sizeof (state));
+      if (wcrtomb (NULL, *ws, &temp_state) > len)
+        {
+          /* We cannot guarantee that the next
+             character fits into the buffer, so
+             return an error.  */
+          errno = E2BIG;
+          return NULL;
+        }
+    }
+  …
+EXAMPLE_END
+
+Here we perform the conversion that might overflow the buffer so that we are afterwards in the position to make an exact decision about the buffer size.  Please note the NULL argument for the destination buffer in the new wcrtomb call; since we are not interested in the converted text at this point, this is a nice way to express this.  The most unusual thing about this piece of code certainly is the duplication of the conversion state object, but if a change of the state is necessary to emit the next multibyte character, we want to have the same shift state change performed in the real conversion.  Therefore, we have to preserve the initial shift state information. 
+There are certainly many more and even better solutions to this problem. This example is only provided for educational purposes. 

@@ -1,0 +1,1 @@
+There is another possibility to introduce severity classes besides using the environment variable SEV_LEVEL.  This simplifies the task of introducing new classes in a running program.  One could use the setenv or putenv function to set the environment variable, but this is toilsome. 

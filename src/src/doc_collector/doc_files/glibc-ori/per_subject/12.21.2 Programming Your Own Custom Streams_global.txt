@@ -1,0 +1,11 @@
+This section describes how you can make a stream that gets input from an arbitrary data source or writes output to an arbitrary data sink programmed by you.  We call these custom streams.  The functions and types described here are all GNU extensions. 
+
+TABLE_BEGIN
+ • Streams and Cookies    The cookie records where to fetch or
+				 store data that is read or written.
+
+ • Hook Functions    How you should define the four hook
+				 functions that a custom stream needs.
+
+TABLE_END
+

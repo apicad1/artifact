@@ -1,0 +1,33 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int tolower (int c)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+If c is an upper-case letter, tolower returns the corresponding lower-case letter.  If c is not an upper-case letter, c is returned unchanged. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int toupper (int c)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+If c is a lower-case letter, toupper returns the corresponding upper-case letter.  Otherwise c is returned unchanged. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int toascii (int c)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function converts c to a 7-bit unsigned char value that fits into the US/UK ASCII character set, by clearing the high-order bits.  This function is a BSD extension and is also an SVID extension. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int _tolower (int c)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This is identical to tolower, and is provided for compatibility with the SVID.  See SVID. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int _toupper (int c)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This is identical to toupper, and is provided for compatibility with the SVID. 

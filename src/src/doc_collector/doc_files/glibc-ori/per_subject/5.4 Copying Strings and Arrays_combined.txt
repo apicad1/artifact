@@ -1,0 +1,246 @@
+You can use the functions described in this section to copy the contents of strings, wide strings, and arrays.  The ‘str’ and ‘mem’ functions are declared in string.h while the ‘w’ functions are declared in wchar.h.        
+A helpful way to remember the ordering of the arguments to the functions in this section is that it corresponds to an assignment expression, with the destination array specified to the left of the source array.  Most of these functions return the address of the destination array; a few return the address of the destination’s terminating null, or of just past the destination. 
+Most of these functions do not work properly if the source and destination arrays overlap.  For example, if the beginning of the destination array overlaps the end of the source array, the original contents of that part of the source array may get overwritten before it is copied.  Even worse, in the case of the string functions, the null byte marking the end of the string may be lost, and the copy function might get stuck in a loop trashing all the memory allocated to your program. 
+All functions that have problems copying between overlapping arrays are explicitly identified in this manual.  In addition to functions in this section, there are a few others like sprintf (see Formatted Output Functions) and scanf (see Formatted Input Functions). 
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void * memcpy (void *restrict to, const void *restrict from, size_t size)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The memcpy function copies size bytes from the object beginning at from into the object beginning at to.  The behavior of this function is undefined if the two arrays to and from overlap; use memmove instead if overlapping is possible. 
+The value returned by memcpy is the value of to. 
+Here is an example of how you might use memcpy to copy the contents of an array: 
+
+EXAMPLE_BEGIN
+struct foo *oldarray, *newarray;
+int arraysize;
+…
+memcpy (new, old, arraysize * sizeof (struct foo));
+EXAMPLE_END
+
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: wchar_t * wmemcpy (wchar_t *restrict wto, const wchar_t *restrict wfrom, size_t size)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The wmemcpy function copies size wide characters from the object beginning at wfrom into the object beginning at wto.  The behavior of this function is undefined if the two arrays wto and wfrom overlap; use wmemmove instead if overlapping is possible. 
+The following is a possible implementation of wmemcpy but there are more optimizations possible. 
+
+EXAMPLE_BEGIN
+wchar_t *
+wmemcpy (wchar_t *restrict wto, const wchar_t *restrict wfrom,
+         size_t size)
+{
+  return (wchar_t *) memcpy (wto, wfrom, size * sizeof (wchar_t));
+}
+EXAMPLE_END
+
+The value returned by wmemcpy is the value of wto. 
+This function was introduced in Amendment 1 to ISO C90. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void * mempcpy (void *restrict to, const void *restrict from, size_t size)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The mempcpy function is nearly identical to the memcpy function.  It copies size bytes from the object beginning at from into the object pointed to by to.  But instead of returning the value of to it returns a pointer to the byte following the last written byte in the object beginning at to. I.e., the value is ((void *) ((char *) to + size)). 
+This function is useful in situations where a number of objects shall be copied to consecutive memory positions. 
+
+EXAMPLE_BEGIN
+void *
+combine (void *o1, size_t s1, void *o2, size_t s2)
+{
+  void *result = malloc (s1 + s2);
+  if (result != NULL)
+    mempcpy (mempcpy (result, o1, s1), o2, s2);
+  return result;
+}
+EXAMPLE_END
+
+This function is a GNU extension. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: wchar_t * wmempcpy (wchar_t *restrict wto, const wchar_t *restrict wfrom, size_t size)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The wmempcpy function is nearly identical to the wmemcpy function.  It copies size wide characters from the object beginning at wfrom into the object pointed to by wto.  But instead of returning the value of wto it returns a pointer to the wide character following the last written wide character in the object beginning at wto.  I.e., the value is wto + size. 
+This function is useful in situations where a number of objects shall be copied to consecutive memory positions. 
+The following is a possible implementation of wmemcpy but there are more optimizations possible. 
+
+EXAMPLE_BEGIN
+wchar_t *
+wmempcpy (wchar_t *restrict wto, const wchar_t *restrict wfrom,
+          size_t size)
+{
+  return (wchar_t *) mempcpy (wto, wfrom, size * sizeof (wchar_t));
+}
+EXAMPLE_END
+
+This function is a GNU extension. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void * memmove (void *to, const void *from, size_t size)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+memmove copies the size bytes at from into the size bytes at to, even if those two blocks of space overlap.  In the case of overlap, memmove is careful to copy the original values of the bytes in the block at from, including those bytes which also belong to the block at to. 
+The value returned by memmove is the value of to. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: wchar_t * wmemmove (wchar_t *wto, const wchar_t *wfrom, size_t size)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+wmemmove copies the size wide characters at wfrom into the size wide characters at wto, even if those two blocks of space overlap.  In the case of overlap, wmemmove is careful to copy the original values of the wide characters in the block at wfrom, including those wide characters which also belong to the block at wto. 
+The following is a possible implementation of wmemcpy but there are more optimizations possible. 
+
+EXAMPLE_BEGIN
+wchar_t *
+wmempcpy (wchar_t *restrict wto, const wchar_t *restrict wfrom,
+          size_t size)
+{
+  return (wchar_t *) mempcpy (wto, wfrom, size * sizeof (wchar_t));
+}
+EXAMPLE_END
+
+The value returned by wmemmove is the value of wto. 
+This function is a GNU extension. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void * memccpy (void *restrict to, const void *restrict from, int c, size_t size)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function copies no more than size bytes from from to to, stopping if a byte matching c is found.  The return value is a pointer into to one byte past where c was copied, or a null pointer if no byte matching c appeared in the first size bytes of from. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void * memset (void *block, int c, size_t size)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function copies the value of c (converted to an unsigned char) into each of the first size bytes of the object beginning at block.  It returns the value of block. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: wchar_t * wmemset (wchar_t *block, wchar_t wc, size_t size)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function copies the value of wc into each of the first size wide characters of the object beginning at block.  It returns the value of block. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: char * strcpy (char *restrict to, const char *restrict from)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This copies bytes from the string from (up to and including the terminating null byte) into the string to.  Like memcpy, this function has undefined results if the strings overlap.  The return value is the value of to. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: wchar_t * wcscpy (wchar_t *restrict wto, const wchar_t *restrict wfrom)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This copies wide characters from the wide string wfrom (up to and including the terminating null wide character) into the string wto.  Like wmemcpy, this function has undefined results if the strings overlap.  The return value is the value of wto. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: char * strdup (const char *s)
+Preliminary: | MT-Safe  | AS-Unsafe heap | AC-Unsafe mem | See POSIX Safety Concepts. 
+This function copies the string s into a newly allocated string.  The string is allocated using malloc; see Unconstrained Allocation.  If malloc cannot allocate space for the new string, strdup returns a null pointer.  Otherwise it returns a pointer to the new string. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: wchar_t * wcsdup (const wchar_t *ws)
+Preliminary: | MT-Safe  | AS-Unsafe heap | AC-Unsafe mem | See POSIX Safety Concepts. 
+This function copies the wide string ws into a newly allocated string.  The string is allocated using malloc; see Unconstrained Allocation.  If malloc cannot allocate space for the new string, wcsdup returns a null pointer.  Otherwise it returns a pointer to the new wide string. 
+This function is a GNU extension. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: char * stpcpy (char *restrict to, const char *restrict from)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function is like strcpy, except that it returns a pointer to the end of the string to (that is, the address of the terminating null byte to + strlen (from)) rather than the beginning. 
+For example, this program uses stpcpy to concatenate ‘foo’ and ‘bar’ to produce ‘foobar’, which it then prints. 
+
+EXAMPLE_BEGIN
+
+
+#include <string.h>
+#include <stdio.h>
+
+int
+main (void)
+{
+  char buffer[10];
+  char *to = buffer;
+  to = stpcpy (to, "foo");
+  to = stpcpy (to, "bar");
+  puts (buffer);
+  return 0;
+}
+EXAMPLE_END
+
+This function is part of POSIX.1-2008 and later editions, but was available in the GNU C Library and other systems as an extension long before it was standardized. 
+Its behavior is undefined if the strings overlap.  The function is declared in string.h. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: wchar_t * wcpcpy (wchar_t *restrict wto, const wchar_t *restrict wfrom)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function is like wcscpy, except that it returns a pointer to the end of the string wto (that is, the address of the terminating null wide character wto + wcslen (wfrom)) rather than the beginning. 
+This function is not part of ISO or POSIX but was found useful while developing the GNU C Library itself. 
+The behavior of wcpcpy is undefined if the strings overlap. 
+wcpcpy is a GNU extension and is declared in wchar.h. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: char * strdupa (const char *s)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This macro is similar to strdup but allocates the new string using alloca instead of malloc (see Variable Size Automatic).  This means of course the returned string has the same limitations as any block of memory allocated using alloca. 
+For obvious reasons strdupa is implemented only as a macro; you cannot get the address of this function.  Despite this limitation it is a useful function.  The following code shows a situation where using malloc would be a lot more expensive. 
+
+EXAMPLE_BEGIN
+
+
+#include <paths.h>
+#include <string.h>
+#include <stdio.h>
+
+const char path[] = _PATH_STDPATH;
+
+int
+main (void)
+{
+  char *wr_path = strdupa (path);
+  char *cp = strtok (wr_path, ":");
+
+  while (cp != NULL)
+    {
+      puts (cp);
+      cp = strtok (NULL, ":");
+    }
+  return 0;
+}
+EXAMPLE_END
+
+Please note that calling strtok using path directly is invalid.  It is also not allowed to call strdupa in the argument list of strtok since strdupa uses alloca (see Variable Size Automatic) can interfere with the parameter passing. 
+This function is only available if GNU CC is used. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void bcopy (const void *from, void *to, size_t size)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This is a partially obsolete alternative for memmove, derived from BSD.  Note that it is not quite equivalent to memmove, because the arguments are not in the same order and there is no return value. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void bzero (void *block, size_t size)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This is a partially obsolete alternative for memset, derived from BSD.  Note that it is not as general as memset, because the only value it can store is zero. 

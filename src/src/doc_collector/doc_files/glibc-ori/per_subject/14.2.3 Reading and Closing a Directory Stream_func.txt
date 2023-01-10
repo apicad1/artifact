@@ -1,0 +1,61 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: struct dirent * readdir (DIR *dirstream)
+Preliminary: | MT-Safe  | AS-Unsafe lock | AC-Unsafe lock | See POSIX Safety Concepts. 
+This function reads the next entry from the directory.  It normally returns a pointer to a structure containing information about the file.  This structure is associated with the dirstream handle and can be rewritten by a subsequent call. 
+Portability Note: On some systems readdir may not return entries for . and .., even though these are always valid file names in any directory.  See File Name Resolution. 
+If there are no more entries in the directory or an error is detected, readdir returns a null pointer.  The following errno error conditions are defined for this function: 
+	EBADF
+The dirstream argument is not valid. 
+To distinguish between an end-of-directory condition or an error, you must set errno to zero before calling readdir.  To avoid entering an infinite loop, you should stop reading from the directory after the first error. 
+Caution: The pointer returned by readdir points to a buffer within the DIR object.  The data in that buffer will be overwritten by the next call to readdir.  You must take care, for instance, to copy the d_name string if you need it later. 
+Because of this, it is not safe to share a DIR object among multiple threads, unless you use your own locking to ensure that no thread calls readdir while another thread is still using the data from the previous call.  In the GNU C Library, it is safe to call readdir from multiple threads as long as each thread uses its own DIR object.  POSIX.1-2008 does not require this to be safe, but we are not aware of any operating systems where it does not work. 
+readdir_r allows you to provide your own buffer for the struct dirent, but it is less portable than readdir, and has problems with very long filenames (see below).  We recommend you use readdir, but do not share DIR objects. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int readdir_r (DIR *dirstream, struct dirent *entry, struct dirent **result)
+Preliminary: | MT-Safe  | AS-Unsafe lock | AC-Unsafe lock | See POSIX Safety Concepts. 
+This function is a version of readdir which performs internal locking.  Like readdir it returns the next entry from the directory.  To prevent conflicts between simultaneously running threads the result is stored inside the entry object. 
+Portability Note: readdir_r is deprecated.  It is recommended to use readdir instead of readdir_r for the following reasons: 
+  On systems which do not define NAME_MAX, it may not be possible to use readdir_r safely because the caller does not specify the length of the buffer for the directory entry.   On some systems, readdir_r cannot read directory entries with very long names.  If such a name is encountered, the GNU C Library implementation of readdir_r returns with an error code of ENAMETOOLONG after the final directory entry has been read.  On other systems, readdir_r may return successfully, but the d_name member may not be NUL-terminated or may be truncated.   POSIX-1.2008 does not guarantee that readdir is thread-safe, even when access to the same dirstream is serialized.  But in current implementations (including the GNU C Library), it is safe to call readdir concurrently on different dirstreams, so there is no need to use readdir_r in most multi-threaded programs.  In the rare case that multiple threads need to read from the same dirstream, it is still better to use readdir and external synchronization.   It is expected that future versions of POSIX will obsolete readdir_r and mandate the level of thread safety for readdir which is provided by the GNU C Library and other implementations today. 
+Normally readdir_r returns zero and sets *result to entry.  If there are no more entries in the directory or an error is detected, readdir_r sets *result to a null pointer and returns a nonzero error code, also stored in errno, as described for readdir. 
+It is also important to look at the definition of the struct dirent type.  Simply passing a pointer to an object of this type for the second parameter of readdir_r might not be enough.  Some systems don’t define the d_name element sufficiently long.  In this case the user has to provide additional space.  There must be room for at least NAME_MAX + 1 characters in the d_name array. Code to call readdir_r could look like this: 
+
+EXAMPLE_BEGIN
+  union
+  {
+    struct dirent d;
+    char b[offsetof (struct dirent, d_name) + NAME_MAX + 1];
+  } u;
+
+  if (readdir_r (dir, &u.d, &res) == 0)
+    …
+EXAMPLE_END
+
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: struct dirent64 * readdir64 (DIR *dirstream)
+Preliminary: | MT-Safe  | AS-Unsafe lock | AC-Unsafe lock | See POSIX Safety Concepts. 
+The readdir64 function is just like the readdir function except that it returns a pointer to a record of type struct dirent64.  Some of the members of this data type (notably d_ino) might have a different size to allow large filesystems. 
+In all other aspects this function is equivalent to readdir. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int readdir64_r (DIR *dirstream, struct dirent64 *entry, struct dirent64 **result)
+Preliminary: | MT-Safe  | AS-Unsafe lock | AC-Unsafe lock | See POSIX Safety Concepts. 
+The deprecated readdir64_r function is equivalent to the readdir_r function except that it takes parameters of base type struct dirent64 instead of struct dirent in the second and third position.  The same precautions mentioned in the documentation of readdir_r also apply here. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int closedir (DIR *dirstream)
+Preliminary: | MT-Safe  | AS-Unsafe heap lock/hurd | AC-Unsafe mem fd lock/hurd | See POSIX Safety Concepts. 
+This function closes the directory stream dirstream.  It returns 0 on success and -1 on failure. 
+The following errno error conditions are defined for this function: 
+	EBADF
+The dirstream argument is not valid. 

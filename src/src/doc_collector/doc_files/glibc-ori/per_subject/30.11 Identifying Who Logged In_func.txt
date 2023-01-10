@@ -1,0 +1,19 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: char * getlogin (void)
+Preliminary: | MT-Unsafe race:getlogin race:utent sig:ALRM timer locale | AS-Unsafe dlopen plugin heap lock | AC-Unsafe corrupt lock fd mem | See POSIX Safety Concepts. 
+The getlogin function returns a pointer to a string containing the name of the user logged in on the controlling terminal of the process, or a null pointer if this information cannot be determined.  The string is statically allocated and might be overwritten on subsequent calls to this function or to cuserid. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: char * cuserid (char *string)
+Preliminary: | MT-Unsafe race:cuserid/!string locale | AS-Unsafe dlopen plugin heap lock | AC-Unsafe corrupt lock fd mem | See POSIX Safety Concepts. 
+The cuserid function returns a pointer to a string containing a user name associated with the effective ID of the process.  If string is not a null pointer, it should be an array that can hold at least L_cuserid characters; the string is returned in this array.  Otherwise, a pointer to a string in a static area is returned. This string is statically allocated and might be overwritten on subsequent calls to this function or to getlogin. 
+The use of this function is deprecated since it is marked to be withdrawn in XPG4.2 and has already been removed from newer revisions of POSIX.1. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int L_cuserid
+An integer constant that indicates how long an array you might need to store a user name. 

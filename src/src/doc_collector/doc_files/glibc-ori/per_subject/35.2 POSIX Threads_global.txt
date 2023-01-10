@@ -1,0 +1,11 @@
+This section describes the GNU C Library POSIX Threads implementation. 
+
+TABLE_BEGIN
+ • Thread-specific Data    Support for creating and
+				  managing thread-specific data
+
+ • Non-POSIX Extensions    Additional functions to extend
+				  POSIX Thread functionality
+
+TABLE_END
+

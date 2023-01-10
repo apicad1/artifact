@@ -1,0 +1,12 @@
+
+TABLE_BEGIN
+ • FP Exceptions    IEEE 754 math exceptions and how to detect them.
+
+ • Infinity and NaN    Special values returned by calculations.
+
+ • Status bit operations    Checking for exceptions after the fact.
+
+ • Math Error Reporting    How the math functions report errors.
+
+TABLE_END
+

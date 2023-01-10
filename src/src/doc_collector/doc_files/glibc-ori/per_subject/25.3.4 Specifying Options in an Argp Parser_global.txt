@@ -1,0 +1,7 @@
+The options field in a struct argp points to a vector of struct argp_option structures, each of which specifies an option that the argp parser supports.  Multiple entries may be used for a single option provided it has multiple names.  This should be terminated by an entry with zero in all fields.  Note that when using an initialized C array for options, writing { 0 } is enough to achieve this. 
+
+TABLE_BEGIN
+ • Flags    Flags for options.
+
+TABLE_END
+

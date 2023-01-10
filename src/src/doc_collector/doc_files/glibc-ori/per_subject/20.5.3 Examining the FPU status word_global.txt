@@ -1,0 +1,22 @@
+ISO C99 defines functions to query and manipulate the floating-point status word.  You can use these functions to check for untrapped exceptions when it’s convenient, rather than worrying about them in the middle of a calculation. 
+These constants represent the various IEEE 754 exceptions.  Not all FPUs report all the different exceptions.  Each constant is defined if and only if the FPU you are compiling for supports that exception, so you can test for FPU support with ‘#ifdef’.  They are defined in fenv.h. 
+The macro FE_ALL_EXCEPT is the bitwise OR of all exception macros which are supported by the FP implementation. 
+These functions allow you to clear exception flags, test for exceptions, and save and restore the set of exceptions flagged. 
+To understand these functions, imagine that the status word is an integer variable named status.  feclearexcept is then equivalent to ‘status &= ~excepts’ and fetestexcept is equivalent to ‘(status & excepts)’.  The actual implementation may be very different, of course. 
+Exception flags are only cleared when the program explicitly requests it, by calling feclearexcept.  If you want to check for exceptions from a set of calculations, you should clear all the flags first.  Here is a simple example of the way to use fetestexcept: 
+
+EXAMPLE_BEGIN
+{
+  double f;
+  int raised;
+  feclearexcept (FE_ALL_EXCEPT);
+  f = compute ();
+  raised = fetestexcept (FE_OVERFLOW | FE_INVALID);
+  if (raised & FE_OVERFLOW) { /* … */ }
+  if (raised & FE_INVALID) { /* … */ }
+  /* … */
+}
+EXAMPLE_END
+
+You cannot explicitly set bits in the status word.  You can, however, save the entire status word and restore it later.  This is done with the following functions: 
+Note that the value stored in fexcept_t bears no resemblance to the bit mask returned by fetestexcept.  The type may not even be an integer.  Do not attempt to modify an fexcept_t variable. 

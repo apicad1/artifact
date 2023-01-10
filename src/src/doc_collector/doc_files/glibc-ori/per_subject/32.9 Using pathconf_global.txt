@@ -1,0 +1,4 @@
+When your machine allows different files to have different values for a file system parameter, you can use the functions in this section to find out the value that applies to any particular file. 
+These functions and the associated constants for the parameter argument are declared in the header file unistd.h. 
+Here are the symbolic constants that you can use as the parameter argument to pathconf and fpathconf.  The values are all integer constants. 
+Portability Note: On some systems, the GNU C Library does not enforce _PC_NAME_MAX or _PC_PATH_MAX limits. 

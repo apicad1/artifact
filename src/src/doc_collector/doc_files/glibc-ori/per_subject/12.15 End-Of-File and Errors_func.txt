@@ -1,0 +1,46 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int EOF
+This macro is an integer value that is returned by a number of narrow stream functions to indicate an end-of-file condition, or some other error situation.  With the GNU C Library, EOF is -1.  In other libraries, its value may be some other negative number. 
+This symbol is declared in stdio.h. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int WEOF
+This macro is an integer value that is returned by a number of wide stream functions to indicate an end-of-file condition, or some other error situation.  With the GNU C Library, WEOF is -1.  In other libraries, its value may be some other negative number. 
+This symbol is declared in wchar.h. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int feof (FILE *stream)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Unsafe lock | See POSIX Safety Concepts. 
+The feof function returns nonzero if and only if the end-of-file indicator for the stream stream is set. 
+This symbol is declared in stdio.h. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int feof_unlocked (FILE *stream)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The feof_unlocked function is equivalent to the feof function except that it does not implicitly lock the stream. 
+This function is a GNU extension. 
+This symbol is declared in stdio.h. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int ferror (FILE *stream)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Unsafe lock | See POSIX Safety Concepts. 
+The ferror function returns nonzero if and only if the error indicator for the stream stream is set, indicating that an error has occurred on a previous operation on the stream. 
+This symbol is declared in stdio.h. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int ferror_unlocked (FILE *stream)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The ferror_unlocked function is equivalent to the ferror function except that it does not implicitly lock the stream. 
+This function is a GNU extension. 
+This symbol is declared in stdio.h. 

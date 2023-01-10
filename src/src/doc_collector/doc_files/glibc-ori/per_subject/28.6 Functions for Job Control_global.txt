@@ -1,0 +1,11 @@
+This section contains detailed descriptions of the functions relating to job control. 
+
+TABLE_BEGIN
+ • Identifying the Terminal    Determining the controlling terminal’s name.
+
+ • Process Group Functions    Functions for manipulating process groups.
+
+ • Terminal Access Functions    Functions for controlling terminal access.
+
+TABLE_END
+

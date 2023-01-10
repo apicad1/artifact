@@ -1,0 +1,33 @@
+A signal is a software interrupt delivered to a process.  The operating system uses signals to report exceptional situations to an executing program.  Some signals report errors such as references to invalid memory addresses; others report asynchronous events, such as disconnection of a phone line. 
+The GNU C Library defines a variety of signal types, each for a particular kind of event.  Some kinds of events make it inadvisable or impossible for the program to proceed as usual, and the corresponding signals normally abort the program.  Other kinds of signals that report harmless events are ignored by default. 
+If you anticipate an event that causes signals, you can define a handler function and tell the operating system to run it when that particular type of signal arrives. 
+Finally, one process can send a signal to another process; this allows a parent process to abort a child, or two related processes to communicate and synchronize. 
+
+TABLE_BEGIN
+ • Concepts of Signals    Introduction to the signal facilities.
+
+ • Standard Signals    Particular kinds of signals with
+                                 standard names and meanings.
+
+ • Signal Actions    Specifying what happens when a
+                                 particular signal is delivered.
+
+ • Defining Handlers    How to write a signal handler function.
+
+ • Interrupted Primitives    Signal handlers affect use of open,
+				 read, write and other functions.
+
+ • Generating Signals    How to send a signal to a process.
+
+ • Blocking Signals    Making the system hold signals temporarily.
+
+ • Waiting for a Signal    Suspending your program until a signal
+                                 arrives.
+
+ • Signal Stack    Using a Separate Signal Stack.
+
+ • BSD Signal Handling    Additional functions for backward
+			         compatibility with BSD.
+
+TABLE_END
+

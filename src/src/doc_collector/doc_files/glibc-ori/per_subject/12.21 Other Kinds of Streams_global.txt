@@ -1,0 +1,14 @@
+The GNU C Library provides ways for you to define additional kinds of streams that do not necessarily correspond to an open file. 
+One such type of stream takes input from or writes output to a string. These kinds of streams are used internally to implement the sprintf and sscanf functions.  You can also create such a stream explicitly, using the functions described in String Streams. 
+More generally, you can define streams that do input/output to arbitrary objects using functions supplied by your program.  This protocol is discussed in Custom Streams. 
+Portability Note: The facilities described in this section are specific to GNU.  Other systems or C implementations might or might not provide equivalent functionality. 
+
+TABLE_BEGIN
+ • String Streams    Streams that get data from or put data in
+				 a string or memory buffer.
+
+ • Custom Streams    Defining your own streams with an arbitrary
+				 input data source and/or output data sink.
+
+TABLE_END
+

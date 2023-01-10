@@ -1,0 +1,21 @@
+When a stream is closed with fclose, the connection between the stream and the file is canceled.  After you have closed a stream, you cannot perform any additional operations on it. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int fclose (FILE *stream)
+Preliminary: | MT-Safe  | AS-Unsafe heap lock | AC-Unsafe lock mem fd | See POSIX Safety Concepts. 
+This function causes stream to be closed and the connection to the corresponding file to be broken.  Any buffered output is written and any buffered input is discarded.  The fclose function returns a value of 0 if the file was closed successfully, and EOF if an error was detected. 
+It is important to check for errors when you call fclose to close an output stream, because real, everyday errors can be detected at this time.  For example, when fclose writes the remaining buffered output, it might get an error because the disk is full.  Even if you know the buffer is empty, errors can still occur when closing a file if you are using NFS. 
+The function fclose is declared in stdio.h. 
+<<<<<<<<<<<<<<<<<<<<
+
+To close all streams currently available the GNU C Library provides another function. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int fcloseall (void)
+Preliminary: | MT-Unsafe race:streams | AS-Unsafe  | AC-Safe  | See POSIX Safety Concepts. 
+This function causes all open streams of the process to be closed and the connections to corresponding files to be broken.  All buffered data is written and any buffered input is discarded.  The fcloseall function returns a value of 0 if all the files were closed successfully, and EOF if an error was detected. 
+This function should be used only in special situations, e.g., when an error occurred and the program must be aborted.  Normally each single stream should be closed separately so that problems with individual streams can be identified.  It is also problematic since the standard streams (see Standard Streams) will also be closed. 
+The function fcloseall is declared in stdio.h. 
+<<<<<<<<<<<<<<<<<<<<
+
+If the main function to your program returns, or if you call the exit function (see Normal Termination), all open streams are automatically closed properly.  If your program terminates in any other manner, such as by calling the abort function (see Aborting a Program) or from a fatal signal (see Signal Handling), open streams might not be closed properly.  Buffered output might not be flushed and files may be incomplete.  For more information on buffering of streams, see Stream Buffering. 

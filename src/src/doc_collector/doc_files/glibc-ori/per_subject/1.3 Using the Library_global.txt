@@ -1,0 +1,16 @@
+This section describes some of the practical issues involved in using the GNU C Library. 
+
+TABLE_BEGIN
+ • Header Files    How to include the header files in your
+                                 programs.
+
+ • Macro Definitions    Some functions in the library may really
+                                 be implemented as macros.
+
+ • Reserved Names    The C standard reserves some names for
+                                 the library, and some for users.
+
+ • Feature Test Macros    How to control what names are defined.
+
+TABLE_END
+

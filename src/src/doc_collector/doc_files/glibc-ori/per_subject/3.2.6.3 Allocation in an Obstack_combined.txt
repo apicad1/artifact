@@ -1,0 +1,50 @@
+The most direct way to allocate an object in an obstack is with obstack_alloc, which is invoked almost like malloc. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void * obstack_alloc (struct obstack *obstack-ptr, int size)
+Preliminary: | MT-Safe race:obstack-ptr | AS-Safe  | AC-Unsafe corrupt mem | See POSIX Safety Concepts. 
+This allocates an uninitialized block of size bytes in an obstack and returns its address.  Here obstack-ptr specifies which obstack to allocate the block in; it is the address of the struct obstack object which represents the obstack.  Each obstack function or macro requires you to specify an obstack-ptr as the first argument. 
+This function calls the obstack’s obstack_chunk_alloc function if it needs to allocate a new chunk of memory; it calls obstack_alloc_failed_handler if allocation of memory by obstack_chunk_alloc failed. 
+<<<<<<<<<<<<<<<<<<<<
+
+For example, here is a function that allocates a copy of a string str in a specific obstack, which is in the variable string_obstack: 
+
+EXAMPLE_BEGIN
+struct obstack string_obstack;
+
+char *
+copystring (char *string)
+{
+  size_t len = strlen (string) + 1;
+  char *s = (char *) obstack_alloc (&string_obstack, len);
+  memcpy (s, string, len);
+  return s;
+}
+EXAMPLE_END
+
+To allocate a block with specified contents, use the function obstack_copy, declared like this: 
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void * obstack_copy (struct obstack *obstack-ptr, void *address, int size)
+Preliminary: | MT-Safe race:obstack-ptr | AS-Safe  | AC-Unsafe corrupt mem | See POSIX Safety Concepts. 
+This allocates a block and initializes it by copying size bytes of data starting at address.  It calls obstack_alloc_failed_handler if allocation of memory by obstack_chunk_alloc failed. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void * obstack_copy0 (struct obstack *obstack-ptr, void *address, int size)
+Preliminary: | MT-Safe race:obstack-ptr | AS-Safe  | AC-Unsafe corrupt mem | See POSIX Safety Concepts. 
+Like obstack_copy, but appends an extra byte containing a null character.  This extra byte is not counted in the argument size. 
+<<<<<<<<<<<<<<<<<<<<
+
+The obstack_copy0 function is convenient for copying a sequence of characters into an obstack as a null-terminated string.  Here is an example of its use: 
+
+EXAMPLE_BEGIN
+char *
+obstack_savestring (char *addr, int size)
+{
+  return obstack_copy0 (&myobstack, addr, size);
+}
+EXAMPLE_END
+
+Contrast this with the previous example of savestring using malloc (see Basic Allocation). 

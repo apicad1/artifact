@@ -1,0 +1,16 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int posix_fallocate (int fd, off_t offset, off_t length)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+Allocate backing store for the region of length bytes starting at byte offset in the file for the descriptor fd.  The file length is increased to ‘length + offset’ if necessary. 
+fd must be a regular file opened for writing, or EBADF is returned.  If there is insufficient disk space to fulfill the allocation request, ENOSPC is returned. 
+Note: If fallocate is not available (because the file system does not support it), posix_fallocate is emulated, which has the following drawbacks: 
+  It is very inefficient because all file system blocks in the requested range need to be examined (even if they have been allocated before) and potentially rewritten.  In contrast, with proper fallocate support (see below), the file system can examine the internal file allocation data structures and eliminate holes directly, maybe even using unwritten extents (which are pre-allocated but uninitialized on disk).   There is a race condition if another thread or process modifies the underlying file in the to-be-allocated area.  Non-null bytes could be overwritten with null bytes.   If fd has been opened with the O_WRONLY flag, the function will fail with an errno value of EBADF.   If fd has been opened with the O_APPEND flag, the function will fail with an errno value of EBADF.   If length is zero, ftruncate is used to increase the file size as requested, without allocating file system blocks.  There is a race condition which means that ftruncate can accidentally truncate the file if it has been extended concurrently. 
+On Linux, if an application does not benefit from emulation or if the emulation is harmful due to its inherent race conditions, the application can use the Linux-specific fallocate function, with a zero flag argument.  For the fallocate function, the GNU C Library does not perform allocation emulation if the file system does not support allocation.  Instead, an EOPNOTSUPP is returned to the caller. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int posix_fallocate64 (int fd, off64_t offset, off64_t length)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function is a variant of posix_fallocate64 which accepts 64-bit file offsets on all platforms. 

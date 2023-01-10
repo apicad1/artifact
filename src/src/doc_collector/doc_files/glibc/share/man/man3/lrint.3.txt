@@ -1,0 +1,69 @@
+LRINT(3)                                        Linux Programmer's Manual                                       LRINT(3)
+
+NAME
+       lrint, lrintf, lrintl, llrint, llrintf, llrintl - round to nearest integer
+
+SYNOPSIS
+       #include <math.h>
+
+       long lrint(double x);
+       long lrintf(float x);
+       long lrintl(long double x);
+
+       long long llrint(double x);
+       long long llrintf(float x);
+       long long llrintl(long double x);
+
+       Link with -lm.
+
+   Feature Test Macro Requirements for glibc (see feature_test_macros(7)):
+
+       All functions shown above:
+           _ISOC99_SOURCE || _POSIX_C_SOURCE >= 200112L
+
+DESCRIPTION
+       These functions round their argument to the nearest integer value, using the current rounding direction (see fes‐
+       etround(3)).
+
+       Note that unlike the rint(3) family of functions, the return type of these functions differs from that  of  their
+       arguments.
+
+RETURN VALUE
+       These functions return the rounded integer value.
+
+       If  x is a NaN or an infinity, or the rounded value is too large to be stored in a long (long long in the case of
+       the ll* functions), then a domain error occurs, and the return value is unspecified.
+
+ERRORS
+       See math_error(7) for information on how to determine whether an error has occurred when calling these functions.
+
+       The following errors can occur:
+
+       Domain error: x is a NaN or infinite, or the rounded value is too large
+              An invalid floating-point exception (FE_INVALID) is raised.
+
+       These functions do not set errno.
+
+VERSIONS
+       These functions first appeared in glibc in version 2.1.
+
+ATTRIBUTES
+       For an explanation of the terms used in this section, see attributes(7).
+
+       ┌──────────────────────────────────────────────────────────────────────────────────────┬───────────────┬─────────┐
+       │Interface                                                                             │ Attribute     │ Value   │
+       ├──────────────────────────────────────────────────────────────────────────────────────┼───────────────┼─────────┤
+       │lrint(), lrintf(), lrintl(), llrint(), llrintf(), llrintl()                           │ Thread safety │ MT-Safe │
+       └──────────────────────────────────────────────────────────────────────────────────────┴───────────────┴─────────┘
+
+CONFORMING TO
+       C99, POSIX.1-2001, POSIX.1-2008.
+
+SEE ALSO
+       ceil(3), floor(3), lround(3), nearbyint(3), rint(3), round(3)
+
+COLOPHON
+       This page is part of release 5.13 of the Linux man-pages project.  A  description  of  the  project,  information
+       about reporting bugs, and the latest version of this page, can be found at https://www.kernel.org/doc/man-pages/.
+
+                                                       2021-03-22                                               LRINT(3)

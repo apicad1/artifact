@@ -1,0 +1,111 @@
+The functions vprintf and friends are provided so that you can define your own variadic printf-like functions that make use of the same internals as the built-in formatted output functions. 
+The most natural way to define such functions would be to use a language construct to say, “Call printf and pass this template plus all of my arguments after the first five.”  But there is no way to do this in C, and it would be hard to provide a way, since at the C language level there is no way to tell how many arguments your function received. 
+Since that method is impossible, we provide alternative functions, the vprintf series, which lets you pass a va_list to describe “all of my arguments after the first five.” 
+When it is sufficient to define a macro rather than a real function, the GNU C compiler provides a way to do this much more easily with macros. For example: 
+
+EXAMPLE_BEGIN
+#define myprintf(a, b, c, d, e, rest...) \
+	    printf (mytemplate , ## rest)
+EXAMPLE_END
+
+See Variadic Macros in The C preprocessor, for details. But this is limited to macros, and does not apply to real functions at all. 
+Before calling vprintf or the other functions listed in this section, you must call va_start (see Variadic Functions) to initialize a pointer to the variable arguments.  Then you can call va_arg to fetch the arguments that you want to handle yourself.  This advances the pointer past those arguments. 
+Once your va_list pointer is pointing at the argument of your choice, you are ready to call vprintf.  That argument and all subsequent arguments that were passed to your function are used by vprintf along with the template that you specified separately. 
+Portability Note: The value of the va_list pointer is undetermined after the call to vprintf, so you must not use va_arg after you call vprintf.  Instead, you should call va_end to retire the pointer from service.  You can call va_start again and begin fetching the arguments from the start of the variable argument list.  (Alternatively, you can use va_copy to make a copy of the va_list pointer before calling vfprintf.)  Calling vprintf does not destroy the argument list of your function, merely the particular pointer that you passed to it. 
+Prototypes for these functions are declared in stdio.h.  
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int vprintf (const char *template, va_list ap)
+Preliminary: | MT-Safe locale | AS-Unsafe corrupt heap | AC-Unsafe mem lock corrupt | See POSIX Safety Concepts. 
+This function is similar to printf except that, instead of taking a variable number of arguments directly, it takes an argument list pointer ap. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int vwprintf (const wchar_t *template, va_list ap)
+Preliminary: | MT-Safe locale | AS-Unsafe corrupt heap | AC-Unsafe mem lock corrupt | See POSIX Safety Concepts. 
+This function is similar to wprintf except that, instead of taking a variable number of arguments directly, it takes an argument list pointer ap. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int vfprintf (FILE *stream, const char *template, va_list ap)
+Preliminary: | MT-Safe locale | AS-Unsafe corrupt heap | AC-Unsafe mem lock corrupt | See POSIX Safety Concepts. 
+This is the equivalent of fprintf with the variable argument list specified directly as for vprintf. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int vfwprintf (FILE *stream, const wchar_t *template, va_list ap)
+Preliminary: | MT-Safe locale | AS-Unsafe corrupt heap | AC-Unsafe mem lock corrupt | See POSIX Safety Concepts. 
+This is the equivalent of fwprintf with the variable argument list specified directly as for vwprintf. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int vsprintf (char *s, const char *template, va_list ap)
+Preliminary: | MT-Safe locale | AS-Unsafe heap | AC-Unsafe mem | See POSIX Safety Concepts. 
+This is the equivalent of sprintf with the variable argument list specified directly as for vprintf. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int vswprintf (wchar_t *ws, size_t size, const wchar_t *template, va_list ap)
+Preliminary: | MT-Safe locale | AS-Unsafe heap | AC-Unsafe mem | See POSIX Safety Concepts. 
+This is the equivalent of swprintf with the variable argument list specified directly as for vwprintf. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int vsnprintf (char *s, size_t size, const char *template, va_list ap)
+Preliminary: | MT-Safe locale | AS-Unsafe heap | AC-Unsafe mem | See POSIX Safety Concepts. 
+This is the equivalent of snprintf with the variable argument list specified directly as for vprintf. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int vasprintf (char **ptr, const char *template, va_list ap)
+Preliminary: | MT-Safe locale | AS-Unsafe heap | AC-Unsafe mem | See POSIX Safety Concepts. 
+The vasprintf function is the equivalent of asprintf with the variable argument list specified directly as for vprintf. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int obstack_vprintf (struct obstack *obstack, const char *template, va_list ap)
+Preliminary: | MT-Safe race:obstack locale | AS-Unsafe corrupt heap | AC-Unsafe corrupt mem | See POSIX Safety Concepts. 
+The obstack_vprintf function is the equivalent of obstack_printf with the variable argument list specified directly as for vprintf. 
+<<<<<<<<<<<<<<<<<<<<
+
+Here’s an example showing how you might use vfprintf.  This is a function that prints error messages to the stream stderr, along with a prefix indicating the name of the program (see Error Messages, for a description of program_invocation_short_name). 
+
+EXAMPLE_BEGIN
+#include <stdio.h>
+#include <stdarg.h>
+
+void
+eprintf (const char *template, ...)
+{
+  va_list ap;
+  extern char *program_invocation_short_name;
+
+  fprintf (stderr, "%s: ", program_invocation_short_name);
+  va_start (ap, template);
+  vfprintf (stderr, template, ap);
+  va_end (ap);
+}
+EXAMPLE_END
+
+You could call eprintf like this: 
+
+EXAMPLE_BEGIN
+eprintf ("file `%s' does not exist\n", filename);
+EXAMPLE_END
+
+In GNU C, there is a special construct you can use to let the compiler know that a function uses a printf-style format string.  Then it can check the number and types of arguments in each call to the function, and warn you when they do not match the format string. For example, take this declaration of eprintf: 
+
+EXAMPLE_BEGIN
+void eprintf (const char *template, ...)
+	__attribute__ ((format (printf, 1, 2)));
+EXAMPLE_END
+
+This tells the compiler that eprintf uses a format string like printf (as opposed to scanf; see Formatted Input); the format string appears as the first argument; and the arguments to satisfy the format begin with the second. See Declaring Attributes of Functions in Using GNU CC, for more information. 

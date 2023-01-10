@@ -1,0 +1,42 @@
+WCSNCMP(3)                                      Linux Programmer's Manual                                     WCSNCMP(3)
+
+NAME
+       wcsncmp - compare two fixed-size wide-character strings
+
+SYNOPSIS
+       #include <wchar.h>
+
+       int wcsncmp(const wchar_t *s1, const wchar_t *s2, size_t n);
+
+DESCRIPTION
+       The wcsncmp() function is the wide-character equivalent of the strncmp(3) function.  It compares the wide-charac‐
+       ter string pointed to by s1 and the wide-character string pointed to by s2, but at most n  wide  characters  from
+       each  string.   In  each  string, the comparison extends only up to the first occurrence of a null wide character
+       (L'\0'), if any.
+
+RETURN VALUE
+       The wcsncmp() function returns zero if the wide-character strings at s1 and s2, truncated to at  most  length  n,
+       are equal.  It returns an integer greater than zero if at the first differing position i (i < n), the correspond‐
+       ing wide-character s1[i] is greater than s2[i].  It returns an integer less than zero if at the  first  differing
+       position i (i < n), the corresponding wide-character s1[i] is less than s2[i].
+
+ATTRIBUTES
+       For an explanation of the terms used in this section, see attributes(7).
+
+       ┌──────────────────────────────────────────────────────────────────────────────────────┬───────────────┬─────────┐
+       │Interface                                                                             │ Attribute     │ Value   │
+       ├──────────────────────────────────────────────────────────────────────────────────────┼───────────────┼─────────┤
+       │wcsncmp()                                                                             │ Thread safety │ MT-Safe │
+       └──────────────────────────────────────────────────────────────────────────────────────┴───────────────┴─────────┘
+
+CONFORMING TO
+       POSIX.1-2001, POSIX.1-2008, C99.
+
+SEE ALSO
+       strncmp(3), wcsncasecmp(3)
+
+COLOPHON
+       This  page  is  part  of  release 5.13 of the Linux man-pages project.  A description of the project, information
+       about reporting bugs, and the latest version of this page, can be found at https://www.kernel.org/doc/man-pages/.
+
+GNU                                                    2021-03-22                                             WCSNCMP(3)

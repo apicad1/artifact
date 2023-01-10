@@ -1,0 +1,43 @@
+The symbols referred to in this section are declared in the file syslog.h. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void openlog (const char *ident, int option, int facility)
+Preliminary: | MT-Safe  | AS-Unsafe lock | AC-Unsafe lock fd | See POSIX Safety Concepts. 
+openlog opens or reopens a connection to Syslog in preparation for submitting messages. 
+ident is an arbitrary identification string which future syslog invocations will prefix to each message.  This is intended to identify the source of the message, and people conventionally set it to the name of the program that will submit the messages. 
+If ident is NULL, or if openlog is not called, the default identification string used in Syslog messages will be the program name, taken from argv[0]. 
+Please note that the string pointer ident will be retained internally by the Syslog routines.  You must not free the memory that ident points to.  It is also dangerous to pass a reference to an automatic variable since leaving the scope would mean ending the lifetime of the variable.  If you want to change the ident string, you must call openlog again; overwriting the string pointed to by ident is not thread-safe. 
+You can cause the Syslog routines to drop the reference to ident and go back to the default string (the program name taken from argv[0]), by calling closelog: See closelog. 
+In particular, if you are writing code for a shared library that might get loaded and then unloaded (e.g. a PAM module), and you use openlog, you must call closelog before any point where your library might get unloaded, as in this example: 
+
+EXAMPLE_BEGIN
+#include <syslog.h>
+
+void
+shared_library_function (void)
+{
+  openlog ("mylibrary", option, priority);
+
+  syslog (LOG_INFO, "shared library has been invoked");
+
+  closelog ();
+}
+EXAMPLE_END
+
+Without the call to closelog, future invocations of syslog by the program using the shared library may crash, if the library gets unloaded and the memory containing the string "mylibrary" becomes unmapped.  This is a limitation of the BSD syslog interface. 
+openlog may or may not open the /dev/log socket, depending on option.  If it does, it tries to open it and connect it as a stream socket.  If that doesn’t work, it tries to open it and connect it as a datagram socket.  The socket has the “Close on Exec” attribute, so the kernel will close it if the process performs an exec. 
+You don’t have to use openlog.  If you call syslog without having called openlog, syslog just opens the connection implicitly and uses defaults for the information in ident and options. 
+options is a bit string, with the bits as defined by the following single bit masks: 
+	LOG_PERROR  
+If on, openlog sets up the connection so that any syslog on this connection writes its message to the calling process’ Standard Error stream in addition to submitting it to Syslog.  If off, syslog does not write the message to Standard Error.  
+	LOG_CONS  
+If on, openlog sets up the connection so that a syslog on this connection that fails to submit a message to Syslog writes the message instead to system console.  If off, syslog does not write to the system console (but of course Syslog may write messages it receives to the console).  
+	LOG_PID  
+When on, openlog sets up the connection so that a syslog on this connection inserts the calling process’ Process ID (PID) into the message.  When off, openlog does not insert the PID.  
+	LOG_NDELAY  
+When on, openlog opens and connects the /dev/log socket. When off, a future syslog call must open and connect the socket.  Portability note:  In early systems, the sense of this bit was exactly the opposite.  
+	LOG_ODELAY  
+This bit does nothing.  It exists for backward compatibility.  
+If any other bit in options is on, the result is undefined. 
+facility is the default facility code for this connection.  A syslog on this connection that specifies default facility causes this facility to be associated with the message.  See syslog for possible values.  A value of zero means the default, which is LOG_USER. 
+If a Syslog connection is already open when you call openlog, openlog “reopens” the connection.  Reopening is like opening except that if you specify zero for the default facility code, the default facility code simply remains unchanged and if you specify LOG_NDELAY and the socket is already open and connected, openlog just leaves it that way. 

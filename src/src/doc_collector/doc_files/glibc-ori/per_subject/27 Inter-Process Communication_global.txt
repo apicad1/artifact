@@ -1,0 +1,7 @@
+This chapter describes the GNU C Library inter-process communication primitives. 
+
+TABLE_BEGIN
+ • Semaphores    Support for creating and managing semaphores
+
+TABLE_END
+

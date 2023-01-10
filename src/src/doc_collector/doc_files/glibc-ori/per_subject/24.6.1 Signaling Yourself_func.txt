@@ -1,0 +1,12 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int raise (int signum)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The raise function sends the signal signum to the calling process.  It returns zero if successful and a nonzero value if it fails. About the only reason for failure would be if the value of signum is invalid. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int gsignal (int signum)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The gsignal function does the same thing as raise; it is provided only for compatibility with SVID. 

@@ -1,0 +1,7 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void * memfrob (void *mem, size_t length)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The function memfrob obfuscates length bytes of data beginning at mem, in place.  Each byte is bitwise xor-ed with the binary pattern 00101010 (hexadecimal 0x2A).  The return value is always mem. 
+memfrob a second time on the same data returns it to its original state. 
+Portability Note:  This function is unique to the GNU C Library. It is declared in string.h. 

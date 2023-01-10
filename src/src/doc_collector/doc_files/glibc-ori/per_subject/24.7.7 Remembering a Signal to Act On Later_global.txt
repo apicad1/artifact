@@ -1,0 +1,50 @@
+Instead of blocking a signal using the library facilities, you can get almost the same results by making the handler set a flag to be tested later, when you “unblock”.  Here is an example: 
+
+EXAMPLE_BEGIN
+/* If this flag is nonzero, don’t handle the signal right away. */
+volatile sig_atomic_t signal_pending;
+
+/* This is nonzero if a signal arrived and was not handled. */
+volatile sig_atomic_t defer_signal;
+
+void
+handler (int signum)
+{
+  if (defer_signal)
+    signal_pending = signum;
+  else
+    … /* “Really” handle the signal. */
+}
+
+…
+
+void
+update_mumble (int frob)
+{
+  /* Prevent signals from having immediate effect. */
+  defer_signal++;
+  /* Now update mumble, without worrying about interruption. */
+  mumble.a = 1;
+  mumble.b = hack ();
+  mumble.c = frob;
+  /* We have updated mumble.  Handle any signal that came in. */
+  defer_signal--;
+  if (defer_signal == 0 && signal_pending != 0)
+    raise (signal_pending);
+}
+EXAMPLE_END
+
+Note how the particular signal that arrives is stored in signal_pending.  That way, we can handle several types of inconvenient signals with the same mechanism. 
+We increment and decrement defer_signal so that nested critical sections will work properly; thus, if update_mumble were called with signal_pending already nonzero, signals would be deferred not only within update_mumble, but also within the caller.  This is also why we do not check signal_pending if defer_signal is still nonzero. 
+The incrementing and decrementing of defer_signal each require more than one instruction; it is possible for a signal to happen in the middle.  But that does not cause any problem.  If the signal happens early enough to see the value from before the increment or decrement, that is equivalent to a signal which came before the beginning of the increment or decrement, which is a case that works properly. 
+It is absolutely vital to decrement defer_signal before testing signal_pending, because this avoids a subtle bug.  If we did these things in the other order, like this, 
+
+EXAMPLE_BEGIN
+  if (defer_signal == 1 && signal_pending != 0)
+    raise (signal_pending);
+  defer_signal--;
+EXAMPLE_END
+
+then a signal arriving in between the if statement and the decrement would be effectively “lost” for an indefinite amount of time.  The handler would merely set defer_signal, but the program having already tested this variable, it would not test the variable again. 
+Bugs like these are called timing errors.  They are especially bad because they happen only rarely and are nearly impossible to reproduce. You can’t expect to find them with a debugger as you would find a reproducible bug.  So it is worth being especially careful to avoid them. 
+(You would not be tempted to write the code in this order, given the use of defer_signal as a counter which must be tested along with signal_pending.  After all, testing for zero is cleaner than testing for one.  But if you did not use defer_signal as a counter, and gave it values of zero and one only, then either order might seem equally simple.  This is a further advantage of using a counter for defer_signal: it will reduce the chance you will write the code in the wrong order and create a subtle bug.) 

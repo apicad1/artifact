@@ -1,0 +1,17 @@
+Some of the facilities implemented by the C library really should be thought of as parts of the C language itself.  These facilities ought to be documented in the C Language Manual, not in the library manual; but since we don’t have the language manual yet, and documentation for these features has been written, we are publishing it here. 
+
+TABLE_BEGIN
+ • Consistency Checking    Using assert to abort if
+				 something “impossible” happens.
+
+ • Variadic Functions    Defining functions with varying numbers
+                                 of args.
+
+ • Null Pointer Constant    The macro NULL.
+
+ • Important Data Types    Data types for object sizes.
+
+ • Data Type Measurements    Parameters of data type representations.
+
+TABLE_END
+

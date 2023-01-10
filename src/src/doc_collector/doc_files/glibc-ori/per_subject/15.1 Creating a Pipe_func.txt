@@ -1,0 +1,11 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int pipe (int filedes[2])
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe fd | See POSIX Safety Concepts. 
+The pipe function creates a pipe and puts the file descriptors for the reading and writing ends of the pipe (respectively) into filedes[0] and filedes[1]. 
+An easy way to remember that the input end comes first is that file descriptor 0 is standard input, and file descriptor 1 is standard output. 
+If successful, pipe returns a value of 0.  On failure, -1 is returned.  The following errno error conditions are defined for this function: 
+	EMFILE
+The process has too many files open.  
+	ENFILE
+There are too many open files in the entire system.  See Error Codes, for more information about ENFILE.  This error never occurs on GNU/Hurd systems. 

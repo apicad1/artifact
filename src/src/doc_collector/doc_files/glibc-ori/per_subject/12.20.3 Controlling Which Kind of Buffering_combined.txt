@@ -1,0 +1,88 @@
+After opening a stream (but before any other operations have been performed on it), you can explicitly specify what kind of buffering you want it to have using the setvbuf function.  
+The facilities listed in this section are declared in the header file stdio.h.  
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int setvbuf (FILE *stream, char *buf, int mode, size_t size)
+Preliminary: | MT-Safe  | AS-Unsafe corrupt | AC-Unsafe lock corrupt | See POSIX Safety Concepts. 
+This function is used to specify that the stream stream should have the buffering mode mode, which can be either _IOFBF (for full buffering), _IOLBF (for line buffering), or _IONBF (for unbuffered input/output). 
+If you specify a null pointer as the buf argument, then setvbuf allocates a buffer itself using malloc.  This buffer will be freed when you close the stream. 
+Otherwise, buf should be a character array that can hold at least size characters.  You should not free the space for this array as long as the stream remains open and this array remains its buffer.  You should usually either allocate it statically, or malloc (see Unconstrained Allocation) the buffer.  Using an automatic array is not a good idea unless you close the file before exiting the block that declares the array. 
+While the array remains a stream buffer, the stream I/O functions will use the buffer for their internal purposes.  You shouldn’t try to access the values in the array directly while the stream is using it for buffering. 
+The setvbuf function returns zero on success, or a nonzero value if the value of mode is not valid or if the request could not be honored. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int _IOFBF
+The value of this macro is an integer constant expression that can be used as the mode argument to the setvbuf function to specify that the stream should be fully buffered. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int _IOLBF
+The value of this macro is an integer constant expression that can be used as the mode argument to the setvbuf function to specify that the stream should be line buffered. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int _IONBF
+The value of this macro is an integer constant expression that can be used as the mode argument to the setvbuf function to specify that the stream should be unbuffered. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int BUFSIZ
+The value of this macro is an integer constant expression that is good to use for the size argument to setvbuf.  This value is guaranteed to be at least 256. 
+The value of BUFSIZ is chosen on each system so as to make stream I/O efficient.  So it is a good idea to use BUFSIZ as the size for the buffer when you call setvbuf. 
+Actually, you can get an even better value to use for the buffer size by means of the fstat system call: it is found in the st_blksize field of the file attributes.  See Attribute Meanings. 
+Sometimes people also use BUFSIZ as the allocation size of buffers used for related purposes, such as strings used to receive a line of input with fgets (see Character Input).  There is no particular reason to use BUFSIZ for this instead of any other integer, except that it might lead to doing I/O in chunks of an efficient size. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void setbuf (FILE *stream, char *buf)
+Preliminary: | MT-Safe  | AS-Unsafe corrupt | AC-Unsafe lock corrupt | See POSIX Safety Concepts. 
+If buf is a null pointer, the effect of this function is equivalent to calling setvbuf with a mode argument of _IONBF.  Otherwise, it is equivalent to calling setvbuf with buf, and a mode of _IOFBF and a size argument of BUFSIZ. 
+The setbuf function is provided for compatibility with old code; use setvbuf in all new programs. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void setbuffer (FILE *stream, char *buf, size_t size)
+Preliminary: | MT-Safe  | AS-Unsafe corrupt | AC-Unsafe lock corrupt | See POSIX Safety Concepts. 
+If buf is a null pointer, this function makes stream unbuffered. Otherwise, it makes stream fully buffered using buf as the buffer.  The size argument specifies the length of buf. 
+This function is provided for compatibility with old BSD code.  Use setvbuf instead. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void setlinebuf (FILE *stream)
+Preliminary: | MT-Safe  | AS-Unsafe corrupt | AC-Unsafe lock corrupt | See POSIX Safety Concepts. 
+This function makes stream be line buffered, and allocates the buffer for you. 
+This function is provided for compatibility with old BSD code.  Use setvbuf instead. 
+<<<<<<<<<<<<<<<<<<<<
+
+It is possible to query whether a given stream is line buffered or not using a non-standard function introduced in Solaris and available in the GNU C Library. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int __flbf (FILE *stream)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The __flbf function will return a nonzero value in case the stream stream is line buffered.  Otherwise the return value is zero. 
+This function is declared in the stdio_ext.h header. 
+<<<<<<<<<<<<<<<<<<<<
+
+Two more extensions allow to determine the size of the buffer and how much of it is used.  These functions were also introduced in Solaris. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: size_t __fbufsize (FILE *stream)
+Preliminary: | MT-Safe race:stream | AS-Unsafe corrupt | AC-Safe  | See POSIX Safety Concepts. 
+The __fbufsize function return the size of the buffer in the stream stream.  This value can be used to optimize the use of the stream. 
+This function is declared in the stdio_ext.h header. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: size_t __fpending (FILE *stream)
+Preliminary: | MT-Safe race:stream | AS-Unsafe corrupt | AC-Safe  | See POSIX Safety Concepts. 
+The __fpending function returns the number of bytes currently in the output buffer. For wide-oriented streams the measuring unit is wide characters.  This function should not be used on buffers in read mode or opened read-only. 
+This function is declared in the stdio_ext.h header. 

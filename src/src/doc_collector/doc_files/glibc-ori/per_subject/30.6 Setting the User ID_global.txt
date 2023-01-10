@@ -1,0 +1,1 @@
+This section describes the functions for altering the user ID (real and/or effective) of a process.  To use these facilities, you must include the header files sys/types.h and unistd.h.   

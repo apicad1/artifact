@@ -1,0 +1,47 @@
+A backtrace is a list of the function calls that are currently active in a thread.  The usual way to inspect a backtrace of a program is to use an external debugger such as gdb.  However, sometimes it is useful to obtain a backtrace programmatically from within a program, e.g., for the purposes of logging or diagnostics. 
+The header file execinfo.h declares three functions that obtain and manipulate backtraces of the current thread.  
+The following program illustrates the use of these functions.  Note that the array to contain the return addresses returned by backtrace is allocated on the stack.  Therefore code like this can be used in situations where the memory handling via malloc does not work anymore (in which case the backtrace_symbols has to be replaced by a backtrace_symbols_fd call as well).  The number of return addresses is normally not very large.  Even complicated programs rather seldom have a nesting level of more than, say, 50 and with 200 possible entries probably all programs should be covered. 
+
+EXAMPLE_BEGIN
+
+
+#include <execinfo.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+/* Obtain a backtrace and print it to stdout. */
+void
+print_trace (void)
+{
+  void *array[10];
+  char **strings;
+  int size, i;
+
+  size = backtrace (array, 10);
+  strings = backtrace_symbols (array, size);
+  if (strings != NULL)
+  {
+
+    printf ("Obtained %d stack frames.\n", size);
+    for (i = 0; i < size; i++)
+      printf ("%s\n", strings[i]);
+  }
+
+  free (strings);
+}
+
+/* A dummy function to make the backtrace more interesting. */
+void
+dummy_function (void)
+{
+  print_trace ();
+}
+
+int
+main (void)
+{
+  dummy_function ();
+  return 0;
+}
+EXAMPLE_END
+

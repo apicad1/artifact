@@ -1,0 +1,1 @@
+To examine the attributes of files, use the functions stat, fstat and lstat.  They return the attribute information in a struct stat object.  All three functions are declared in the header file sys/stat.h. 

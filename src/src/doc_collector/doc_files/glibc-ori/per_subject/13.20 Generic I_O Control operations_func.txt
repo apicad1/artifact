@@ -1,0 +1,6 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int ioctl (int filedes, int command, …)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The ioctl function performs the generic I/O operation command on filedes. 
+A third argument is usually present, either a single number or a pointer to a structure.  The meaning of this argument, the returned value, and any error codes depends upon the command used.  Often -1 is returned for a failure. 

@@ -1,0 +1,18 @@
+Now let us consider what the server process must do to accept connections on a socket.  First it must use the listen function to enable connection requests on the socket, and then accept each incoming connection with a call to accept (see Accepting Connections).  Once connection requests are enabled on a server socket, the select function reports when the socket has a connection ready to be accepted (see Waiting for I/O). 
+The listen function is not allowed for sockets using connectionless communication styles. 
+You can write a network server that does not even start running until a connection to it is requested.  See Inetd Servers. 
+In the Internet namespace, there are no special protection mechanisms for controlling access to a port; any process on any machine can make a connection to your server.  If you want to restrict access to your server, make it examine the addresses associated with connection requests or implement some other handshaking or identification protocol. 
+In the local namespace, the ordinary file protection bits control who has access to connect to the socket. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int listen (int socket, int n)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe fd | See POSIX Safety Concepts. 
+The listen function enables the socket socket to accept connections, thus making it a server socket. 
+The argument n specifies the length of the queue for pending connections.  When the queue fills, new clients attempting to connect fail with ECONNREFUSED until the server calls accept to accept a connection from the queue. 
+The listen function returns 0 on success and -1 on failure.  The following errno error conditions are defined for this function: 
+	EBADF
+The argument socket is not a valid file descriptor.  
+	ENOTSOCK
+The argument socket is not a socket.  
+	EOPNOTSUPP
+The socket socket does not support this operation. 

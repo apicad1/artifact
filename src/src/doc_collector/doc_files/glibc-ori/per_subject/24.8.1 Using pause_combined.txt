@@ -1,0 +1,13 @@
+The simple way to wait until a signal arrives is to call pause. Please read about its disadvantages, in the following section, before you use it. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int pause (void)
+Preliminary: | MT-Unsafe race:sigprocmask/!bsd!linux | AS-Unsafe lock/hurd | AC-Unsafe lock/hurd | See POSIX Safety Concepts. 
+The pause function suspends program execution until a signal arrives whose action is either to execute a handler function, or to terminate the process. 
+If the signal causes a handler function to be executed, then pause returns.  This is considered an unsuccessful return (since “successful” behavior would be to suspend the program forever), so the return value is -1.  Even if you specify that other primitives should resume when a system handler returns (see Interrupted Primitives), this has no effect on pause; it always fails when a signal is handled. 
+The following errno error conditions are defined for this function: 
+	EINTR
+The function was interrupted by delivery of a signal. 
+If the signal causes program termination, pause doesn’t return (obviously). 
+This function is a cancellation point in multithreaded programs.  This is a problem if the thread allocates some resources (like memory, file descriptors, semaphores or whatever) at the time pause is called.  If the thread gets cancelled these resources stay allocated until the program ends.  To avoid this calls to pause should be protected using cancellation handlers. 
+The pause function is declared in  unistd.h. 

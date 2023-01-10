@@ -1,0 +1,71 @@
+√: is a bug in Project-Case benchmark
+√*: is a bug which is comfirmed in later versions but not in Project-Case benchmark
+!type: it is a bug location but the reported bug type is wrong
+*: TBD
+×: not a real bug
+
+7/16
+(base) @test:~/api_misuse/evaluation/apimu4c_project/curl$ apicad detect --only
+[2022-12-19 14:48:05] INFO(detection): Detecting for 11 functions
+[2022-12-19 14:48:05] INFO(detector): Processing mbedtls_pk_parse_keyfile
+[2022-12-19 14:48:05] INFO(detector): Processing SSL_CTX_use_PrivateKey
+[2022-12-19 14:48:05] INFO(detector): Processing Curl_ssl_sessionid_lock
+[2022-12-19 14:48:05] INFO(detector): Processing BIO_ctrl
+[2022-12-19 14:48:05] INFO(detector): Processing x509_crt_parse_file
+[2022-12-19 14:48:05] INFO(detector): Processing ssl_write
+[2022-12-19 14:48:05] INFO(detector): Processing BIO_new
+[2022-12-19 14:48:05] INFO(detector): Processing Curl_timeleft
+[2022-12-19 14:48:05] INFO(detector): Processing Curl_urldecode
+[2022-12-19 14:48:05] INFO(detector): Processing SSL_get_peer_cert_chain
+[2022-12-19 14:48:05] INFO(detector): Processing mbedtls_version_from_curl
+[2022-12-19 14:48:05] ERROR(BUGREPORT): Curl_timeleft: /home/test/api_misuse/evaluation/apimu4c_project/curl/curl-curl-7_63_0/lib/doh.c:221:16, TYPE: retval
+[2022-12-19 14:48:05] ERROR(BUGREPORT): Curl_timeleft: /home/test/api_misuse/evaluation/apimu4c_project/curl/curl-curl-7_63_0/lib/url.c:3376:27, TYPE: retval
+[2022-12-19 14:48:05] ERROR(BUGREPORT): Curl_timeleft: /home/test/api_misuse/evaluation/apimu4c_project/curl/curl-curl-7_63_0/lib/http_proxy.c:315:13, TYPE: retval
+[2022-12-19 14:48:05] ERROR(BUGREPORT): Curl_timeleft: /home/test/api_misuse/evaluation/apimu4c_project/curl/curl-curl-7_63_0/lib/ftp.c:351:12, TYPE: retval
+[2022-12-19 14:48:05] ERROR(BUGREPORT): Curl_timeleft: /home/test/api_misuse/evaluation/apimu4c_project/curl/curl-curl-7_63_0/lib/transfer.c:1225:12, TYPE: retval
+[2022-12-19 14:48:05] ERROR(BUGREPORT): Curl_timeleft: /home/test/api_misuse/evaluation/apimu4c_project/curl/curl-curl-7_63_0/lib/vtls/polarssl.c:750:18, TYPE: retval √
+[2022-12-19 14:48:05] ERROR(BUGREPORT): Curl_urldecode: /home/test/api_misuse/evaluation/apimu4c_project/curl/curl-curl-7_63_0/lib/tftp.c:489:14, TYPE: retval √
+[2022-12-19 14:48:05] ERROR(BUGREPORT): Curl_ssl_sessionid_lock: /home/test/api_misuse/evaluation/apimu4c_project/curl/curl-curl-7_63_0/lib/vtls/openssl.c:2261:5, TYPE: causality √
+[2022-12-19 14:48:05] ERROR(BUGREPORT): Curl_ssl_sessionid_lock: /home/test/api_misuse/evaluation/apimu4c_project/curl/curl-curl-7_63_0/lib/vtls/polarssl.c:392:5, TYPE: causality √
+[2022-12-19 14:48:05] ERROR(BUGREPORT): BIO_ctrl: /home/test/api_misuse/evaluation/apimu4c_project/curl/curl-curl-7_63_0/lib/vtls/openssl.c:2962:3, TYPE: causality
+[2022-12-19 14:48:05] ERROR(BUGREPORT): BIO_new: /home/test/api_misuse/evaluation/apimu4c_project/curl/curl-curl-7_63_0/lib/vtls/openssl.c:3394:12, TYPE: causality √
+[2022-12-19 14:48:05] ERROR(BUGREPORT): BIO_new: /home/test/api_misuse/evaluation/apimu4c_project/curl/curl-curl-7_63_0/lib/vtls/openssl.c:740:12, TYPE: causality √
+[2022-12-19 14:48:05] ERROR(BUGREPORT): BIO_new: /home/test/api_misuse/evaluation/apimu4c_project/curl/curl-curl-7_63_0/lib/vtls/openssl.c:2997:20, TYPE: causality √
+[2022-12-19 14:48:05] ERROR(BUGREPORT): BIO_new: /home/test/api_misuse/evaluation/apimu4c_project/curl/curl-curl-7_63_0/lib/vtls/openssl.c:2764:22, TYPE: causality
+[2022-12-19 14:48:05] ERROR(BUGREPORT): SSL_get_peer_cert_chain: /home/test/api_misuse/evaluation/apimu4c_project/curl/curl-curl-7_63_0/lib/vtls/openssl.c:1741:8, TYPE: causality
+[2022-12-19 14:48:05] ERROR(BUGREPORT): SSL_get_peer_cert_chain: /home/test/api_misuse/evaluation/apimu4c_project/curl/curl-curl-7_63_0/lib/vtls/openssl.c:3044:8, TYPE: causality !type
+[2022-12-19 14:48:05] INFO(BUGREPORT): Total reports: 16
+
+10/18
+(base) @test:~/api_misuse/evaluation/apimu4c_project/curl$ apicad detect --only --enable-doc
+[2022-12-19 14:49:06] INFO(detection): Detecting for 11 functions
+[2022-12-19 14:49:06] INFO(detector): Processing mbedtls_pk_parse_keyfile
+[2022-12-19 14:49:06] INFO(detector): Processing SSL_CTX_use_PrivateKey
+[2022-12-19 14:49:06] INFO(detector): Processing Curl_ssl_sessionid_lock
+[2022-12-19 14:49:06] INFO(detector): Processing BIO_ctrl
+[2022-12-19 14:49:06] INFO(detector): Processing x509_crt_parse_file
+[2022-12-19 14:49:06] INFO(detector): Processing ssl_write
+[2022-12-19 14:49:06] INFO(detector): Processing BIO_new
+[2022-12-19 14:49:06] INFO(detector): Processing Curl_timeleft
+[2022-12-19 14:49:06] INFO(detector): Processing Curl_urldecode
+[2022-12-19 14:49:06] INFO(detector): Processing SSL_get_peer_cert_chain
+[2022-12-19 14:49:06] INFO(detector): Processing mbedtls_version_from_curl
+[2022-12-19 14:49:06] ERROR(BUGREPORT): BIO_new: /home/test/api_misuse/evaluation/apimu4c_project/curl/curl-curl-7_63_0/lib/vtls/openssl.c:3330:14, TYPE: retval √
+[2022-12-19 14:49:06] ERROR(BUGREPORT): BIO_new: /home/test/api_misuse/evaluation/apimu4c_project/curl/curl-curl-7_63_0/lib/vtls/openssl.c:740:12, TYPE: retval causality √√
+[2022-12-19 14:49:06] ERROR(BUGREPORT): BIO_new: /home/test/api_misuse/evaluation/apimu4c_project/curl/curl-curl-7_63_0/lib/vtls/openssl.c:2764:22, TYPE: retval causality
+[2022-12-19 14:49:06] ERROR(BUGREPORT): BIO_new: /home/test/api_misuse/evaluation/apimu4c_project/curl/curl-curl-7_63_0/lib/vtls/openssl.c:3056:9, TYPE: retval √*
+[2022-12-19 14:49:06] ERROR(BUGREPORT): Curl_timeleft: /home/test/api_misuse/evaluation/apimu4c_project/curl/curl-curl-7_63_0/lib/doh.c:221:16, TYPE: retval
+[2022-12-19 14:49:06] ERROR(BUGREPORT): Curl_timeleft: /home/test/api_misuse/evaluation/apimu4c_project/curl/curl-curl-7_63_0/lib/url.c:3376:27, TYPE: retval
+[2022-12-19 14:49:06] ERROR(BUGREPORT): Curl_timeleft: /home/test/api_misuse/evaluation/apimu4c_project/curl/curl-curl-7_63_0/lib/http_proxy.c:315:13, TYPE: retval
+[2022-12-19 14:49:06] ERROR(BUGREPORT): Curl_timeleft: /home/test/api_misuse/evaluation/apimu4c_project/curl/curl-curl-7_63_0/lib/ftp.c:351:12, TYPE: retval
+[2022-12-19 14:49:06] ERROR(BUGREPORT): Curl_timeleft: /home/test/api_misuse/evaluation/apimu4c_project/curl/curl-curl-7_63_0/lib/transfer.c:1225:12, TYPE: retval
+[2022-12-19 14:49:06] ERROR(BUGREPORT): Curl_timeleft: /home/test/api_misuse/evaluation/apimu4c_project/curl/curl-curl-7_63_0/lib/vtls/polarssl.c:750:18, TYPE: retval √
+[2022-12-19 14:49:06] ERROR(BUGREPORT): Curl_urldecode: /home/test/api_misuse/evaluation/apimu4c_project/curl/curl-curl-7_63_0/lib/tftp.c:489:14, TYPE: retval √
+[2022-12-19 14:49:06] ERROR(BUGREPORT): SSL_get_peer_cert_chain: /home/test/api_misuse/evaluation/apimu4c_project/curl/curl-curl-7_63_0/lib/vtls/openssl.c:1741:8, TYPE: retval causality
+[2022-12-19 14:49:06] ERROR(BUGREPORT): SSL_get_peer_cert_chain: /home/test/api_misuse/evaluation/apimu4c_project/curl/curl-curl-7_63_0/lib/vtls/openssl.c:3044:8, TYPE: retval causality √
+[2022-12-19 14:49:06] ERROR(BUGREPORT): Curl_ssl_sessionid_lock: /home/test/api_misuse/evaluation/apimu4c_project/curl/curl-curl-7_63_0/lib/vtls/openssl.c:2261:5, TYPE: causality √
+[2022-12-19 14:49:06] ERROR(BUGREPORT): Curl_ssl_sessionid_lock: /home/test/api_misuse/evaluation/apimu4c_project/curl/curl-curl-7_63_0/lib/vtls/polarssl.c:392:5, TYPE: causality √
+[2022-12-19 14:49:06] ERROR(BUGREPORT): BIO_ctrl: /home/test/api_misuse/evaluation/apimu4c_project/curl/curl-curl-7_63_0/lib/vtls/openssl.c:2962:3, TYPE: causality
+[2022-12-19 14:49:06] ERROR(BUGREPORT): BIO_new: /home/test/api_misuse/evaluation/apimu4c_project/curl/curl-curl-7_63_0/lib/vtls/openssl.c:3394:12, TYPE: causality √
+[2022-12-19 14:49:06] ERROR(BUGREPORT): BIO_new: /home/test/api_misuse/evaluation/apimu4c_project/curl/curl-curl-7_63_0/lib/vtls/openssl.c:2997:20, TYPE: causality √
+[2022-12-19 14:49:06] INFO(BUGREPORT): Total reports: 18-1+1=18

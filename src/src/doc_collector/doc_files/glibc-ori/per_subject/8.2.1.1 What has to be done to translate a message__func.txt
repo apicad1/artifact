@@ -1,0 +1,45 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: char * gettext (const char *msgid)
+Preliminary: | MT-Safe env | AS-Unsafe corrupt heap lock dlopen | AC-Unsafe corrupt lock fd mem | See POSIX Safety Concepts. 
+The gettext function searches the currently selected message catalogs for a string which is equal to msgid.  If there is such a string available it is returned.  Otherwise the argument string msgid is returned. 
+Please note that although the return value is char * the returned string must not be changed.  This broken type results from the history of the function and does not reflect the way the function should be used. 
+Please note that above we wrote “message catalogs” (plural).  This is a specialty of the GNU implementation of these functions and we will say more about this when we talk about the ways message catalogs are selected (see Locating gettext catalog). 
+The gettext function does not modify the value of the global errno variable.  This is necessary to make it possible to write something like 
+
+EXAMPLE_BEGIN
+  printf (gettext ("Operation failed: %m\n"));
+EXAMPLE_END
+
+Here the errno value is used in the printf function while processing the %m format element and if the gettext function would change this value (it is called before printf is called) we would get a wrong message. 
+So there is no easy way to detect a missing message catalog besides comparing the argument string with the result.  But it is normally the task of the user to react on missing catalogs.  The program cannot guess when a message catalog is really necessary since for a user who speaks the language the program was developed in, the message does not need any translation. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: char * dgettext (const char *domainname, const char *msgid)
+Preliminary: | MT-Safe env | AS-Unsafe corrupt heap lock dlopen | AC-Unsafe corrupt lock fd mem | See POSIX Safety Concepts. 
+The dgettext function acts just like the gettext function.  It only takes an additional first argument domainname which guides the selection of the message catalogs which are searched for the translation.  If the domainname parameter is the null pointer the dgettext function is exactly equivalent to gettext since the default value for the domain name is used. 
+As for gettext the return value type is char * which is an anachronism.  The returned string must never be modified. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: char * dcgettext (const char *domainname, const char *msgid, int category)
+Preliminary: | MT-Safe env | AS-Unsafe corrupt heap lock dlopen | AC-Unsafe corrupt lock fd mem | See POSIX Safety Concepts. 
+The dcgettext adds another argument to those which dgettext takes.  This argument category specifies the last piece of information needed to localize the message catalog.  I.e., the domain name and the locale category exactly specify which message catalog has to be used (relative to a given directory, see below). 
+The dgettext function can be expressed in terms of dcgettext by using 
+
+EXAMPLE_BEGIN
+dcgettext (domain, string, LC_MESSAGES)
+EXAMPLE_END
+
+instead of 
+
+EXAMPLE_BEGIN
+dgettext (domain, string)
+EXAMPLE_END
+
+This also shows which values are expected for the third parameter.  One has to use the available selectors for the categories available in locale.h.  Normally the available values are LC_CTYPE, LC_COLLATE, LC_MESSAGES, LC_MONETARY, LC_NUMERIC, and LC_TIME.  Please note that LC_ALL must not be used and even though the names might suggest this, there is no relation to the environment variable of this name. 
+The dcgettext function is only implemented for compatibility with other systems which have gettext functions.  There is not really any situation where it is necessary (or useful) to use a different value than LC_MESSAGES for the category parameter.  We are dealing with messages here and any other choice can only be irritating. 
+As for gettext the return value type is char * which is an anachronism.  The returned string must never be modified. 

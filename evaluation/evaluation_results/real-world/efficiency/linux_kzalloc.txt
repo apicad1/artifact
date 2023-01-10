@@ -1,0 +1,11 @@
+apicad：
+real    11m32.386s
+user    15m4.911s
+sys     7m27.232s
+(base) @test:~/api_misuse/evaluation/real-world/linux$ du -sh cad-output/traces/kzalloc/
+2.0G    cad-output/traces/kzalloc/
+(base) @test:~/api_misuse/evaluation/real-world/linux$ find ./cad-output/traces/kzalloc/ -name *.json | wc -l
+29133
+(base) @test:~/api_misuse/evaluation/real-world/linux$ du -sh cad-output/features/kzalloc/
+128M    cad-output/features/kzalloc/
+

@@ -1,0 +1,65 @@
+FFS(3)                                          Linux Programmer's Manual                                         FFS(3)
+
+NAME
+       ffs, ffsl, ffsll - find first bit set in a word
+
+SYNOPSIS
+       #include <strings.h>
+
+       int ffs(int i);
+
+       #include <string.h>
+
+       int ffsl(long i);
+       int ffsll(long long i);
+
+   Feature Test Macro Requirements for glibc (see feature_test_macros(7)):
+
+       ffs():
+           Since glibc 2.12:
+               _XOPEN_SOURCE >= 700
+                   || ! (_POSIX_C_SOURCE >= 200809L)
+                   || /* Glibc since 2.19: */ _DEFAULT_SOURCE
+                   || /* Glibc <= 2.19: */ _BSD_SOURCE || _SVID_SOURCE
+           Before glibc 2.12:
+               none
+
+       ffsl(), ffsll():
+           Since glibc 2.27:
+               _DEFAULT_SOURCE
+           Before glibc 2.27:
+               _GNU_SOURCE
+
+DESCRIPTION
+       The  ffs()  function returns the position of the first (least significant) bit set in the word i.  The least sig‐
+       nificant bit is position 1 and the most significant position is, for example, 32 or 64.   The  functions  ffsll()
+       and ffsl() do the same but take arguments of possibly different size.
+
+RETURN VALUE
+       These functions return the position of the first bit set, or 0 if no bits are set in i.
+
+ATTRIBUTES
+       For an explanation of the terms used in this section, see attributes(7).
+
+       ┌──────────────────────────────────────────────────────────────────────────────────────┬───────────────┬─────────┐
+       │Interface                                                                             │ Attribute     │ Value   │
+       ├──────────────────────────────────────────────────────────────────────────────────────┼───────────────┼─────────┤
+       │ffs(), ffsl(), ffsll()                                                                │ Thread safety │ MT-Safe │
+       └──────────────────────────────────────────────────────────────────────────────────────┴───────────────┴─────────┘
+
+CONFORMING TO
+       ffs(): POSIX.1-2001, POSIX.1-2008, 4.3BSD.
+
+       The ffsl() and ffsll() functions are glibc extensions.
+
+NOTES
+       BSD systems have a prototype in <string.h>.
+
+SEE ALSO
+       memchr(3)
+
+COLOPHON
+       This  page  is  part  of  release 5.13 of the Linux man-pages project.  A description of the project, information
+       about reporting bugs, and the latest version of this page, can be found at https://www.kernel.org/doc/man-pages/.
+
+GNU                                                    2021-03-22                                                 FFS(3)

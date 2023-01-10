@@ -1,0 +1,16 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Jn
+This specifies the Julian day, with n between 1 and 365. February 29 is never counted, even in leap years. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- n
+This specifies the Julian day, with n between 0 and 365. February 29 is counted in leap years. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Mm.w.d
+This specifies day d of week w of month m.  The day d must be between 0 (Sunday) and 6.  The week w must be between 1 and 5; week 1 is the first week in which day d occurs, and week 5 specifies the last d day in the month.  The month m should be between 1 and 12. 

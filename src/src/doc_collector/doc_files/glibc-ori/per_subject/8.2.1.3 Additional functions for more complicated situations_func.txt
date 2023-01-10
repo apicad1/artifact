@@ -1,0 +1,188 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: char * ngettext (const char *msgid1, const char *msgid2, unsigned long int n)
+Preliminary: | MT-Safe env | AS-Unsafe corrupt heap lock dlopen | AC-Unsafe corrupt lock fd mem | See POSIX Safety Concepts. 
+The ngettext function is similar to the gettext function as it finds the message catalogs in the same way.  But it takes two extra arguments.  The msgid1 parameter must contain the singular form of the string to be converted.  It is also used as the key for the search in the catalog.  The msgid2 parameter is the plural form. The parameter n is used to determine the plural form.  If no message catalog is found msgid1 is returned if n == 1, otherwise msgid2. 
+An example for the use of this function is: 
+
+EXAMPLE_BEGIN
+  printf (ngettext ("%d file removed", "%d files removed", n), n);
+EXAMPLE_END
+
+Please note that the numeric value n has to be passed to the printf function as well.  It is not sufficient to pass it only to ngettext. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: char * dngettext (const char *domain, const char *msgid1, const char *msgid2, unsigned long int n)
+Preliminary: | MT-Safe env | AS-Unsafe corrupt heap lock dlopen | AC-Unsafe corrupt lock fd mem | See POSIX Safety Concepts. 
+The dngettext is similar to the dgettext function in the way the message catalog is selected.  The difference is that it takes two extra parameters to provide the correct plural form.  These two parameters are handled in the same way ngettext handles them. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: char * dcngettext (const char *domain, const char *msgid1, const char *msgid2, unsigned long int n, int category)
+Preliminary: | MT-Safe env | AS-Unsafe corrupt heap lock dlopen | AC-Unsafe corrupt lock fd mem | See POSIX Safety Concepts. 
+The dcngettext is similar to the dcgettext function in the way the message catalog is selected.  The difference is that it takes two extra parameters to provide the correct plural form.  These two parameters are handled in the same way ngettext handles them. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Only one form:
+Some languages only require one single form.  There is no distinction between the singular and plural form.  An appropriate header entry would look like this: 
+
+EXAMPLE_BEGIN
+Plural-Forms: nplurals=1; plural=0;
+EXAMPLE_END
+
+Languages with this property include: 
+	Finno-Ugric family
+Hungarian 
+	Asian family
+Japanese, Korean 
+	Turkic/Altaic family
+Turkish 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Two forms, singular used for one only
+This is the form used in most existing programs since it is what English uses.  A header entry would look like this: 
+
+EXAMPLE_BEGIN
+Plural-Forms: nplurals=2; plural=n != 1;
+EXAMPLE_END
+
+(Note: this uses the feature of C expressions that boolean expressions have to value zero or one.) 
+Languages with this property include: 
+	Germanic family
+Danish, Dutch, English, German, Norwegian, Swedish 
+	Finno-Ugric family
+Estonian, Finnish 
+	Latin/Greek family
+Greek 
+	Semitic family
+Hebrew 
+	Romance family
+Italian, Portuguese, Spanish 
+	Artificial
+Esperanto 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Two forms, singular used for zero and one
+Exceptional case in the language family.  The header entry would be: 
+
+EXAMPLE_BEGIN
+Plural-Forms: nplurals=2; plural=n>1;
+EXAMPLE_END
+
+Languages with this property include: 
+	Romanic family
+French, Brazilian Portuguese 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Three forms, special case for zero
+The header entry would be: 
+
+EXAMPLE_BEGIN
+Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n != 0 ? 1 : 2;
+EXAMPLE_END
+
+Languages with this property include: 
+	Baltic family
+Latvian 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Three forms, special cases for one and two
+The header entry would be: 
+
+EXAMPLE_BEGIN
+Plural-Forms: nplurals=3; plural=n==1 ? 0 : n==2 ? 1 : 2;
+EXAMPLE_END
+
+Languages with this property include: 
+	Celtic
+Gaeilge (Irish) 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Three forms, special case for numbers ending in 1[2-9]
+The header entry would look like this: 
+
+EXAMPLE_BEGIN
+Plural-Forms: nplurals=3; \
+    plural=n%10==1 && n%100!=11 ? 0 : \
+           n%10>=2 && (n%100<10 || n%100>=20) ? 1 : 2;
+EXAMPLE_END
+
+Languages with this property include: 
+	Baltic family
+Lithuanian 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Three forms, special cases for numbers ending in 1 and 2, 3, 4, except those ending in 1[1-4]
+The header entry would look like this: 
+
+EXAMPLE_BEGIN
+Plural-Forms: nplurals=3; \
+    plural=n%100/10==1 ? 2 : n%10==1 ? 0 : (n+9)%10>3 ? 2 : 1;
+EXAMPLE_END
+
+Languages with this property include: 
+	Slavic family
+Croatian, Czech, Russian, Ukrainian 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Three forms, special cases for 1 and 2, 3, 4
+The header entry would look like this: 
+
+EXAMPLE_BEGIN
+Plural-Forms: nplurals=3; \
+    plural=(n==1) ? 1 : (n>=2 && n<=4) ? 2 : 0;
+EXAMPLE_END
+
+Languages with this property include: 
+	Slavic family
+Slovak 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Three forms, special case for one and some numbers ending in 2, 3, or 4
+The header entry would look like this: 
+
+EXAMPLE_BEGIN
+Plural-Forms: nplurals=3; \
+    plural=n==1 ? 0 : \
+           n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;
+EXAMPLE_END
+
+Languages with this property include: 
+	Slavic family
+Polish 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Four forms, special case for one and all numbers ending in 02, 03, or 04
+The header entry would look like this: 
+
+EXAMPLE_BEGIN
+Plural-Forms: nplurals=4; \
+    plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || n%100==4 ? 2 : 3;
+EXAMPLE_END
+
+Languages with this property include: 
+	Slavic family
+Slovenian 

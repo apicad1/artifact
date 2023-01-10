@@ -1,0 +1,45 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: struct sockaddr
+The struct sockaddr type itself has the following members: 
+	short int sa_family
+This is the code for the address format of this address.  It identifies the format of the data which follows.  
+	char sa_data[14]
+This is the actual socket address data, which is format-dependent.  Its length also depends on the format, and may well be more than 14.  The length 14 of sa_data is essentially arbitrary. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- AF_LOCAL  
+This designates the address format that goes with the local namespace. (PF_LOCAL is the name of that namespace.)  See Local Namespace Details, for information about this address format. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- AF_UNIX  
+This is a synonym for AF_LOCAL.  Although AF_LOCAL is mandated by POSIX.1g, AF_UNIX is portable to more systems. AF_UNIX was the traditional name stemming from BSD, so even most POSIX systems support it.  It is also the name of choice in the Unix98 specification. (The same is true for PF_UNIX vs. PF_LOCAL). 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- AF_FILE  
+This is another synonym for AF_LOCAL, for compatibility. (PF_FILE is likewise a synonym for PF_LOCAL.) 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- AF_INET  
+This designates the address format that goes with the Internet namespace.  (PF_INET is the name of that namespace.) See Internet Address Formats. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- AF_INET6  
+This is similar to AF_INET, but refers to the IPv6 protocol. (PF_INET6 is the name of the corresponding namespace.) 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- AF_UNSPEC  
+This designates no particular address format.  It is used only in rare cases, such as to clear out the default destination address of a “connected” datagram socket.  See Sending Datagrams. 
+The corresponding namespace designator symbol PF_UNSPEC exists for completeness, but there is no reason to use it in a program. 

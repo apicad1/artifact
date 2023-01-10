@@ -1,0 +1,30 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: struct group * getgrgid (gid_t gid)
+Preliminary: | MT-Unsafe race:grgid locale | AS-Unsafe dlopen plugin heap lock | AC-Unsafe corrupt lock fd mem | See POSIX Safety Concepts. 
+This function returns a pointer to a statically-allocated structure containing information about the group whose group ID is gid. This structure may be overwritten by subsequent calls to getgrgid. 
+A null pointer indicates there is no group with ID gid. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int getgrgid_r (gid_t gid, struct group *result_buf, char *buffer, size_t buflen, struct group **result)
+Preliminary: | MT-Safe locale | AS-Unsafe dlopen plugin heap lock | AC-Unsafe corrupt lock fd mem | See POSIX Safety Concepts. 
+This function is similar to getgrgid in that it returns information about the group whose group ID is gid.  However, it fills the user supplied structure pointed to by result_buf with the information instead of using a static buffer.  The first buflen bytes of the additional buffer pointed to by buffer are used to contain additional information, normally strings which are pointed to by the elements of the result structure. 
+If a group with ID gid is found, the pointer returned in result points to the record which contains the wanted data (i.e., result contains the value result_buf).  If no group is found or if an error occurred, the pointer returned in result is a null pointer.  The function returns zero or an error code.  If the buffer buffer is too small to contain all the needed information, the error code ERANGE is returned and errno is set to ERANGE. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: struct group * getgrnam (const char *name)
+Preliminary: | MT-Unsafe race:grnam locale | AS-Unsafe dlopen plugin heap lock | AC-Unsafe corrupt lock fd mem | See POSIX Safety Concepts. 
+This function returns a pointer to a statically-allocated structure containing information about the group whose group name is name. This structure may be overwritten by subsequent calls to getgrnam. 
+A null pointer indicates there is no group named name. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int getgrnam_r (const char *name, struct group *result_buf, char *buffer, size_t buflen, struct group **result)
+Preliminary: | MT-Safe locale | AS-Unsafe dlopen plugin heap lock | AC-Unsafe corrupt lock fd mem | See POSIX Safety Concepts. 
+This function is similar to getgrnam in that it returns information about the group whose group name is name.  Like getgrgid_r, it uses the user supplied buffers in result_buf and buffer, not a static buffer. 
+The return values are the same as for getgrgid_r. 

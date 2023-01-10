@@ -1,0 +1,1 @@
+Here are the descriptions of the functions for performing formatted input. Prototypes for these functions are in the header file stdio.h.  

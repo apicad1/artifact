@@ -1,0 +1,6 @@
+The functions bind and getsockname use the generic data type struct sockaddr * to represent a pointer to a socket address.  You can’t use this data type effectively to interpret an address or construct one; for that, you must use the proper data type for the socket’s namespace. 
+Thus, the usual practice is to construct an address of the proper namespace-specific type, then cast a pointer to struct sockaddr * when you call bind or getsockname. 
+The one piece of information that you can get from the struct sockaddr data type is the address format designator.  This tells you which data type to use to understand the address fully. 
+The symbols in this section are defined in the header file sys/socket.h. 
+Each address format has a symbolic name which starts with ‘AF_’. Each of them corresponds to a ‘PF_’ symbol which designates the corresponding namespace.  Here is a list of address format names: 
+sys/socket.h defines symbols starting with ‘AF_’ for many different kinds of networks, most or all of which are not actually implemented.  We will document those that really work as we receive information about how to use them. 

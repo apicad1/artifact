@@ -1,0 +1,54 @@
+WCSCASECMP(3)                                   Linux Programmer's Manual                                  WCSCASECMP(3)
+
+NAME
+       wcscasecmp - compare two wide-character strings, ignoring case
+
+SYNOPSIS
+       #include <wchar.h>
+
+       int wcscasecmp(const wchar_t *s1, const wchar_t *s2);
+
+   Feature Test Macro Requirements for glibc (see feature_test_macros(7)):
+
+       wcscasecmp():
+           Since glibc 2.10:
+               _POSIX_C_SOURCE >= 200809L
+           Before glibc 2.10:
+               _GNU_SOURCE
+
+DESCRIPTION
+       The  wcscasecmp() function is the wide-character equivalent of the strcasecmp(3) function.  It compares the wide-
+       character string pointed to by s1 and the wide-character string pointed  to  by  s2,  ignoring  case  differences
+       (towupper(3), towlower(3)).
+
+RETURN VALUE
+       The  wcscasecmp() function returns zero if the wide-character strings at s1 and s2 are equal except for case dis‐
+       tinctions.  It returns a positive integer if s1 is greater than s2, ignoring case.  It returns a negative integer
+       if s1 is smaller than s2, ignoring case.
+
+VERSIONS
+       The wcscasecmp() function is provided in glibc since version 2.1.
+
+ATTRIBUTES
+       For an explanation of the terms used in this section, see attributes(7).
+
+       ┌───────────────────────────────────────────────────────────────────────────────┬───────────────┬────────────────┐
+       │Interface                                                                      │ Attribute     │ Value          │
+       ├───────────────────────────────────────────────────────────────────────────────┼───────────────┼────────────────┤
+       │wcscasecmp()                                                                   │ Thread safety │ MT-Safe locale │
+       └───────────────────────────────────────────────────────────────────────────────┴───────────────┴────────────────┘
+
+CONFORMING TO
+       POSIX.1-2008.  This function is not specified in POSIX.1-2001, and is not widely available on other systems.
+
+NOTES
+       The behavior of wcscasecmp() depends on the LC_CTYPE category of the current locale.
+
+SEE ALSO
+       strcasecmp(3), wcscmp(3)
+
+COLOPHON
+       This  page  is  part  of  release 5.13 of the Linux man-pages project.  A description of the project, information
+       about reporting bugs, and the latest version of this page, can be found at https://www.kernel.org/doc/man-pages/.
+
+GNU                                                    2021-03-22                                          WCSCASECMP(3)

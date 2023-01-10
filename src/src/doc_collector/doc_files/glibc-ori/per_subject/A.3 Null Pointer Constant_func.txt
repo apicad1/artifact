@@ -1,0 +1,4 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: void * NULL
+This is a null pointer constant. 

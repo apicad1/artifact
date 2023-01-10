@@ -1,0 +1,139 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: struct hostent
+This data type is used to represent an entry in the hosts database.  It has the following members: 
+	char *h_name
+This is the “official” name of the host.  
+	char **h_aliases
+These are alternative names for the host, represented as a null-terminated vector of strings.  
+	int h_addrtype
+This is the host address type; in practice, its value is always either AF_INET or AF_INET6, with the latter being used for IPv6 hosts.  In principle other kinds of addresses could be represented in the database as well as Internet addresses; if this were done, you might find a value in this field other than AF_INET or AF_INET6.  See Socket Addresses.  
+	int h_length
+This is the length, in bytes, of each address.  
+	char **h_addr_list
+This is the vector of addresses for the host.  (Recall that the host might be connected to multiple networks and have different addresses on each one.)  The vector is terminated by a null pointer.  
+	char *h_addr
+This is a synonym for h_addr_list[0]; in other words, it is the first host address. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: struct hostent * gethostbyname (const char *name)
+Preliminary: | MT-Unsafe race:hostbyname env locale | AS-Unsafe dlopen plugin corrupt heap lock | AC-Unsafe lock corrupt mem fd | See POSIX Safety Concepts. 
+The gethostbyname function returns information about the host named name.  If the lookup fails, it returns a null pointer. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: struct hostent * gethostbyname2 (const char *name, int af)
+Preliminary: | MT-Unsafe race:hostbyname2 env locale | AS-Unsafe dlopen plugin corrupt heap lock | AC-Unsafe lock corrupt mem fd | See POSIX Safety Concepts. 
+The gethostbyname2 function is like gethostbyname, but allows the caller to specify the desired address family (e.g. AF_INET or AF_INET6) of the result. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: struct hostent * gethostbyaddr (const void *addr, socklen_t length, int format)
+Preliminary: | MT-Unsafe race:hostbyaddr env locale | AS-Unsafe dlopen plugin corrupt heap lock | AC-Unsafe lock corrupt mem fd | See POSIX Safety Concepts. 
+The gethostbyaddr function returns information about the host with Internet address addr.  The parameter addr is not really a pointer to char - it can be a pointer to an IPv4 or an IPv6 address.  The length argument is the size (in bytes) of the address at addr.  format specifies the address format; for an IPv4 Internet address, specify a value of AF_INET; for an IPv6 Internet address, use AF_INET6. 
+If the lookup fails, gethostbyaddr returns a null pointer. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- HOST_NOT_FOUND  
+No such host is known in the database. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- TRY_AGAIN  
+This condition happens when the name server could not be contacted.  If you try again later, you may succeed then. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- NO_RECOVERY  
+A non-recoverable error occurred. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- NO_ADDRESS  
+The host database contains an entry for the name, but it doesn’t have an associated Internet address. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int gethostbyname_r (const char *restrict name, struct hostent *restrict result_buf, char *restrict buf, size_t buflen, struct hostent **restrict result, int *restrict h_errnop)
+Preliminary: | MT-Safe env locale | AS-Unsafe dlopen plugin corrupt heap lock | AC-Unsafe lock corrupt mem fd | See POSIX Safety Concepts. 
+The gethostbyname_r function returns information about the host named name.  The caller must pass a pointer to an object of type struct hostent in the result_buf parameter.  In addition the function may need extra buffer space and the caller must pass a pointer and the size of the buffer in the buf and buflen parameters. 
+A pointer to the buffer, in which the result is stored, is available in *result after the function call successfully returned.  The buffer passed as the buf parameter can be freed only once the caller has finished with the result hostent struct, or has copied it including all the other memory that it points to.  If an error occurs or if no entry is found, the pointer *result is a null pointer.  Success is signalled by a zero return value.  If the function failed the return value is an error number.  In addition to the errors defined for gethostbyname it can also be ERANGE.  In this case the call should be repeated with a larger buffer.  Additional error information is not stored in the global variable h_errno but instead in the object pointed to by h_errnop. 
+Here’s a small example: 
+
+EXAMPLE_BEGIN
+struct hostent *
+gethostname (char *host)
+{
+  struct hostent *hostbuf, *hp;
+  size_t hstbuflen;
+  char *tmphstbuf;
+  int res;
+  int herr;
+
+  hostbuf = malloc (sizeof (struct hostent));
+  hstbuflen = 1024;
+  tmphstbuf = malloc (hstbuflen);
+
+  while ((res = gethostbyname_r (host, hostbuf, tmphstbuf, hstbuflen,
+                                 &hp, &herr)) == ERANGE)
+    {
+      /* Enlarge the buffer.  */
+      tmphstbuf = reallocarray (tmphstbuf, hstbuflen, 2);
+      hstbuflen *= 2;
+    }
+
+  free (tmphstbuf);
+  /*  Check for errors.  */
+  if (res || hp == NULL)
+    return NULL;
+  return hp;
+}
+EXAMPLE_END
+
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int gethostbyname2_r (const char *name, int af, struct hostent *restrict result_buf, char *restrict buf, size_t buflen, struct hostent **restrict result, int *restrict h_errnop)
+Preliminary: | MT-Safe env locale | AS-Unsafe dlopen plugin corrupt heap lock | AC-Unsafe lock corrupt mem fd | See POSIX Safety Concepts. 
+The gethostbyname2_r function is like gethostbyname_r, but allows the caller to specify the desired address family (e.g. AF_INET or AF_INET6) for the result. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int gethostbyaddr_r (const void *addr, socklen_t length, int format, struct hostent *restrict result_buf, char *restrict buf, size_t buflen, struct hostent **restrict result, int *restrict h_errnop)
+Preliminary: | MT-Safe env locale | AS-Unsafe dlopen plugin corrupt heap lock | AC-Unsafe lock corrupt mem fd | See POSIX Safety Concepts. 
+The gethostbyaddr_r function returns information about the host with Internet address addr.  The parameter addr is not really a pointer to char - it can be a pointer to an IPv4 or an IPv6 address.  The length argument is the size (in bytes) of the address at addr.  format specifies the address format; for an IPv4 Internet address, specify a value of AF_INET; for an IPv6 Internet address, use AF_INET6. 
+Similar to the gethostbyname_r function, the caller must provide buffers for the result and memory used internally.  In case of success the function returns zero.  Otherwise the value is an error number where ERANGE has the special meaning that the caller-provided buffer is too small. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void sethostent (int stayopen)
+Preliminary: | MT-Unsafe race:hostent env locale | AS-Unsafe dlopen plugin heap lock | AC-Unsafe corrupt lock fd mem | See POSIX Safety Concepts. 
+This function opens the hosts database to begin scanning it.  You can then call gethostent to read the entries. 
+If the stayopen argument is nonzero, this sets a flag so that subsequent calls to gethostbyname or gethostbyaddr will not close the database (as they usually would).  This makes for more efficiency if you call those functions several times, by avoiding reopening the database for each call. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: struct hostent * gethostent (void)
+Preliminary: | MT-Unsafe race:hostent race:hostentbuf env locale | AS-Unsafe dlopen plugin heap lock | AC-Unsafe corrupt lock fd mem | See POSIX Safety Concepts. 
+This function returns the next entry in the hosts database.  It returns a null pointer if there are no more entries. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void endhostent (void)
+Preliminary: | MT-Unsafe race:hostent env locale | AS-Unsafe dlopen plugin heap lock | AC-Unsafe corrupt lock fd mem | See POSIX Safety Concepts. 
+This function closes the hosts database. 

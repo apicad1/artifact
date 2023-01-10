@@ -1,0 +1,12 @@
+Once a socket has been connected to a peer, you can use the ordinary read and write operations (see I/O Primitives) to transfer data.  A socket is a two-way communications channel, so read and write operations can be performed at either end. 
+There are also some I/O modes that are specific to socket operations. In order to specify these modes, you must use the recv and send functions instead of the more generic read and write functions.  The recv and send functions take an additional argument which you can use to specify various flags to control special I/O modes.  For example, you can specify the MSG_OOB flag to read or write out-of-band data, the MSG_PEEK flag to peek at input, or the MSG_DONTROUTE flag to control inclusion of routing information on output. 
+
+TABLE_BEGIN
+ • Sending Data    Sending data with send.
+
+ • Receiving Data    Reading data with recv.
+
+ • Socket Data Options    Using send and recv.
+
+TABLE_END
+

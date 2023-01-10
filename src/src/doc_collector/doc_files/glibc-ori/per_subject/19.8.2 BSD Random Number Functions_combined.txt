@@ -1,0 +1,71 @@
+This section describes a set of random number generation functions that are derived from BSD.  There is no advantage to using these functions with the GNU C Library; we support them for BSD compatibility only. 
+The prototypes for these functions are in stdlib.h.  
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: long int random (void)
+Preliminary: | MT-Safe  | AS-Unsafe lock | AC-Unsafe lock | See POSIX Safety Concepts. 
+This function returns the next pseudo-random number in the sequence. The value returned ranges from 0 to 2147483647. 
+NB: Temporarily this function was defined to return a int32_t value to indicate that the return value always contains 32 bits even if long int is wider.  The standard demands it differently.  Users must always be aware of the 32-bit limitation, though. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void srandom (unsigned int seed)
+Preliminary: | MT-Safe  | AS-Unsafe lock | AC-Unsafe lock | See POSIX Safety Concepts. 
+The srandom function sets the state of the random number generator based on the integer seed.  If you supply a seed value of 1, this will cause random to reproduce the default set of random numbers. 
+To produce a different set of pseudo-random numbers each time your program runs, do srandom (time (0)). 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: char * initstate (unsigned int seed, char *state, size_t size)
+Preliminary: | MT-Safe  | AS-Unsafe lock | AC-Unsafe lock | See POSIX Safety Concepts. 
+The initstate function is used to initialize the random number generator state.  The argument state is an array of size bytes, used to hold the state information.  It is initialized based on seed.  The size must be between 8 and 256 bytes, and should be a power of two.  The bigger the state array, the better. 
+The return value is the previous value of the state information array. You can use this value later as an argument to setstate to restore that state. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: char * setstate (char *state)
+Preliminary: | MT-Safe  | AS-Unsafe lock | AC-Unsafe lock | See POSIX Safety Concepts. 
+The setstate function restores the random number state information state.  The argument must have been the result of a previous call to initstate or setstate. 
+The return value is the previous value of the state information array. You can use this value later as an argument to setstate to restore that state. 
+If the function fails the return value is NULL. 
+<<<<<<<<<<<<<<<<<<<<
+
+The four functions described so far in this section all work on a state which is shared by all threads.  The state is not directly accessible to the user and can only be modified by these functions.  This makes it hard to deal with situations where each thread should have its own pseudo-random number generator. 
+The GNU C Library contains four additional functions which contain the state as an explicit parameter and therefore make it possible to handle thread-local PRNGs.  Besides this there is no difference.  In fact, the four functions already discussed are implemented internally using the following interfaces. 
+The stdlib.h header contains a definition of the following type: 
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: struct random_data
+Objects of type struct random_data contain the information necessary to represent the state of the PRNG.  Although a complete definition of the type is present the type should be treated as opaque. 
+<<<<<<<<<<<<<<<<<<<<
+
+The functions modifying the state follow exactly the already described functions. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int random_r (struct random_data *restrict buf, int32_t *restrict result)
+Preliminary: | MT-Safe race:buf | AS-Safe  | AC-Unsafe corrupt | See POSIX Safety Concepts. 
+The random_r function behaves exactly like the random function except that it uses and modifies the state in the object pointed to by the first parameter instead of the global state. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int srandom_r (unsigned int seed, struct random_data *buf)
+Preliminary: | MT-Safe race:buf | AS-Safe  | AC-Unsafe corrupt | See POSIX Safety Concepts. 
+The srandom_r function behaves exactly like the srandom function except that it uses and modifies the state in the object pointed to by the second parameter instead of the global state. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int initstate_r (unsigned int seed, char *restrict statebuf, size_t statelen, struct random_data *restrict buf)
+Preliminary: | MT-Safe race:buf | AS-Safe  | AC-Unsafe corrupt | See POSIX Safety Concepts. 
+The initstate_r function behaves exactly like the initstate function except that it uses and modifies the state in the object pointed to by the fourth parameter instead of the global state. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int setstate_r (char *restrict statebuf, struct random_data *restrict buf)
+Preliminary: | MT-Safe race:buf | AS-Safe  | AC-Unsafe corrupt | See POSIX Safety Concepts. 
+The setstate_r function behaves exactly like the setstate function except that it uses and modifies the state in the object pointed to by the first parameter instead of the global state. 

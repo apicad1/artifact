@@ -1,0 +1,26 @@
+Each process has associated with it a directory, called its current working directory or simply working directory, that is used in the resolution of relative file names (see File Name Resolution). 
+When you log in and begin a new session, your working directory is initially set to the home directory associated with your login account in the system user database.  You can find any user’s home directory using the getpwuid or getpwnam functions; see User Database. 
+Users can change the working directory using shell commands like cd.  The functions described in this section are the primitives used by those commands and by other programs for examining and changing the working directory.  
+Prototypes for these functions are declared in the header file unistd.h.  
+You could implement the behavior of GNU’s getcwd (NULL, 0) using only the standard behavior of getcwd: 
+
+EXAMPLE_BEGIN
+char *
+gnu_getcwd ()
+{
+  size_t size = 100;
+
+  while (1)
+    {
+      char *buffer = (char *) xmalloc (size);
+      if (getcwd (buffer, size) == buffer)
+        return buffer;
+      free (buffer);
+      if (errno != ERANGE)
+        return 0;
+      size *= 2;
+    }
+}
+EXAMPLE_END
+
+See Malloc Examples, for information about xmalloc, which is not a library function but is a customary name used in most GNU software. 

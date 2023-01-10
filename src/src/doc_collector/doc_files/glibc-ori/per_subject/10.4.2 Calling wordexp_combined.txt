@@ -1,0 +1,40 @@
+All the functions, constants and data types for word expansion are declared in the header file wordexp.h. 
+Word expansion produces a vector of words (strings).  To return this vector, wordexp uses a special data type, wordexp_t, which is a structure.  You pass wordexp the address of the structure, and it fills in the structure’s fields to tell you about the results. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: wordexp_t
+This data type holds a pointer to a word vector.  More precisely, it records both the address of the word vector and its size. 
+	we_wordc
+The number of elements in the vector.  
+	we_wordv
+The address of the vector.  This field has type char **.  
+	we_offs
+The offset of the first real element of the vector, from its nominal address in the we_wordv field.  Unlike the other fields, this is always an input to wordexp, rather than an output from it.  If you use a nonzero offset, then that many elements at the beginning of the vector are left empty.  (The wordexp function fills them with null pointers.)  The we_offs field is meaningful only if you use the WRDE_DOOFFS flag.  Otherwise, the offset is always zero regardless of what is in this field, and the first real element comes at the beginning of the vector. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int wordexp (const char *words, wordexp_t *word-vector-ptr, int flags)
+Preliminary: | MT-Unsafe race:utent const:env env sig:ALRM timer locale | AS-Unsafe dlopen plugin i18n heap corrupt lock | AC-Unsafe corrupt lock fd mem | See POSIX Safety Concepts. 
+Perform word expansion on the string words, putting the result in a newly allocated vector, and store the size and address of this vector into *word-vector-ptr.  The argument flags is a combination of bit flags; see Flags for Wordexp, for details of the flags. 
+You shouldn’t use any of the characters ‘|&;<>’ in the string words unless they are quoted; likewise for newline.  If you use these characters unquoted, you will get the WRDE_BADCHAR error code.  Don’t use parentheses or braces unless they are quoted or part of a word expansion construct.  If you use quotation characters ‘'"`’, they should come in pairs that balance. 
+The results of word expansion are a sequence of words.  The function wordexp allocates a string for each resulting word, then allocates a vector of type char ** to store the addresses of these strings.  The last element of the vector is a null pointer. This vector is called the word vector. 
+To return this vector, wordexp stores both its address and its length (number of elements, not counting the terminating null pointer) into *word-vector-ptr. 
+If wordexp succeeds, it returns 0.  Otherwise, it returns one of these error codes: 
+	WRDE_BADCHAR  
+ The input string words contains an unquoted invalid character such as ‘|’.  
+	WRDE_BADVAL  
+ The input string refers to an undefined shell variable, and you used the flag WRDE_UNDEF to forbid such references.  
+	WRDE_CMDSUB  
+ The input string uses command substitution, and you used the flag WRDE_NOCMD to forbid command substitution.  
+	WRDE_NOSPACE  
+ It was impossible to allocate memory to hold the result.  In this case, wordexp can store part of the results—as much as it could allocate room for.  
+	WRDE_SYNTAX  
+ There was a syntax error in the input string.  For example, an unmatched quoting character is a syntax error.  This error code is also used to signal division by zero and overflow in arithmetic expansion. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void wordfree (wordexp_t *word-vector-ptr)
+Preliminary: | MT-Safe  | AS-Unsafe corrupt heap | AC-Unsafe corrupt mem | See POSIX Safety Concepts. 
+Free the storage used for the word-strings and vector that *word-vector-ptr points to.  This does not free the structure *word-vector-ptr itself—only the other data it points to. 

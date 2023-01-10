@@ -1,0 +1,134 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: struct utmpx
+The utmpx data structure contains at least the following members: 
+	short int ut_type
+Specifies the type of login; one of EMPTY, RUN_LVL, BOOT_TIME, OLD_TIME, NEW_TIME, INIT_PROCESS, LOGIN_PROCESS, USER_PROCESS or DEAD_PROCESS.  
+	pid_t ut_pid
+The process ID number of the login process.  
+	char ut_line[]
+The device name of the tty (without /dev/).  
+	char ut_id[]
+The inittab ID of the process.  
+	char ut_user[]
+The user’s login name.  
+	struct timeval ut_tv
+Time the entry was made.  For entries of type OLD_TIME this is the time when the system clock changed, and for entries of type NEW_TIME this is the time the system clock was set to. 
+In the GNU C Library, struct utmpx is identical to struct utmp except for the fact that including utmpx.h does not make visible the declaration of struct exit_status. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- EMPTY  
+This macro is used to indicate that the entry contains no valid user accounting information. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- RUN_LVL  
+This macro is used to identify the system’s runlevel. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- BOOT_TIME  
+This macro is used to identify the time of system boot. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- OLD_TIME  
+This macro is used to identify the time when the system clock changed. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- NEW_TIME  
+This macro is used to identify the time after the system clock changed. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- INIT_PROCESS  
+This macro is used to identify a process spawned by the init process. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- LOGIN_PROCESS  
+This macro is used to identify the session leader of a logged in user. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- USER_PROCESS  
+This macro is used to identify a user process. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- DEAD_PROCESS  
+This macro is used to identify a terminated process. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void setutxent (void)
+Preliminary: | MT-Unsafe race:utent | AS-Unsafe lock | AC-Unsafe lock fd | See POSIX Safety Concepts. 
+This function is similar to setutent.  In the GNU C Library it is simply an alias for setutent. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: struct utmpx * getutxent (void)
+Preliminary: | MT-Unsafe init race:utent sig:ALRM timer | AS-Unsafe heap lock | AC-Unsafe lock fd mem | See POSIX Safety Concepts. 
+The getutxent function is similar to getutent, but returns a pointer to a struct utmpx instead of struct utmp.  In the GNU C Library it simply is an alias for getutent. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void endutxent (void)
+Preliminary: | MT-Unsafe race:utent | AS-Unsafe lock | AC-Unsafe lock | See POSIX Safety Concepts. 
+This function is similar to endutent.  In the GNU C Library it is simply an alias for endutent. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: struct utmpx * getutxid (const struct utmpx *id)
+Preliminary: | MT-Unsafe init race:utent sig:ALRM timer | AS-Unsafe lock heap | AC-Unsafe lock mem fd | See POSIX Safety Concepts. 
+This function is similar to getutid, but uses struct utmpx instead of struct utmp.  In the GNU C Library it is simply an alias for getutid. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: struct utmpx * getutxline (const struct utmpx *line)
+Preliminary: | MT-Unsafe init race:utent sig:ALRM timer | AS-Unsafe heap lock | AC-Unsafe lock fd mem | See POSIX Safety Concepts. 
+This function is similar to getutid, but uses struct utmpx instead of struct utmp.  In the GNU C Library it is simply an alias for getutline. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: struct utmpx * pututxline (const struct utmpx *utmp)
+Preliminary: | MT-Unsafe race:utent sig:ALRM timer | AS-Unsafe lock | AC-Unsafe lock fd | See POSIX Safety Concepts. 
+The pututxline function is functionally identical to pututline, but uses struct utmpx instead of struct utmp.  In the GNU C Library, pututxline is simply an alias for pututline. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int utmpxname (const char *file)
+Preliminary: | MT-Unsafe race:utent | AS-Unsafe lock heap | AC-Unsafe lock mem | See POSIX Safety Concepts. 
+The utmpxname function is functionally identical to utmpname.  In the GNU C Library, utmpxname is simply an alias for utmpname. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int getutmp (const struct utmpx *utmpx, struct utmp *utmp)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+getutmp copies the information, insofar as the structures are compatible, from utmpx to utmp. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int getutmpx (const struct utmp *utmp, struct utmpx *utmpx)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+getutmpx copies the information, insofar as the structures are compatible, from utmp to utmpx. 

@@ -1,0 +1,13 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int listen (int socket, int n)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe fd | See POSIX Safety Concepts. 
+The listen function enables the socket socket to accept connections, thus making it a server socket. 
+The argument n specifies the length of the queue for pending connections.  When the queue fills, new clients attempting to connect fail with ECONNREFUSED until the server calls accept to accept a connection from the queue. 
+The listen function returns 0 on success and -1 on failure.  The following errno error conditions are defined for this function: 
+	EBADF
+The argument socket is not a valid file descriptor.  
+	ENOTSOCK
+The argument socket is not a socket.  
+	EOPNOTSUPP
+The socket socket does not support this operation. 

@@ -1,0 +1,2 @@
+The internal representation for entries of the file is struct fstab, defined in fstab.h. 
+To read the entire content of the of the fstab file the GNU C Library contains a set of three functions which are designed in the usual way. 

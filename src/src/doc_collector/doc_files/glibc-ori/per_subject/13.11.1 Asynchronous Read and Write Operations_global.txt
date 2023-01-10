@@ -1,0 +1,2 @@
+To write data asynchronously to a file, there exists an equivalent pair of functions with a very similar interface. 
+Besides these functions with the more or less traditional interface, POSIX.1b also defines a function which can initiate more than one operation at a time, and which can handle freely mixed read and write operations.  It is therefore similar to a combination of readv and writev. 

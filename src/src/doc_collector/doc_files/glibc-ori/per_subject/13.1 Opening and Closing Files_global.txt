@@ -1,0 +1,2 @@
+This section describes the primitives for opening and closing files using file descriptors.  The open and creat functions are declared in the header file fcntl.h, while close is declared in unistd.h.   
+To close a stream, call fclose (see Closing Streams) instead of trying to close its underlying file descriptor with close. This flushes any buffered output and updates the stream object to indicate that it is closed. 

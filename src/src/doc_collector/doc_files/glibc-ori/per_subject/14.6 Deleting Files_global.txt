@@ -1,0 +1,2 @@
+You can delete a file with unlink or remove. 
+Deletion actually deletes a file name.  If this is the file’s only name, then the file is deleted as well.  If the file has other remaining names (see Hard Links), it remains accessible under those names. 

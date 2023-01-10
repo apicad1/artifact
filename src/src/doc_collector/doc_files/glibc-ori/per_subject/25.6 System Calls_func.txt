@@ -1,0 +1,49 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: long int syscall (long int sysno, …)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+syscall performs a generic system call. 
+
+sysno is the system call number.  Each kind of system call is identified by a number.  Macros for all the possible system call numbers are defined in sys/syscall.h 
+The remaining arguments are the arguments for the system call, in order, and their meanings depend on the kind of system call.  Each kind of system call has a definite number of arguments, from zero to five. If you code more arguments than the system call takes, the extra ones to the right are ignored. 
+The return value is the return value from the system call, unless the system call failed.  In that case, syscall returns -1 and sets errno to an error code that the system call returned.  Note that system calls do not return -1 when they succeed.  
+If you specify an invalid sysno, syscall returns -1 with errno = ENOSYS. 
+Example: 
+
+EXAMPLE_BEGIN
+
+
+#include <unistd.h>
+#include <sys/syscall.h>
+#include <errno.h>
+
+…
+
+int rc;
+
+rc = syscall(SYS_chmod, "/etc/passwd", 0444);
+
+if (rc == -1)
+   fprintf(stderr, "chmod failed, errno = %d\n", errno);
+
+EXAMPLE_END
+
+This, if all the compatibility stars are aligned, is equivalent to the following preferable code: 
+
+EXAMPLE_BEGIN
+
+
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <errno.h>
+
+…
+
+int rc;
+
+rc = chmod("/etc/passwd", 0444);
+if (rc == -1)
+   fprintf(stderr, "chmod failed, errno = %d\n", errno);
+
+EXAMPLE_END
+

@@ -1,0 +1,2 @@
+The symbols in this section are declared in unistd.h. 
+You will not normally use the functions in this section, because the functions described in Memory Allocation are easier to use.  Those are interfaces to a GNU C Library memory allocator that uses the functions below itself.  The functions below are simple interfaces to system calls. 

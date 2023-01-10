@@ -1,0 +1,2 @@
+Generally searching for a specific element in an array means that potentially all elements must be checked.  The GNU C Library contains functions to perform linear search.  The prototypes for the following two functions can be found in search.h. 
+To search a sorted array for an element matching the key, use the bsearch function.  The prototype for this function is in the header file stdlib.h.  

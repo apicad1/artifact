@@ -1,0 +1,133 @@
+This section describes the options for the ‘%d’, ‘%i’, ‘%o’, ‘%u’, ‘%x’, and ‘%X’ conversion specifications.  These conversions print integers in various formats. 
+The ‘%d’ and ‘%i’ conversion specifications both print an int argument as a signed decimal number; while ‘%o’, ‘%u’, and ‘%x’ print the argument as an unsigned octal, decimal, or hexadecimal number (respectively).  The ‘%X’ conversion specification is just like ‘%x’ except that it uses the characters ‘ABCDEF’ as digits instead of ‘abcdef’. 
+The following flags are meaningful: 
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘-’
+Left-justify the result in the field (instead of the normal right-justification). 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘+’
+For the signed ‘%d’ and ‘%i’ conversions, print a plus sign if the value is positive. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘ ’
+For the signed ‘%d’ and ‘%i’ conversions, if the result doesn’t start with a plus or minus sign, prefix it with a space character instead.  Since the ‘+’ flag ensures that the result includes a sign, this flag is ignored if you supply both of them. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘#’
+For the ‘%o’ conversion, this forces the leading digit to be ‘0’, as if by increasing the precision.  For ‘%x’ or ‘%X’, this prefixes a leading ‘0x’ or ‘0X’ (respectively) to the result.  This doesn’t do anything useful for the ‘%d’, ‘%i’, or ‘%u’ conversions.  Using this flag produces output which can be parsed by the strtoul function (see Parsing of Integers) and scanf with the ‘%i’ conversion (see Numeric Input Conversions). 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘'’
+Separate the digits into groups as specified by the locale specified for the LC_NUMERIC category; see General Numeric.  This flag is a GNU extension. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘0’
+Pad the field with zeros instead of spaces.  The zeros are placed after any indication of sign or base.  This flag is ignored if the ‘-’ flag is also specified, or if a precision is specified. 
+<<<<<<<<<<<<<<<<<<<<
+
+If a precision is supplied, it specifies the minimum number of digits to appear; leading zeros are produced if necessary.  If you don’t specify a precision, the number is printed with as many digits as it needs.  If you convert a value of zero with an explicit precision of zero, then no characters at all are produced. 
+Without a type modifier, the corresponding argument is treated as an int (for the signed conversions ‘%i’ and ‘%d’) or unsigned int (for the unsigned conversions ‘%o’, ‘%u’, ‘%x’, and ‘%X’).  Recall that since printf and friends are variadic, any char and short arguments are automatically converted to int by the default argument promotions.  For arguments of other integer types, you can use these modifiers: 
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘hh’
+Specifies that the argument is a signed char or unsigned char, as appropriate.  A char argument is converted to an int or unsigned int by the default argument promotions anyway, but the ‘hh’ modifier says to convert it back to a char again. 
+This modifier was introduced in ISO C99. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘h’
+Specifies that the argument is a short int or unsigned short int, as appropriate.  A short argument is converted to an int or unsigned int by the default argument promotions anyway, but the ‘h’ modifier says to convert it back to a short again. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘j’
+Specifies that the argument is a intmax_t or uintmax_t, as appropriate. 
+This modifier was introduced in ISO C99. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘l’
+Specifies that the argument is a long int or unsigned long int, as appropriate.  Two ‘l’ characters are like the ‘L’ modifier, below. 
+If used with ‘%c’ or ‘%s’ the corresponding parameter is considered as a wide character or wide character string respectively. This use of ‘l’ was introduced in Amendment 1 to ISO C90. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘L’
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘ll’
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘q’
+Specifies that the argument is a long long int.  (This type is an extension supported by the GNU C compiler.  On systems that don’t support extra-long integers, this is the same as long int.) 
+The ‘q’ modifier is another name for the same thing, which comes from 4.4 BSD; a long long int is sometimes called a “quad” int. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘t’
+Specifies that the argument is a ptrdiff_t. 
+This modifier was introduced in ISO C99. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘z’
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘Z’
+Specifies that the argument is a size_t. 
+‘z’ was introduced in ISO C99.  ‘Z’ is a GNU extension predating this addition and should not be used in new code. 
+<<<<<<<<<<<<<<<<<<<<
+
+Here is an example.  Using the template string: 
+
+EXAMPLE_BEGIN
+"|%5d|%-5d|%+5d|%+-5d|% 5d|%05d|%5.0d|%5.2d|%d|\n"
+EXAMPLE_END
+
+to print numbers using the different options for the ‘%d’ conversion gives results like: 
+
+EXAMPLE_BEGIN
+|    0|0    |   +0|+0   |    0|00000|     |   00|0|
+|    1|1    |   +1|+1   |    1|00001|    1|   01|1|
+|   -1|-1   |   -1|-1   |   -1|-0001|   -1|  -01|-1|
+|100000|100000|+100000|+100000| 100000|100000|100000|100000|100000|
+EXAMPLE_END
+
+In particular, notice what happens in the last case where the number is too large to fit in the minimum field width specified. 
+Here are some more examples showing how unsigned integers print under various format options, using the template string: 
+
+EXAMPLE_BEGIN
+"|%5u|%5o|%5x|%5X|%#5o|%#5x|%#5X|%#10.8x|\n"
+EXAMPLE_END
+
+
+EXAMPLE_BEGIN
+|    0|    0|    0|    0|    0|    0|    0|  00000000|
+|    1|    1|    1|    1|   01|  0x1|  0X1|0x00000001|
+|100000|303240|186a0|186A0|0303240|0x186a0|0X186A0|0x000186a0|
+EXAMPLE_END
+

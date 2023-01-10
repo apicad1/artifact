@@ -1,0 +1,3 @@
+When calling argp_help (see Argp Help) or argp_state_help (see Argp Helper Functions) the exact output is determined by the flags argument.  This should consist of any of the following flags, or’d together: 
+The following flags are only understood when used with argp_state_help.  They control whether the function returns after printing its output, or terminates the program: 
+The following flags are combinations of the basic flags for printing standard messages: 

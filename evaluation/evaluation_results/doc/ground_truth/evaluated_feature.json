@@ -1,0 +1,2946 @@
+{
+    "argz_next": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "roughly"
+            ]
+        }
+    },
+    "bcmp": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "roughly"
+            ]
+        }
+    },
+    "CPU_EQUAL": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "roughly"
+            ]
+        }
+    },
+    "fgetgrent": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "roughly"
+            ]
+        }
+    },
+    "fgetpos": {
+        "ret": {
+            "value": [
+                0,
+                -1
+            ],
+            "cond": [
+                "roughly",
+                "fail"
+            ]
+        }
+    },
+    "fgetws": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "success"
+            ]
+        }
+    },
+    "fmemopen": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "fail"
+            ]
+        }
+    },
+    "fputws": {
+        "ret": {
+            "value": [
+                -1
+            ],
+            "cond": [
+                "fail"
+            ]
+        }
+    },
+    "getaddrinfo_a": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "success"
+            ]
+        }
+    },
+    "getcontext": {
+        "ret": {
+            "value": [
+                0,
+                -1
+            ],
+            "cond": [
+                "fail",
+                "fail"
+            ]
+        }
+    },
+    "getdelim": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "success"
+            ]
+        }
+    },
+    "getfsspec": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "fail"
+            ]
+        }
+    },
+    "getopt_long_only": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "roughly"
+            ]
+        }
+    },
+    "getpwent": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "roughly"
+            ]
+        }
+    },
+    "getpwuid_r": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "success"
+            ]
+        },
+        "arg.post": [
+            false,
+            false,
+            false,
+            false,
+            true
+        ]
+    },
+    "getrpcport": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "roughly"
+            ]
+        }
+    },
+    "getservbyname": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "fail"
+            ]
+        }
+    },
+    "globfree": {
+        "casuality": {
+            "pre": [
+                "glob"
+            ],
+            "post": []
+        }
+    },
+    "hcreate_r": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "fail"
+            ]
+        },
+        "arg.pre": [
+            false,
+            true
+        ],
+        "casuality": {
+            "pre": [],
+            "post": [
+                "hdestroy"
+            ]
+        }
+    },
+    "inet_ntop": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "success"
+            ]
+        }
+    },
+    "initgroups": {
+        "ret": {
+            "value": [
+                0,
+                -1
+            ],
+            "cond": [
+                "success",
+                "fail"
+            ]
+        }
+    },
+    "initstate_r": {
+        "arg.pre": [
+            false,
+            true,
+            false,
+            false
+        ]
+    },
+    "isnan": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "roughly"
+            ]
+        }
+    },
+    "login_tty": {
+        "ret": {
+            "value": [
+                -1,
+                0
+            ],
+            "cond": [
+                "fail",
+                "success"
+            ]
+        }
+    },
+    "lsearch": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "roughly"
+            ]
+        }
+    },
+    "mbrlen": {
+        "ret": {
+            "value": [
+                0,
+                -1,
+                -2
+            ],
+            "cond": [
+                "success",
+                "fail",
+                "success"
+            ]
+        }
+    },
+    "mbstowcs": {
+        "ret": {
+            "value": [
+                0,
+                -1
+            ],
+            "cond": [
+                "success",
+                "fail"
+            ]
+        }
+    },
+    "mbtowc": {
+        "ret": {
+            "value": [
+                0,
+                -1
+            ],
+            "cond": [
+                "success",
+                "fail"
+            ]
+        }
+    },
+    "mq_setattr": {
+        "ret": {
+            "value": [
+                -1
+            ],
+            "cond": [
+                "success"
+            ]
+        }
+    },
+    "pthread_attr_getsigmask_np": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "roughly"
+            ]
+        }
+    },
+    "pthread_spin_init": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "success"
+            ]
+        }
+    },
+    "regcomp": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "success"
+            ]
+        },
+        "casuality": {
+            "pre": [],
+            "post": [
+                ""
+            ]
+        }
+    },
+    "res_init": {
+        "ret": {
+            "value": [
+                0,
+                -1
+            ],
+            "cond": [
+                "success",
+                "fail"
+            ]
+        }
+    },
+    "res_nmkquery": {
+        "ret": {
+            "value": [
+                -1
+            ],
+            "cond": [
+                "fail"
+            ]
+        }
+    },
+    "res_nquery": {
+        "ret": {
+            "value": [
+                -1
+            ],
+            "cond": [
+                "fail"
+            ]
+        }
+    },
+    "rpmatch": {
+        "ret": {
+            "value": [
+                0,
+                1,
+                -1
+            ],
+            "cond": [
+                "roughly",
+                "roughly",
+                "roughly"
+            ]
+        }
+    },
+    "setcontext": {
+        "ret": {
+            "value": [
+                0,
+                -1
+            ],
+            "cond": [
+                "fail",
+                "fail"
+            ]
+        }
+    },
+    "setmntent": {
+        "casuality": {
+            "pre": [],
+            "post": [
+                "endmntent",
+                "fclose"
+            ]
+        }
+    },
+    "sigfillset": {
+        "ret": {
+            "value": [
+                0,
+                -1
+            ],
+            "cond": [
+                "success",
+                "fail"
+            ]
+        },
+        "casuality": {
+            "pre": [],
+            "post": [
+                "sigdelset",
+                "sigismember",
+                "sigaddset"
+            ]
+        }
+    },
+    "sighold": {
+        "ret": {
+            "value": [
+                0,
+                -1
+            ],
+            "cond": [
+                "success",
+                "fail"
+            ]
+        }
+    },
+    "strrchr": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "roughly"
+            ]
+        }
+    },
+    "TAILQ_EMPTY": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "roughly"
+            ]
+        }
+    },
+    "uselocale": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "fail"
+            ]
+        }
+    },
+    "versionsort": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "roughly"
+            ]
+        }
+    },
+    "wcsnlen": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "roughly"
+            ]
+        }
+    },
+    "wcstok": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "roughly"
+            ]
+        }
+    },
+    "clk_get_accuracy": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "roughly"
+            ]
+        }
+    },
+    "find_or_create_page": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "roughly"
+            ]
+        }
+    },
+    "folio_contains": {
+        "ret": {
+            "value": [
+                1
+            ],
+            "cond": [
+                "roughly"
+            ]
+        }
+    },
+    "folio_redirty_for_writepage": {
+        "ret": {
+            "value": [
+                1,
+                0
+            ],
+            "cond": [
+                "roughly",
+                "roughly"
+            ]
+        }
+    },
+    "generic_writepages": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "success"
+            ]
+        }
+    },
+    "kmemdup_nul": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "fail"
+            ]
+        }
+    },
+    "kstrdup": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "fail"
+            ]
+        }
+    },
+    "readahead_folio": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "roughly"
+            ]
+        }
+    },
+    "str_has_prefix": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "roughly"
+            ]
+        }
+    },
+    "uuid_is_valid": {
+        "ret": {
+            "value": [
+                1
+            ],
+            "cond": [
+                "roughly"
+            ]
+        }
+    },
+    "vm_map_ram": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "fail"
+            ]
+        }
+    },
+    "ADMISSION_SYNTAX_new": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "fail"
+            ]
+        },
+        "casuality": {
+            "pre": [],
+            "post": [
+                "ADMISSION_SYNTAX_free"
+            ]
+        }
+    },
+    "ASN1_INTEGER_get_int64": {
+        "ret": {
+            "value": [
+                1,
+                0
+            ],
+            "cond": [
+                "success",
+                "fail"
+            ]
+        }
+    },
+    "ASN1_INTEGER_new": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "fail"
+            ]
+        }
+    },
+    "ASN1_OBJECT_new": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "fail"
+            ]
+        }
+    },
+    "ASN1_STRING_TABLE_add": {
+        "ret": {
+            "value": [
+                1,
+                0
+            ],
+            "cond": [
+                "success",
+                "fail"
+            ]
+        },
+        "casuality": {
+            "pre": [],
+            "post": [
+                "ASN1_STRING_TABLE_cleanup"
+            ]
+        }
+    },
+    "ASN1_TIME_cmp_time_t": {
+        "ret": {
+            "value": [
+                -1,
+                0,
+                1,
+                -2
+            ],
+            "cond": [
+                "success",
+                "success",
+                "success",
+                "fail"
+            ]
+        }
+    },
+    "ASN1_TYPE_cmp": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "roughly"
+            ]
+        }
+    },
+    "ASRange_new": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "fail"
+            ]
+        },
+        "casuality": {
+            "pre": [],
+            "post": [
+                "ASRange_free"
+            ]
+        }
+    },
+    "b2i_PVK_bio": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "fail"
+            ]
+        }
+    },
+    "b2i_PVK_bio_ex": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "fail"
+            ]
+        }
+    },
+    "BIO_debug_callback": {
+        "ret": {
+            "value": [
+                1
+            ],
+            "cond": [
+                "roughly"
+            ]
+        }
+    },
+    "BIO_get_accept_name": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "fail"
+            ]
+        }
+    },
+    "BIO_get_bind_mode": {
+        "ret": {
+            "value": [
+                -1
+            ],
+            "cond": [
+                "fail"
+            ]
+        }
+    },
+    "BIO_get_cipher_status": {
+        "ret": {
+            "value": [
+                1,
+                0
+            ],
+            "cond": [
+                "success",
+                "fail"
+            ]
+        }
+    },
+    "BIO_set_indent": {
+        "ret": {
+            "value": [
+                1,
+                0
+            ],
+            "cond": [
+                "success",
+                "fail"
+            ]
+        }
+    },
+    "BIO_set_mem_eof_return": {
+        "ret": {
+            "value": [
+                1,
+                0
+            ],
+            "cond": [
+                "fail",
+                "success"
+            ]
+        },
+        "arg.pre": [
+            false,
+            true
+        ]
+    },
+    "BIO_snprintf": {
+        "ret": {
+            "value": [
+                -1
+            ],
+            "cond": [
+                "fail"
+            ]
+        }
+    },
+    "BIO_ssl_copy_session_id": {
+        "ret": {
+            "value": [
+                1,
+                0
+            ],
+            "cond": [
+                "success",
+                "fail"
+            ]
+        }
+    },
+    "BIO_up_ref": {
+        "ret": {
+            "value": [
+                1,
+                0
+            ],
+            "cond": [
+                "success",
+                "fail"
+            ]
+        }
+    },
+    "BN_BLINDING_new": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "fail"
+            ]
+        }
+    },
+    "BN_mul_word": {
+        "ret": {
+            "value": [
+                1,
+                0
+            ],
+            "cond": [
+                "success",
+                "fail"
+            ]
+        }
+    },
+    "BN_print": {
+        "ret": {
+            "value": [
+                1,
+                0
+            ],
+            "cond": [
+                "success",
+                "fail"
+            ]
+        }
+    },
+    "BN_to_ASN1_ENUMERATED": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "fail"
+            ]
+        }
+    },
+    "BN_ucmp": {
+        "ret": {
+            "value": [
+                -1,
+                0,
+                1
+            ],
+            "cond": [
+                "roughly",
+                "roughly",
+                "roughly"
+            ]
+        }
+    },
+    "CMS_get0_signers": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "fail"
+            ]
+        }
+    },
+    "CMS_ReceiptRequest_free": {
+        "casuality": {
+            "pre": [
+                "CMS_ReceiptRequest_new"
+            ],
+            "post": []
+        }
+    },
+    "CMS_sign_ex": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "fail"
+            ]
+        }
+    },
+    "CMS_sign_receipt": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "fail"
+            ]
+        }
+    },
+    "CRYPTO_THREAD_lock_new": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "fail"
+            ]
+        }
+    },
+    "CT_POLICY_EVAL_CTX_new_ex": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "fail"
+            ]
+        }
+    },
+    "d2i_ADMISSION_SYNTAX": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "fail"
+            ]
+        }
+    },
+    "d2i_ASIdOrRange": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "fail"
+            ]
+        }
+    },
+    "d2i_DSA_SIG": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "fail"
+            ]
+        }
+    },
+    "d2i_EDIPARTYNAME": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "fail"
+            ]
+        }
+    },
+    "d2i_ESS_CERT_ID_V2": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "fail"
+            ]
+        }
+    },
+    "d2i_NOTICEREF": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "fail"
+            ]
+        }
+    },
+    "d2i_OCSP_CRLID": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "fail"
+            ]
+        }
+    },
+    "d2i_OCSP_REQINFO": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "fail"
+            ]
+        }
+    },
+    "d2i_PKCS12": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "fail"
+            ]
+        }
+    },
+    "d2i_PKCS7_SIGNER_INFO": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "fail"
+            ]
+        }
+    },
+    "d2i_PrivateKey_ex": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "fail"
+            ]
+        },
+        "arg.pre": [
+            true,
+            false,
+            false,
+            false,
+            false,
+            false
+        ]
+    },
+    "d2i_TS_RESP_fp": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "fail"
+            ]
+        }
+    },
+    "d2i_X509_VAL": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "fail"
+            ]
+        }
+    },
+    "DES_key_sched": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "success"
+            ]
+        }
+    },
+    "DES_set_key_checked": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "success"
+            ]
+        }
+    },
+    "DH_set_ex_data": {
+        "ret": {
+            "value": [
+                1,
+                0
+            ],
+            "cond": [
+                "success",
+                "fail"
+            ]
+        }
+    },
+    "DSA_generate_key": {
+        "ret": {
+            "value": [
+                1,
+                0
+            ],
+            "cond": [
+                "success",
+                "fail"
+            ]
+        }
+    },
+    "DSA_set_flags": {
+        "casuality": {
+            "pre": [],
+            "post": [
+                "DSA_clear_flags"
+            ]
+        }
+    },
+    "ECDSA_SIG_set0": {
+        "ret": {
+            "value": [
+                1,
+                0
+            ],
+            "cond": [
+                "success",
+                "fail"
+            ]
+        }
+    },
+    "EC_GROUP_check": {
+        "ret": {
+            "value": [
+                1,
+                0
+            ],
+            "cond": [
+                "success",
+                "fail"
+            ]
+        }
+    },
+    "EC_GROUP_check_named_curve": {
+        "ret": {
+            "value": [
+                0,
+                -1
+            ],
+            "cond": [
+                "success",
+                "fail"
+            ]
+        }
+    },
+    "EC_GROUP_cmp": {
+        "ret": {
+            "value": [
+                0,
+                1,
+                -1
+            ],
+            "cond": [
+                "success",
+                "success",
+                "fail"
+            ]
+        }
+    },
+    "EC_GROUP_copy": {
+        "ret": {
+            "value": [
+                1,
+                0
+            ],
+            "cond": [
+                "success",
+                "fail"
+            ]
+        }
+    },
+    "EC_GROUP_set_seed": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "roughly"
+            ]
+        }
+    },
+    "EC_KEY_get_ex_new_index": {
+        "ret": {
+            "value": [
+                -1
+            ],
+            "cond": [
+                "fail"
+            ]
+        }
+    },
+    "EC_KEY_get_flags": {
+        "casuality": {
+            "pre": [],
+            "post": [
+                "EC_KEY_clear_flags"
+            ]
+        }
+    },
+    "EC_KEY_precompute_mult": {
+        "ret": {
+            "value": [
+                1,
+                0
+            ],
+            "cond": [
+                "success",
+                "fail"
+            ]
+        }
+    },
+    "EC_KEY_set_group": {
+        "ret": {
+            "value": [
+                1,
+                0
+            ],
+            "cond": [
+                "success",
+                "fail"
+            ]
+        }
+    },
+    "EC_POINT_copy": {
+        "ret": {
+            "value": [
+                1,
+                0
+            ],
+            "cond": [
+                "success",
+                "fail"
+            ]
+        }
+    },
+    "EC_POINT_point2buf": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "fail"
+            ]
+        },
+        "arg.pre": [
+            false,
+            false,
+            false,
+            true,
+            false
+        ]
+    },
+    "ENGINE_get_first": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "fail"
+            ]
+        }
+    },
+    "ENGINE_init": {
+        "ret": {
+            "value": [
+                1,
+                0
+            ],
+            "cond": [
+                "success",
+                "fail"
+            ]
+        },
+        "casuality": {
+            "pre": [],
+            "post": [
+                "ENGINE_finish"
+            ]
+        }
+    },
+    "ERR_func_error_string": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "roughly"
+            ]
+        }
+    },
+    "ERR_reason_error_string": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "fail"
+            ]
+        }
+    },
+    "ESS_CERT_ID_dup": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "fail"
+            ]
+        }
+    },
+    "ESS_CERT_ID_V2_free": {
+        "casuality": {
+            "pre": [
+                "ESS_CERT_ID_V2_new"
+            ],
+            "post": []
+        }
+    },
+    "ESS_SIGNING_CERT_dup": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "fail"
+            ]
+        }
+    },
+    "EVP_Digest": {
+        "ret": {
+            "value": [
+                1,
+                0
+            ],
+            "cond": [
+                "success",
+                "fail"
+            ]
+        }
+    },
+    "EVP_DigestFinalXOF": {
+        "ret": {
+            "value": [
+                1,
+                0
+            ],
+            "cond": [
+                "success",
+                "fail"
+            ]
+        }
+    },
+    "EVP_DigestUpdate": {
+        "ret": {
+            "value": [
+                1,
+                0
+            ],
+            "cond": [
+                "success",
+                "fail"
+            ]
+        }
+    },
+    "EVP_ENCODE_CTX_copy": {
+        "arg.pre": [
+            true,
+            false
+        ]
+    },
+    "EVP_EncryptFinal_ex": {
+        "ret": {
+            "value": [
+                1,
+                0
+            ],
+            "cond": [
+                "success",
+                "fail"
+            ]
+        }
+    },
+    "EVP_EncryptUpdate": {
+        "ret": {
+            "value": [
+                1,
+                0
+            ],
+            "cond": [
+                "success",
+                "fail"
+            ]
+        }
+    },
+    "EVP_get_cipherbyname": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "fail"
+            ]
+        }
+    },
+    "EVP_get_cipherbyobj": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "fail"
+            ]
+        }
+    },
+    "EVP_KDF_CTX_get_kdf_size": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "roughly"
+            ]
+        }
+    },
+    "EVP_KDF_fetch": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "fail"
+            ]
+        }
+    },
+    "EVP_MAC_CTX_get_block_size": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "roughly"
+            ]
+        }
+    },
+    "EVP_MAC_final": {
+        "ret": {
+            "value": [
+                1,
+                0
+            ],
+            "cond": [
+                "success",
+                "fail"
+            ]
+        }
+    },
+    "EVP_MAC_update": {
+        "ret": {
+            "value": [
+                1,
+                0
+            ],
+            "cond": [
+                "success",
+                "fail"
+            ]
+        }
+    },
+    "EVP_MAC_up_ref": {
+        "ret": {
+            "value": [
+                1,
+                0
+            ],
+            "cond": [
+                "success",
+                "fail"
+            ]
+        }
+    },
+    "EVP_MD_meth_get_flags": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "fail"
+            ]
+        }
+    },
+    "EVP_MD_names_do_all": {
+        "ret": {
+            "value": [
+                1
+            ],
+            "cond": [
+                "roughly"
+            ]
+        }
+    },
+    "EVP_PKEY_assign_DH": {
+        "ret": {
+            "value": [
+                1,
+                0
+            ],
+            "cond": [
+                "success",
+                "fail"
+            ]
+        }
+    },
+    "EVP_PKEY_assign_SIPHASH": {
+        "ret": {
+            "value": [
+                1,
+                0
+            ],
+            "cond": [
+                "success",
+                "fail"
+            ]
+        }
+    },
+    "EVP_PKEY_decrypt_init_ex": {
+        "ret": {
+            "value": [
+                1,
+                0
+            ],
+            "cond": [
+                "success",
+                "fail"
+            ]
+        }
+    },
+    "EVP_PKEY_get_group_name": {
+        "ret": {
+            "value": [
+                1,
+                0
+            ],
+            "cond": [
+                "roughly",
+                "roughly"
+            ]
+        }
+    },
+    "EVP_PKEY_get_raw_private_key": {
+        "ret": {
+            "value": [
+                1,
+                0
+            ],
+            "cond": [
+                "success",
+                "fail"
+            ]
+        }
+    },
+    "EVP_PKEY_meth_new": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "fail"
+            ]
+        }
+    },
+    "EVP_PKEY_set1_engine": {
+        "ret": {
+            "value": [
+                1,
+                0
+            ],
+            "cond": [
+                "success",
+                "fail"
+            ]
+        }
+    },
+    "EVP_PKEY_set_ex_data": {
+        "ret": {
+            "value": [
+                1,
+                0
+            ],
+            "cond": [
+                "success",
+                "fail"
+            ]
+        }
+    },
+    "EVP_PKEY_verify_init": {
+        "ret": {
+            "value": [
+                1,
+                0
+            ],
+            "cond": [
+                "success",
+                "fail"
+            ]
+        }
+    },
+    "EVP_set_default_properties": {
+        "ret": {
+            "value": [
+                1,
+                0
+            ],
+            "cond": [
+                "success",
+                "fail"
+            ]
+        }
+    },
+    "EVP_SignInit_ex": {
+        "ret": {
+            "value": [
+                1,
+                0
+            ],
+            "cond": [
+                "success",
+                "fail"
+            ]
+        },
+        "arg.pre": [
+            true,
+            false,
+            false
+        ]
+    },
+    "GENERAL_SUBTREE_free": {
+        "casuality": {
+            "pre": [
+                "GENERAL_SUBTREE_new"
+            ],
+            "post": []
+        }
+    },
+    "i2d_PKCS8_PRIV_KEY_INFO_bio": {
+        "ret": {
+            "value": [
+                1,
+                0
+            ],
+            "cond": [
+                "success",
+                "fail"
+            ]
+        }
+    },
+    "i2d_X509_PUBKEY_bio": {
+        "ret": {
+            "value": [
+                1,
+                0
+            ],
+            "cond": [
+                "success",
+                "fail"
+            ]
+        }
+    },
+    "i2d_X509_REQ_fp": {
+        "ret": {
+            "value": [
+                0,
+                1
+            ],
+            "cond": [
+                "fail",
+                "fail"
+            ]
+        }
+    },
+    "i2s_ASN1_IA5STRING": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "fail"
+            ]
+        }
+    },
+    "MD4_Init": {
+        "ret": {
+            "value": [
+                1,
+                0
+            ],
+            "cond": [
+                "fail",
+                "success"
+            ]
+        }
+    },
+    "MDC2_Init": {
+        "ret": {
+            "value": [
+                1,
+                0
+            ],
+            "cond": [
+                "success",
+                "fail"
+            ]
+        }
+    },
+    "OCSP_basic_verify": {
+        "ret": {
+            "value": [
+                1,
+                0,
+                -1
+            ],
+            "cond": [
+                "success",
+                "success",
+                "fail"
+            ]
+        }
+    },
+    "OCSP_request_sign": {
+        "ret": {
+            "value": [
+                1,
+                0
+            ],
+            "cond": [
+                "success",
+                "fail"
+            ]
+        }
+    },
+    "OCSP_RESPID_new": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "fail"
+            ]
+        },
+        "casuality": {
+            "pre": [],
+            "post": [
+                "OCSP_RESPID_free"
+            ]
+        }
+    },
+    "OCSP_resp_get0_id": {
+        "ret": {
+            "value": [
+                1,
+                0
+            ],
+            "cond": [
+                "success",
+                "fail"
+            ]
+        }
+    },
+    "OCSP_resp_get0_signer": {
+        "ret": {
+            "value": [
+                1,
+                0
+            ],
+            "cond": [
+                "roughly",
+                "roughly"
+            ]
+        }
+    },
+    "OCSP_resp_get1_id": {
+        "ret": {
+            "value": [
+                1,
+                0
+            ],
+            "cond": [
+                "success",
+                "fail"
+            ]
+        }
+    },
+    "OCSP_SERVICELOC_free": {
+        "casuality": {
+            "pre": [
+                "OCSP_SERVICELOC_new"
+            ],
+            "post": []
+        }
+    },
+    "OPENSSL_INIT_set_config_filename": {
+        "casuality": {
+            "pre": [],
+            "post": [
+                "OPENSSL_INIT_free"
+            ]
+        }
+    },
+    "OSSL_CMP_certConf_cb": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "fail"
+            ]
+        }
+    },
+    "OSSL_CMP_CTX_get_status": {
+        "ret": {
+            "value": [
+                -1
+            ],
+            "cond": [
+                "fail"
+            ]
+        }
+    },
+    "OSSL_CMP_CTX_new": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "fail"
+            ]
+        }
+    },
+    "OSSL_CMP_CTX_set_certConf_cb_arg": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "success"
+            ]
+        }
+    },
+    "OSSL_CMP_CTX_snprint_PKIStatus": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "fail"
+            ]
+        }
+    },
+    "OSSL_CMP_SRV_CTX_get0_cmp_ctx": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "fail"
+            ]
+        }
+    },
+    "OSSL_CMP_validate_cert_path": {
+        "ret": {
+            "value": [
+                1,
+                0
+            ],
+            "cond": [
+                "success",
+                "fail"
+            ]
+        }
+    },
+    "OSSL_DECODER_CTX_add_decoder": {
+        "ret": {
+            "value": [
+                1,
+                0
+            ],
+            "cond": [
+                "success",
+                "fail"
+            ]
+        }
+    },
+    "OSSL_DECODER_CTX_add_extra": {
+        "ret": {
+            "value": [
+                1,
+                0
+            ],
+            "cond": [
+                "success",
+                "fail"
+            ]
+        }
+    },
+    "OSSL_DECODER_CTX_new_for_pkey": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "roughly"
+            ]
+        }
+    },
+    "OSSL_ENCODER_CTX_set_params": {
+        "ret": {
+            "value": [
+                1,
+                0
+            ],
+            "cond": [
+                "success",
+                "fail"
+            ]
+        }
+    },
+    "OSSL_ENCODER_CTX_set_passphrase_ui": {
+        "ret": {
+            "value": [
+                1,
+                0
+            ],
+            "cond": [
+                "success",
+                "fail"
+            ]
+        }
+    },
+    "OSSL_ENCODER_get0_description": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "roughly"
+            ]
+        }
+    },
+    "OSSL_HTTP_REQ_CTX_set_expected": {
+        "ret": {
+            "value": [
+                1,
+                0
+            ],
+            "cond": [
+                "success",
+                "fail"
+            ]
+        },
+        "casuality": {
+            "pre": [],
+            "post": [
+                "OSSL_HTTP_REQ_CTX_set1_req"
+            ]
+        }
+    },
+    "OSSL_HTTP_REQ_CTX_set_request_line": {
+        "ret": {
+            "value": [
+                1,
+                0
+            ],
+            "cond": [
+                "success",
+                "fail"
+            ]
+        }
+    },
+    "OSSL_LIB_CTX_get0_global_default": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "fail"
+            ]
+        }
+    },
+    "OSSL_LIB_CTX_new_from_dispatch": {
+        "arg.pre": [
+            true,
+            false
+        ]
+    },
+    "OSSL_LIB_CTX_set0_default": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "fail"
+            ]
+        }
+    },
+    "OSSL_PROVIDER_load": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "fail"
+            ]
+        }
+    },
+    "OSSL_SELF_TEST_new": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "fail"
+            ]
+        },
+        "casuality": {
+            "pre": [],
+            "post": [
+                "OSSL_SELF_TEST_free"
+            ]
+        }
+    },
+    "OSSL_STORE_open": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "fail"
+            ]
+        }
+    },
+    "OSSL_STORE_register_loader": {
+        "ret": {
+            "value": [
+                1,
+                0
+            ],
+            "cond": [
+                "success",
+                "fail"
+            ]
+        }
+    },
+    "OSSL_STORE_SEARCH_get0_string": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "fail"
+            ]
+        }
+    },
+    "OSSL_STORE_supports_search": {
+        "ret": {
+            "value": [
+                1,
+                0
+            ],
+            "cond": [
+                "roughly",
+                "roughly"
+            ]
+        }
+    },
+    "OTHERNAME_free": {
+        "casuality": {
+            "pre": [
+                "OTHERNAME_new"
+            ],
+            "post": []
+        }
+    },
+    "PBEPARAM_free": {
+        "casuality": {
+            "pre": [
+                "PBEPARAM_new"
+            ],
+            "post": []
+        }
+    },
+    "PBKDF2PARAM_new": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "fail"
+            ]
+        },
+        "casuality": {
+            "pre": [],
+            "post": [
+                "PBKDF2PARAM_free"
+            ]
+        }
+    },
+    "PEM_bytes_read_bio_secmem": {
+        "ret": {
+            "value": [
+                1,
+                0
+            ],
+            "cond": [
+                "success",
+                "fail"
+            ]
+        },
+        "casuality": {
+            "pre": [],
+            "post": [
+                "OPENSSL_secure_free"
+            ]
+        }
+    },
+    "PEM_get_EVP_CIPHER_INFO": {
+        "ret": {
+            "value": [
+                1,
+                0
+            ],
+            "cond": [
+                "success",
+                "fail"
+            ]
+        }
+    },
+    "PEM_read_bio": {
+        "ret": {
+            "value": [
+                1,
+                0
+            ],
+            "cond": [
+                "success",
+                "fail"
+            ]
+        },
+        "arg.post": [
+            false,
+            true,
+            true,
+            true,
+            true
+        ]
+    },
+    "PEM_read_bio_SSL_SESSION": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "fail"
+            ]
+        }
+    },
+    "PEM_write_bio_PKCS7_stream": {
+        "ret": {
+            "value": [
+                1,
+                0
+            ],
+            "cond": [
+                "success",
+                "fail"
+            ]
+        }
+    },
+    "PEM_X509_INFO_read_bio_ex": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "fail"
+            ]
+        }
+    },
+    "PKCS12_free": {
+        "casuality": {
+            "pre": [
+                "PKCS12_new"
+            ],
+            "post": []
+        }
+    },
+    "PKCS12_SAFEBAG_free": {
+        "casuality": {
+            "pre": [
+                "PKCS12_SAFEBAG_new"
+            ],
+            "post": []
+        }
+    },
+    "PKCS7_dup": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "fail"
+            ]
+        }
+    },
+    "PKCS7_ENC_CONTENT_free": {
+        "casuality": {
+            "pre": [
+                "PKCS7_ENC_CONTENT_new"
+            ],
+            "post": []
+        }
+    },
+    "PKCS7_get0_signers": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "fail"
+            ]
+        }
+    },
+    "PKCS7_SIGNER_INFO_free": {
+        "casuality": {
+            "pre": [
+                "PKCS7_SIGNER_INFO_new"
+            ],
+            "post": []
+        }
+    },
+    "PKCS8_decrypt": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "fail"
+            ]
+        }
+    },
+    "PKCS8_pkey_add1_attr": {
+        "ret": {
+            "value": [
+                1,
+                0
+            ],
+            "cond": [
+                "success",
+                "fail"
+            ]
+        }
+    },
+    "PKCS8_PRIV_KEY_INFO_free": {
+        "casuality": {
+            "pre": [
+                "PKCS8_PRIV_KEY_INFO_new"
+            ],
+            "post": []
+        }
+    },
+    "RAND_query_egd_bytes": {
+        "ret": {
+            "value": [
+                -1
+            ],
+            "cond": [
+                "fail"
+            ]
+        }
+    },
+    "RAND_write_file": {
+        "ret": {
+            "value": [
+                -1
+            ],
+            "cond": [
+                "roughly"
+            ]
+        }
+    },
+    "RSA_get_multi_prime_extra_count": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "roughly"
+            ]
+        }
+    },
+    "RSA_get_version": {
+        "ret": {
+            "value": [
+                8017
+            ],
+            "cond": [
+                "roughly"
+            ]
+        }
+    },
+    "RSA_meth_new": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "fail"
+            ]
+        },
+        "arg.pre": [
+            true,
+            false
+        ]
+    },
+    "RSA_PSS_PARAMS_free": {
+        "casuality": {
+            "pre": [
+                "RSA_PSS_PARAMS_new"
+            ],
+            "post": []
+        }
+    },
+    "RSA_PSS_PARAMS_new": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "fail"
+            ]
+        },
+        "casuality": {
+            "pre": [],
+            "post": [
+                "RSA_PSS_PARAMS_free"
+            ]
+        }
+    },
+    "RSA_set0_factors": {
+        "ret": {
+            "value": [
+                1,
+                0
+            ],
+            "cond": [
+                "success",
+                "fail"
+            ]
+        }
+    },
+    "s2i_ASN1_INTEGER": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "fail"
+            ]
+        }
+    },
+    "SRP_create_verifier": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "fail"
+            ]
+        }
+    },
+    "SSL_config": {
+        "ret": {
+            "value": [
+                1,
+                0
+            ],
+            "cond": [
+                "success",
+                "fail"
+            ]
+        }
+    },
+    "SSL_CTX_get_default_passwd_cb": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "roughly"
+            ]
+        }
+    },
+    "SSL_CTX_get_ex_data": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "fail"
+            ]
+        }
+    },
+    "SSL_CTX_get_tlsext_status_type": {
+        "ret": {
+            "value": [
+                -1
+            ],
+            "cond": [
+                "roughly"
+            ]
+        }
+    },
+    "SSL_CTX_set1_groups": {
+        "ret": {
+            "value": [
+                1,
+                0
+            ],
+            "cond": [
+                "success",
+                "fail"
+            ]
+        }
+    },
+    "SSL_CTX_set_ciphersuites": {
+        "ret": {
+            "value": [
+                1,
+                0
+            ],
+            "cond": [
+                "roughly",
+                "roughly"
+            ]
+        }
+    },
+    "SSL_CTX_set_cipher_list": {
+        "ret": {
+            "value": [
+                1,
+                0
+            ],
+            "cond": [
+                "success",
+                "fail"
+            ]
+        }
+    },
+    "SSL_CTX_set_ctlog_list_file": {
+        "ret": {
+            "value": [
+                1,
+                0
+            ],
+            "cond": [
+                "success",
+                "fail"
+            ]
+        }
+    },
+    "SSL_CTX_set_max_early_data": {
+        "ret": {
+            "value": [
+                1,
+                0
+            ],
+            "cond": [
+                "success",
+                "fail"
+            ]
+        }
+    },
+    "SSL_CTX_set_tlsext_status_cb": {
+        "ret": {
+            "value": [
+                0,
+                1
+            ],
+            "cond": [
+                "fail",
+                "success"
+            ]
+        }
+    },
+    "SSL_CTX_set_tlsext_status_type": {
+        "ret": {
+            "value": [
+                0,
+                1,
+                -1
+            ],
+            "cond": [
+                "fail",
+                "success",
+                "roughly"
+            ]
+        }
+    },
+    "SSL_dane_enable": {
+        "casuality": {
+            "pre": [],
+            "post": [
+                "SSL_connect"
+            ]
+        }
+    },
+    "SSL_get_psk_identity": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "roughly"
+            ]
+        }
+    },
+    "SSL_get_psk_identity_hint": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "roughly"
+            ]
+        }
+    },
+    "SSL_has_pending": {
+        "ret": {
+            "value": [
+                1,
+                0
+            ],
+            "cond": [
+                "roughly",
+                "roughly"
+            ]
+        }
+    },
+    "SSL_peek_ex": {
+        "ret": {
+            "value": [
+                1,
+                0
+            ],
+            "cond": [
+                "success",
+                "fail"
+            ]
+        }
+    },
+    "SSL_select_next_proto": {
+        "arg.pre": [
+            false,
+            false,
+            false,
+            true,
+            false,
+            true
+        ]
+    },
+    "SSL_set_async_callback": {
+        "ret": {
+            "value": [
+                1,
+                0
+            ],
+            "cond": [
+                "success",
+                "fail"
+            ]
+        }
+    },
+    "SSL_state_string": {
+        "ret": {
+            "value": [
+                6
+            ],
+            "cond": [
+                "roughly"
+            ]
+        }
+    },
+    "SSL_verify_client_post_handshake": {
+        "ret": {
+            "value": [
+                1,
+                0
+            ],
+            "cond": [
+                "success",
+                "fail"
+            ]
+        }
+    },
+    "SSL_want_read": {
+        "ret": {
+            "value": [
+                1,
+                0
+            ],
+            "cond": [
+                "roughly",
+                "roughly"
+            ]
+        }
+    },
+    "SXNET_free": {
+        "casuality": {
+            "pre": [
+                "SXNET_new"
+            ],
+            "post": []
+        }
+    },
+    "TS_REQ_new": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "fail"
+            ]
+        },
+        "casuality": {
+            "pre": [],
+            "post": [
+                "TS_REQ_free"
+            ]
+        }
+    },
+    "TS_RESP_dup": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "fail"
+            ]
+        }
+    },
+    "UI_add_input_string": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "success"
+            ]
+        }
+    },
+    "UI_new_method": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "fail"
+            ]
+        },
+        "casuality": {
+            "pre": [],
+            "post": [
+                "UI_free"
+            ]
+        }
+    },
+    "UI_OpenSSL": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "roughly"
+            ]
+        }
+    },
+    "X509V3_get_d2i": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "fail"
+            ]
+        }
+    },
+    "X509_ALGOR_set0": {
+        "ret": {
+            "value": [
+                1,
+                0
+            ],
+            "cond": [
+                "success",
+                "fail"
+            ]
+        }
+    },
+    "X509_ATTRIBUTE_free": {
+        "casuality": {
+            "pre": [
+                "X509_ATTRIBUTE_new"
+            ],
+            "post": []
+        }
+    },
+    "X509_build_chain": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "fail"
+            ]
+        }
+    },
+    "X509_CERT_AUX_free": {
+        "casuality": {
+            "pre": [
+                "X509_CERT_AUX_new"
+            ],
+            "post": []
+        }
+    },
+    "X509_get0_authority_issuer": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "roughly"
+            ]
+        }
+    },
+    "X509_get0_authority_key_id": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "roughly"
+            ]
+        }
+    },
+    "X509_load_cert_crl_file": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "fail"
+            ]
+        }
+    },
+    "X509_LOOKUP_init": {
+        "ret": {
+            "value": [
+                1,
+                0
+            ],
+            "cond": [
+                "success",
+                "fail"
+            ]
+        }
+    },
+    "X509_NAME_add_entry_by_NID": {
+        "ret": {
+            "value": [
+                1,
+                0
+            ],
+            "cond": [
+                "success",
+                "fail"
+            ]
+        }
+    },
+    "X509_NAME_ENTRY_dup": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "fail"
+            ]
+        }
+    },
+    "X509_REVOKED_set_serialNumber": {
+        "ret": {
+            "value": [
+                1,
+                0
+            ],
+            "cond": [
+                "success",
+                "fail"
+            ]
+        }
+    },
+    "X509_STORE_get1_all_certs": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "fail"
+            ]
+        }
+    },
+    "X509_STORE_get_ex_data": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "fail"
+            ]
+        }
+    },
+    "X509_STORE_get_lookup_certs": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "roughly"
+            ]
+        }
+    },
+    "X509_VERIFY_PARAM_get0_email": {
+        "ret": {
+            "value": [
+                0
+            ],
+            "cond": [
+                "roughly"
+            ]
+        }
+    },
+    "X509_VERIFY_PARAM_set1_ip": {
+        "ret": {
+            "value": [
+                1,
+                0
+            ],
+            "cond": [
+                "success",
+                "fail"
+            ]
+        },
+        "arg.pre": [
+            false,
+            false,
+            true
+        ]
+    },
+    "X509_VERIFY_PARAM_set_flags": {
+        "ret": {
+            "value": [
+                1,
+                0
+            ],
+            "cond": [
+                "success",
+                "fail"
+            ]
+        }
+    },
+    "X509_VERIFY_PARAM_set_trust": {
+        "ret": {
+            "value": [
+                1,
+                0
+            ],
+            "cond": [
+                "success",
+                "fail"
+            ]
+        }
+    }
+}

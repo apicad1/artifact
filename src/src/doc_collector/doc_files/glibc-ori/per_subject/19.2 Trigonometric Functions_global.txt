@@ -1,0 +1,10 @@
+These are the familiar sin, cos, and tan functions. The arguments to all of these functions are in units of radians; recall that pi radians equals 180 degrees. 
+The math library normally defines M_PI to a double approximation of pi.  If strict ISO and/or POSIX compliance are requested this constant is not defined, but you can easily define it yourself: 
+
+EXAMPLE_BEGIN
+#define M_PI 3.14159265358979323846264338327
+EXAMPLE_END
+
+You can also compute the value of pi with the expression acos (-1.0). 
+In many applications where sin and cos are used, the sine and cosine of the same angle are needed at the same time.  It is more efficient to compute them simultaneously, so the library provides a function to do that. 
+ISO C99 defines variants of the trig functions which work on complex numbers.  The GNU C Library provides these functions, but they are only useful if your compiler supports the new complex types defined by the standard. (As of this writing GCC supports complex numbers, but there are bugs in the implementation.) 

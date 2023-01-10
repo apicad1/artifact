@@ -1,0 +1,1 @@
+You can get information about dynamic memory allocation by calling the mallinfo2 function.  This function and its associated data type are declared in malloc.h; they are an extension of the standard SVID/XPG version.  

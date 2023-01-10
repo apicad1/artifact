@@ -1,0 +1,49 @@
+FILENO(3)                                       Linux Programmer's Manual                                      FILENO(3)
+
+NAME
+       fileno - obtain file descriptor of a stdio stream
+
+SYNOPSIS
+       #include <stdio.h>
+
+       int fileno(FILE *stream);
+
+   Feature Test Macro Requirements for glibc (see feature_test_macros(7)):
+
+       fileno():
+           _POSIX_C_SOURCE
+
+DESCRIPTION
+       The function fileno() examines the argument stream and returns the integer file descriptor used to implement this
+       stream.  The file descriptor is still owned by stream and will be closed when fclose(3) is called.  Duplicate the
+       file descriptor with dup(2) before passing it to code that might close it.
+
+       For the nonlocking counterpart, see unlocked_stdio(3).
+
+RETURN VALUE
+       On success, fileno() returns the file descriptor associated with stream.  On failure, -1 is returned and errno is
+       set to indicate the error.
+
+ERRORS
+       EBADF  stream is not associated with a file.
+
+ATTRIBUTES
+       For an explanation of the terms used in this section, see attributes(7).
+
+       ┌──────────────────────────────────────────────────────────────────────────────────────┬───────────────┬─────────┐
+       │Interface                                                                             │ Attribute     │ Value   │
+       ├──────────────────────────────────────────────────────────────────────────────────────┼───────────────┼─────────┤
+       │fileno()                                                                              │ Thread safety │ MT-Safe │
+       └──────────────────────────────────────────────────────────────────────────────────────┴───────────────┴─────────┘
+
+CONFORMING TO
+       The function fileno() conforms to POSIX.1-2001 and POSIX.1-2008.
+
+SEE ALSO
+       open(2), fdopen(3), stdio(3), unlocked_stdio(3)
+
+COLOPHON
+       This page is part of release 5.13 of the Linux man-pages project.  A  description  of  the  project,  information
+       about reporting bugs, and the latest version of this page, can be found at https://www.kernel.org/doc/man-pages/.
+
+                                                       2021-03-22                                              FILENO(3)

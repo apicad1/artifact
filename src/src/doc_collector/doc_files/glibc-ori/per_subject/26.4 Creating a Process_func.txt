@@ -1,0 +1,29 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: pid_t fork (void)
+Preliminary: | MT-Safe  | AS-Unsafe plugin | AC-Unsafe lock | See POSIX Safety Concepts. 
+The fork function creates a new process. 
+If the operation is successful, there are then both parent and child processes and both see fork return, but with different values: it returns a value of 0 in the child process and returns the child’s process ID in the parent process. 
+If process creation failed, fork returns a value of -1 in the parent process.  The following errno error conditions are defined for fork: 
+	EAGAIN
+There aren’t enough system resources to create another process, or the user already has too many processes running.  This means exceeding the RLIMIT_NPROC resource limit, which can usually be increased; see Limits on Resources.  
+	ENOMEM
+The process requires more space than the system can supply. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: pid_t _Fork (void)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The _Fork function is similar to fork, but it does not invoke any callbacks registered with pthread_atfork, nor does it reset any internal state or locks (such as the malloc locks).  In the new subprocess, only async-signal-safe functions may be called, such as dup2 or execve. 
+The _Fork function is an async-signal-safe replacement of fork. It is a GNU extension. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: pid_t vfork (void)
+Preliminary: | MT-Safe  | AS-Unsafe plugin | AC-Unsafe lock | See POSIX Safety Concepts. 
+The vfork function is similar to fork but on some systems it is more efficient; however, there are restrictions you must follow to use it safely. 
+While fork makes a complete copy of the calling process’s address space and allows both the parent and child to execute independently, vfork does not make this copy.  Instead, the child process created with vfork shares its parent’s address space until it calls _exit or one of the exec functions.  In the meantime, the parent process suspends execution. 
+You must be very careful not to allow the child process created with vfork to modify any global data or even local variables shared with the parent.  Furthermore, the child process cannot return from (or do a long jump out of) the function that called vfork!  This would leave the parent process’s control information very confused.  If in doubt, use fork instead. 
+Some operating systems don’t really implement vfork.  The GNU C Library permits you to use vfork on all systems, but actually executes fork if vfork isn’t available.  If you follow the proper precautions for using vfork, your program will still work even if the system uses fork instead. 

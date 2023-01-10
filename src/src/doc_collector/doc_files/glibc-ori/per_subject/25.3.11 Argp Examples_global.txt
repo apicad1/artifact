@@ -1,0 +1,13 @@
+These example programs demonstrate the basic usage of argp. 
+
+TABLE_BEGIN
+ • 1    A minimal program using argp.
+
+ • 2    A program using only default options.
+
+ • 3    A simple program with user options.
+
+ • 4    Combining multiple argp parsers.
+
+TABLE_END
+

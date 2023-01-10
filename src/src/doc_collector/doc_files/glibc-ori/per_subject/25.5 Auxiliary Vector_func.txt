@@ -1,0 +1,5 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: unsigned long int getauxval (unsigned long int type)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function is used to inquire about the entries in the auxiliary vector.  The type argument should be one of the ‘AT_’ symbols defined in elf.h.  If a matching entry is found, the value is returned; if the entry is not found, zero is returned and errno is set to ENOENT. 

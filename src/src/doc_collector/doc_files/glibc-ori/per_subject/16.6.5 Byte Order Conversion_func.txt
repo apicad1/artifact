@@ -1,0 +1,28 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: uint16_t htons (uint16_t hostshort)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function converts the uint16_t integer hostshort from host byte order to network byte order. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: uint16_t ntohs (uint16_t netshort)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function converts the uint16_t integer netshort from network byte order to host byte order. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: uint32_t htonl (uint32_t hostlong)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function converts the uint32_t integer hostlong from host byte order to network byte order. 
+This is used for IPv4 Internet addresses. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: uint32_t ntohl (uint32_t netlong)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function converts the uint32_t integer netlong from network byte order to host byte order. 
+This is used for IPv4 Internet addresses. 

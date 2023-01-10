@@ -1,0 +1,32 @@
+# Preprocess:
+(base) @test:~/api_misuse/evaluation/$ apicad doc-analyze --no-sem
+[2022-08-31 14:16:57] INFO(doc-analyzer): === Starting to analyze ===
+[2022-08-31 14:16:57] INFO(doc-analyzer): Preprocessing documents for glibc
+==================================================
+====         Preprocessing glibc info        =====
+Total number of functions: 1128
+==================================================
+[2022-08-31 14:19:53] INFO(doc-analyzer): time consuming(s): 176.17807698249817
+[2022-08-31 14:19:53] INFO(doc-analyzer): Preprocessing documents for linux
+==================================================
+====         Preprocessing Linux info        =====
+Total number of functions: 899
+==================================================
+[2022-08-31 14:19:55] INFO(doc-analyzer): time consuming(s): 1.678473949432373
+[2022-08-31 14:19:55] INFO(doc-analyzer): Preprocessing documents for openssl
+==================================================
+====        Preprocessing openssl info       =====
+Total number of functions: 4143
+==================================================
+[2022-08-31 14:20:32] INFO(doc-analyzer): time consuming(s): 37.32099151611328
+[2022-08-31 14:20:32] INFO(doc-analyzer): Total time consuming(s): 215.18404030799866
+[2022-08-31 14:20:32] INFO(doc-analyzer): === Finish analyze ===
+
+# Extracting semantics:
+(base) @test:~/api_misuse/evaluation/$ apicad doc-analyze --no-pre
+[2022-08-31 14:32:22] INFO(doc-analyzer): === Starting to analyze ===
+[2022-08-31 14:32:22] INFO(doc-analyzer): Extracting semantics from preprocessed files
+Total number of functions: 2824
+[2022-08-31 14:44:31] INFO(doc-analyzer): time consuming(s): 728.5588190555573
+[2022-08-31 14:44:31] INFO(doc-analyzer): Total time consuming(s): 728.5620794296265
+[2022-08-31 14:44:31] INFO(doc-analyzer): === Finish analyze ===

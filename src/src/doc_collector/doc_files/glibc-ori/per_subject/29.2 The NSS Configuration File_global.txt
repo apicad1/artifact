@@ -1,0 +1,35 @@
+Somehow the NSS code must be told about the wishes of the user.  For this reason there is the file /etc/nsswitch.conf.  For each database, this file contains a specification of how the lookup process should work.  The file could look like this: 
+
+EXAMPLE_BEGIN
+# /etc/nsswitch.conf
+#
+# Name Service Switch configuration file.
+#
+
+passwd:     db files
+shadow:     files
+group:      db files
+
+hosts:      files dns
+networks:   files
+
+ethers:     db files
+protocols:  db files
+rpc:        db files
+services:   db files
+EXAMPLE_END
+
+The first column is the database as you can guess from the table above. The rest of the line specifies how the lookup process works.  Please note that you specify the way it works for each database individually. This cannot be done with the old way of a monolithic implementation. 
+The configuration specification for each database can contain two different items: 
+  the service specification like files, db, or nis.  the reaction on lookup result like [NOTFOUND=return]. 
+
+TABLE_BEGIN
+ • Services in the NSS configuration    Service names in the NSS configuration.
+
+ • Actions in the NSS configuration    React appropriately to the lookup result.
+
+ • Notes on NSS Configuration File    Things to take care about while
+                                     configuring NSS.
+
+TABLE_END
+

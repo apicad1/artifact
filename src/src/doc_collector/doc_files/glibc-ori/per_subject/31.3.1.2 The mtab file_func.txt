@@ -1,0 +1,70 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: struct mntent
+This structure is used with the getmntent, getmntent_r, addmntent, and hasmntopt functions. 
+	char *mnt_fsname
+This element contains a pointer to a string describing the name of the special device from which the filesystem is mounted.  It corresponds to the fs_spec element in struct fstab.  
+	char *mnt_dir
+This element points to a string describing the mount point of the filesystem.  It corresponds to the fs_file element in struct fstab.  
+	char *mnt_type
+mnt_type describes the filesystem type and is therefore equivalent to fs_vfstype in struct fstab.  mntent.h defines a few symbolic names for some of the values this string can have. But since the kernel can support arbitrary filesystems it does not make much sense to give them symbolic names.  If one knows the symbol name one also knows the filesystem name.  Nevertheless here follows the list of the symbols provided in mntent.h.   MNTTYPE_IGNORE   This symbol expands to "ignore".  The value is sometimes used in fstab files to make sure entries are not used without removing them.  MNTTYPE_NFS   Expands to "nfs".  Using this macro sometimes could make sense since it names the default NFS implementation, in case both version 2 and 3 are supported.  MNTTYPE_SWAP   This symbol expands to "swap".  It names the special fstab entry which names one of the possibly multiple swap partitions.    
+	char *mnt_opts
+The element contains a string describing the options used while mounting the filesystem.  As for the equivalent element fs_mntops of struct fstab it is best to use the function getsubopt (see Suboptions) to access the parts of this string.  The mntent.h file defines a number of macros with string values which correspond to some of the options understood by the kernel.  There might be many more options which are possible so it doesn’t make much sense to rely on these macros but to be consistent here is the list:   MNTOPT_DEFAULTS   Expands to "defaults".  This option should be used alone since it indicates all values for the customizable values are chosen to be the default.  MNTOPT_RO   Expands to "ro".  See the FSTAB_RO value, it means the filesystem is mounted read-only.  MNTOPT_RW   Expands to "rw".  See the FSTAB_RW value, it means the filesystem is mounted with read and write permissions.  MNTOPT_SUID   Expands to "suid".  This means that the SUID bit (see How Change Persona) is respected when a program from the filesystem is started.  MNTOPT_NOSUID   Expands to "nosuid".  This is the opposite of MNTOPT_SUID, the SUID bit for all files from the filesystem is ignored.  MNTOPT_NOAUTO   Expands to "noauto".  At startup time the mount program will ignore this entry if it is started with the -a option to mount all filesystems mentioned in the fstab file.    As for the FSTAB_* entries introduced above it is important to use strcmp to check for equality.  
+	mnt_freq
+This elements corresponds to fs_freq and also specifies the frequency in days in which dumps are made.  
+	mnt_passno
+This element is equivalent to fs_passno with the same meaning which is uninteresting for all programs beside dump. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: FILE * setmntent (const char *file, const char *mode)
+Preliminary: | MT-Safe  | AS-Unsafe heap lock | AC-Unsafe mem fd lock | See POSIX Safety Concepts. 
+The setmntent function prepares the file named FILE which must be in the format of a fstab and mtab file for the upcoming processing through the other functions of the family.  The mode parameter can be chosen in the way the opentype parameter for fopen (see Opening Streams) can be chosen.  If the file is opened for writing the file is also allowed to be empty. 
+If the file was successfully opened setmntent returns a file handle for future use.  Otherwise the return value is NULL and errno is set accordingly. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int endmntent (FILE *stream)
+Preliminary: | MT-Safe  | AS-Unsafe heap lock | AC-Unsafe lock mem fd | See POSIX Safety Concepts. 
+This function takes for the stream parameter a file handle which previously was returned from the setmntent call. endmntent closes the stream and frees all resources. 
+The return value is 1 unless an error occurred in which case it is 0. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: struct mntent * getmntent (FILE *stream)
+Preliminary: | MT-Unsafe race:mntentbuf locale | AS-Unsafe corrupt heap init | AC-Unsafe init corrupt lock mem | See POSIX Safety Concepts. 
+The getmntent function takes as the parameter a file handle previously returned by a successful call to setmntent.  It returns a pointer to a static variable of type struct mntent which is filled with the information from the next entry from the file currently read. 
+The file format used prescribes the use of spaces or tab characters to separate the fields.  This makes it harder to use names containing one of these characters (e.g., mount points using spaces).  Therefore these characters are encoded in the files and the getmntent function takes care of the decoding while reading the entries back in. '\040' is used to encode a space character, '\011' to encode a tab character, '\012' to encode a newline character, and '\\' to encode a backslash. 
+If there was an error or the end of the file is reached the return value is NULL. 
+This function is not thread-safe since all calls to this function return a pointer to the same static variable.  getmntent_r should be used in situations where multiple threads access the file. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: struct mntent * getmntent_r (FILE *stream, struct mntent *result, char *buffer, int bufsize)
+Preliminary: | MT-Safe locale | AS-Unsafe corrupt heap | AC-Unsafe corrupt lock mem | See POSIX Safety Concepts. 
+The getmntent_r function is the reentrant variant of getmntent.  It also returns the next entry from the file and returns a pointer.  The actual variable the values are stored in is not static, though.  Instead the function stores the values in the variable pointed to by the result parameter.  Additional information (e.g., the strings pointed to by the elements of the result) are kept in the buffer of size bufsize pointed to by buffer. 
+Escaped characters (space, tab, backslash) are converted back in the same way as it happens for getmentent. 
+The function returns a NULL pointer in error cases.  Errors could be: 
+  error while reading the file,  end of file reached,  bufsize is too small for reading a complete new entry. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int addmntent (FILE *stream, const struct mntent *mnt)
+Preliminary: | MT-Safe race:stream locale | AS-Unsafe corrupt | AC-Unsafe corrupt | See POSIX Safety Concepts. 
+The addmntent function allows adding a new entry to the file previously opened with setmntent.  The new entries are always appended.  I.e., even if the position of the file descriptor is not at the end of the file this function does not overwrite an existing entry following the current position. 
+The implication of this is that to remove an entry from a file one has to create a new file while leaving out the entry to be removed and after closing the file remove the old one and rename the new file to the chosen name. 
+This function takes care of spaces and tab characters in the names to be written to the file.  It converts them and the backslash character into the format described in the getmntent description above. 
+This function returns 0 in case the operation was successful. Otherwise the return value is 1 and errno is set appropriately. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: char * hasmntopt (const struct mntent *mnt, const char *opt)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function can be used to check whether the string pointed to by the mnt_opts element of the variable pointed to by mnt contains the option opt.  If this is true a pointer to the beginning of the option in the mnt_opts element is returned.  If no such option exists the function returns NULL. 
+This function is useful to test whether a specific option is present but when all options have to be processed one is better off with using the getsubopt function to iterate over all options in the string. 

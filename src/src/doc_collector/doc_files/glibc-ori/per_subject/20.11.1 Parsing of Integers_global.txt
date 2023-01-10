@@ -1,0 +1,37 @@
+The ‘str’ functions are declared in stdlib.h and those beginning with ‘wcs’ are declared in wchar.h.  One might wonder about the use of restrict in the prototypes of the functions in this section.  It is seemingly useless but the ISO C standard uses it (for the functions defined there) so we have to do it as well. 
+All the functions mentioned in this section so far do not handle alternative representations of characters as described in the locale data.  Some locales specify thousands separator and the way they have to be used which can help to make large numbers more readable.  To read such numbers one has to use the scanf functions with the ‘'’ flag. 
+Here is a function which parses a string as a sequence of integers and returns the sum of them: 
+
+EXAMPLE_BEGIN
+int
+sum_ints_from_string (char *string)
+{
+  int sum = 0;
+
+  while (1) {
+    char *tail;
+    int next;
+
+    /* Skip whitespace by hand, to detect the end.  */
+    while (isspace (*string)) string++;
+    if (*string == 0)
+      break;
+
+    /* There is more nonwhitespace,  */
+    /* so it ought to be another number.  */
+    errno = 0;
+    /* Parse it.  */
+    next = strtol (string, &tail, 0);
+    /* Add it in, if not overflow.  */
+    if (errno)
+      printf ("Overflow\n");
+    else
+      sum += next;
+    /* Advance past it.  */
+    string = tail;
+  }
+
+  return sum;
+}
+EXAMPLE_END
+

@@ -1,0 +1,35 @@
+In the introduction of this chapter it was said that certain character sets use a stateful encoding.  That is, the encoded values depend in some way on the previous bytes in the text. 
+Since the conversion functions allow converting a text in more than one step we must have a way to pass this information from one call of the functions to another. 
+To use objects of type mbstate_t the programmer has to define such objects (normally as local variables on the stack) and pass a pointer to the object to the conversion functions.  This way the conversion function can update the object if the current multibyte character set is stateful. 
+There is no specific function or initializer to put the state object in any specific state.  The rules are that the object should always represent the initial state before the first use, and this is achieved by clearing the whole variable with code such as follows: 
+
+EXAMPLE_BEGIN
+{
+  mbstate_t state;
+  memset (&state, '\0', sizeof (state));
+  /* from now on state can be used.  */
+  …
+}
+EXAMPLE_END
+
+When using the conversion functions to generate output it is often necessary to test whether the current state corresponds to the initial state.  This is necessary, for example, to decide whether to emit escape sequences to set the state to the initial state at certain sequence points.  Communication protocols often require this. 
+Code using mbsinit often looks similar to this: 
+
+EXAMPLE_BEGIN
+{
+  mbstate_t state;
+  memset (&state, '\0', sizeof (state));
+  /* Use state.  */
+  …
+  if (! mbsinit (&state))
+    {
+      /* Emit code to return to initial state.  */
+      const wchar_t empty[] = L"";
+      const wchar_t *srcp = empty;
+      wcsrtombs (outbuf, &srcp, outbuflen, &state);
+    }
+  …
+}
+EXAMPLE_END
+
+The code to emit the escape sequence to get back to the initial state is interesting.  The wcsrtombs function can be used to determine the necessary output code (see Converting Strings).  Please note that with the GNU C Library it is not necessary to perform this extra action for the conversion from multibyte text to wide character text since the wide character encoding is not stateful.  But there is nothing mentioned in any standard that prohibits making wchar_t use a stateful encoding. 

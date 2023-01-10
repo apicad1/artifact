@@ -1,0 +1,30 @@
+Each process is named by a process ID number, a value of type pid_t.  A process ID is allocated to each process when it is created.  Process IDs are reused over time.  The lifetime of a process ends when the parent process of the corresponding process waits on the process ID after the process has terminated.  See Process Completion.  (The parent process can arrange for such waiting to happen implicitly.)  A process ID uniquely identifies a process only during the lifetime of the process.  As a rule of thumb, this means that the process must still be running. 
+Process IDs can also denote process groups and sessions. See Job Control. 
+On Linux, threads created by pthread_create also receive a thread ID.  The thread ID of the initial (main) thread is the same as the process ID of the entire process.  Thread IDs for subsequently created threads are distinct.  They are allocated from the same numbering space as process IDs.  Process IDs and thread IDs are sometimes also referred to collectively as task IDs.  In contrast to processes, threads are never waited for explicitly, so a thread ID becomes eligible for reuse as soon as a thread exits or is canceled.  This is true even for joinable threads, not just detached threads.  Threads are assigned to a thread group.  In the GNU C Library implementation running on Linux, the process ID is the thread group ID of all threads in the process. 
+You can get the process ID of a process by calling getpid.  The function getppid returns the process ID of the parent of the current process (this is also known as the parent process ID). Your program should include the header files unistd.h and sys/types.h to use these functions.   
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: pid_t
+The pid_t data type is a signed integer type which is capable of representing a process ID.  In the GNU C Library, this is an int. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: pid_t getpid (void)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The getpid function returns the process ID of the current process. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: pid_t getppid (void)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The getppid function returns the process ID of the parent of the current process. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: pid_t gettid (void)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The gettid function returns the thread ID of the current thread.  The returned value is obtained from the Linux kernel and is not subject to caching.  See the discussion of thread IDs above, especially regarding reuse of the IDs of threads which have exited. 
+This function is specific to Linux. 

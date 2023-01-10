@@ -1,0 +1,67 @@
+You can duplicate a file descriptor, or allocate another file descriptor that refers to the same open file as the original.  Duplicate descriptors share one file position and one set of file status flags (see File Status Flags), but each has its own set of file descriptor flags (see Descriptor Flags). 
+The major use of duplicating a file descriptor is to implement redirection of input or output:  that is, to change the file or pipe that a particular file descriptor corresponds to. 
+You can perform this operation using the fcntl function with the F_DUPFD command, but there are also convenient functions dup and dup2 for duplicating descriptors. 
+The fcntl function and flags are declared in fcntl.h, while prototypes for dup and dup2 are in the header file unistd.h. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int dup (int old)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function copies descriptor old to the first available descriptor number (the first number not currently open).  It is equivalent to fcntl (old, F_DUPFD, 0). 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int dup2 (int old, int new)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function copies the descriptor old to descriptor number new. 
+If old is an invalid descriptor, then dup2 does nothing; it does not close new.  Otherwise, the new duplicate of old replaces any previous meaning of descriptor new, as if new were closed first. 
+If old and new are different numbers, and old is a valid descriptor number, then dup2 is equivalent to: 
+
+EXAMPLE_BEGIN
+close (new);
+fcntl (old, F_DUPFD, new)
+EXAMPLE_END
+
+However, dup2 does this atomically; there is no instant in the middle of calling dup2 at which new is closed and not yet a duplicate of old. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int F_DUPFD
+This macro is used as the command argument to fcntl, to copy the file descriptor given as the first argument. 
+The form of the call in this case is: 
+
+EXAMPLE_BEGIN
+fcntl (old, F_DUPFD, next-filedes)
+EXAMPLE_END
+
+The next-filedes argument is of type int and specifies that the file descriptor returned should be the next available one greater than or equal to this value. 
+The return value from fcntl with this command is normally the value of the new file descriptor.  A return value of -1 indicates an error.  The following errno error conditions are defined for this command: 
+	EBADF
+The old argument is invalid.  
+	EINVAL
+The next-filedes argument is invalid.  
+	EMFILE
+There are no more file descriptors available—your program is already using the maximum.  In BSD and GNU, the maximum is controlled by a resource limit that can be changed; see Limits on Resources, for more information about the RLIMIT_NOFILE limit. 
+ENFILE is not a possible error code for dup2 because dup2 does not create a new opening of a file; duplicate descriptors do not count toward the limit which ENFILE indicates.  EMFILE is possible because it refers to the limit on distinct descriptor numbers in use in one process. 
+<<<<<<<<<<<<<<<<<<<<
+
+Here is an example showing how to use dup2 to do redirection. Typically, redirection of the standard streams (like stdin) is done by a shell or shell-like program before calling one of the exec functions (see Executing a File) to execute a new program in a child process.  When the new program is executed, it creates and initializes the standard streams to point to the corresponding file descriptors, before its main function is invoked. 
+So, to redirect standard input to a file, the shell could do something like: 
+
+EXAMPLE_BEGIN
+pid = fork ();
+if (pid == 0)
+  {
+    char *filename;
+    char *program;
+    int file;
+    …
+    file = TEMP_FAILURE_RETRY (open (filename, O_RDONLY));
+    dup2 (file, STDIN_FILENO);
+    TEMP_FAILURE_RETRY (close (file));
+    execv (program, NULL);
+  }
+EXAMPLE_END
+
+There is also a more detailed example showing how to implement redirection in the context of a pipeline of processes in Launching Jobs. 

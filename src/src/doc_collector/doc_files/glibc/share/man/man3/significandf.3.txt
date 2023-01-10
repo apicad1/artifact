@@ -1,0 +1,49 @@
+SIGNIFICAND(3)                                  Linux Programmer's Manual                                 SIGNIFICAND(3)
+
+NAME
+       significand, significandf, significandl - get mantissa of floating-point number
+
+SYNOPSIS
+       #include <math.h>
+
+       double significand(double x);
+       float significandf(float x);
+       long double significandl(long double x);
+
+       Link with -lm.
+
+   Feature Test Macro Requirements for glibc (see feature_test_macros(7)):
+
+       significand(), significandf(), significandl():
+           /* Since glibc 2.19: */ _DEFAULT_SOURCE
+               || /* Glibc versions <= 2.19: */ _BSD_SOURCE || _SVID_SOURCE
+
+DESCRIPTION
+       These functions return the mantissa of x scaled to the range [1,2).  They are equivalent to
+
+           scalb(x, (double) -ilogb(x))
+
+       This function exists mainly for use in certain standardized tests for IEEE 754 conformance.
+
+ATTRIBUTES
+       For an explanation of the terms used in this section, see attributes(7).
+
+       ┌────────────────┬───────────────┬─────────┐
+       │Interface       │ Attribute     │ Value   │
+       ├────────────────┼───────────────┼─────────┤
+       │significand(),  │ Thread safety │ MT-Safe │
+       │significandf(), │               │         │
+       │significandl()  │               │         │
+       └────────────────┴───────────────┴─────────┘
+
+CONFORMING TO
+       These functions are nonstandard; the double version is available on a number of other systems.
+
+SEE ALSO
+       ilogb(3), scalb(3)
+
+COLOPHON
+       This  page  is  part  of  release 5.05 of the Linux man-pages project.  A description of the project, information
+       about reporting bugs, and the latest version of this page, can be found at https://www.kernel.org/doc/man-pages/.
+
+GNU                                                    2017-09-15                                         SIGNIFICAND(3)

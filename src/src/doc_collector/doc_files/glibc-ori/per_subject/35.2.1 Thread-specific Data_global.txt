@@ -1,0 +1,1 @@
+The GNU C Library implements functions to allow users to create and manage data specific to a thread.  Such data may be destroyed at thread exit, if a destructor is provided.  The following functions are defined: 

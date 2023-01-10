@@ -1,0 +1,2 @@
+The functions in this section are related to the exponential functions; see Exponents and Logarithms. 
+There are counterparts for the hyperbolic functions which take complex arguments. 

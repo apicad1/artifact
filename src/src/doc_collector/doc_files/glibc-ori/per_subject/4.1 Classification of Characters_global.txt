@@ -1,0 +1,10 @@
+This section explains the library functions for classifying characters. For example, isalpha is the function to test for an alphabetic character.  It takes one argument, the character to test, and returns a nonzero integer if the character is alphabetic, and zero otherwise.  You would use it like this: 
+
+EXAMPLE_BEGIN
+if (isalpha (c))
+  printf ("The character `%c' is alphabetic.\n", c);
+EXAMPLE_END
+
+Each of the functions in this section tests for membership in a particular class of characters; each has a name starting with ‘is’. Each of them takes one argument, which is a character to test, and returns an int which is treated as a boolean value.  The character argument is passed as an int, and it may be the constant value EOF instead of a real character. 
+The attributes of any given character can vary between locales. See Locales, for more information on locales. 
+These functions are declared in the header file ctype.h.  

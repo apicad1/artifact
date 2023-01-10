@@ -1,0 +1,52 @@
+The file access mode allows a file descriptor to be used for reading, writing, both, or neither.  The access mode is determined when the file is opened, and never change. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int O_RDONLY
+Open the file for read access. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int O_WRONLY
+Open the file for write access. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int O_RDWR
+Open the file for both reading and writing. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int O_PATH
+Obtain a file descriptor for the file, but do not open the file for reading or writing.  Permission checks for the file itself are skipped when the file is opened (but permission to access the directory that contains it is still needed), and permissions are checked when the descriptor is used later on. 
+For example, such descriptors can be used with the fexecve function (see Executing a File). 
+This access mode is specific to Linux.  On GNU/Hurd systems, it is possible to use O_EXEC explicitly, or specify no access modes at all (see below). 
+<<<<<<<<<<<<<<<<<<<<
+
+The portable file access modes O_RDONLY, O_WRONLY, and O_RDWR may not correspond to individual bits.  To determine the file access mode with fcntl, you must extract the access mode bits from the retrieved file status flags, using the O_ACCMODE mask. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int O_ACCMODE
+This macro is a mask that can be bitwise-ANDed with the file status flag value to recover the file access mode, assuming that a standard file access mode is in use. 
+<<<<<<<<<<<<<<<<<<<<
+
+If a non-standard file access mode is used (such as O_PATH or O_EXEC), masking with O_ACCMODE may give incorrect results.  These non-standard access modes are identified by individual bits and have to be checked directly (without masking with O_ACCMODE first). 
+On GNU/Hurd systems (but not on other systems), O_RDONLY and O_WRONLY are independent bits that can be bitwise-ORed together, and it is valid for either bit to be set or clear.  This means that O_RDWR is the same as O_RDONLY|O_WRONLY.  A file access mode of zero is permissible; it allows no operations that do input or output to the file, but does allow other operations such as fchmod.  On GNU/Hurd systems, since “read-only” or “write-only” is a misnomer, fcntl.h defines additional names for the file access modes. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int O_READ
+Open the file for reading.  Same as O_RDONLY; only defined on GNU/Hurd. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int O_WRITE
+Open the file for writing.  Same as O_WRONLY; only defined on GNU/Hurd. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int O_EXEC
+Open the file for executing.  Only defined on GNU/Hurd. 

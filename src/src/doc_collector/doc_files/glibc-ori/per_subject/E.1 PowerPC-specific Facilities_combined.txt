@@ -1,0 +1,75 @@
+Facilities specific to PowerPC that are not specific to a particular operating system are declared in sys/platform/ppc.h. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: uint64_t __ppc_get_timebase (void)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+Read the current value of the Time Base Register. 
+The Time Base Register is a 64-bit register that stores a monotonically incremented value updated at a system-dependent frequency that may be different from the processor frequency.  More information is available in Power ISA 2.06b - Book II - Section 5.2. 
+__ppc_get_timebase uses the processor’s time base facility directly without requiring assistance from the operating system, so it is very efficient. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: uint64_t __ppc_get_timebase_freq (void)
+Preliminary: | MT-Unsafe init | AS-Unsafe corrupt:init | AC-Unsafe corrupt:init | See POSIX Safety Concepts. 
+Read the current frequency at which the Time Base Register is updated. 
+This frequency is not related to the processor clock or the bus clock. It is also possible that this frequency is not constant.  More information is available in Power ISA 2.06b - Book II - Section 5.2. 
+<<<<<<<<<<<<<<<<<<<<
+
+The following functions provide hints about the usage of resources that are shared with other processors.  They can be used, for example, if a program waiting on a lock intends to divert the shared resources to be used by other processors.  More information is available in Power ISA 2.06b - Book II - Section 3.2. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void __ppc_yield (void)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+Provide a hint that performance will probably be improved if shared resources dedicated to the executing processor are released for use by other processors. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void __ppc_mdoio (void)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+Provide a hint that performance will probably be improved if shared resources dedicated to the executing processor are released until all outstanding storage accesses to caching-inhibited storage have been completed. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void __ppc_mdoom (void)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+Provide a hint that performance will probably be improved if shared resources dedicated to the executing processor are released until all outstanding storage accesses to cacheable storage for which the data is not in the cache have been completed. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void __ppc_set_ppr_med (void)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+Set the Program Priority Register to medium value (default). 
+The Program Priority Register (PPR) is a 64-bit register that controls the program’s priority.  By adjusting the PPR value the programmer may improve system throughput by causing the system resources to be used more efficiently, especially in contention situations. The three unprivileged states available are covered by the functions __ppc_set_ppr_med (medium – default), __ppc_set_ppc_low (low) and __ppc_set_ppc_med_low (medium low).  More information available in Power ISA 2.06b - Book II - Section 3.1. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void __ppc_set_ppr_low (void)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+Set the Program Priority Register to low value. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void __ppc_set_ppr_med_low (void)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+Set the Program Priority Register to medium low value. 
+<<<<<<<<<<<<<<<<<<<<
+
+Power ISA 2.07 extends the priorities that can be set to the Program Priority Register (PPR).  The following functions implement the new priority levels: very low and medium high. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void __ppc_set_ppr_very_low (void)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+Set the Program Priority Register to very low value. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void __ppc_set_ppr_med_high (void)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+Set the Program Priority Register to medium high value.  The medium high priority is privileged and may only be set during certain time intervals by problem-state programs.  If the program priority is medium high when the time interval expires or if an attempt is made to set the priority to medium high when it is not allowed, the priority is set to medium. 

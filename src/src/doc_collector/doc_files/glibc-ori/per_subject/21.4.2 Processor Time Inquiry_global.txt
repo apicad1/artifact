@@ -1,0 +1,2 @@
+The times function returns information about a process’ consumption of processor time in a struct tms object, in addition to the process’ CPU time.  See Time Basics.  You should include the header file sys/times.h to use this facility.    
+Portability Note: The clock function described in CPU Time is specified by the ISO C standard.  The times function is a feature of POSIX.1.  On GNU systems, the CPU time is defined to be equivalent to the sum of the tms_utime and tms_stime fields returned by times. 

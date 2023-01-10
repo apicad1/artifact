@@ -1,0 +1,7 @@
+The clock hardware inside a modern computer is quite reliable, but it can still be wrong.  The functions in this section allow one to set the system’s idea of the current calendar time, and to adjust the rate at which the system counts seconds, so that the calendar time will both be accurate, and remain accurate. 
+The functions in this section require special privileges to use. See Users and Groups. 
+For systems that remain up and running for long periods, it is not enough to set the time once; one should also discipline the clock so that it does not drift away from the true calendar time. 
+The ntp_gettime and ntp_adjtime functions provide an interface to monitor and discipline the system clock.  For example, you can fine-tune the rate at which the clock “ticks,” and make small adjustments to the current reported calendar time smoothly, by temporarily speeding up or slowing down the clock. 
+These functions’ names begin with ‘ntp_’ because they were designed for use by programs implementing the Network Time Protocol to synchronize a system’s clock with other systems’ clocks and/or with external high-precision clock hardware. 
+These functions, and the constants and structures they use, are declared in sys/timex.h. 
+For compatibility, the GNU C Library also provides several older functions for controlling the system time.  New programs should prefer to use the functions above. 

@@ -1,0 +1,30 @@
+Many of the math functions are defined only over a subset of the real or complex numbers.  Even if they are mathematically defined, their result may be larger or smaller than the range representable by their return type without loss of accuracy.  These are known as domain errors, overflows, and underflows, respectively.  Math functions do several things when one of these errors occurs.  In this manual we will refer to the complete response as signalling a domain error, overflow, or underflow. 
+When a math function suffers a domain error, it raises the invalid exception and returns NaN.  It also sets errno to EDOM; this is for compatibility with old systems that do not support IEEE 754 exception handling.  Likewise, when overflow occurs, math functions raise the overflow exception and, in the default rounding mode, return ∞ or -∞ as appropriate (in other rounding modes, the largest finite value of the appropriate sign is returned when appropriate for that rounding mode).  They also set errno to ERANGE if returning ∞ or -∞; errno may or may not be set to ERANGE when a finite value is returned on overflow.  When underflow occurs, the underflow exception is raised, and zero (appropriately signed) or a subnormal value, as appropriate for the mathematical result of the function and the rounding mode, is returned.  errno may be set to ERANGE, but this is not guaranteed; it is intended that the GNU C Library should set it when the underflow is to an appropriately signed zero, but not necessarily for other underflows. 
+When a math function has an argument that is a signaling NaN, the GNU C Library does not consider this a domain error, so errno is unchanged, but the invalid exception is still raised (except for a few functions that are specified to handle signaling NaNs differently). 
+Some of the math functions are defined mathematically to result in a complex value over parts of their domains.  The most familiar example of this is taking the square root of a negative number.  The complex math functions, such as csqrt, will return the appropriate complex value in this case.  The real-valued functions, such as sqrt, will signal a domain error. 
+Some older hardware does not support infinities.  On that hardware, overflows instead return a particular very large number (usually the largest representable number).  math.h defines macros you can use to test for overflow on both old and new hardware. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: double HUGE_VAL
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: float HUGE_VALF
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: long double HUGE_VALL
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: _FloatN HUGE_VAL_FN
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: _FloatNx HUGE_VAL_FNx
+An expression representing a particular very large number.  On machines that use IEEE 754 floating point format, HUGE_VAL is infinity. On other machines, it’s typically the largest positive number that can be represented. 
+Mathematical functions return the appropriately typed version of HUGE_VAL or -HUGE_VAL when the result is too large to be represented. 

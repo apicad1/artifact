@@ -1,0 +1,107 @@
+Here is a summary of all the functions associated with obstacks.  Each takes the address of an obstack (struct obstack *) as its first argument. 
+
+>>>>>>>>>>>>>>>>>>>>
+- void obstack_init (struct obstack *obstack-ptr)
+Initialize use of an obstack.  See Creating Obstacks. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- void *obstack_alloc (struct obstack *obstack-ptr, int size)
+Allocate an object of size uninitialized bytes. See Allocation in an Obstack. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- void *obstack_copy (struct obstack *obstack-ptr, void *address, int size)
+Allocate an object of size bytes, with contents copied from address.  See Allocation in an Obstack. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- void *obstack_copy0 (struct obstack *obstack-ptr, void *address, int size)
+Allocate an object of size+1 bytes, with size of them copied from address, followed by a null character at the end. See Allocation in an Obstack. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- void obstack_free (struct obstack *obstack-ptr, void *object)
+Free object (and everything allocated in the specified obstack more recently than object).  See Freeing Obstack Objects. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- void obstack_blank (struct obstack *obstack-ptr, int size)
+Add size uninitialized bytes to a growing object. See Growing Objects. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- void obstack_grow (struct obstack *obstack-ptr, void *address, int size)
+Add size bytes, copied from address, to a growing object. See Growing Objects. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- void obstack_grow0 (struct obstack *obstack-ptr, void *address, int size)
+Add size bytes, copied from address, to a growing object, and then add another byte containing a null character.  See Growing Objects. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- void obstack_1grow (struct obstack *obstack-ptr, char data-char)
+Add one byte containing data-char to a growing object. See Growing Objects. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- void *obstack_finish (struct obstack *obstack-ptr)
+Finalize the object that is growing and return its permanent address. See Growing Objects. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- int obstack_object_size (struct obstack *obstack-ptr)
+Get the current size of the currently growing object.  See Growing Objects. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- void obstack_blank_fast (struct obstack *obstack-ptr, int size)
+Add size uninitialized bytes to a growing object without checking that there is enough room.  See Extra Fast Growing. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- void obstack_1grow_fast (struct obstack *obstack-ptr, char data-char)
+Add one byte containing data-char to a growing object without checking that there is enough room.  See Extra Fast Growing. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- int obstack_room (struct obstack *obstack-ptr)
+Get the amount of room now available for growing the current object. See Extra Fast Growing. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- int obstack_alignment_mask (struct obstack *obstack-ptr)
+The mask used for aligning the beginning of an object.  This is an lvalue.  See Obstacks Data Alignment. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- int obstack_chunk_size (struct obstack *obstack-ptr)
+The size for allocating chunks.  This is an lvalue.  See Obstack Chunks. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- void *obstack_base (struct obstack *obstack-ptr)
+Tentative starting address of the currently growing object. See Status of an Obstack. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- void *obstack_next_free (struct obstack *obstack-ptr)
+Address just after the end of the currently growing object. See Status of an Obstack. 

@@ -1,0 +1,1 @@
+This section describes how to reread parts of a directory that you have already read from an open directory stream.  All the symbols are declared in the header file dirent.h. 

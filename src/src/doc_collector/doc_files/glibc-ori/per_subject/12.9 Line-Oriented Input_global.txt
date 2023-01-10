@@ -1,0 +1,4 @@
+Since many programs interpret input on the basis of lines, it is convenient to have functions to read a line of text from a stream. 
+Standard C has functions to do this, but they aren’t very safe: null characters and even (for gets) long lines can confuse them.  So the GNU C Library provides the nonstandard getline function that makes it easy to read lines reliably. 
+Another GNU extension, getdelim, generalizes getline.  It reads a delimited record, defined as everything through the next occurrence of a specified delimiter character. 
+All these functions are declared in stdio.h. 

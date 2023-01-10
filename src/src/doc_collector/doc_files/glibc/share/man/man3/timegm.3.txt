@@ -1,0 +1,57 @@
+TIMEGM(3)                                       Linux Programmer's Manual                                      TIMEGM(3)
+
+NAME
+       timegm, timelocal - inverses of gmtime and localtime
+
+SYNOPSIS
+       #include <time.h>
+
+       time_t timelocal(struct tm *tm);
+       time_t timegm(struct tm *tm);
+
+   Feature Test Macro Requirements for glibc (see feature_test_macros(7)):
+
+       timelocal(), timegm():
+           Since glibc 2.19:
+               _DEFAULT_SOURCE
+           Glibc 2.19 and earlier:
+               _BSD_SOURCE || _SVID_SOURCE
+
+DESCRIPTION
+       The  functions  timelocal()  and  timegm() are the inverses of localtime(3) and gmtime(3).  Both functions take a
+       broken-down time and convert it to calendar time (seconds since the Epoch, 1970-01-01 00:00:00 +0000, UTC).   The
+       difference  between  the  two  functions is that timelocal() takes the local timezone into account when doing the
+       conversion, while timegm() takes the input value to be Coordinated Universal Time (UTC).
+
+RETURN VALUE
+       On success, these functions return the calendar time (seconds since the Epoch), expressed  as  a  value  of  type
+       time_t.  On error, they return the value (time_t) -1 and set errno to indicate the error.
+
+ERRORS
+       EOVERFLOW
+              The result cannot be represented.
+
+ATTRIBUTES
+       For an explanation of the terms used in this section, see attributes(7).
+
+       ┌───────────────────────────────────────────────────────────────────────────┬───────────────┬────────────────────┐
+       │Interface                                                                  │ Attribute     │ Value              │
+       ├───────────────────────────────────────────────────────────────────────────┼───────────────┼────────────────────┤
+       │timelocal(), timegm()                                                      │ Thread safety │ MT-Safe env locale │
+       └───────────────────────────────────────────────────────────────────────────┴───────────────┴────────────────────┘
+
+CONFORMING TO
+       These functions are nonstandard GNU extensions that are also present on the BSDs.  Avoid their use.
+
+NOTES
+       The  timelocal() function is equivalent to the POSIX standard function mktime(3).  There is no reason to ever use
+       it.
+
+SEE ALSO
+       gmtime(3), localtime(3), mktime(3), tzset(3)
+
+COLOPHON
+       This page is part of release 5.13 of the Linux man-pages project.  A  description  of  the  project,  information
+       about reporting bugs, and the latest version of this page, can be found at https://www.kernel.org/doc/man-pages/.
+
+GNU                                                    2021-03-22                                              TIMEGM(3)

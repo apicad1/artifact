@@ -1,0 +1,55 @@
+EXP10(3)                                        Linux Programmer's Manual                                       EXP10(3)
+
+NAME
+       exp10, exp10f, exp10l - base-10 exponential function
+
+SYNOPSIS
+       #define _GNU_SOURCE         /* See feature_test_macros(7) */
+       #include <math.h>
+
+       double exp10(double x);
+       float exp10f(float x);
+       long double exp10l(long double x);
+
+       Link with -lm.
+
+DESCRIPTION
+       These functions return the value of 10 raised to the power of x.
+
+RETURN VALUE
+       On success, these functions return the base-10 exponential value of x.
+
+       For  various  special cases, including the handling of infinity and NaN, as well as overflows and underflows, see
+       exp(3).
+
+ERRORS
+       See math_error(7) for information on how to determine whether an error has occurred when calling these functions.
+
+       For a discussion of the errors that can occur for these functions, see exp(3).
+
+VERSIONS
+       These functions first appeared in glibc in version 2.1.
+
+ATTRIBUTES
+       For an explanation of the terms used in this section, see attributes(7).
+
+       ┌─────────────────────────────┬───────────────┬─────────┐
+       │Interface                    │ Attribute     │ Value   │
+       ├─────────────────────────────┼───────────────┼─────────┤
+       │exp10(), exp10f(), exp10l()  │ Thread safety │ MT-Safe │
+       └─────────────────────────────┴───────────────┴─────────┘
+CONFORMING TO
+       These functions are GNU extensions.
+
+BUGS
+       Prior to version 2.19, the glibc implementation of these functions did not set errno to ERANGE when an  underflow
+       error occurred.
+
+SEE ALSO
+       cbrt(3), exp(3), exp2(3), log10(3), sqrt(3)
+
+COLOPHON
+       This  page  is  part  of  release 5.05 of the Linux man-pages project.  A description of the project, information
+       about reporting bugs, and the latest version of this page, can be found at https://www.kernel.org/doc/man-pages/.
+
+GNU                                                    2017-09-15                                               EXP10(3)

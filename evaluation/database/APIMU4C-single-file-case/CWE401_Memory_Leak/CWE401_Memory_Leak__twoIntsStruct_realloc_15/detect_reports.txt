@@ -1,0 +1,2 @@
+Total: 1
+/mnt/e/Projects/api_misuse/my_tool_sym/test/compsac19/APIMU4C/API_Misuse_Benchmark/CWE401_Memory_Leak/CWE401_Memory_Leak__twoIntsStruct_realloc_15/CWE401_Memory_Leak__twoIntsStruct_realloc_15.c:74

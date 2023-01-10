@@ -1,0 +1,17 @@
+The GNU C Library provides non-standard API functions to set and get the default attributes used in the creation of threads in a process. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int pthread_getattr_default_np (pthread_attr_t *attr)
+Preliminary: | MT-Safe  | AS-Unsafe lock | AC-Unsafe lock | See POSIX Safety Concepts. 
+Get the default attribute values and set attr to match.  This function returns 0 on success and a non-zero error code on failure. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int pthread_setattr_default_np (pthread_attr_t *attr)
+Preliminary: | MT-Safe  | AS-Unsafe heap lock | AC-Unsafe lock mem | See POSIX Safety Concepts. 
+Set the default attribute values to match the values in attr.  The function returns 0 on success and a non-zero error code on failure. The following error codes are defined for this function: 
+	EINVAL
+At least one of the values in attr does not qualify as valid for the attributes or the stack address is set in the attribute. 
+	ENOMEM
+The system does not have sufficient memory. 

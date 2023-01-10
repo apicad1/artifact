@@ -1,0 +1,2 @@
+The normal way of sending data on a datagram socket is by using the sendto function, declared in sys/socket.h. 
+You can call connect on a datagram socket, but this only specifies a default destination for further data transmission on the socket.  When a socket has a default destination you can use send (see Sending Data) or even write (see I/O Primitives) to send a packet there.  You can cancel the default destination by calling connect using an address format of AF_UNSPEC in the addr argument.  See Connecting, for more information about the connect function. 

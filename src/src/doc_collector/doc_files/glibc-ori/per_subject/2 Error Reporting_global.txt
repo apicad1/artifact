@@ -1,0 +1,13 @@
+Many functions in the GNU C Library detect and report error conditions, and sometimes your programs need to check for these error conditions. For example, when you open an input file, you should verify that the file was actually opened correctly, and print an error message or take other appropriate action if the call to the library function failed. 
+This chapter describes how the error reporting facility works.  Your program should include the header file errno.h to use this facility.  
+
+TABLE_BEGIN
+ • Checking for Errors    How errors are reported by library functions.
+
+ • Error Codes    Error code macros; all of these expand
+                                 into integer constant values.
+
+ • Error Messages    Mapping error codes onto error messages.
+
+TABLE_END
+

@@ -1,0 +1,1 @@
+These members of the struct lconv structure specify how to print the sign (if any) of a monetary value. 

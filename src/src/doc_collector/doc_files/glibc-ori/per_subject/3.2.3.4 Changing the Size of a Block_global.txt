@@ -1,0 +1,25 @@
+Often you do not know for certain how big a block you will ultimately need at the time you must begin to use the block.  For example, the block might be a buffer that you use to hold a line being read from a file; no matter how long you make the buffer initially, you may encounter a line that is longer. 
+You can make the block longer by calling realloc or reallocarray.  These functions are declared in stdlib.h.  
+Like malloc, realloc and reallocarray may return a null pointer if no memory space is available to make the block bigger.  When this happens, the original block is untouched; it has not been modified or relocated. 
+In most cases it makes no difference what happens to the original block when realloc fails, because the application program cannot continue when it is out of memory, and the only thing to do is to give a fatal error message.  Often it is convenient to write and use subroutines, conventionally called xrealloc and xreallocarray, that take care of the error message as xmalloc does for malloc:  
+
+EXAMPLE_BEGIN
+void *
+xreallocarray (void *ptr, size_t nmemb, size_t size)
+{
+  void *value = reallocarray (ptr, nmemb, size);
+  if (value == 0)
+    fatal ("Virtual memory exhausted");
+  return value;
+}
+
+void *
+xrealloc (void *ptr, size_t size)
+{
+  return xreallocarray (ptr, 1, size);
+}
+EXAMPLE_END
+
+You can also use realloc or reallocarray to make a block smaller.  The reason you would do this is to avoid tying up a lot of memory space when only a little is needed. In several allocation implementations, making a block smaller sometimes necessitates copying it, so it can fail if no other space is available. 
+Portability Notes: 
+  Portable programs should not attempt to reallocate blocks to be size zero. On other implementations if ptr is non-null, realloc (ptr, 0) might free the block and return a non-null pointer to a size-zero object, or it might fail and return NULL without freeing the block. The ISO C17 standard allows these variations.   In the GNU C Library, reallocation fails if the resulting block would exceed PTRDIFF_MAX in size, to avoid problems with programs that subtract pointers or use signed indexes.  Other implementations may succeed, leading to undefined behavior later.   In the GNU C Library, if the new size is the same as the old, realloc and reallocarray are guaranteed to change nothing and return the same address that you gave.  However, POSIX and ISO C allow the functions to relocate the object or fail in this situation. 

@@ -1,0 +1,2 @@
+The entire collection of attributes of a terminal is stored in a structure of type struct termios.  This structure is used with the functions tcgetattr and tcsetattr to read and set the attributes. 
+The following sections describe the details of the members of the struct termios structure. 

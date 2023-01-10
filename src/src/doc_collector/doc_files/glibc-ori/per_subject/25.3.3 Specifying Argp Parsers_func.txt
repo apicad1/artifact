@@ -1,0 +1,18 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: struct argp
+This structure specifies how to parse a given set of options and arguments, perhaps in conjunction with other argp parsers.  It has the following fields: 
+	const struct argp_option *options
+A pointer to a vector of argp_option structures specifying which options this argp parser understands; it may be zero if there are no options at all.  See Argp Option Vectors.  
+	argp_parser_t parser
+A pointer to a function that defines actions for this parser; it is called for each option parsed, and at other well-defined points in the parsing process.  A value of zero is the same as a pointer to a function that always returns ARGP_ERR_UNKNOWN.  See Argp Parser Functions.  
+	const char *args_doc
+If non-zero, a string describing what non-option arguments are called by this parser.  This is only used to print the ‘Usage:’ message.  If it contains newlines, the strings separated by them are considered alternative usage patterns and printed on separate lines.  Lines after the first are prefixed by ‘ or: ’ instead of ‘Usage:’.  
+	const char *doc
+If non-zero, a string containing extra text to be printed before and after the options in a long help message, with the two sections separated by a vertical tab ('\v', '\013') character.  By convention, the documentation before the options is just a short string explaining what the program does.  Documentation printed after the options describe behavior in more detail.  
+	const struct argp_child *children
+A pointer to a vector of argp_child structures.  This pointer specifies which additional argp parsers should be combined with this one.  See Argp Children.  
+	char *(*help_filter)(int key, const char *text, void *input)
+If non-zero, a pointer to a function that filters the output of help messages.  See Argp Help Filtering.  
+	const char *argp_domain
+If non-zero, the strings used in the argp library are translated using the domain described by this string.  If zero, the current default domain is used.  

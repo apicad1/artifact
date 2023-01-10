@@ -1,0 +1,68 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int fegetenv (fenv_t *envp)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+Store the floating-point environment in the variable pointed to by envp. 
+The function returns zero in case the operation was successful, a non-zero value otherwise. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int feholdexcept (fenv_t *envp)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+Store the current floating-point environment in the object pointed to by envp.  Then clear all exception flags, and set the FPU to trap no exceptions.  Not all FPUs support trapping no exceptions; if feholdexcept cannot set this mode, it returns nonzero value.  If it succeeds, it returns zero. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int fesetenv (const fenv_t *envp)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+Set the floating-point environment to that described by envp. 
+The function returns zero in case the operation was successful, a non-zero value otherwise. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int feupdateenv (const fenv_t *envp)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+Like fesetenv, this function sets the floating-point environment to that described by envp.  However, if any exceptions were flagged in the status word before feupdateenv was called, they remain flagged after the call.  In other words, after feupdateenv is called, the status word is the bitwise OR of the previous status word and the one saved in envp. 
+The function returns zero in case the operation was successful, a non-zero value otherwise. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int fegetmode (femode_t *modep)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+Store the floating-point control modes in the variable pointed to by modep. 
+The function returns zero in case the operation was successful, a non-zero value otherwise. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int fesetmode (const femode_t *modep)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+Set the floating-point control modes to those described by modep. 
+The function returns zero in case the operation was successful, a non-zero value otherwise. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int feenableexcept (int excepts)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function enables traps for each of the exceptions as indicated by the parameter excepts.  The individual exceptions are described in Status bit operations.  Only the specified exceptions are enabled, the status of the other exceptions is not changed. 
+The function returns the previous enabled exceptions in case the operation was successful, -1 otherwise. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int fedisableexcept (int excepts)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function disables traps for each of the exceptions as indicated by the parameter excepts.  The individual exceptions are described in Status bit operations.  Only the specified exceptions are disabled, the status of the other exceptions is not changed. 
+The function returns the previous enabled exceptions in case the operation was successful, -1 otherwise. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int fegetexcept (void)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The function returns a bitmask of all currently enabled exceptions.  It returns -1 in case of failure. 

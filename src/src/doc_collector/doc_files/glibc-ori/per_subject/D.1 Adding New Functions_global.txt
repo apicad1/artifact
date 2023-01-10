@@ -1,0 +1,17 @@
+The process of building the library is driven by the makefiles, which make heavy use of special features of GNU make.  The makefiles are very complex, and you probably don’t want to try to understand them. But what they do is fairly straightforward, and only requires that you define a few variables in the right places. 
+The library sources are divided into subdirectories, grouped by topic. 
+The string subdirectory has all the string-manipulation functions, math has all the mathematical functions, etc. 
+Each subdirectory contains a simple makefile, called Makefile, which defines a few make variables and then includes the global makefile Rules with a line like: 
+
+EXAMPLE_BEGIN
+include ../Rules
+EXAMPLE_END
+
+The basic variables that a subdirectory makefile defines are: 
+
+TABLE_BEGIN
+ • Platform    Adding platform-specific
+                                         features.
+
+TABLE_END
+

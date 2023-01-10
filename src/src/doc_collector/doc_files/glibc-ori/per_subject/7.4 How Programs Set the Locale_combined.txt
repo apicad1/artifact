@@ -1,0 +1,61 @@
+A C program inherits its locale environment variables when it starts up. This happens automatically.  However, these variables do not automatically control the locale used by the library functions, because ISO C says that all programs start by default in the standard ‘C’ locale.  To use the locales specified by the environment, you must call setlocale.  Call it as follows: 
+
+EXAMPLE_BEGIN
+setlocale (LC_ALL, "");
+EXAMPLE_END
+
+to select a locale based on the user choice of the appropriate environment variables. 
+You can also use setlocale to specify a particular locale, for general use or for a specific category. 
+The symbols in this section are defined in the header file locale.h. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: char * setlocale (int category, const char *locale)
+Preliminary: | MT-Unsafe const:locale env | AS-Unsafe init lock heap corrupt | AC-Unsafe init corrupt lock mem fd | See POSIX Safety Concepts. 
+The function setlocale sets the current locale for category category to locale. 
+If category is LC_ALL, this specifies the locale for all purposes.  The other possible values of category specify a single purpose (see Locale Categories). 
+You can also use this function to find out the current locale by passing a null pointer as the locale argument.  In this case, setlocale returns a string that is the name of the locale currently selected for category category. 
+The string returned by setlocale can be overwritten by subsequent calls, so you should make a copy of the string (see Copying Strings and Arrays) if you want to save it past any further calls to setlocale.  (The standard library is guaranteed never to call setlocale itself.) 
+You should not modify the string returned by setlocale.  It might be the same string that was passed as an argument in a previous call to setlocale.  One requirement is that the category must be the same in the call the string was returned and the one when the string is passed in as locale parameter. 
+When you read the current locale for category LC_ALL, the value encodes the entire combination of selected locales for all categories. If you specify the same “locale name” with LC_ALL in a subsequent call to setlocale, it restores the same combination of locale selections. 
+To be sure you can use the returned string encoding the currently selected locale at a later time, you must make a copy of the string.  It is not guaranteed that the returned pointer remains valid over time. 
+When the locale argument is not a null pointer, the string returned by setlocale reflects the newly-modified locale. 
+If you specify an empty string for locale, this means to read the appropriate environment variable and use its value to select the locale for category. 
+If a nonempty string is given for locale, then the locale of that name is used if possible. 
+The effective locale name (either the second argument to setlocale, or if the argument is an empty string, the name obtained from the process environment) must be a valid locale name. See Locale Names. 
+If you specify an invalid locale name, setlocale returns a null pointer and leaves the current locale unchanged. 
+<<<<<<<<<<<<<<<<<<<<
+
+Here is an example showing how you might use setlocale to temporarily switch to a new locale. 
+
+EXAMPLE_BEGIN
+#include <stddef.h>
+#include <locale.h>
+#include <stdlib.h>
+#include <string.h>
+
+void
+with_other_locale (char *new_locale,
+                   void (*subroutine) (int),
+                   int argument)
+{
+  char *old_locale, *saved_locale;
+
+  /* Get the name of the current locale.  */
+  old_locale = setlocale (LC_ALL, NULL);
+
+  /* Copy the name so it won’t be clobbered by setlocale. */
+  saved_locale = strdup (old_locale);
+  if (saved_locale == NULL)
+    fatal ("Out of memory");
+
+  /* Now change the locale and do some stuff with it. */
+  setlocale (LC_ALL, new_locale);
+  (*subroutine) (argument);
+
+  /* Restore the original locale. */
+  setlocale (LC_ALL, saved_locale);
+  free (saved_locale);
+}
+EXAMPLE_END
+
+Portability Note: Some ISO C systems may define additional locale categories, and future versions of the library will do so.  For portability, assume that any symbol beginning with ‘LC_’ might be defined in locale.h. 

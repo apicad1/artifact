@@ -1,0 +1,3 @@
+When a stream is closed with fclose, the connection between the stream and the file is canceled.  After you have closed a stream, you cannot perform any additional operations on it. 
+To close all streams currently available the GNU C Library provides another function. 
+If the main function to your program returns, or if you call the exit function (see Normal Termination), all open streams are automatically closed properly.  If your program terminates in any other manner, such as by calling the abort function (see Aborting a Program) or from a fatal signal (see Signal Handling), open streams might not be closed properly.  Buffered output might not be flushed and files may be incomplete.  For more information on buffering of streams, see Stream Buffering. 

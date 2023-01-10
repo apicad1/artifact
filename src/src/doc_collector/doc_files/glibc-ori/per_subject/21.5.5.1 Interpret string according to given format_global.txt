@@ -1,0 +1,27 @@
+The first function is rather low-level.  It is nevertheless frequently used in software since it is better known.  Its interface and implementation are heavily influenced by the getdate function, which is defined and implemented in terms of calls to strptime. 
+The specification of the function in the XPG standard is rather vague, leaving out a few important pieces of information.  Most importantly, it does not specify what happens to those elements of tm which are not directly initialized by the different formats.  The implementations on different Unix systems vary here. 
+The GNU C Library implementation does not touch those fields which are not directly initialized.  Exceptions are the tm_wday and tm_yday elements, which are recomputed if any of the year, month, or date elements changed.  This has two implications: 
+  Before calling the strptime function for a new input string, you should prepare the tm structure you pass.  Normally this will mean initializing all values to zero.  Alternatively, you can set all fields to values like INT_MAX, allowing you to determine which elements were set by the function call.  Zero does not work here since it is a valid value for many of the fields.  Careful initialization is necessary if you want to find out whether a certain field in tm was initialized by the function call.   You can construct a struct tm value with several consecutive strptime calls.  A useful application of this is e.g. the parsing of two separate strings, one containing date information and the other time information.  By parsing one after the other without clearing the structure in-between, you can construct a complete broken-down time. 
+The following example shows a function which parses a string which contains the date information in either US style or ISO 8601 form: 
+
+EXAMPLE_BEGIN
+const char *
+parse_date (const char *input, struct tm *tm)
+{
+  const char *cp;
+
+  /* First clear the result structure.  */
+  memset (tm, '\0', sizeof (*tm));
+
+  /* Try the ISO format first.  */
+  cp = strptime (input, "%F", tm);
+  if (cp == NULL)
+    {
+      /* Does not match.  Try the US form.  */
+      cp = strptime (input, "%D", tm);
+    }
+
+  return cp;
+}
+EXAMPLE_END
+

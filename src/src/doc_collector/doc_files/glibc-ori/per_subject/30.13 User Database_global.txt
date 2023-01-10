@@ -1,0 +1,14 @@
+This section describes how to search and scan the database of registered users.  The database itself is kept in the file /etc/passwd on most systems, but on some systems a special network server gives access to it. 
+Historically, this database included one-way hashes of user passphrases (see Passphrase Storage) as well as public information about each user (such as their user ID and full name).  Many of the functions and data structures associated with this database, and the filename /etc/passwd itself, reflect this history.  However, the information in this database is available to all users, and it is no longer considered safe to make passphrase hashes available to all users, so they have been moved to a “shadow” database that can only be accessed with special privileges. 
+
+TABLE_BEGIN
+ • User Data Structure    What each user record contains.
+
+ • Lookup User    How to look for a particular user.
+
+ • Scanning All Users    Scanning the list of all users, one by one.
+
+ • Writing a User Entry    How a program can rewrite a user’s record.
+
+TABLE_END
+

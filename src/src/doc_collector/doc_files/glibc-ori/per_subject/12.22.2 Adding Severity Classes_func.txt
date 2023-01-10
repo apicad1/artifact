@@ -1,0 +1,9 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int addseverity (int severity, const char *string)
+Preliminary: | MT-Safe  | AS-Unsafe heap lock | AC-Unsafe lock mem | See POSIX Safety Concepts. 
+This function allows the introduction of new severity classes which can be addressed by the severity parameter of the fmtmsg function. The severity parameter of addseverity must match the value for the parameter with the same name of fmtmsg, and string is the string printed in the actual messages instead of the numeric value. 
+If string is NULL the severity class with the numeric value according to severity is removed. 
+It is not possible to overwrite or remove one of the default severity classes.  All calls to addseverity with severity set to one of the values for the default classes will fail. 
+The return value is MM_OK if the task was successfully performed. If the return value is MM_NOTOK something went wrong.  This could mean that no more memory is available or a class is not available when it has to be removed. 
+This function is not specified in the X/Open Portability Guide although the fmtsmg function is.  It is available on System V systems. 

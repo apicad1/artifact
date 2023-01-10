@@ -1,0 +1,11 @@
+The GNU C Library can provide machine-specific functionality. 
+
+TABLE_BEGIN
+ • PowerPC    Facilities Specific to the PowerPC Architecture
+
+ • RISC-V    Facilities Specific to the RISC-V Architecture
+
+ • X86    Facilities Specific to the X86 Architecture
+
+TABLE_END
+

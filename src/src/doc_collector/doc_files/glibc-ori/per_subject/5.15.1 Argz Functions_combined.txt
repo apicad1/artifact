@@ -1,0 +1,105 @@
+Each argz vector is represented by a pointer to the first element, of type char *, and a size, of type size_t, both of which can be initialized to 0 to represent an empty argz vector.  All argz functions accept either a pointer and a size argument, or pointers to them, if they will be modified. 
+The argz functions use malloc/realloc to allocate/grow argz vectors, and so any argz vector created using these functions may be freed by using free; conversely, any argz function that may grow a string expects that string to have been allocated using malloc (those argz functions that only examine their arguments or modify them in place will work on any sort of memory). See Unconstrained Allocation. 
+All argz functions that do memory allocation have a return type of error_t, and return 0 for success, and ENOMEM if an allocation error occurs. 
+These functions are declared in the standard include file argz.h. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: error_t argz_create (char *const argv[], char **argz, size_t *argz_len)
+Preliminary: | MT-Safe  | AS-Unsafe heap | AC-Unsafe mem | See POSIX Safety Concepts. 
+The argz_create function converts the Unix-style argument vector argv (a vector of pointers to normal C strings, terminated by (char *)0; see Program Arguments) into an argz vector with the same elements, which is returned in argz and argz_len. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: error_t argz_create_sep (const char *string, int sep, char **argz, size_t *argz_len)
+Preliminary: | MT-Safe  | AS-Unsafe heap | AC-Unsafe mem | See POSIX Safety Concepts. 
+The argz_create_sep function converts the string string into an argz vector (returned in argz and argz_len) by splitting it into elements at every occurrence of the byte sep. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: size_t argz_count (const char *argz, size_t argz_len)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+Returns the number of elements in the argz vector argz and argz_len. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void argz_extract (const char *argz, size_t argz_len, char **argv)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The argz_extract function converts the argz vector argz and argz_len into a Unix-style argument vector stored in argv, by putting pointers to every element in argz into successive positions in argv, followed by a terminator of 0. Argv must be pre-allocated with enough space to hold all the elements in argz plus the terminating (char *)0 ((argz_count (argz, argz_len) + 1) * sizeof (char *) bytes should be enough).  Note that the string pointers stored into argv point into argz—they are not copies—and so argz must be copied if it will be changed while argv is still active.  This function is useful for passing the elements in argz to an exec function (see Executing a File). 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void argz_stringify (char *argz, size_t len, int sep)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The argz_stringify converts argz into a normal string with the elements separated by the byte sep, by replacing each '\0' inside argz (except the last one, which terminates the string) with sep.  This is handy for printing argz in a readable manner. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: error_t argz_add (char **argz, size_t *argz_len, const char *str)
+Preliminary: | MT-Safe  | AS-Unsafe heap | AC-Unsafe mem | See POSIX Safety Concepts. 
+The argz_add function adds the string str to the end of the argz vector *argz, and updates *argz and *argz_len accordingly. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: error_t argz_add_sep (char **argz, size_t *argz_len, const char *str, int delim)
+Preliminary: | MT-Safe  | AS-Unsafe heap | AC-Unsafe mem | See POSIX Safety Concepts. 
+The argz_add_sep function is similar to argz_add, but str is split into separate elements in the result at occurrences of the byte delim.  This is useful, for instance, for adding the components of a Unix search path to an argz vector, by using a value of ':' for delim. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: error_t argz_append (char **argz, size_t *argz_len, const char *buf, size_t buf_len)
+Preliminary: | MT-Safe  | AS-Unsafe heap | AC-Unsafe mem | See POSIX Safety Concepts. 
+The argz_append function appends buf_len bytes starting at buf to the argz vector *argz, reallocating *argz to accommodate it, and adding buf_len to *argz_len. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void argz_delete (char **argz, size_t *argz_len, char *entry)
+Preliminary: | MT-Safe  | AS-Unsafe heap | AC-Unsafe mem | See POSIX Safety Concepts. 
+If entry points to the beginning of one of the elements in the argz vector *argz, the argz_delete function will remove this entry and reallocate *argz, modifying *argz and *argz_len accordingly.  Note that as destructive argz functions usually reallocate their argz argument, pointers into argz vectors such as entry will then become invalid. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: error_t argz_insert (char **argz, size_t *argz_len, char *before, const char *entry)
+Preliminary: | MT-Safe  | AS-Unsafe heap | AC-Unsafe mem | See POSIX Safety Concepts. 
+The argz_insert function inserts the string entry into the argz vector *argz at a point just before the existing element pointed to by before, reallocating *argz and updating *argz and *argz_len.  If before is 0, entry is added to the end instead (as if by argz_add).  Since the first element is in fact the same as *argz, passing in *argz as the value of before will result in entry being inserted at the beginning. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: char * argz_next (const char *argz, size_t argz_len, const char *entry)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The argz_next function provides a convenient way of iterating over the elements in the argz vector argz.  It returns a pointer to the next element in argz after the element entry, or 0 if there are no elements following entry.  If entry is 0, the first element of argz is returned. 
+This behavior suggests two styles of iteration: 
+
+EXAMPLE_BEGIN
+    char *entry = 0;
+    while ((entry = argz_next (argz, argz_len, entry)))
+      action;
+EXAMPLE_END
+
+(the double parentheses are necessary to make some C compilers shut up about what they consider a questionable while-test) and: 
+
+EXAMPLE_BEGIN
+    char *entry;
+    for (entry = argz;
+         entry;
+         entry = argz_next (argz, argz_len, entry))
+      action;
+EXAMPLE_END
+
+Note that the latter depends on argz having a value of 0 if it is empty (rather than a pointer to an empty block of memory); this invariant is maintained for argz vectors created by the functions here. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: error_t argz_replace (char **argz, size_t *argz_len, const char *str, const char *with, unsigned *replace_count)
+Preliminary: | MT-Safe  | AS-Unsafe heap | AC-Unsafe mem | See POSIX Safety Concepts. 
+Replace any occurrences of the string str in argz with with, reallocating argz as necessary.  If replace_count is non-zero, *replace_count will be incremented by the number of replacements performed. 

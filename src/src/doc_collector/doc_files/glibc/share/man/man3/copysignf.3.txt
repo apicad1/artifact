@@ -1,0 +1,58 @@
+COPYSIGN(3)                                     Linux Programmer's Manual                                    COPYSIGN(3)
+
+NAME
+       copysign, copysignf, copysignl - copy sign of a number
+
+SYNOPSIS
+       #include <math.h>
+
+       double copysign(double x, double y);
+       float copysignf(float x, float y);
+       long double copysignl(long double x, long double y);
+
+       Link with -lm.
+
+   Feature Test Macro Requirements for glibc (see feature_test_macros(7)):
+
+       copysign(), copysignf(), copysignl():
+           _ISOC99_SOURCE || _POSIX_C_SOURCE >= 200112L
+               || /* Since glibc 2.19: */ _DEFAULT_SOURCE
+               || /* Glibc versions <= 2.19: */ _BSD_SOURCE || _SVID_SOURCE
+
+DESCRIPTION
+       These functions return a value whose absolute value matches that of x, but whose sign bit matches that of y.
+
+       For example, copysign(42.0, -1.0) and copysign(-42.0, -1.0) both return -42.0.
+
+RETURN VALUE
+       On success, these functions return a value whose magnitude is taken from x and whose sign is taken from y.
+
+       If x is a NaN, a NaN with the sign bit of y is returned.
+
+ERRORS
+       No errors occur.
+
+ATTRIBUTES
+       For an explanation of the terms used in this section, see attributes(7).
+
+       ┌─────────────────────────────────────┬───────────────┬─────────┐
+       │Interface                            │ Attribute     │ Value   │
+       ├─────────────────────────────────────┼───────────────┼─────────┤
+       │copysign(), copysignf(), copysignl() │ Thread safety │ MT-Safe │
+       └─────────────────────────────────────┴───────────────┴─────────┘
+CONFORMING TO
+       C99,  POSIX.1-2001,  POSIX.1-2008.   This function is defined in IEC 559 (and the appendix with recommended func‐
+       tions in IEEE 754/IEEE 854).
+
+NOTES
+       On architectures where the floating-point formats are not IEEE 754 compliant, these functions may treat  a  nega‐
+       tive zero as positive.
+
+SEE ALSO
+       signbit(3)
+
+COLOPHON
+       This  page  is  part  of  release 5.05 of the Linux man-pages project.  A description of the project, information
+       about reporting bugs, and the latest version of this page, can be found at https://www.kernel.org/doc/man-pages/.
+
+GNU                                                    2017-09-15                                            COPYSIGN(3)

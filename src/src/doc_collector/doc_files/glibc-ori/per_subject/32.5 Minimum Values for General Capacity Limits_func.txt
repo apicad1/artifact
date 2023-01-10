@@ -1,0 +1,58 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- _POSIX_AIO_LISTIO_MAX  
+The most restrictive limit permitted by POSIX for the maximum number of I/O operations that can be specified in a list I/O call.  The value of this constant is 2; thus you can add up to two new entries of the list of outstanding operations. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- _POSIX_AIO_MAX  
+The most restrictive limit permitted by POSIX for the maximum number of outstanding asynchronous I/O operations.  The value of this constant is 1.  So you cannot expect that you can issue more than one operation and immediately continue with the normal work, receiving the notifications asynchronously. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- _POSIX_ARG_MAX  
+The value of this macro is the most restrictive limit permitted by POSIX for the maximum combined length of the argv and environ arguments that can be passed to the exec functions. Its value is 4096. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- _POSIX_CHILD_MAX  
+The value of this macro is the most restrictive limit permitted by POSIX for the maximum number of simultaneous processes per real user ID.  Its value is 6. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- _POSIX_NGROUPS_MAX  
+The value of this macro is the most restrictive limit permitted by POSIX for the maximum number of supplementary group IDs per process.  Its value is 0. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- _POSIX_OPEN_MAX  
+The value of this macro is the most restrictive limit permitted by POSIX for the maximum number of files that a single process can have open simultaneously.  Its value is 16. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- _POSIX_SSIZE_MAX  
+The value of this macro is the most restrictive limit permitted by POSIX for the maximum value that can be stored in an object of type ssize_t.  Its value is 32767. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- _POSIX_STREAM_MAX  
+The value of this macro is the most restrictive limit permitted by POSIX for the maximum number of streams that a single process can have open simultaneously.  Its value is 8. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- _POSIX_TZNAME_MAX  
+The value of this macro is the most restrictive limit permitted by POSIX for the maximum length of a time zone name.  Its value is 3. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- _POSIX2_RE_DUP_MAX  
+The value of this macro is the most restrictive limit permitted by POSIX for the numbers used in the ‘\{min,max\}’ construct in a regular expression.  Its value is 255. 

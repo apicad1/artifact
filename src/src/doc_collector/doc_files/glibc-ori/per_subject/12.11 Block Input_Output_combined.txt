@@ -1,0 +1,33 @@
+This section describes how to do input and output operations on blocks of data.  You can use these functions to read and write binary data, as well as to read and write text in fixed-size blocks instead of by characters or lines.     
+Binary files are typically used to read and write blocks of data in the same format as is used to represent the data in a running program.  In other words, arbitrary blocks of memory—not just character or string objects—can be written to a binary file, and meaningfully read in again by the same program. 
+Storing data in binary form is often considerably more efficient than using the formatted I/O functions.  Also, for floating-point numbers, the binary form avoids possible loss of precision in the conversion process.  On the other hand, binary files can’t be examined or modified easily using many standard file utilities (such as text editors), and are not portable between different implementations of the language, or different kinds of computers. 
+These functions are declared in stdio.h.  
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: size_t fread (void *data, size_t size, size_t count, FILE *stream)
+Preliminary: | MT-Safe  | AS-Unsafe corrupt | AC-Unsafe lock corrupt | See POSIX Safety Concepts. 
+This function reads up to count objects of size size into the array data, from the stream stream.  It returns the number of objects actually read, which might be less than count if a read error occurs or the end of the file is reached.  This function returns a value of zero (and doesn’t read anything) if either size or count is zero. 
+If fread encounters end of file in the middle of an object, it returns the number of complete objects read, and discards the partial object.  Therefore, the stream remains at the actual end of the file. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: size_t fread_unlocked (void *data, size_t size, size_t count, FILE *stream)
+Preliminary: | MT-Safe race:stream | AS-Unsafe corrupt | AC-Unsafe corrupt | See POSIX Safety Concepts. 
+The fread_unlocked function is equivalent to the fread function except that it does not implicitly lock the stream. 
+This function is a GNU extension. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: size_t fwrite (const void *data, size_t size, size_t count, FILE *stream)
+Preliminary: | MT-Safe  | AS-Unsafe corrupt | AC-Unsafe lock corrupt | See POSIX Safety Concepts. 
+This function writes up to count objects of size size from the array data, to the stream stream.  The return value is normally count, if the call succeeds.  Any other value indicates some sort of error, such as running out of space. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: size_t fwrite_unlocked (const void *data, size_t size, size_t count, FILE *stream)
+Preliminary: | MT-Safe race:stream | AS-Unsafe corrupt | AC-Unsafe corrupt | See POSIX Safety Concepts. 
+The fwrite_unlocked function is equivalent to the fwrite function except that it does not implicitly lock the stream. 
+This function is a GNU extension. 

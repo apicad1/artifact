@@ -1,0 +1,45 @@
+In some situations it is desirable to allow programs to access files or devices even if this is not possible with the permissions granted to the user.  One possible solution is to set the setuid-bit of the program file.  If such a program is started the effective user ID of the process is changed to that of the owner of the program file.  So to allow write access to files like /etc/passwd, which normally can be written only by the super-user, the modifying program will have to be owned by root and the setuid-bit must be set. 
+But besides the files the program is intended to change the user should not be allowed to access any file to which s/he would not have access anyway.  The program therefore must explicitly check whether the user would have the necessary access to a file, before it reads or writes the file. 
+To do this, use the function access, which checks for access permission based on the process’s real user ID rather than the effective user ID.  (The setuid feature does not alter the real user ID, so it reflects the user who actually ran the program.) 
+There is another way you could check this access, which is easy to describe, but very hard to use.  This is to examine the file mode bits and mimic the system’s own access computation.  This method is undesirable because many systems have additional access control features; your program cannot portably mimic them, and you would not want to try to keep track of the diverse features that different systems have.  Using access is simple and automatically does whatever is appropriate for the system you are using. 
+access is only appropriate to use in setuid programs. A non-setuid program will always use the effective ID rather than the real ID. 
+The symbols in this section are declared in unistd.h. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int access (const char *filename, int how)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The access function checks to see whether the file named by filename can be accessed in the way specified by the how argument.  The how argument either can be the bitwise OR of the flags R_OK, W_OK, X_OK, or the existence test F_OK. 
+This function uses the real user and group IDs of the calling process, rather than the effective IDs, to check for access permission.  As a result, if you use the function from a setuid or setgid program (see How Change Persona), it gives information relative to the user who actually ran the program. 
+The return value is 0 if the access is permitted, and -1 otherwise.  (In other words, treated as a predicate function, access returns true if the requested access is denied.) 
+In addition to the usual file name errors (see File Name Errors), the following errno error conditions are defined for this function: 
+	EACCES
+The access specified by how is denied.  
+	ENOENT
+The file doesn’t exist.  
+	EROFS
+Write permission was requested for a file on a read-only file system. 
+<<<<<<<<<<<<<<<<<<<<
+
+These macros are defined in the header file unistd.h for use as the how argument to the access function.  The values are integer constants.  
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int R_OK
+Flag meaning test for read permission. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int W_OK
+Flag meaning test for write permission. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int X_OK
+Flag meaning test for execute/search permission. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int F_OK
+Flag meaning test for existence of the file. 

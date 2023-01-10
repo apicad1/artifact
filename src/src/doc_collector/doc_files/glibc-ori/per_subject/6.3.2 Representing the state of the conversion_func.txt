@@ -1,0 +1,16 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Data type: mbstate_t
+
+A variable of type mbstate_t can contain all the information about the shift state needed from one call to a conversion function to another. 
+
+mbstate_t is defined in wchar.h.  It was introduced in Amendment 1 to ISO C90. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int mbsinit (const mbstate_t *ps)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The mbsinit function determines whether the state object pointed to by ps is in the initial state.  If ps is a null pointer or the object is in the initial state the return value is nonzero.  Otherwise it is zero. 
+
+mbsinit was introduced in Amendment 1 to ISO C90 and is declared in wchar.h. 

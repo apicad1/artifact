@@ -1,0 +1,85 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: cpu_set_t
+This data set is a bitset where each bit represents a CPU.  How the system’s CPUs are mapped to bits in the bitset is system dependent. The data type has a fixed size; in the unlikely case that the number of bits are not sufficient to describe the CPUs of the system a different interface has to be used. 
+This type is a GNU extension and is defined in sched.h. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int CPU_SETSIZE
+The value of this macro is the maximum number of CPUs which can be handled with a cpu_set_t object. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: void CPU_ZERO (cpu_set_t *set)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This macro initializes the CPU set set to be the empty set. 
+This macro is a GNU extension and is defined in sched.h. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: void CPU_SET (int cpu, cpu_set_t *set)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This macro adds cpu to the CPU set set. 
+The cpu parameter must not have side effects since it is evaluated more than once. 
+This macro is a GNU extension and is defined in sched.h. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: void CPU_CLR (int cpu, cpu_set_t *set)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This macro removes cpu from the CPU set set. 
+The cpu parameter must not have side effects since it is evaluated more than once. 
+This macro is a GNU extension and is defined in sched.h. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int CPU_ISSET (int cpu, const cpu_set_t *set)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This macro returns a nonzero value (true) if cpu is a member of the CPU set set, and zero (false) otherwise. 
+The cpu parameter must not have side effects since it is evaluated more than once. 
+This macro is a GNU extension and is defined in sched.h. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int sched_getaffinity (pid_t pid, size_t cpusetsize, cpu_set_t *cpuset)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function stores the CPU affinity mask for the process or thread with the ID pid in the cpusetsize bytes long bitmap pointed to by cpuset.  If successful, the function always initializes all bits in the cpu_set_t object and returns zero. 
+If pid does not correspond to a process or thread on the system the or the function fails for some other reason, it returns -1 and errno is set to represent the error condition. 
+	ESRCH
+No process or thread with the given ID found.  
+	EFAULT
+The pointer cpuset does not point to a valid object. 
+This function is a GNU extension and is declared in sched.h. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int sched_setaffinity (pid_t pid, size_t cpusetsize, const cpu_set_t *cpuset)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function installs the cpusetsize bytes long affinity mask pointed to by cpuset for the process or thread with the ID pid. If successful the function returns zero and the scheduler will in the future take the affinity information into account. 
+If the function fails it will return -1 and errno is set to the error code: 
+	ESRCH
+No process or thread with the given ID found.  
+	EFAULT
+The pointer cpuset does not point to a valid object.  
+	EINVAL
+The bitset is not valid.  This might mean that the affinity set might not leave a processor for the process or thread to run on. 
+This function is a GNU extension and is declared in sched.h. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int getcpu (unsigned int *cpu, unsigned int *node)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The getcpu function identifies the processor and node on which the calling thread or process is currently running and writes them into the integers pointed to by the cpu and node arguments.  The processor is a unique nonnegative integer identifying a CPU.  The node is a unique nonnegative integer identifying a NUMA node.  When either cpu or node is NULL, nothing is written to the respective pointer. 
+The return value is 0 on success and -1 on failure.  The following errno error condition is defined for this function: 
+	ENOSYS
+The operating system does not support this function. 
+This function is Linux-specific and is declared in sched.h. 

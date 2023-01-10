@@ -1,0 +1,18 @@
+The function alloca supports a kind of half-dynamic allocation in which blocks are allocated dynamically but freed automatically. 
+Allocating a block with alloca is an explicit action; you can allocate as many blocks as you wish, and compute the size at run time.  But all the blocks are freed when you exit the function that alloca was called from, just as if they were automatic variables declared in that function.  There is no way to free the space explicitly. 
+The prototype for alloca is in stdlib.h.  This function is a BSD extension.  
+Do not use alloca inside the arguments of a function call—you will get unpredictable results, because the stack space for the alloca would appear on the stack in the middle of the space for the function arguments.  An example of what to avoid is foo (x, alloca (4), y). 
+
+TABLE_BEGIN
+ • Alloca Example    Example of using alloca.
+
+ • Advantages of Alloca    Reasons to use alloca.
+
+ • Disadvantages of Alloca    Reasons to avoid alloca.
+
+ • GNU C Variable-Size Arrays    Only in GNU C, here is an alternative
+				 method of allocating dynamically and
+				 freeing automatically.
+
+TABLE_END
+

@@ -1,0 +1,52 @@
+When dealing with asynchronous operations it is sometimes necessary to get into a consistent state.  This would mean for AIO that one wants to know whether a certain request or a group of requests were processed. This could be done by waiting for the notification sent by the system after the operation terminated, but this sometimes would mean wasting resources (mainly computation time).  Instead POSIX.1b defines two functions which will help with most kinds of consistency. 
+The aio_fsync and aio_fsync64 functions are only available if the symbol _POSIX_SYNCHRONIZED_IO is defined in unistd.h. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int aio_fsync (int op, struct aiocb *aiocbp)
+Preliminary: | MT-Safe  | AS-Unsafe lock heap | AC-Unsafe lock mem | See POSIX Safety Concepts. 
+Calling this function forces all I/O operations queued at the time of the function call operating on the file descriptor aiocbp->aio_fildes into the synchronized I/O completion state (see Synchronizing I/O).  The aio_fsync function returns immediately but the notification through the method described in aiocbp->aio_sigevent will happen only after all requests for this file descriptor have terminated and the file is synchronized.  This also means that requests for this very same file descriptor which are queued after the synchronization request are not affected. 
+If op is O_DSYNC the synchronization happens as with a call to fdatasync.  Otherwise op should be O_SYNC and the synchronization happens as with fsync. 
+As long as the synchronization has not happened, a call to aio_error with the reference to the object pointed to by aiocbp returns EINPROGRESS.  Once the synchronization is done aio_error return 0 if the synchronization was not successful.  Otherwise the value returned is the value to which the fsync or fdatasync function would have set the errno variable.  In this case nothing can be assumed about the consistency of the data written to this file descriptor. 
+The return value of this function is 0 if the request was successfully enqueued.  Otherwise the return value is -1 and errno is set to one of the following values: 
+	EAGAIN
+The request could not be enqueued due to temporary lack of resources. 
+	EBADF
+The file descriptor aiocbp->aio_fildes is not valid. 
+	EINVAL
+The implementation does not support I/O synchronization or the op parameter is other than O_DSYNC and O_SYNC. 
+	ENOSYS
+This function is not implemented. 
+When the sources are compiled with _FILE_OFFSET_BITS == 64 this function is in fact aio_fsync64 since the LFS interface transparently replaces the normal implementation. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int aio_fsync64 (int op, struct aiocb64 *aiocbp)
+Preliminary: | MT-Safe  | AS-Unsafe lock heap | AC-Unsafe lock mem | See POSIX Safety Concepts. 
+This function is similar to aio_fsync with the only difference that the argument is a reference to a variable of type struct aiocb64. 
+When the sources are compiled with _FILE_OFFSET_BITS == 64 this function is available under the name aio_fsync and so transparently replaces the interface for small files on 32 bit machines. 
+<<<<<<<<<<<<<<<<<<<<
+
+Another method of synchronization is to wait until one or more requests of a specific set terminated.  This could be achieved by the aio_* functions to notify the initiating process about the termination but in some situations this is not the ideal solution.  In a program which constantly updates clients somehow connected to the server it is not always the best solution to go round robin since some connections might be slow.  On the other hand letting the aio_* functions notify the caller might also be not the best solution since whenever the process works on preparing data for a client it makes no sense to be interrupted by a notification since the new client will not be handled before the current client is served.  For situations like this aio_suspend should be used. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int aio_suspend (const struct aiocb *const list[], int nent, const struct timespec *timeout)
+Preliminary: | MT-Safe  | AS-Unsafe lock | AC-Unsafe lock | See POSIX Safety Concepts. 
+When calling this function, the calling thread is suspended until at least one of the requests pointed to by the nent elements of the array list has completed.  If any of the requests has already completed at the time aio_suspend is called, the function returns immediately.  Whether a request has terminated or not is determined by comparing the error status of the request with EINPROGRESS.  If an element of list is NULL, the entry is simply ignored. 
+If no request has finished, the calling process is suspended.  If timeout is NULL, the process is not woken until a request has finished.  If timeout is not NULL, the process remains suspended at least as long as specified in timeout.  In this case, aio_suspend returns with an error. 
+The return value of the function is 0 if one or more requests from the list have terminated.  Otherwise the function returns -1 and errno is set to one of the following values: 
+	EAGAIN
+None of the requests from the list completed in the time specified by timeout. 
+	EINTR
+A signal interrupted the aio_suspend function.  This signal might also be sent by the AIO implementation while signalling the termination of one of the requests. 
+	ENOSYS
+The aio_suspend function is not implemented. 
+When the sources are compiled with _FILE_OFFSET_BITS == 64 this function is in fact aio_suspend64 since the LFS interface transparently replaces the normal implementation. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int aio_suspend64 (const struct aiocb64 *const list[], int nent, const struct timespec *timeout)
+Preliminary: | MT-Safe  | AS-Unsafe lock | AC-Unsafe lock | See POSIX Safety Concepts. 
+This function is similar to aio_suspend with the only difference that the argument is a reference to a variable of type struct aiocb64. 
+When the sources are compiled with _FILE_OFFSET_BITS == 64 this function is available under the name aio_suspend and so transparently replaces the interface for small files on 32 bit machines. 

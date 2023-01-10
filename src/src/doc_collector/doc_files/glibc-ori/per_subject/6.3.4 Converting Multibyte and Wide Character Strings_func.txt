@@ -1,0 +1,43 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: size_t mbsrtowcs (wchar_t *restrict dst, const char **restrict src, size_t len, mbstate_t *restrict ps)
+Preliminary: | MT-Unsafe race:mbsrtowcs/!ps | AS-Unsafe corrupt heap lock dlopen | AC-Unsafe corrupt lock mem fd | See POSIX Safety Concepts. 
+The mbsrtowcs function (“multibyte string restartable to wide character string”) converts the NUL-terminated multibyte character string at *src into an equivalent wide character string, including the NUL wide character at the end.  The conversion is started using the state information from the object pointed to by ps or from an internal object of mbsrtowcs if ps is a null pointer.  Before returning, the state object is updated to match the state after the last converted character.  The state is the initial state if the terminating NUL byte is reached and converted. 
+If dst is not a null pointer, the result is stored in the array pointed to by dst; otherwise, the conversion result is not available since it is stored in an internal buffer. 
+If len wide characters are stored in the array dst before reaching the end of the input string, the conversion stops and len is returned.  If dst is a null pointer, len is never checked. 
+Another reason for a premature return from the function call is if the input string contains an invalid multibyte sequence.  In this case the global variable errno is set to EILSEQ and the function returns (size_t) -1. 
+In all other cases the function returns the number of wide characters converted during this call.  If dst is not null, mbsrtowcs stores in the pointer pointed to by src either a null pointer (if the NUL byte in the input string was reached) or the address of the byte following the last converted multibyte character. 
+Like mbstowcs the dst parameter may be a null pointer and the function can be used to count the number of wide characters that would be required. 
+
+mbsrtowcs was introduced in Amendment 1 to ISO C90 and is declared in wchar.h. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: size_t wcsrtombs (char *restrict dst, const wchar_t **restrict src, size_t len, mbstate_t *restrict ps)
+Preliminary: | MT-Unsafe race:wcsrtombs/!ps | AS-Unsafe corrupt heap lock dlopen | AC-Unsafe corrupt lock mem fd | See POSIX Safety Concepts. 
+The wcsrtombs function (“wide character string restartable to multibyte string”) converts the NUL-terminated wide character string at *src into an equivalent multibyte character string and stores the result in the array pointed to by dst.  The NUL wide character is also converted.  The conversion starts in the state described in the object pointed to by ps or by a state object local to wcsrtombs in case ps is a null pointer.  If dst is a null pointer, the conversion is performed as usual but the result is not available.  If all characters of the input string were successfully converted and if dst is not a null pointer, the pointer pointed to by src gets assigned a null pointer. 
+If one of the wide characters in the input string has no valid multibyte character equivalent, the conversion stops early, sets the global variable errno to EILSEQ, and returns (size_t) -1. 
+Another reason for a premature stop is if dst is not a null pointer and the next converted character would require more than len bytes in total to the array dst.  In this case (and if dst is not a null pointer) the pointer pointed to by src is assigned a value pointing to the wide character right after the last one successfully converted. 
+Except in the case of an encoding error the return value of the wcsrtombs function is the number of bytes in all the multibyte character sequences which were or would have been (if dst was not a null) stored in dst.  Before returning, the state in the object pointed to by ps (or the internal object in case ps is a null pointer) is updated to reflect the state after the last conversion.  The state is the initial shift state in case the terminating NUL wide character was converted. 
+
+The wcsrtombs function was introduced in Amendment 1 to ISO C90 and is declared in wchar.h. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: size_t mbsnrtowcs (wchar_t *restrict dst, const char **restrict src, size_t nmc, size_t len, mbstate_t *restrict ps)
+Preliminary: | MT-Unsafe race:mbsnrtowcs/!ps | AS-Unsafe corrupt heap lock dlopen | AC-Unsafe corrupt lock mem fd | See POSIX Safety Concepts. 
+The mbsnrtowcs function is very similar to the mbsrtowcs function.  All the parameters are the same except for nmc, which is new.  The return value is the same as for mbsrtowcs. 
+This new parameter specifies how many bytes at most can be used from the multibyte character string.  In other words, the multibyte character string *src need not be NUL-terminated.  But if a NUL byte is found within the nmc first bytes of the string, the conversion stops there. 
+Like mbstowcs the dst parameter may be a null pointer and the function can be used to count the number of wide characters that would be required. 
+This function is a GNU extension.  It is meant to work around the problems mentioned above.  Now it is possible to convert a buffer with multibyte character text piece by piece without having to care about inserting NUL bytes and the effect of NUL bytes on the conversion state. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: size_t wcsnrtombs (char *restrict dst, const wchar_t **restrict src, size_t nwc, size_t len, mbstate_t *restrict ps)
+Preliminary: | MT-Unsafe race:wcsnrtombs/!ps | AS-Unsafe corrupt heap lock dlopen | AC-Unsafe corrupt lock mem fd | See POSIX Safety Concepts. 
+The wcsnrtombs function implements the conversion from wide character strings to multibyte character strings.  It is similar to wcsrtombs but, just like mbsnrtowcs, it takes an extra parameter, which specifies the length of the input string. 
+No more than nwc wide characters from the input string *src are converted.  If the input string contains a NUL wide character in the first nwc characters, the conversion stops at this place. 
+The wcsnrtombs function is a GNU extension and just like mbsnrtowcs helps in situations where no NUL-terminated input strings are available. 

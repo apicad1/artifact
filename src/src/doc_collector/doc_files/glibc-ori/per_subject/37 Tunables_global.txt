@@ -1,0 +1,66 @@
+Tunables are a feature in the GNU C Library that allows application authors and distribution maintainers to alter the runtime library behavior to match their workload. These are implemented as a set of switches that may be modified in different ways. The current default method to do this is via the GLIBC_TUNABLES environment variable by setting it to a string of colon-separated name=value pairs.  For example, the following example enables malloc checking and sets the malloc trim threshold to 128 bytes: 
+
+EXAMPLE_BEGIN
+GLIBC_TUNABLES=glibc.malloc.trim_threshold=128:glibc.malloc.check=3
+export GLIBC_TUNABLES
+EXAMPLE_END
+
+Tunables are not part of the GNU C Library stable ABI, and they are subject to change or removal across releases.  Additionally, the method to modify tunable values may change between releases and across distributions. It is possible to implement multiple ‘frontends’ for the tunables allowing distributions to choose their preferred method at build time. 
+Finally, the set of tunables available may vary between distributions as the tunables feature allows distributions to add their own tunables under their own namespace. 
+Passing --list-tunables to the dynamic loader to print all tunables with minimum and maximum values: 
+
+EXAMPLE_BEGIN
+$ /lib64/ld-linux-x86-64.so.2 --list-tunables
+glibc.rtld.nns: 0x4 (min: 0x1, max: 0x10)
+glibc.elision.skip_lock_after_retries: 3 (min: -2147483648, max: 2147483647)
+glibc.malloc.trim_threshold: 0x0 (min: 0x0, max: 0xffffffffffffffff)
+glibc.malloc.perturb: 0 (min: 0, max: 255)
+glibc.cpu.x86_shared_cache_size: 0x100000 (min: 0x0, max: 0xffffffffffffffff)
+glibc.mem.tagging: 0 (min: 0, max: 255)
+glibc.elision.tries: 3 (min: -2147483648, max: 2147483647)
+glibc.elision.enable: 0 (min: 0, max: 1)
+glibc.cpu.x86_rep_movsb_threshold: 0x1000 (min: 0x100, max: 0xffffffffffffffff)
+glibc.malloc.mxfast: 0x0 (min: 0x0, max: 0xffffffffffffffff)
+glibc.elision.skip_lock_busy: 3 (min: -2147483648, max: 2147483647)
+glibc.malloc.top_pad: 0x0 (min: 0x0, max: 0xffffffffffffffff)
+glibc.cpu.x86_rep_stosb_threshold: 0x800 (min: 0x1, max: 0xffffffffffffffff)
+glibc.cpu.x86_non_temporal_threshold: 0xc0000 (min: 0x0, max: 0xffffffffffffffff)
+glibc.cpu.x86_shstk:
+glibc.cpu.hwcap_mask: 0x6 (min: 0x0, max: 0xffffffffffffffff)
+glibc.malloc.mmap_max: 0 (min: -2147483648, max: 2147483647)
+glibc.elision.skip_trylock_internal_abort: 3 (min: -2147483648, max: 2147483647)
+glibc.malloc.tcache_unsorted_limit: 0x0 (min: 0x0, max: 0xffffffffffffffff)
+glibc.cpu.x86_ibt:
+glibc.cpu.hwcaps:
+glibc.elision.skip_lock_internal_abort: 3 (min: -2147483648, max: 2147483647)
+glibc.malloc.arena_max: 0x0 (min: 0x1, max: 0xffffffffffffffff)
+glibc.malloc.mmap_threshold: 0x0 (min: 0x0, max: 0xffffffffffffffff)
+glibc.cpu.x86_data_cache_size: 0x8000 (min: 0x0, max: 0xffffffffffffffff)
+glibc.malloc.tcache_count: 0x0 (min: 0x0, max: 0xffffffffffffffff)
+glibc.malloc.arena_test: 0x0 (min: 0x1, max: 0xffffffffffffffff)
+glibc.pthread.mutex_spin_count: 100 (min: 0, max: 32767)
+glibc.rtld.optional_static_tls: 0x200 (min: 0x0, max: 0xffffffffffffffff)
+glibc.malloc.tcache_max: 0x0 (min: 0x0, max: 0xffffffffffffffff)
+glibc.malloc.check: 0 (min: 0, max: 3)
+EXAMPLE_END
+
+
+TABLE_BEGIN
+ • Tunable names    The structure of a tunable name
+
+ • Memory Allocation Tunables    Tunables in the memory allocation subsystem
+
+ • Dynamic Linking Tunables    Tunables in the dynamic linking subsystem
+
+ • Elision Tunables    Tunables in elision subsystem
+
+ • POSIX Thread Tunables    Tunables in the POSIX thread subsystem
+
+ • Hardware Capability Tunables    Tunables that modify the hardware
+				  capabilities seen by the GNU C Library
+
+ • Memory Related Tunables    Tunables that control the use of memory by
+			     the GNU C Library.
+
+TABLE_END
+

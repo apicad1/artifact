@@ -1,0 +1,97 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘-’
+Left-justify the result in the field (instead of the normal right-justification). 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘+’
+For the signed ‘%d’ and ‘%i’ conversions, print a plus sign if the value is positive. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘ ’
+For the signed ‘%d’ and ‘%i’ conversions, if the result doesn’t start with a plus or minus sign, prefix it with a space character instead.  Since the ‘+’ flag ensures that the result includes a sign, this flag is ignored if you supply both of them. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘#’
+For the ‘%o’ conversion, this forces the leading digit to be ‘0’, as if by increasing the precision.  For ‘%x’ or ‘%X’, this prefixes a leading ‘0x’ or ‘0X’ (respectively) to the result.  This doesn’t do anything useful for the ‘%d’, ‘%i’, or ‘%u’ conversions.  Using this flag produces output which can be parsed by the strtoul function (see Parsing of Integers) and scanf with the ‘%i’ conversion (see Numeric Input Conversions). 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘'’
+Separate the digits into groups as specified by the locale specified for the LC_NUMERIC category; see General Numeric.  This flag is a GNU extension. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘0’
+Pad the field with zeros instead of spaces.  The zeros are placed after any indication of sign or base.  This flag is ignored if the ‘-’ flag is also specified, or if a precision is specified. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘hh’
+Specifies that the argument is a signed char or unsigned char, as appropriate.  A char argument is converted to an int or unsigned int by the default argument promotions anyway, but the ‘hh’ modifier says to convert it back to a char again. 
+This modifier was introduced in ISO C99. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘h’
+Specifies that the argument is a short int or unsigned short int, as appropriate.  A short argument is converted to an int or unsigned int by the default argument promotions anyway, but the ‘h’ modifier says to convert it back to a short again. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘j’
+Specifies that the argument is a intmax_t or uintmax_t, as appropriate. 
+This modifier was introduced in ISO C99. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘l’
+Specifies that the argument is a long int or unsigned long int, as appropriate.  Two ‘l’ characters are like the ‘L’ modifier, below. 
+If used with ‘%c’ or ‘%s’ the corresponding parameter is considered as a wide character or wide character string respectively. This use of ‘l’ was introduced in Amendment 1 to ISO C90. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘L’
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘ll’
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘q’
+Specifies that the argument is a long long int.  (This type is an extension supported by the GNU C compiler.  On systems that don’t support extra-long integers, this is the same as long int.) 
+The ‘q’ modifier is another name for the same thing, which comes from 4.4 BSD; a long long int is sometimes called a “quad” int. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘t’
+Specifies that the argument is a ptrdiff_t. 
+This modifier was introduced in ISO C99. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘z’
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘Z’
+Specifies that the argument is a size_t. 
+‘z’ was introduced in ISO C99.  ‘Z’ is a GNU extension predating this addition and should not be used in new code. 

@@ -1,0 +1,13 @@
+Besides signals that are generated as a result of a hardware trap or interrupt, your program can explicitly send signals to itself or to another process. 
+
+TABLE_BEGIN
+ • Signaling Yourself    A process can send a signal to itself.
+
+ • Signaling Another Process    Send a signal to another process.
+
+ • Permission for kill    Permission for using kill.
+
+ • Kill Example    Using kill for Communication.
+
+TABLE_END
+

@@ -1,0 +1,40 @@
+Your program can arrange to run its own cleanup functions if normal termination happens.  If you are writing a library for use in various application programs, then it is unreliable to insist that all applications call the library’s cleanup functions explicitly before exiting.  It is much more robust to make the cleanup invisible to the application, by setting up a cleanup function in the library itself using atexit or on_exit. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int atexit (void (*function) (void))
+Preliminary: | MT-Safe  | AS-Unsafe heap lock | AC-Unsafe lock mem | See POSIX Safety Concepts. 
+The atexit function registers the function function to be called at normal program termination.  The function is called with no arguments. 
+The return value from atexit is zero on success and nonzero if the function cannot be registered. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int on_exit (void (*function)(int status, void *arg), void *arg)
+Preliminary: | MT-Safe  | AS-Unsafe heap lock | AC-Unsafe lock mem | See POSIX Safety Concepts. 
+This function is a somewhat more powerful variant of atexit.  It accepts two arguments, a function function and an arbitrary pointer arg.  At normal program termination, the function is called with two arguments:  the status value passed to exit, and the arg. 
+This function is included in the GNU C Library only for compatibility for SunOS, and may not be supported by other implementations. 
+<<<<<<<<<<<<<<<<<<<<
+
+Here’s a trivial program that illustrates the use of exit and atexit: 
+
+EXAMPLE_BEGIN
+
+
+#include <stdio.h>
+#include <stdlib.h>
+
+void
+bye (void)
+{
+  puts ("Goodbye, cruel world....");
+}
+
+int
+main (void)
+{
+  atexit (bye);
+  exit (EXIT_SUCCESS);
+}
+EXAMPLE_END
+
+When this program is executed, it just prints the message and exits. 

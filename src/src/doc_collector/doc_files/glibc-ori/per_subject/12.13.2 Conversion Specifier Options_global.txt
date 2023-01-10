@@ -1,0 +1,2 @@
+If you define a meaning for ‘%A’, what if the template contains ‘%+23A’ or ‘%-#A’?  To implement a sensible meaning for these, the handler when called needs to be able to get the options specified in the template. 
+Both the handler-function and arginfo-function accept an argument that points to a struct printf_info, which contains information about the options appearing in an instance of the conversion specifier.  This data type is declared in the header file printf.h.  

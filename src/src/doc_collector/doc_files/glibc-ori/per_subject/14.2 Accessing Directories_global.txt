@@ -1,0 +1,25 @@
+The facilities described in this section let you read the contents of a directory file.  This is useful if you want your program to list all the files in a directory, perhaps as part of a menu. 
+The opendir function opens a directory stream whose elements are directory entries.  Alternatively fdopendir can be used which can have advantages if the program needs to have more control over the way the directory is opened for reading.  This allows, for instance, to pass the O_NOATIME flag to open. 
+You use the readdir function on the directory stream to retrieve these entries, represented as struct dirent objects.  The name of the file for each entry is stored in the d_name member of this structure.  There are obvious parallels here to the stream facilities for ordinary files, described in I/O on Streams. 
+
+TABLE_BEGIN
+ • Directory Entries    Format of one directory entry.
+
+ • Opening a Directory    How to open a directory stream.
+
+ • Reading/Closing Directory    How to read directory entries from the stream.
+
+ • Simple Directory Lister    A very simple directory listing program.
+
+ • Random Access Directory    Rereading part of the directory
+                                 already read with the same stream.
+
+ • Scanning Directory Content    Get entries for user selected subset of
+                                 contents in given directory.
+
+ • Simple Directory Lister Mark II    Revised version of the program.
+
+ • Low-level Directory Access    AS-Safe functions for directory access.
+
+TABLE_END
+

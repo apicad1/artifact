@@ -1,0 +1,21 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int F_GETFL
+This macro is used as the command argument to fcntl, to read the file status flags for the open file with descriptor filedes. 
+The normal return value from fcntl with this command is a nonnegative number which can be interpreted as the bitwise OR of the individual flags.  Since the file access modes are not single-bit values, you can mask off other bits in the returned flags with O_ACCMODE to compare them. 
+In case of an error, fcntl returns -1.  The following errno error conditions are defined for this command: 
+	EBADF
+The filedes argument is invalid. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int F_SETFL
+This macro is used as the command argument to fcntl, to set the file status flags for the open file corresponding to the filedes argument.  This command requires a third int argument to specify the new flags, so the call looks like this: 
+
+EXAMPLE_BEGIN
+fcntl (filedes, F_SETFL, new-flags)
+EXAMPLE_END
+
+You can’t change the access mode for the file in this way; that is, whether the file descriptor was opened for reading or writing. 
+The normal return value from fcntl with this command is an unspecified value other than -1, which indicates an error.  The error conditions are the same as for the F_GETFL command. 

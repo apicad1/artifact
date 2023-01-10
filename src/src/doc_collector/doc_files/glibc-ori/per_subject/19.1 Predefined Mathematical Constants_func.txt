@@ -1,0 +1,76 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- M_E  
+The base of natural logarithms. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- M_LOG2E  
+The logarithm to base 2 of M_E. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- M_LOG10E  
+The logarithm to base 10 of M_E. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- M_LN2  
+The natural logarithm of 2. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- M_LN10  
+The natural logarithm of 10. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- M_PI  
+Pi, the ratio of a circle’s circumference to its diameter. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- M_PI_2  
+Pi divided by two. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- M_PI_4  
+Pi divided by four. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- M_1_PI  
+The reciprocal of pi (1/pi) 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- M_2_PI  
+Two times the reciprocal of pi. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- M_2_SQRTPI  
+Two times the reciprocal of the square root of pi. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- M_SQRT2  
+The square root of two. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- M_SQRT1_2  
+The reciprocal of the square root of two (also the square root of 1/2). 

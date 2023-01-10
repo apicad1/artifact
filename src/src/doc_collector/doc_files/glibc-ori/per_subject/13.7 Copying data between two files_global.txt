@@ -1,0 +1,2 @@
+A special function is provided to copy data between two files on the same file system.  The system can optimize such copy operations.  This is particularly important on network file systems, where the data would otherwise have to be transferred twice over the network. 
+Note that this function only copies file data, but not metadata such as file permissions or extended attributes. 

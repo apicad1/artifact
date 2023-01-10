@@ -1,0 +1,35 @@
+This section describes how you can perform various other operations on file descriptors, such as inquiring about or setting flags describing the status of the file descriptor, manipulating record locks, and the like.  All of these operations are performed by the function fcntl. 
+The second argument to the fcntl function is a command that specifies which operation to perform.  The function and macros that name various flags that are used with it are declared in the header file fcntl.h.  Many of these flags are also used by the open function; see Opening and Closing Files.  
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int fcntl (int filedes, int command, …)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The fcntl function performs the operation specified by command on the file descriptor filedes.  Some commands require additional arguments to be supplied.  These additional arguments and the return value and error conditions are given in the detailed descriptions of the individual commands. 
+Briefly, here is a list of what the various commands are. 
+	F_DUPFD  
+Duplicate the file descriptor (return another file descriptor pointing to the same open file).  See Duplicating Descriptors.  
+	F_GETFD  
+Get flags associated with the file descriptor.  See Descriptor Flags.  
+	F_SETFD  
+Set flags associated with the file descriptor.  See Descriptor Flags.  
+	F_GETFL  
+Get flags associated with the open file.  See File Status Flags.  
+	F_SETFL  
+Set flags associated with the open file.  See File Status Flags.  
+	F_GETLK  
+Test a file lock.  See File Locks.  
+	F_SETLK  
+Set or clear a file lock.  See File Locks.  
+	F_SETLKW  
+Like F_SETLK, but wait for completion.  See File Locks.  
+	F_OFD_GETLK  
+Test an open file description lock.  See Open File Description Locks. Specific to Linux.  
+	F_OFD_SETLK  
+Set or clear an open file description lock.  See Open File Description Locks. Specific to Linux.  
+	F_OFD_SETLKW  
+Like F_OFD_SETLK, but block until lock is acquired. See Open File Description Locks.  Specific to Linux.  
+	F_GETOWN  
+Get process or process group ID to receive SIGIO signals. See Interrupt Input.  
+	F_SETOWN  
+Set process or process group ID to receive SIGIO signals. See Interrupt Input. 
+This function is a cancellation point in multi-threaded programs for the commands F_SETLKW (and the LFS analogous F_SETLKW64) and F_OFD_SETLKW.  This is a problem if the thread allocates some resources (like memory, file descriptors, semaphores or whatever) at the time fcntl is called.  If the thread gets canceled these resources stay allocated until the program ends.  To avoid this calls to fcntl should be protected using cancellation handlers. 

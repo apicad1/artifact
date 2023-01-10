@@ -1,0 +1,27 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void argp_usage (const struct argp_state *state)
+Preliminary: | MT-Unsafe race:argpbuf env locale | AS-Unsafe heap i18n corrupt | AC-Unsafe mem corrupt lock | See POSIX Safety Concepts. 
+Outputs the standard usage message for the argp parser referred to by state to state->err_stream and terminates the program with exit (argp_err_exit_status).  See Argp Global Variables. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void argp_error (const struct argp_state *state, const char *fmt, …)
+Preliminary: | MT-Unsafe race:argpbuf env locale | AS-Unsafe heap i18n corrupt | AC-Unsafe mem corrupt lock | See POSIX Safety Concepts. 
+Prints the printf format string fmt and following args, preceded by the program name and ‘:’, and followed by a ‘Try … --help’ message, and terminates the program with an exit status of argp_err_exit_status.  See Argp Global Variables. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void argp_failure (const struct argp_state *state, int status, int errnum, const char *fmt, …)
+Preliminary: | MT-Safe  | AS-Unsafe corrupt heap | AC-Unsafe lock corrupt mem | See POSIX Safety Concepts. 
+Similar to the standard GNU error-reporting function error, this prints the program name and ‘:’, the printf format string fmt, and the appropriate following args.  If it is non-zero, the standard unix error text for errnum is printed.  If status is non-zero, it terminates the program with that value as its exit status. 
+The difference between argp_failure and argp_error is that argp_error is for parsing errors, whereas argp_failure is for other problems that occur during parsing but don’t reflect a syntactic problem with the input, such as illegal values for options, bad phase of the moon, etc. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void argp_state_help (const struct argp_state *state, FILE *stream, unsigned flags)
+Preliminary: | MT-Unsafe race:argpbuf env locale | AS-Unsafe heap i18n corrupt | AC-Unsafe mem corrupt lock | See POSIX Safety Concepts. 
+Outputs a help message for the argp parser referred to by state, to stream.  The flags argument determines what sort of help message is produced.  See Argp Help Flags. 

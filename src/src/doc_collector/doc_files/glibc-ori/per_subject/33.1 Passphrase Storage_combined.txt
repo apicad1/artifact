@@ -1,0 +1,152 @@
+Sometimes it is necessary to be sure that a user is authorized to use some service a machine provides—for instance, to log in as a particular user id (see Users and Groups).  One traditional way of doing this is for each user to choose a secret passphrase; then, the system can ask someone claiming to be a user what the user’s passphrase is, and if the person gives the correct passphrase then the system can grant the appropriate privileges.  (Traditionally, these were called “passwords,” but nowadays a single word is too easy to guess.) 
+Programs that handle passphrases must take special care not to reveal them to anyone, no matter what.  It is not enough to keep them in a file that is only accessible with special privileges.  The file might be “leaked” via a bug or misconfiguration, and system administrators shouldn’t learn everyone’s passphrase even if they have to edit that file for some reason.  To avoid this, passphrases should also be converted into one-way hashes, using a one-way function, before they are stored. 
+A one-way function is easy to compute, but there is no known way to compute its inverse.  This means the system can easily check passphrases, by hashing them and comparing the result with the stored hash.  But an attacker who discovers someone’s passphrase hash can only discover the passphrase it corresponds to by guessing and checking.  The one-way functions are designed to make this process impractically slow, for all but the most obvious guesses.  (Do not use a word from the dictionary as your passphrase.) 
+The GNU C Library provides an interface to four one-way functions, based on the SHA-2-512, SHA-2-256, MD5, and DES cryptographic primitives.  New passphrases should be hashed with either of the SHA-based functions. The others are too weak for newly set passphrases, but we continue to support them for verifying old passphrases.  The DES-based hash is especially weak, because it ignores all but the first eight characters of its input. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: char * crypt (const char *phrase, const char *salt)
+Preliminary: | MT-Unsafe race:crypt | AS-Unsafe corrupt lock heap dlopen | AC-Unsafe lock mem | See POSIX Safety Concepts. 
+The function crypt converts a passphrase string, phrase, into a one-way hash suitable for storage in the user database.  The string that it returns will consist entirely of printable ASCII characters.  It will not contain whitespace, nor any of the characters ‘:’, ‘;’, ‘*’, ‘!’, or ‘\’. 
+The salt parameter controls which one-way function is used, and it also ensures that the output of the one-way function is different for every user, even if they have the same passphrase.  This makes it harder to guess passphrases from a large user database.  Without salt, the attacker could make a guess, run crypt on it once, and compare the result with all the hashes.  Salt forces the attacker to make separate calls to crypt for each user. 
+To verify a passphrase, pass the previously hashed passphrase as the salt.  To hash a new passphrase for storage, set salt to a string consisting of a prefix plus a sequence of randomly chosen characters, according to this table: 
+
+TABLE_BEGIN
+ SHA-2-512 ‘$6$’ 16 characters
+ SHA-2-256 ‘$5$’ 16 characters
+ MD5 ‘$1$’ 8 characters
+ DES ‘’ 2 characters
+TABLE_END
+
+In all cases, the random characters should be chosen from the alphabet ./0-9A-Za-z. 
+With all of the hash functions except DES, phrase can be arbitrarily long, and all eight bits of each byte are significant. With DES, only the first eight characters of phrase affect the output, and the eighth bit of each byte is also ignored. 
+crypt can fail.  Some implementations return NULL on failure, and others return an invalid hashed passphrase, which will begin with a ‘*’ and will not be the same as salt.  In either case, errno will be set to indicate the problem.  Some of the possible error codes are: 
+	EINVAL
+salt is invalid; neither a previously hashed passphrase, nor a well-formed new salt for any of the supported hash functions.  
+	EPERM
+The system configuration forbids use of the hash function selected by salt.  
+	ENOMEM
+Failed to allocate internal scratch storage.  
+	ENOSYS
+	EOPNOTSUPP
+Hashing passphrases is not supported at all, or the hash function selected by salt is not supported.  The GNU C Library does not use these error codes, but they may be encountered on other operating systems. 
+crypt uses static storage for both internal scratchwork and the string it returns.  It is not safe to call crypt from multiple threads simultaneously, and the string it returns will be overwritten by any subsequent call to crypt. 
+crypt is specified in the X/Open Portability Guide and is present on nearly all historical Unix systems.  However, the XPG does not specify any one-way functions. 
+crypt is declared in unistd.h.  The GNU C Library also declares this function in crypt.h. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: char * crypt_r (const char *phrase, const char *salt, struct crypt_data *data)
+Preliminary: | MT-Safe  | AS-Unsafe corrupt lock heap dlopen | AC-Unsafe lock mem | See POSIX Safety Concepts. 
+
+The function crypt_r is a thread-safe version of crypt. Instead of static storage, it uses the memory pointed to by its data argument for both scratchwork and the string it returns. It can safely be used from multiple threads, as long as different data objects are used in each thread.  The string it returns will still be overwritten by another call with the same data. 
+data must point to a struct crypt_data object allocated by the caller.  All of the fields of struct crypt_data are private, but before one of these objects is used for the first time, it must be initialized to all zeroes, using memset or similar. After that, it can be reused for many calls to crypt_r without erasing it again.  struct crypt_data is very large, so it is best to allocate it with malloc rather than as a local variable.  See Memory Allocation. 
+crypt_r is a GNU extension.  It is declared in crypt.h, as is struct crypt_data. 
+<<<<<<<<<<<<<<<<<<<<
+
+The following program shows how to use crypt the first time a passphrase is entered.  It uses getentropy to make the salt as unpredictable as possible; see Unpredictable Bytes. 
+
+EXAMPLE_BEGIN
+
+
+#include <stdio.h>
+#include <unistd.h>
+#include <crypt.h>
+
+int
+main(void)
+{
+  unsigned char ubytes[16];
+  char salt[20];
+  const char *const saltchars =
+    "./0123456789ABCDEFGHIJKLMNOPQRST"
+    "UVWXYZabcdefghijklmnopqrstuvwxyz";
+  char *hash;
+  int i;
+
+  /* Retrieve 16 unpredictable bytes from the operating system. */
+  if (getentropy (ubytes, sizeof ubytes))
+    {
+      perror ("getentropy");
+      return 1;
+    }
+
+  /* Use them to fill in the salt string. */
+  salt[0] = '$';
+  salt[1] = '5'; /* SHA-256 */
+  salt[2] = '$';
+  for (i = 0; i < 16; i++)
+    salt[3+i] = saltchars[ubytes[i] & 0x3f];
+  salt[3+i] = '\0';
+
+  /* Read in the user’s passphrase and hash it. */
+  hash = crypt (getpass ("Enter new passphrase: "), salt);
+  if (!hash || hash[0] == '*')
+    {
+      perror ("crypt");
+      return 1;
+    }
+
+  /* Print the results. */
+  puts (hash);
+  return 0;
+}
+EXAMPLE_END
+
+The next program demonstrates how to verify a passphrase.  It checks a hash hardcoded into the program, because looking up real users’ hashed passphrases may require special privileges (see User Database). It also shows that different one-way functions produce different hashes for the same passphrase. 
+
+EXAMPLE_BEGIN
+
+
+#include <stdio.h>
+#include <string.h>
+#include <unistd.h>
+#include <crypt.h>
+
+/* ‘GNU's Not Unix’ hashed using SHA-256, MD5, and DES. */
+static const char hash_sha[] =
+  "$5$DQ2z5NHf1jNJnChB$kV3ZTR0aUaosujPhLzR84Llo3BsspNSe4/tsp7VoEn6";
+static const char hash_md5[] = "$1$A3TxDv41$rtXVTUXl2LkeSV0UU5xxs1";
+static const char hash_des[] = "FgkTuF98w5DaI";
+
+int
+main(void)
+{
+  char *phrase;
+  int status = 0;
+
+  /* Prompt for a passphrase. */
+  phrase = getpass ("Enter passphrase: ");
+
+  /* Compare against the stored hashes.  Any input that begins with
+     ‘GNU's No’ will match the DES hash, but the other two will
+     only match ‘GNU's Not Unix’. */
+
+  if (strcmp (crypt (phrase, hash_sha), hash_sha))
+    {
+      puts ("SHA: not ok");
+      status = 1;
+    }
+  else
+    puts ("SHA: ok");
+
+  if (strcmp (crypt (phrase, hash_md5), hash_md5))
+    {
+      puts ("MD5: not ok");
+      status = 1;
+    }
+  else
+    puts ("MD5: ok");
+
+  if (strcmp (crypt (phrase, hash_des), hash_des))
+    {
+      puts ("DES: not ok");
+      status = 1;
+    }
+  else
+    puts ("DES: ok");
+
+  return status;
+}
+EXAMPLE_END
+

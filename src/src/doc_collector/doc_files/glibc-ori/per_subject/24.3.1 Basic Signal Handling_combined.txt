@@ -1,0 +1,83 @@
+The signal function provides a simple interface for establishing an action for a particular signal.  The function and associated macros are declared in the header file signal.h.  
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: sighandler_t
+This is the type of signal handler functions.  Signal handlers take one integer argument specifying the signal number, and have return type void.  So, you should define handler functions like this: 
+
+EXAMPLE_BEGIN
+void handler (int signum) { … }
+EXAMPLE_END
+
+The name sighandler_t for this data type is a GNU extension. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: sighandler_t signal (int signum, sighandler_t action)
+Preliminary: | MT-Safe sigintr | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The signal function establishes action as the action for the signal signum. 
+The first argument, signum, identifies the signal whose behavior you want to control, and should be a signal number.  The proper way to specify a signal number is with one of the symbolic signal names (see Standard Signals)—don’t use an explicit number, because the numerical code for a given kind of signal may vary from operating system to operating system. 
+The second argument, action, specifies the action to use for the signal signum.  This can be one of the following: 
+	SIG_DFL
+  SIG_DFL specifies the default action for the particular signal. The default actions for various kinds of signals are stated in Standard Signals.  
+	SIG_IGN
+  SIG_IGN specifies that the signal should be ignored.  Your program generally should not ignore signals that represent serious events or that are normally used to request termination.  You cannot ignore the SIGKILL or SIGSTOP signals at all.  You can ignore program error signals like SIGSEGV, but ignoring the error won’t enable the program to continue executing meaningfully.  Ignoring user requests such as SIGINT, SIGQUIT, and SIGTSTP is unfriendly.  When you do not wish signals to be delivered during a certain part of the program, the thing to do is to block them, not ignore them. See Blocking Signals.  
+	handler
+Supply the address of a handler function in your program, to specify running this handler as the way to deliver the signal.  For more information about defining signal handler functions, see Defining Handlers. 
+If you set the action for a signal to SIG_IGN, or if you set it to SIG_DFL and the default action is to ignore that signal, then any pending signals of that type are discarded (even if they are blocked).  Discarding the pending signals means that they will never be delivered, not even if you subsequently specify another action and unblock this kind of signal. 
+The signal function returns the action that was previously in effect for the specified signum.  You can save this value and restore it later by calling signal again. 
+If signal can’t honor the request, it returns SIG_ERR instead.  The following errno error conditions are defined for this function: 
+	EINVAL
+You specified an invalid signum; or you tried to ignore or provide a handler for SIGKILL or SIGSTOP. 
+<<<<<<<<<<<<<<<<<<<<
+
+Compatibility Note: A problem encountered when working with the signal function is that it has different semantics on BSD and SVID systems.  The difference is that on SVID systems the signal handler is deinstalled after signal delivery.  On BSD systems the handler must be explicitly deinstalled.  In the GNU C Library we use the BSD version by default.  To use the SVID version you can either use the function sysv_signal (see below) or use the _XOPEN_SOURCE feature select macro (see Feature Test Macros).  In general, use of these functions should be avoided because of compatibility problems.  It is better to use sigaction if it is available since the results are much more reliable. 
+Here is a simple example of setting up a handler to delete temporary files when certain fatal signals happen: 
+
+EXAMPLE_BEGIN
+#include <signal.h>
+
+void
+termination_handler (int signum)
+{
+  struct temp_file *p;
+
+  for (p = temp_file_list; p; p = p->next)
+    unlink (p->name);
+}
+
+int
+main (void)
+{
+  …
+  if (signal (SIGINT, termination_handler) == SIG_IGN)
+    signal (SIGINT, SIG_IGN);
+  if (signal (SIGHUP, termination_handler) == SIG_IGN)
+    signal (SIGHUP, SIG_IGN);
+  if (signal (SIGTERM, termination_handler) == SIG_IGN)
+    signal (SIGTERM, SIG_IGN);
+  …
+}
+EXAMPLE_END
+
+Note that if a given signal was previously set to be ignored, this code avoids altering that setting.  This is because non-job-control shells often ignore certain signals when starting children, and it is important for the children to respect this. 
+We do not handle SIGQUIT or the program error signals in this example because these are designed to provide information for debugging (a core dump), and the temporary files may give useful information. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: sighandler_t sysv_signal (int signum, sighandler_t action)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The sysv_signal implements the behavior of the standard signal function as found on SVID systems.  The difference to BSD systems is that the handler is deinstalled after a delivery of a signal. 
+Compatibility Note: As said above for signal, this function should be avoided when possible.  sigaction is the preferred method. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: sighandler_t ssignal (int signum, sighandler_t action)
+Preliminary: | MT-Safe sigintr | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The ssignal function does the same thing as signal; it is provided only for compatibility with SVID. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: sighandler_t SIG_ERR
+The value of this macro is used as the return value from signal to indicate an error. 

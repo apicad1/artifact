@@ -1,0 +1,1 @@
+In making a connection, the client makes a connection while the server waits for and accepts the connection.  Here we discuss what the client program must do with the connect function, which is declared in sys/socket.h. 

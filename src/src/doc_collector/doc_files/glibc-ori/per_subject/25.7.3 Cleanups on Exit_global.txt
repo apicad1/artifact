@@ -1,0 +1,24 @@
+Your program can arrange to run its own cleanup functions if normal termination happens.  If you are writing a library for use in various application programs, then it is unreliable to insist that all applications call the library’s cleanup functions explicitly before exiting.  It is much more robust to make the cleanup invisible to the application, by setting up a cleanup function in the library itself using atexit or on_exit. 
+Here’s a trivial program that illustrates the use of exit and atexit: 
+
+EXAMPLE_BEGIN
+
+
+#include <stdio.h>
+#include <stdlib.h>
+
+void
+bye (void)
+{
+  puts ("Goodbye, cruel world....");
+}
+
+int
+main (void)
+{
+  atexit (bye);
+  exit (EXIT_SUCCESS);
+}
+EXAMPLE_END
+
+When this program is executed, it just prints the message and exits. 

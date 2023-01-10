@@ -1,0 +1,14 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void clearerr (FILE *stream)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Unsafe lock | See POSIX Safety Concepts. 
+This function clears the end-of-file and error indicators for the stream stream. 
+The file positioning functions (see File Positioning) also clear the end-of-file indicator for the stream. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void clearerr_unlocked (FILE *stream)
+Preliminary: | MT-Safe race:stream | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The clearerr_unlocked function is equivalent to the clearerr function except that it does not implicitly lock the stream. 
+This function is a GNU extension. 

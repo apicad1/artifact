@@ -1,0 +1,6 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void argp_help (const struct argp *argp, FILE *stream, unsigned flags, char *name)
+Preliminary: | MT-Unsafe race:argpbuf env locale | AS-Unsafe heap i18n corrupt | AC-Unsafe mem corrupt lock | See POSIX Safety Concepts. 
+This outputs a help message for the argp parser argp to stream.  The type of messages printed will be determined by flags. 
+Any options such as ‘--help’ that are implemented automatically by argp itself will not be present in the help output; for this reason it is best to use argp_state_help if calling from within an argp parser function.  See Argp Helper Functions. 

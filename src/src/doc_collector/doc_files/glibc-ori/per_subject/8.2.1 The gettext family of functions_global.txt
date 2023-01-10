@@ -1,0 +1,20 @@
+The paradigms underlying the gettext approach to message translations is different from that of the catgets functions the basic functionally is equivalent.  There are functions of the following categories: 
+
+TABLE_BEGIN
+ • Translation with gettext    What has to be done to translate a message.
+
+ • Locating gettext catalog    How to determine which catalog to be used.
+
+ • Advanced gettext functions    Additional functions for more complicated
+                                    situations.
+
+ • Charset conversion in gettext    How to specify the output character set
+                                    gettext uses.
+
+ • GUI program problems    How to use gettext in GUI programs.
+
+ • Using gettextized software    The possibilities of the user to influence
+                                    the way gettext works.
+
+TABLE_END
+

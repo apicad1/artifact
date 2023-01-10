@@ -1,0 +1,29 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: size_t fread (void *data, size_t size, size_t count, FILE *stream)
+Preliminary: | MT-Safe  | AS-Unsafe corrupt | AC-Unsafe lock corrupt | See POSIX Safety Concepts. 
+This function reads up to count objects of size size into the array data, from the stream stream.  It returns the number of objects actually read, which might be less than count if a read error occurs or the end of the file is reached.  This function returns a value of zero (and doesn’t read anything) if either size or count is zero. 
+If fread encounters end of file in the middle of an object, it returns the number of complete objects read, and discards the partial object.  Therefore, the stream remains at the actual end of the file. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: size_t fread_unlocked (void *data, size_t size, size_t count, FILE *stream)
+Preliminary: | MT-Safe race:stream | AS-Unsafe corrupt | AC-Unsafe corrupt | See POSIX Safety Concepts. 
+The fread_unlocked function is equivalent to the fread function except that it does not implicitly lock the stream. 
+This function is a GNU extension. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: size_t fwrite (const void *data, size_t size, size_t count, FILE *stream)
+Preliminary: | MT-Safe  | AS-Unsafe corrupt | AC-Unsafe lock corrupt | See POSIX Safety Concepts. 
+This function writes up to count objects of size size from the array data, to the stream stream.  The return value is normally count, if the call succeeds.  Any other value indicates some sort of error, such as running out of space. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: size_t fwrite_unlocked (const void *data, size_t size, size_t count, FILE *stream)
+Preliminary: | MT-Safe race:stream | AS-Unsafe corrupt | AC-Unsafe corrupt | See POSIX Safety Concepts. 
+The fwrite_unlocked function is equivalent to the fwrite function except that it does not implicitly lock the stream. 
+This function is a GNU extension. 

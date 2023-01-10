@@ -1,0 +1,5 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: TEMP_FAILURE_RETRY (expression)
+This macro evaluates expression once, and examines its value as type long int.  If the value equals -1, that indicates a failure and errno should be set to show what kind of failure. If it fails and reports error code EINTR, TEMP_FAILURE_RETRY evaluates it again, and over and over until the result is not a temporary failure. 
+The value returned by TEMP_FAILURE_RETRY is whatever value expression produced. 

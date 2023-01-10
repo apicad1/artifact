@@ -1,0 +1,18 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Probe: setjmp (void *$arg1, int $arg2, void *$arg3)
+This probe is triggered whenever setjmp or sigsetjmp is called.  Argument $arg1 is a pointer to the jmp_buf passed as the first argument of setjmp or sigsetjmp, $arg2 is the second argument of sigsetjmp or zero if this is a call to setjmp and $arg3 is a pointer to the return address that will be stored in the jmp_buf. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Probe: longjmp (void *$arg1, int $arg2, void *$arg3)
+This probe is triggered whenever longjmp or siglongjmp is called.  Argument $arg1 is a pointer to the jmp_buf passed as the first argument of longjmp or siglongjmp, $arg2 is the return value passed as the second argument of longjmp or siglongjmp and $arg3 is a pointer to the return address longjmp or siglongjmp will return to. 
+The longjmp probe is triggered at a point where the registers have not yet been restored to the values in the jmp_buf and unwinding will show a call stack including the caller of longjmp or siglongjmp. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Probe: longjmp_target (void *$arg1, int $arg2, void *$arg3)
+This probe is triggered under the same conditions and with the same arguments as the longjmp probe. 
+The longjmp_target probe is triggered at a point where the registers have been restored to the values in the jmp_buf and unwinding will show a call stack including the caller of setjmp or sigsetjmp. 

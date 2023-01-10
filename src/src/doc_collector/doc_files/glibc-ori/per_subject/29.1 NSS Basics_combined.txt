@@ -1,0 +1,88 @@
+The basic idea is to put the implementation of the different services offered to access the databases in separate modules.  This has some advantages: 
+To fulfill the first goal above, the ABI of the modules will be described below.  For getting the implementation of a new service right it is important to understand how the functions in the modules get called. They are in no way designed to be used by the programmer directly. Instead the programmer should only use the documented and standardized functions to access the databases. 
+The databases available in the NSS are 
+
+>>>>>>>>>>>>>>>>>>>>
+- aliases
+Mail aliases 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ethers
+Ethernet numbers, 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- group
+Groups of users, see Group Database. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- gshadow
+Group passphrase hashes and related information. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- hosts
+Host names and numbers, see Host Names. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- initgroups
+Supplementary group access list. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- netgroup
+Network wide list of host and users, see Netgroup Database. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- networks
+Network names and numbers, see Networks Database. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- passwd
+User identities, see User Database. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- protocols
+Network protocols, see Protocols Database. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- publickey
+Public keys for Secure RPC. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- rpc
+Remote procedure call names and numbers. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- services
+Network services, see Services Database. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- shadow
+User passphrase hashes and related information. 
+<<<<<<<<<<<<<<<<<<<<
+
+More databases may be added later. 

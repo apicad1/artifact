@@ -1,0 +1,16 @@
+When a program is executed, it receives information about the context in which it was invoked in two ways.  The first mechanism uses the argv and argc arguments to its main function, and is discussed in Program Arguments.  The second mechanism uses environment variables and is discussed in this section. 
+The argv mechanism is typically used to pass command-line arguments specific to the particular program being invoked.  The environment, on the other hand, keeps track of information that is shared by many programs, changes infrequently, and that is less frequently used. 
+The environment variables discussed in this section are the same environment variables that you set using assignments and the export command in the shell.  Programs executed from the shell inherit all of the environment variables from the shell. 
+Standard environment variables are used for information about the user’s home directory, terminal type, current locale, and so on; you can define additional variables for other purposes.  The set of all environment variables that have values is collectively known as the environment. 
+Names of environment variables are case-sensitive and must not contain the character ‘=’.  System-defined environment variables are invariably uppercase. 
+The values of environment variables can be anything that can be represented as a string.  A value must not contain an embedded null character, since this is assumed to terminate the string. 
+
+TABLE_BEGIN
+ • Environment Access    How to get and set the values of
+				 environment variables.
+
+ • Standard Environment    These environment variables have
+                		 standard interpretations.
+
+TABLE_END
+

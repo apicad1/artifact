@@ -1,0 +1,55 @@
+GETW(3)                                         Linux Programmer's Manual                                        GETW(3)
+
+NAME
+       getw, putw - input and output of words (ints)
+
+SYNOPSIS
+       #include <stdio.h>
+
+       int getw(FILE *stream);
+
+       int putw(int w, FILE *stream);
+
+   Feature Test Macro Requirements for glibc (see feature_test_macros(7)):
+
+       getw(), putw():
+           Since glibc 2.3.3:
+               _XOPEN_SOURCE && ! (_POSIX_C_SOURCE >= 200112L)
+                   || /* Glibc since 2.19: */ _DEFAULT_SOURCE
+                   || /* Glibc versions <= 2.19: */ _BSD_SOURCE || _SVID_SOURCE
+           Before glibc 2.3.3:
+               _SVID_SOURCE || _BSD_SOURCE || _XOPEN_SOURCE
+
+DESCRIPTION
+       getw()  reads a word (that is, an int) from stream.  It's provided for compatibility with SVr4.  We recommend you
+       use fread(3) instead.
+
+       putw() writes the word w (that is, an int) to stream.  It is provided for compatibility with SVr4, but we  recom‐
+       mend you use fwrite(3) instead.
+
+RETURN VALUE
+       Normally, getw() returns the word read, and putw() returns 0.  On error, they return EOF.
+
+ATTRIBUTES
+       For an explanation of the terms used in this section, see attributes(7).
+
+       ┌───────────────┬───────────────┬─────────┐
+       │Interface      │ Attribute     │ Value   │
+       ├───────────────┼───────────────┼─────────┤
+       │getw(), putw() │ Thread safety │ MT-Safe │
+       └───────────────┴───────────────┴─────────┘
+CONFORMING TO
+       SVr4, SUSv2.  Not present in POSIX.1.
+
+BUGS
+       The  value  returned  on error is also a legitimate data value.  ferror(3) can be used to distinguish between the
+       two cases.
+
+SEE ALSO
+       ferror(3), fread(3), fwrite(3), getc(3), putc(3)
+
+COLOPHON
+       This page is part of release 5.05 of the Linux man-pages project.  A  description  of  the  project,  information
+       about reporting bugs, and the latest version of this page, can be found at https://www.kernel.org/doc/man-pages/.
+
+GNU                                                    2016-03-15                                                GETW(3)

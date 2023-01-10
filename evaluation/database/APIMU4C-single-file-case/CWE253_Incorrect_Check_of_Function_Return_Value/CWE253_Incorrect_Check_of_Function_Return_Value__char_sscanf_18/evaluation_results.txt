@@ -1,0 +1,6 @@
+Total samples: 1, Total_reports: 0
+             TP: 0, FP: 0, FN: 1
+***** TP *****
+***** FN *****
+/mnt/e/Projects/api_misuse/my_tool_sym/database/APIMU4C/API_Misuse_Benchmark/CWE253_Incorrect_Check_of_Function_Return_Value/CWE253_Incorrect_Check_of_Function_Return_Value__char_sscanf_18/CWE253_Incorrect_Check_of_Function_Return_Value__char_sscanf_18.c:70
+***** FP *****

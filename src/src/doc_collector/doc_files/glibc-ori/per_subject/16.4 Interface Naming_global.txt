@@ -1,0 +1,3 @@
+Each network interface has a name.  This usually consists of a few letters that relate to the type of interface, which may be followed by a number if there is more than one interface of that type.  Examples might be lo (the loopback interface) and eth0 (the first Ethernet interface). 
+Although such names are convenient for humans, it would be clumsy to have to use them whenever a program needs to refer to an interface.  In such situations an interface is referred to by its index, which is an arbitrarily-assigned small positive integer. 
+The following functions, constants and data types are declared in the header file net/if.h. 

@@ -1,0 +1,2 @@
+The usual way to get and set terminal modes is with the functions described in Terminal Modes.  However, on some systems you can use the BSD-derived functions in this section to do some of the same things.  On many systems, these functions do not exist.  Even with the GNU C Library, the functions simply fail with errno = ENOSYS with many kernels, including Linux. 
+The symbols used in this section are declared in sgtty.h. 

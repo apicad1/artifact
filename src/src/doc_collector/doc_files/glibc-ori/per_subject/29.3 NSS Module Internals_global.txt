@@ -1,0 +1,11 @@
+Now it is time to describe what the modules look like.  The functions contained in a module are identified by their names.  I.e., there is no jump table or the like.  How this is done is of no interest here; those interested in this topic should read about Dynamic Linking. 
+
+TABLE_BEGIN
+ • NSS Module Names    Construction of the interface function of
+                                the NSS modules.
+
+ • NSS Modules Interface    Programming interface in the NSS module
+                                functions.
+
+TABLE_END
+

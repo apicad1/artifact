@@ -1,0 +1,17 @@
+TS 18661-1:2014 defines macros for the width of integer types (the number of value and sign bits).  One benefit of these macros is they can be used in #if preprocessor directives, whereas sizeof cannot.  The following macros are defined in limits.h. 
+Further such macros are defined in stdint.h.  Apart from those for types specified by width (see Integers), the following are defined: 
+A common reason that a program needs to know how many bits are in an integer type is for using an array of unsigned long int as a bit vector.  You can access the bit at index n with: 
+
+EXAMPLE_BEGIN
+vector[n / ULONG_WIDTH] & (1UL << (n % ULONG_WIDTH))
+EXAMPLE_END
+
+Before ULONG_WIDTH was a part of the C language, CHAR_BIT was used to compute the number of bits in an integer data type. 
+The number of bits in any data type type can be computed like this: 
+
+EXAMPLE_BEGIN
+sizeof (type) * CHAR_BIT
+EXAMPLE_END
+
+That expression includes padding bits as well as value and sign bits. On all systems supported by the GNU C Library, standard integer types other than _Bool do not have any padding bits. 
+Portability Note: One cannot actually easily compute the number of usable bits in a portable manner. 

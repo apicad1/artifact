@@ -1,0 +1,46 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: sigset_t
+The sigset_t data type is used to represent a signal set. Internally, it may be implemented as either an integer or structure type. 
+For portability, use only the functions described in this section to initialize, change, and retrieve information from sigset_t objects—don’t try to manipulate them directly. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int sigemptyset (sigset_t *set)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function initializes the signal set set to exclude all of the defined signals.  It always returns 0. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int sigfillset (sigset_t *set)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function initializes the signal set set to include all of the defined signals.  Again, the return value is 0. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int sigaddset (sigset_t *set, int signum)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function adds the signal signum to the signal set set. All sigaddset does is modify set; it does not block or unblock any signals. 
+The return value is 0 on success and -1 on failure. The following errno error condition is defined for this function: 
+	EINVAL
+The signum argument doesn’t specify a valid signal. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int sigdelset (sigset_t *set, int signum)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function removes the signal signum from the signal set set.  All sigdelset does is modify set; it does not block or unblock any signals.  The return value and error conditions are the same as for sigaddset. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int sigismember (const sigset_t *set, int signum)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The sigismember function tests whether the signal signum is a member of the signal set set.  It returns 1 if the signal is in the set, 0 if not, and -1 if there is an error. 
+The following errno error condition is defined for this function: 
+	EINVAL
+The signum argument doesn’t specify a valid signal. 

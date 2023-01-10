@@ -1,0 +1,13 @@
+This chapter describes facilities for controlling the system that underlies a process (including the operating system and hardware) and for getting information about it.  Anyone can generally use the informational facilities, but usually only a properly privileged process can make changes. 
+
+TABLE_BEGIN
+ • Host Identification    Determining the name of the machine.
+
+ • Platform Type    Determining operating system and basic
+                                  machine type
+
+ • Filesystem Handling    Controlling/querying mounts
+
+TABLE_END
+
+To get information on parameters of the system that are built into the system, such as the maximum length of a filename, System Configuration. 

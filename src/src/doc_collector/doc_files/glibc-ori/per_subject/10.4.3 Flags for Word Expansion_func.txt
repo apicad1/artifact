@@ -1,0 +1,36 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- WRDE_APPEND  
+Append the words from this expansion to the vector of words produced by previous calls to wordexp.  This way you can effectively expand several words as if they were concatenated with spaces between them. 
+In order for appending to work, you must not modify the contents of the word vector structure between calls to wordexp.  And, if you set WRDE_DOOFFS in the first call to wordexp, you must also set it when you append to the results. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- WRDE_DOOFFS  
+Leave blank slots at the beginning of the vector of words. The we_offs field says how many slots to leave. The blank slots contain null pointers. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- WRDE_NOCMD  
+Don’t do command substitution; if the input requests command substitution, report an error. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- WRDE_REUSE  
+Reuse a word vector made by a previous call to wordexp. Instead of allocating a new vector of words, this call to wordexp will use the vector that already exists (making it larger if necessary). 
+Note that the vector may move, so it is not safe to save an old pointer and use it again after calling wordexp.  You must fetch we_pathv anew after each call. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- WRDE_SHOWERR  
+Do show any error messages printed by commands run by command substitution. More precisely, allow these commands to inherit the standard error output stream of the current process.  By default, wordexp gives these commands a standard error stream that discards all output. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- WRDE_UNDEF  
+If the input refers to a shell variable that is not defined, report an error. 

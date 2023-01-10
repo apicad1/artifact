@@ -1,0 +1,19 @@
+The GNU C Library supports two interfaces for matching regular expressions.  One is the standard POSIX.2 interface, and the other is what the GNU C Library has had for many years. 
+Both interfaces are declared in the header file regex.h. If you define _POSIX_C_SOURCE, then only the POSIX.2 functions, structures, and constants are declared. 
+
+TABLE_BEGIN
+ • POSIX Regexp Compilation    Using regcomp to prepare to match.
+
+ • Flags for POSIX Regexps    Syntax variations for regcomp.
+
+ • Matching POSIX Regexps    Using regexec to match the compiled
+				   pattern that you get from regcomp.
+
+ • Regexp Subexpressions    Finding which parts of the string were matched.
+
+ • Subexpression Complications    Find points of which parts were matched.
+
+ • Regexp Cleanup    Freeing storage; reporting errors.
+
+TABLE_END
+

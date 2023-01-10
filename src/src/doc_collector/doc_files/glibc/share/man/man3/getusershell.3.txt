@@ -1,0 +1,57 @@
+GETUSERSHELL(3)                                 Linux Programmer's Manual                                GETUSERSHELL(3)
+
+NAME
+       getusershell, setusershell, endusershell - get permitted user shells
+
+SYNOPSIS
+       #include <unistd.h>
+
+       char *getusershell(void);
+       void setusershell(void);
+       void endusershell(void);
+
+   Feature Test Macro Requirements for glibc (see feature_test_macros(7)):
+
+       getusershell(), setusershell(), endusershell():
+           Since glibc 2.21:
+               _DEFAULT_SOURCE
+           In glibc 2.19 and 2.20:
+               _DEFAULT_SOURCE || (_XOPEN_SOURCE && _XOPEN_SOURCE < 500)
+           Up to and including glibc 2.19:
+               _BSD_SOURCE || (_XOPEN_SOURCE && _XOPEN_SOURCE < 500)
+
+DESCRIPTION
+       The  getusershell() function returns the next line from the file /etc/shells, opening the file if necessary.  The
+       line should contain the pathname of a valid user shell.  If /etc/shells does not exist or is unreadable, getuser‐
+       shell() behaves as if /bin/sh and /bin/csh were listed in the file.
+
+       The setusershell() function rewinds /etc/shells.
+
+       The endusershell() function closes /etc/shells.
+
+RETURN VALUE
+       The getusershell() function returns NULL on end-of-file.
+
+FILES
+       /etc/shells
+
+ATTRIBUTES
+       For an explanation of the terms used in this section, see attributes(7).
+
+       ┌────────────────────────────────────────────────────────────────────────────────────┬───────────────┬───────────┐
+       │Interface                                                                           │ Attribute     │ Value     │
+       ├────────────────────────────────────────────────────────────────────────────────────┼───────────────┼───────────┤
+       │getusershell(), setusershell(), endusershell()                                      │ Thread safety │ MT-Unsafe │
+       └────────────────────────────────────────────────────────────────────────────────────┴───────────────┴───────────┘
+
+CONFORMING TO
+       4.3BSD.
+
+SEE ALSO
+       shells(5)
+
+COLOPHON
+       This  page  is  part  of  release 5.13 of the Linux man-pages project.  A description of the project, information
+       about reporting bugs, and the latest version of this page, can be found at https://www.kernel.org/doc/man-pages/.
+
+GNU                                                    2021-03-22                                        GETUSERSHELL(3)

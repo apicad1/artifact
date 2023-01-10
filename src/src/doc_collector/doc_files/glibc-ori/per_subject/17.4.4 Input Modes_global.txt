@@ -1,0 +1,2 @@
+This section describes the terminal attribute flags that control fairly low-level aspects of input processing: handling of parity errors, break signals, flow control, and RET and LFD characters. 
+All of these flags are bits in the c_iflag member of the struct termios structure.  The member is an integer, and you change flags using the operators &, | and ^.  Don’t try to specify the entire value for c_iflag—instead, change only specific flags and leave the rest untouched (see Setting Modes). 

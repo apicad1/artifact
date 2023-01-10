@@ -1,0 +1,19 @@
+This chapter describes functions for manipulating dates and times, including functions for determining what time it is and conversion between different time representations. 
+
+TABLE_BEGIN
+ • Time Basics    Concepts and definitions.
+
+ • Time Types    Data types to represent time.
+
+ • Calculating Elapsed Time    How to calculate the length of an interval.
+
+ • Processor And CPU Time    Time a program has spent executing.
+
+ • Calendar Time    Manipulation of “real” dates and times.
+
+ • Setting an Alarm    Sending a signal after a specified time.
+
+ • Sleeping    Waiting for a period of time.
+
+TABLE_END
+

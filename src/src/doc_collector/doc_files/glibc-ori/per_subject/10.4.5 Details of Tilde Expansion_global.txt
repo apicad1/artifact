@@ -1,0 +1,4 @@
+It’s a standard part of shell syntax that you can use ‘~’ at the beginning of a file name to stand for your own home directory.  You can use ‘~user’ to stand for user’s home directory. 
+Tilde expansion is the process of converting these abbreviations to the directory names that they stand for. 
+Tilde expansion applies to the ‘~’ plus all following characters up to whitespace or a slash.  It takes place only at the beginning of a word, and only if none of the characters to be transformed is quoted in any way. 
+Plain ‘~’ uses the value of the environment variable HOME as the proper home directory name.  ‘~’ followed by a user name uses getpwname to look up that user in the user database, and uses whatever directory is recorded there.  Thus, ‘~’ followed by your own name can give different results from plain ‘~’, if the value of HOME is not really your home directory. 

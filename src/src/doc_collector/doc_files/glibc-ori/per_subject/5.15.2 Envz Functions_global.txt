@@ -1,0 +1,5 @@
+Envz vectors are just argz vectors with additional constraints on the form of each element; as such, argz functions can also be used on them, where it makes sense. 
+Each element in an envz vector is a name-value pair, separated by a '=' byte; if multiple '=' bytes are present in an element, those after the first are considered part of the value, and treated like all other non-'\0' bytes. 
+If no '=' bytes are present in an element, that element is considered the name of a “null” entry, as distinct from an entry with an empty value: envz_get will return 0 if given the name of null entry, whereas an entry with an empty value would result in a value of ""; envz_entry will still find such entries, however.  Null entries can be removed with the envz_strip function. 
+As with argz functions, envz functions that may allocate memory (and thus fail) have a return type of error_t, and return either 0 or ENOMEM. 
+These functions are declared in the standard include file envz.h. 

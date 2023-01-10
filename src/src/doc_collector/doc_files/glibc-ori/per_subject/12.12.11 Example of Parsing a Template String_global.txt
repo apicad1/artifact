@@ -1,0 +1,66 @@
+Here is an example of decoding argument types for a format string.  We assume this is part of an interpreter which contains arguments of type NUMBER, CHAR, STRING and STRUCTURE (and perhaps others which are not valid here). 
+
+EXAMPLE_BEGIN
+/* Test whether the nargs specified objects
+   in the vector args are valid
+   for the format string format:
+   if so, return 1.
+   If not, return 0 after printing an error message.  */
+
+int
+validate_args (char *format, int nargs, OBJECT *args)
+{
+  int *argtypes;
+  int nwanted;
+
+  /* Get the information about the arguments.
+     Each conversion specification must be at least two characters
+     long, so there cannot be more specifications than half the
+     length of the string.  */
+
+  argtypes = (int *) alloca (strlen (format) / 2 * sizeof (int));
+  nwanted = parse_printf_format (format, nargs, argtypes);
+
+  /* Check the number of arguments.  */
+  if (nwanted > nargs)
+    {
+      error ("too few arguments (at least %d required)", nwanted);
+      return 0;
+    }
+
+  /* Check the C type wanted for each argument
+     and see if the object given is suitable.  */
+  for (i = 0; i < nwanted; i++)
+    {
+      int wanted;
+
+      if (argtypes[i] & PA_FLAG_PTR)
+	wanted = STRUCTURE;
+      else
+	switch (argtypes[i] & ~PA_FLAG_MASK)
+	  {
+	  case PA_INT:
+	  case PA_FLOAT:
+	  case PA_DOUBLE:
+	    wanted = NUMBER;
+	    break;
+	  case PA_CHAR:
+	    wanted = CHAR;
+	    break;
+	  case PA_STRING:
+	    wanted = STRING;
+	    break;
+	  case PA_POINTER:
+	    wanted = STRUCTURE;
+	    break;
+	  }
+      if (TYPE (args[i]) != wanted)
+	{
+	  error ("type mismatch for arg number %d", i);
+	  return 0;
+	}
+    }
+  return 1;
+}
+EXAMPLE_END
+

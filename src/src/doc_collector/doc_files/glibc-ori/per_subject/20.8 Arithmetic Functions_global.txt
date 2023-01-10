@@ -1,0 +1,19 @@
+The C library provides functions to do basic operations on floating-point numbers.  These include absolute value, maximum and minimum, normalization, bit twiddling, rounding, and a few others. 
+
+TABLE_BEGIN
+ • Absolute Value    Absolute values of integers and floats.
+
+ • Normalization Functions    Extracting exponents and putting them back.
+
+ • Rounding Functions    Rounding floats to integers.
+
+ • Remainder Functions    Remainders on division, precisely defined.
+
+ • FP Bit Twiddling    Sign bit adjustment.  Adding epsilon.
+
+ • FP Comparison Functions    Comparisons without risk of exceptions.
+
+ • Misc FP Arithmetic    Max, min, positive difference, multiply-add.
+
+TABLE_END
+

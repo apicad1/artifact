@@ -1,0 +1,14 @@
+The children field in a struct argp enables other argp parsers to be combined with the referencing one for the parsing of a single set of arguments.  This field should point to a vector of struct argp_child, which is terminated by an entry having a value of zero in the argp field. 
+Where conflicts between combined parsers arise, as when two specify an option with the same name, the parser conflicts are resolved in favor of the parent argp parser(s), or the earlier of the argp parsers in the list of children. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: struct argp_child
+An entry in the list of subsidiary argp parsers pointed to by the children field in a struct argp.  The fields are as follows: 
+	const struct argp *argp
+The child argp parser, or zero to end of the list.  
+	int flags
+Flags for this child.  
+	const char *header
+If non-zero, this is an optional header to be printed within help output before the child options.  As a side-effect, a non-zero value forces the child options to be grouped together.  To achieve this effect without actually printing a header string, use a value of "".  As with header strings specified in an option entry, the conventional value of the last character is ‘:’.  See Argp Option Vectors.  
+	int group
+This is where the child options are grouped relative to the other ‘consolidated’ options in the parent argp parser.  The values are the same as the group field in struct argp_option.  See Argp Option Vectors.  All child-groupings follow parent options at a particular group level.  If both this field and header are zero, then the child’s options aren’t grouped together, they are merged with parent options at the parent option group level.  

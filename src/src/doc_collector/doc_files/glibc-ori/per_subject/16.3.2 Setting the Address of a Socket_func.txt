@@ -1,0 +1,19 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int bind (int socket, struct sockaddr *addr, socklen_t length)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The bind function assigns an address to the socket socket.  The addr and length arguments specify the address; the detailed format of the address depends on the namespace. The first part of the address is always the format designator, which specifies a namespace, and says that the address is in the format of that namespace. 
+The return value is 0 on success and -1 on failure.  The following errno error conditions are defined for this function: 
+	EBADF
+The socket argument is not a valid file descriptor.  
+	ENOTSOCK
+The descriptor socket is not a socket.  
+	EADDRNOTAVAIL
+The specified address is not available on this machine.  
+	EADDRINUSE
+Some other socket is already using the specified address.  
+	EINVAL
+The socket socket already has an address.  
+	EACCES
+You do not have permission to access the requested address.  (In the Internet domain, only the super-user is allowed to specify a port number in the range 0 through IPPORT_RESERVED minus one; see Ports.) 
+Additional conditions may be possible depending on the particular namespace of the socket. 

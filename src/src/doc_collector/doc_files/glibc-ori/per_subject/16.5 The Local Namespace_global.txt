@@ -1,0 +1,11 @@
+This section describes the details of the local namespace, whose symbolic name (required when you create a socket) is PF_LOCAL. The local namespace is also known as “Unix domain sockets”.  Another name is file namespace since socket addresses are normally implemented as file names. 
+
+TABLE_BEGIN
+ • Concepts    What you need to understand.
+
+ • Details    Address format, symbolic names, etc.
+
+ • Example    Example of creating a socket.
+
+TABLE_END
+

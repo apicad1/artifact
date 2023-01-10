@@ -1,0 +1,24 @@
+These are the bit flags that you can use in the cflags operand when compiling a regular expression with regcomp. 
+
+>>>>>>>>>>>>>>>>>>>>
+- REG_EXTENDED  
+Treat the pattern as an extended regular expression, rather than as a basic regular expression. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- REG_ICASE  
+Ignore case when matching letters. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- REG_NOSUB  
+Don’t bother storing the contents of the matchptr array. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- REG_NEWLINE  
+Treat a newline in string as dividing string into multiple lines, so that ‘$’ can match before the newline and ‘^’ can match after.  Also, don’t permit ‘.’ to match a newline, and don’t permit ‘[^…]’ to match a newline. 
+Otherwise, newline acts like any other ordinary character. 

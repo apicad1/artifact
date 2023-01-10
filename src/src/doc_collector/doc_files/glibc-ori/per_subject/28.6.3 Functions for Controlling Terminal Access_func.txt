@@ -1,0 +1,43 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: pid_t tcgetpgrp (int filedes)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function returns the process group ID of the foreground process group associated with the terminal open on descriptor filedes. 
+If there is no foreground process group, the return value is a number greater than 1 that does not match the process group ID of any existing process group.  This can happen if all of the processes in the job that was formerly the foreground job have terminated, and no other job has yet been moved into the foreground. 
+In case of an error, a value of -1 is returned.  The following errno error conditions are defined for this function: 
+	EBADF
+The filedes argument is not a valid file descriptor.  
+	ENOSYS
+The system doesn’t support job control.  
+	ENOTTY
+The terminal file associated with the filedes argument isn’t the controlling terminal of the calling process. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int tcsetpgrp (int filedes, pid_t pgid)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function is used to set a terminal’s foreground process group ID. The argument filedes is a descriptor which specifies the terminal; pgid specifies the process group.  The calling process must be a member of the same session as pgid and must have the same controlling terminal. 
+For terminal access purposes, this function is treated as output.  If it is called from a background process on its controlling terminal, normally all processes in the process group are sent a SIGTTOU signal.  The exception is if the calling process itself is ignoring or blocking SIGTTOU signals, in which case the operation is performed and no signal is sent. 
+If successful, tcsetpgrp returns 0.  A return value of -1 indicates an error.  The following errno error conditions are defined for this function: 
+	EBADF
+The filedes argument is not a valid file descriptor.  
+	EINVAL
+The pgid argument is not valid.  
+	ENOSYS
+The system doesn’t support job control.  
+	ENOTTY
+The filedes isn’t the controlling terminal of the calling process.  
+	EPERM
+The pgid isn’t a process group in the same session as the calling process. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: pid_t tcgetsid (int fildes)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function is used to obtain the process group ID of the session for which the terminal specified by fildes is the controlling terminal. If the call is successful the group ID is returned.  Otherwise the return value is (pid_t) -1 and the global variable errno is set to the following value: 
+	EBADF
+The filedes argument is not a valid file descriptor.  
+	ENOTTY
+The calling process does not have a controlling terminal, or the file is not the controlling terminal. 

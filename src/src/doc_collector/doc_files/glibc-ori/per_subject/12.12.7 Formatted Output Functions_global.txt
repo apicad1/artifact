@@ -1,0 +1,1 @@
+This section describes how to call printf and related functions. Prototypes for these functions are in the header file stdio.h. Because these functions take a variable number of arguments, you must declare prototypes for them before using them.  Of course, the easiest way to make sure you have all the right prototypes is to just include stdio.h.  

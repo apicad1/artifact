@@ -1,0 +1,16 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: struct argp_option
+This structure specifies a single option that an argp parser understands, as well as how to parse and document that option.  It has the following fields: 
+	const char *name
+The long name for this option, corresponding to the long option ‘--name’; this field may be zero if this option only has a short name.  To specify multiple names for an option, additional entries may follow this one, with the OPTION_ALIAS flag set.  See Argp Option Flags.  
+	int key
+The integer key provided by the current option to the option parser.  If key has a value that is a printable ASCII character (i.e., isascii (key) is true), it also specifies a short option ‘-char’, where char is the ASCII character with the code key.  
+	const char *arg
+If non-zero, this is the name of an argument associated with this option, which must be provided (e.g., with the ‘--name=value’ or ‘-char value’ syntaxes), unless the OPTION_ARG_OPTIONAL flag (see Argp Option Flags) is set, in which case it may be provided.  
+	int flags
+Flags associated with this option, some of which are referred to above. See Argp Option Flags.  
+	const char *doc
+A documentation string for this option, for printing in help messages.  If both the name and key fields are zero, this string will be printed tabbed left from the normal option column, making it useful as a group header.  This will be the first thing printed in its group.  In this usage, it’s conventional to end the string with a ‘:’ character.  
+	int group
+Group identity for this option.  In a long help message, options are sorted alphabetically within each group, and the groups presented in the order 0, 1, 2, …, n, -m, …, -2, -1.  Every entry in an options array with this field 0 will inherit the group number of the previous entry, or zero if it’s the first one.  If it’s a group header with name and key fields both zero, the previous entry + 1 is the default.  Automagic options such as ‘--help’ are put into group -1.  Note that because of C structure initialization rules, this field often need not be specified, because 0 is the correct value. 

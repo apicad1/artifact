@@ -1,0 +1,16 @@
+A socket address in the Internet namespace consists of a machine’s Internet address plus a port number which distinguishes the sockets on a given machine (for a given protocol).  Port numbers range from 0 to 65,535. 
+Port numbers less than IPPORT_RESERVED are reserved for standard servers, such as finger and telnet.  There is a database that keeps track of these, and you can use the getservbyname function to map a service name onto a port number; see Services Database. 
+If you write a server that is not one of the standard ones defined in the database, you must choose a port number for it.  Use a number greater than IPPORT_USERRESERVED; such numbers are reserved for servers and won’t ever be generated automatically by the system. Avoiding conflicts with servers being run by other users is up to you. 
+When you use a socket without specifying its address, the system generates a port number for it.  This number is between IPPORT_RESERVED and IPPORT_USERRESERVED. 
+On the Internet, it is actually legitimate to have two different sockets with the same port number, as long as they never both try to communicate with the same socket address (host address plus port number).  You shouldn’t duplicate a port number except in special circumstances where a higher-level protocol requires it.  Normally, the system won’t let you do it; bind normally insists on distinct port numbers.  To reuse a port number, you must set the socket option SO_REUSEADDR.  See Socket-Level Options. 
+These macros are defined in the header file netinet/in.h. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int IPPORT_RESERVED
+Port numbers less than IPPORT_RESERVED are reserved for superuser use. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int IPPORT_USERRESERVED
+Port numbers greater than or equal to IPPORT_USERRESERVED are reserved for explicit use; they will never be allocated automatically. 

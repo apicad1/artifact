@@ -1,0 +1,3 @@
+When you are finished using a compiled regular expression, you can free the storage it uses by calling regfree. 
+You should always free the space in a regex_t structure with regfree before using the structure to compile another regular expression. 
+When regcomp or regexec reports an error, you can use the function regerror to turn it into an error message string. 

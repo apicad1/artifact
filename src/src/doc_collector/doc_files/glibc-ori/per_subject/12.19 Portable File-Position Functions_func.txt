@@ -1,0 +1,45 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: fpos_t
+This is the type of an object that can encode information about the file position of a stream, for use by the functions fgetpos and fsetpos. 
+In the GNU C Library, fpos_t is an opaque data structure that contains internal data to represent file offset and conversion state information.  In other systems, it might have a different internal representation. 
+When compiling with _FILE_OFFSET_BITS == 64 on a 32 bit machine this type is in fact equivalent to fpos64_t since the LFS interface transparently replaces the old interface. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: fpos64_t
+This is the type of an object that can encode information about the file position of a stream, for use by the functions fgetpos64 and fsetpos64. 
+In the GNU C Library, fpos64_t is an opaque data structure that contains internal data to represent file offset and conversion state information.  In other systems, it might have a different internal representation. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int fgetpos (FILE *stream, fpos_t *position)
+Preliminary: | MT-Safe  | AS-Unsafe corrupt | AC-Unsafe lock corrupt | See POSIX Safety Concepts. 
+This function stores the value of the file position indicator for the stream stream in the fpos_t object pointed to by position.  If successful, fgetpos returns zero; otherwise it returns a nonzero value and stores an implementation-defined positive value in errno. 
+When the sources are compiled with _FILE_OFFSET_BITS == 64 on a 32 bit system the function is in fact fgetpos64.  I.e., the LFS interface transparently replaces the old interface. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int fgetpos64 (FILE *stream, fpos64_t *position)
+Preliminary: | MT-Safe  | AS-Unsafe corrupt | AC-Unsafe lock corrupt | See POSIX Safety Concepts. 
+This function is similar to fgetpos but the file position is returned in a variable of type fpos64_t to which position points. 
+If the sources are compiled with _FILE_OFFSET_BITS == 64 on a 32 bits machine this function is available under the name fgetpos and so transparently replaces the old interface. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int fsetpos (FILE *stream, const fpos_t *position)
+Preliminary: | MT-Safe  | AS-Unsafe corrupt | AC-Unsafe lock corrupt | See POSIX Safety Concepts. 
+This function sets the file position indicator for the stream stream to the position position, which must have been set by a previous call to fgetpos on the same stream.  If successful, fsetpos clears the end-of-file indicator on the stream, discards any characters that were “pushed back” by the use of ungetc, and returns a value of zero.  Otherwise, fsetpos returns a nonzero value and stores an implementation-defined positive value in errno. 
+When the sources are compiled with _FILE_OFFSET_BITS == 64 on a 32 bit system the function is in fact fsetpos64.  I.e., the LFS interface transparently replaces the old interface. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int fsetpos64 (FILE *stream, const fpos64_t *position)
+Preliminary: | MT-Safe  | AS-Unsafe corrupt | AC-Unsafe lock corrupt | See POSIX Safety Concepts. 
+This function is similar to fsetpos but the file position used for positioning is provided in a variable of type fpos64_t to which position points. 
+If the sources are compiled with _FILE_OFFSET_BITS == 64 on a 32 bits machine this function is available under the name fsetpos and so transparently replaces the old interface. 

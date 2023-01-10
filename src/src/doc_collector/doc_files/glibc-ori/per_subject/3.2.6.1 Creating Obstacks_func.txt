@@ -1,0 +1,4 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: struct obstack
+An obstack is represented by a data structure of type struct obstack.  This structure has a small fixed size; it records the status of the obstack and how to find the space in which objects are allocated. It does not contain any of the objects themselves.  You should not try to access the contents of the structure directly; use only the functions described in this chapter. 

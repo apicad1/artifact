@@ -1,0 +1,2 @@
+When you have finished using a socket, you can simply close its file descriptor with close; see Opening and Closing Files. If there is still data waiting to be transmitted over the connection, normally close tries to complete this transmission.  You can control this behavior using the SO_LINGER socket option to specify a timeout period; see Socket Options. 
+You can also shut down only reception or transmission on a connection by calling shutdown, which is declared in sys/socket.h. 

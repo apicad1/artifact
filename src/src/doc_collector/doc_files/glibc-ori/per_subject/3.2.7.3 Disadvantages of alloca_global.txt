@@ -1,0 +1,2 @@
+These are the disadvantages of alloca in comparison with malloc: 
+  If you try to allocate more memory than the machine can provide, you don’t get a clean error message.  Instead you get a fatal signal like the one you would get from an infinite recursion; probably a segmentation violation (see Program Error Signals).   Some non-GNU systems fail to support alloca, so it is less portable.  However, a slower emulation of alloca written in C is available for use on systems with this deficiency. 

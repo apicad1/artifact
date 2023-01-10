@@ -1,0 +1,22 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int getpagesize (void)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The getpagesize function returns the page size of the process. This value is fixed for the runtime of the process but can vary in different runs of the application. 
+The function is declared in unistd.h. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: long int get_phys_pages (void)
+Preliminary: | MT-Safe  | AS-Unsafe heap lock | AC-Unsafe lock fd mem | See POSIX Safety Concepts. 
+The get_phys_pages function returns the total number of pages of physical memory the system has.  To get the amount of memory this number has to be multiplied by the page size. 
+This function is a GNU extension. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: long int get_avphys_pages (void)
+Preliminary: | MT-Safe  | AS-Unsafe heap lock | AC-Unsafe lock fd mem | See POSIX Safety Concepts. 
+The get_avphys_pages function returns the number of available pages of physical memory the system has.  To get the amount of memory this number has to be multiplied by the page size. 
+This function is a GNU extension. 

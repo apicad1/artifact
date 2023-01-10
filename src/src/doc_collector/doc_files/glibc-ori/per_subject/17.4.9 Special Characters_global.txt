@@ -1,0 +1,19 @@
+In canonical input, the terminal driver recognizes a number of special characters which perform various control functions.  These include the ERASE character (usually DEL) for editing input, and other editing characters.  The INTR character (normally C-c) for sending a SIGINT signal, and other signal-raising characters, may be available in either canonical or noncanonical input mode.  All these characters are described in this section. 
+The particular characters used are specified in the c_cc member of the struct termios structure.  This member is an array; each element specifies the character for a particular role.  Each element has a symbolic constant that stands for the index of that element—for example, VINTR is the index of the element that specifies the INTR character, so storing '=' in termios.c_cc[VINTR] specifies ‘=’ as the INTR character. 
+On some systems, you can disable a particular special character function by specifying the value _POSIX_VDISABLE for that role.  This value is unequal to any possible character code.  See Options for Files, for more information about how to tell whether the operating system you are using supports _POSIX_VDISABLE. 
+
+TABLE_BEGIN
+ • Editing Characters    Special characters that terminate lines and
+                                  delete text, and other editing functions.
+
+ • Signal Characters    Special characters that send or raise signals
+                                  to or for certain classes of processes.
+
+ • Start/Stop Characters    Special characters that suspend or resume
+                                  suspended output.
+
+ • Other Special    Other special characters for BSD systems:
+				  they can discard output, and print status.
+
+TABLE_END
+

@@ -1,0 +1,87 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: struct tm
+This is the data type used to represent a broken-down time.  The structure contains at least the following members, which can appear in any order. 
+	int tm_sec
+This is the number of full seconds since the top of the minute (normally in the range 0 through 59, but the actual upper limit is 60, to allow for leap seconds if leap second support is available).   
+	int tm_min
+This is the number of full minutes since the top of the hour (in the range 0 through 59).  
+	int tm_hour
+This is the number of full hours past midnight (in the range 0 through 23).  
+	int tm_mday
+This is the ordinal day of the month (in the range 1 through 31). Watch out for this one!  As the only ordinal number in the structure, it is inconsistent with the rest of the structure.  
+	int tm_mon
+This is the number of full calendar months since the beginning of the year (in the range 0 through 11).  Watch out for this one! People usually use ordinal numbers for month-of-year (where January = 1).  
+	int tm_year
+This is the number of full calendar years since 1900.  
+	int tm_wday
+This is the number of full days since Sunday (in the range 0 through 6).  
+	int tm_yday
+This is the number of full days since the beginning of the year (in the range 0 through 365).  
+	int tm_isdst
+  This is a flag that indicates whether Daylight Saving Time is (or was, or will be) in effect at the time described.  The value is positive if Daylight Saving Time is in effect, zero if it is not, and negative if the information is not available.  
+	long int tm_gmtoff
+This field describes the time zone that was used to compute this broken-down time value, including any adjustment for daylight saving; it is the number of seconds that you must add to UTC to get local time. You can also think of this as the number of seconds east of UTC.  For example, for U.S. Eastern Standard Time, the value is -5*60*60. The tm_gmtoff field is derived from BSD and is a GNU library extension; it is not visible in a strict ISO C environment.  
+	const char *tm_zone
+This field is the name for the time zone that was used to compute this broken-down time value.  Like tm_gmtoff, this field is a BSD and GNU extension, and is not visible in a strict ISO C environment. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: struct tm * localtime (const time_t *time)
+Preliminary: | MT-Unsafe race:tmbuf env locale | AS-Unsafe heap lock | AC-Unsafe lock mem fd | See POSIX Safety Concepts. 
+The localtime function converts the simple time pointed to by time to broken-down time representation, expressed relative to the user’s specified time zone. 
+The return value is a pointer to a static broken-down time structure, which might be overwritten by subsequent calls to ctime, gmtime, or localtime.  (But no other library function overwrites the contents of this object.) 
+The return value is the null pointer if time cannot be represented as a broken-down time; typically this is because the year cannot fit into an int. 
+Calling localtime also sets the current time zone as if tzset were called.  See Time Zone Functions. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: struct tm * localtime_r (const time_t *time, struct tm *resultp)
+Preliminary: | MT-Safe env locale | AS-Unsafe heap lock | AC-Unsafe lock mem fd | See POSIX Safety Concepts. 
+The localtime_r function works just like the localtime function.  It takes a pointer to a variable containing a simple time and converts it to the broken-down time format. 
+But the result is not placed in a static buffer.  Instead it is placed in the object of type struct tm to which the parameter resultp points. 
+If the conversion is successful the function returns a pointer to the object the result was written into, i.e., it returns resultp. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: struct tm * gmtime (const time_t *time)
+Preliminary: | MT-Unsafe race:tmbuf env locale | AS-Unsafe heap lock | AC-Unsafe lock mem fd | See POSIX Safety Concepts. 
+This function is similar to localtime, except that the broken-down time is expressed as Coordinated Universal Time (UTC) (formerly called Greenwich Mean Time (GMT)) rather than relative to a local time zone. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: struct tm * gmtime_r (const time_t *time, struct tm *resultp)
+Preliminary: | MT-Safe env locale | AS-Unsafe heap lock | AC-Unsafe lock mem fd | See POSIX Safety Concepts. 
+This function is similar to localtime_r, except that it converts just like gmtime the given time as Coordinated Universal Time. 
+If the conversion is successful the function returns a pointer to the object the result was written into, i.e., it returns resultp. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: time_t mktime (struct tm *brokentime)
+Preliminary: | MT-Safe env locale | AS-Unsafe heap lock | AC-Unsafe lock mem fd | See POSIX Safety Concepts. 
+The mktime function converts a broken-down time structure to a simple time representation.  It also normalizes the contents of the broken-down time structure, and fills in some components based on the values of the others. 
+The mktime function ignores the specified contents of the tm_wday, tm_yday, tm_gmtoff, and tm_zone members of the broken-down time structure.  It uses the values of the other components to determine the calendar time; it’s permissible for these components to have unnormalized values outside their normal ranges.  The last thing that mktime does is adjust the components of the brokentime structure, including the members that were initially ignored. 
+If the specified broken-down time cannot be represented as a simple time, mktime returns a value of (time_t)(-1) and does not modify the contents of brokentime. 
+Calling mktime also sets the current time zone as if tzset were called; mktime uses this information instead of brokentime’s initial tm_gmtoff and tm_zone members.  See Time Zone Functions. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: time_t timelocal (struct tm *brokentime)
+Preliminary: | MT-Safe env locale | AS-Unsafe heap lock | AC-Unsafe lock mem fd | See POSIX Safety Concepts. 
+timelocal is functionally identical to mktime, but more mnemonically named.  Note that it is the inverse of the localtime function. 
+Portability note:  mktime is essentially universally available.  timelocal is rather rare. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: time_t timegm (struct tm *brokentime)
+Preliminary: | MT-Safe env locale | AS-Unsafe heap lock | AC-Unsafe lock mem fd | See POSIX Safety Concepts. 
+timegm is functionally identical to mktime except it always takes the input values to be Coordinated Universal Time (UTC) regardless of any local time zone setting. 
+Note that timegm is the inverse of gmtime. 
+Portability note:  mktime is essentially universally available.  timegm is rather rare.  For the most portable conversion from a UTC broken-down time to a simple time, set the TZ environment variable to UTC, call mktime, then set TZ back. 

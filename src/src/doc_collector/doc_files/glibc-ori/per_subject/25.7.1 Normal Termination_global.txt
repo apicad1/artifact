@@ -1,0 +1,2 @@
+A process terminates normally when its program signals it is done by calling exit.  Returning from main is equivalent to calling exit, and the value that main returns is used as the argument to exit. 
+Normal termination causes the following actions: 

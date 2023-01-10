@@ -1,0 +1,13 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void _exit (int status)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The _exit function is the primitive for causing a process to terminate with status status.  Calling this function does not execute cleanup functions registered with atexit or on_exit. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void _Exit (int status)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The _Exit function is the ISO C equivalent to _exit. The ISO C committee members were not sure whether the definitions of _exit and _Exit were compatible so they have not used the POSIX name. 
+This function was introduced in ISO C99 and is declared in stdlib.h. 

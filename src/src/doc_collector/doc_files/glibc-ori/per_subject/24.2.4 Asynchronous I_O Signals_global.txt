@@ -1,0 +1,1 @@
+The signals listed in this section are used in conjunction with asynchronous I/O facilities.  You have to take explicit action by calling fcntl to enable a particular file descriptor to generate these signals (see Interrupt Input).  The default action for these signals is to ignore them. 

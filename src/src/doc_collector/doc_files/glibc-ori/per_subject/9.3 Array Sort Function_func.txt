@@ -1,0 +1,22 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void qsort (void *array, size_t count, size_t size, comparison_fn_t compare)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Unsafe corrupt | See POSIX Safety Concepts. 
+The qsort function sorts the array array.  The array contains count elements, each of which is of size size. 
+The compare function is used to perform the comparison on the array elements.  This function is called with two pointer arguments and should return an integer less than, equal to, or greater than zero corresponding to whether its first argument is considered less than, equal to, or greater than its second argument. 
+
+Warning: If two objects compare as equal, their order after sorting is unpredictable.  That is to say, the sorting is not stable. This can make a difference when the comparison considers only part of the elements.  Two elements with the same sort key may differ in other respects. 
+Although the object addresses passed to the comparison function lie within the array, they need not correspond with the original locations of those objects because the sorting algorithm may swap around objects in the array before making some comparisons.  The only way to perform a stable sort with qsort is to first augment the objects with a monotonic counter of some kind. 
+Here is a simple example of sorting an array of doubles in numerical order, using the comparison function defined above (see Comparison Functions): 
+
+EXAMPLE_BEGIN
+{
+  double *array;
+  int size;
+  …
+  qsort (array, size, sizeof (double), compare_doubles);
+}
+EXAMPLE_END
+
+The qsort function derives its name from the fact that it was originally implemented using the “quick sort” algorithm. 
+The implementation of qsort in this library might not be an in-place sort and might thereby use an extra amount of memory to store the array. 

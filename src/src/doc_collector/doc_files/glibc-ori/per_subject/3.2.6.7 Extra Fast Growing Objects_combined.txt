@@ -1,0 +1,70 @@
+The usual functions for growing objects incur overhead for checking whether there is room for the new growth in the current chunk.  If you are frequently constructing objects in small steps of growth, this overhead can be significant. 
+You can reduce the overhead by using special “fast growth” functions that grow the object without checking.  In order to have a robust program, you must do the checking yourself.  If you do this checking in the simplest way each time you are about to add data to the object, you have not saved anything, because that is what the ordinary growth functions do.  But if you can arrange to check less often, or check more efficiently, then you make the program faster. 
+The function obstack_room returns the amount of room available in the current chunk.  It is declared as follows: 
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int obstack_room (struct obstack *obstack-ptr)
+Preliminary: | MT-Safe race:obstack-ptr | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This returns the number of bytes that can be added safely to the current growing object (or to an object about to be started) in obstack obstack-ptr using the fast growth functions. 
+<<<<<<<<<<<<<<<<<<<<
+
+While you know there is room, you can use these fast growth functions for adding data to a growing object: 
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void obstack_1grow_fast (struct obstack *obstack-ptr, char c)
+Preliminary: | MT-Safe race:obstack-ptr | AS-Safe  | AC-Unsafe corrupt mem | See POSIX Safety Concepts. 
+The function obstack_1grow_fast adds one byte containing the character c to the growing object in obstack obstack-ptr. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void obstack_ptr_grow_fast (struct obstack *obstack-ptr, void *data)
+Preliminary: | MT-Safe race:obstack-ptr | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The function obstack_ptr_grow_fast adds sizeof (void *) bytes containing the value of data to the growing object in obstack obstack-ptr. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void obstack_int_grow_fast (struct obstack *obstack-ptr, int data)
+Preliminary: | MT-Safe race:obstack-ptr | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The function obstack_int_grow_fast adds sizeof (int) bytes containing the value of data to the growing object in obstack obstack-ptr. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void obstack_blank_fast (struct obstack *obstack-ptr, int size)
+Preliminary: | MT-Safe race:obstack-ptr | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The function obstack_blank_fast adds size bytes to the growing object in obstack obstack-ptr without initializing them. 
+<<<<<<<<<<<<<<<<<<<<
+
+When you check for space using obstack_room and there is not enough room for what you want to add, the fast growth functions are not safe.  In this case, simply use the corresponding ordinary growth function instead.  Very soon this will copy the object to a new chunk; then there will be lots of room available again. 
+So, each time you use an ordinary growth function, check afterward for sufficient space using obstack_room.  Once the object is copied to a new chunk, there will be plenty of space again, so the program will start using the fast growth functions again. 
+Here is an example: 
+
+EXAMPLE_BEGIN
+void
+add_string (struct obstack *obstack, const char *ptr, int len)
+{
+  while (len > 0)
+    {
+      int room = obstack_room (obstack);
+      if (room == 0)
+        {
+          /* Not enough room.  Add one character slowly,
+             which may copy to a new chunk and make room.  */
+          obstack_1grow (obstack, *ptr++);
+          len--;
+        }
+      else
+        {
+          if (room > len)
+            room = len;
+          /* Add fast as much as we have room for. */
+          len -= room;
+          while (room-- > 0)
+            obstack_1grow_fast (obstack, *ptr++);
+        }
+    }
+}
+EXAMPLE_END
+

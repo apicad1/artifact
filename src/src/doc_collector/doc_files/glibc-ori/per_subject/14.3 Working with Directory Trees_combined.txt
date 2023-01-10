@@ -1,0 +1,123 @@
+The functions described so far for handling the files in a directory have allowed you to either retrieve the information bit by bit, or to process all the files as a group (see scandir).  Sometimes it is useful to process whole hierarchies of directories and their contained files.  The X/Open specification defines two functions to do this.  The simpler form is derived from an early definition in System V systems and therefore this function is available on SVID-derived systems.  The prototypes and required definitions can be found in the ftw.h header. 
+There are four functions in this family: ftw, nftw and their 64-bit counterparts ftw64 and nftw64.  These functions take as one of their arguments a pointer to a callback function of the appropriate type. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: __ftw_func_t
+
+EXAMPLE_BEGIN
+int (*) (const char *, const struct stat *, int)
+EXAMPLE_END
+
+The type of callback functions given to the ftw function.  The first parameter points to the file name, the second parameter to an object of type struct stat which is filled in for the file named in the first parameter. 
+The last parameter is a flag giving more information about the current file.  It can have the following values: 
+	FTW_F  
+The item is either a normal file or a file which does not fit into one of the following categories.  This could be special files, sockets etc. 
+	FTW_D  
+The item is a directory. 
+	FTW_NS  
+The stat call failed and so the information pointed to by the second parameter is invalid. 
+	FTW_DNR  
+The item is a directory which cannot be read. 
+	FTW_SL  
+The item is a symbolic link.  Since symbolic links are normally followed seeing this value in a ftw callback function means the referenced file does not exist.  The situation for nftw is different.  This value is only available if the program is compiled with _XOPEN_EXTENDED defined before including the first header.  The original SVID systems do not have symbolic links. 
+If the sources are compiled with _FILE_OFFSET_BITS == 64 this type is in fact __ftw64_func_t since this mode changes struct stat to be struct stat64. 
+<<<<<<<<<<<<<<<<<<<<
+
+For the LFS interface and for use in the function ftw64, the header ftw.h defines another function type. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: __ftw64_func_t
+
+EXAMPLE_BEGIN
+int (*) (const char *, const struct stat64 *, int)
+EXAMPLE_END
+
+This type is used just like __ftw_func_t for the callback function, but this time is called from ftw64.  The second parameter to the function is a pointer to a variable of type struct stat64 which is able to represent the larger values. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: __nftw_func_t
+
+EXAMPLE_BEGIN
+int (*) (const char *, const struct stat *, int, struct FTW *)
+EXAMPLE_END
+
+The first three arguments are the same as for the __ftw_func_t type.  However for the third argument some additional values are defined to allow finer differentiation: 
+	FTW_DP  
+The current item is a directory and all subdirectories have already been visited and reported.  This flag is returned instead of FTW_D if the FTW_DEPTH flag is passed to nftw (see below). 
+	FTW_SLN  
+The current item is a stale symbolic link.  The file it points to does not exist. 
+The last parameter of the callback function is a pointer to a structure with some extra information as described below. 
+If the sources are compiled with _FILE_OFFSET_BITS == 64 this type is in fact __nftw64_func_t since this mode changes struct stat to be struct stat64. 
+<<<<<<<<<<<<<<<<<<<<
+
+For the LFS interface there is also a variant of this data type available which has to be used with the nftw64 function. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: __nftw64_func_t
+
+EXAMPLE_BEGIN
+int (*) (const char *, const struct stat64 *, int, struct FTW *)
+EXAMPLE_END
+
+This type is used just like __nftw_func_t for the callback function, but this time is called from nftw64.  The second parameter to the function is this time a pointer to a variable of type struct stat64 which is able to represent the larger values. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: struct FTW
+The information contained in this structure helps in interpreting the name parameter and gives some information about the current state of the traversal of the directory hierarchy. 
+	int base
+The value is the offset into the string passed in the first parameter to the callback function of the beginning of the file name.  The rest of the string is the path of the file.  This information is especially important if the FTW_CHDIR flag was set in calling nftw since then the current directory is the one the current item is found in. 
+	int level
+Whilst processing, the code tracks how many directories down it has gone to find the current file.  This nesting level starts at 0 for files in the initial directory (or is zero for the initial file if a file was passed). 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int ftw (const char *filename, __ftw_func_t func, int descriptors)
+Preliminary: | MT-Safe  | AS-Unsafe heap | AC-Unsafe mem fd | See POSIX Safety Concepts. 
+The ftw function calls the callback function given in the parameter func for every item which is found in the directory specified by filename and all directories below.  The function follows symbolic links if necessary but does not process an item twice. If filename is not a directory then it itself is the only object returned to the callback function. 
+The file name passed to the callback function is constructed by taking the filename parameter and appending the names of all passed directories and then the local file name.  So the callback function can use this parameter to access the file.  ftw also calls stat for the file and passes that information on to the callback function.  If this stat call is not successful the failure is indicated by setting the third argument of the callback function to FTW_NS.  Otherwise it is set according to the description given in the account of __ftw_func_t above. 
+The callback function is expected to return 0 to indicate that no error occurred and that processing should continue.  If an error occurred in the callback function or it wants ftw to return immediately, the callback function can return a value other than 0.  This is the only correct way to stop the function.  The program must not use setjmp or similar techniques to continue from another place.  This would leave resources allocated by the ftw function unfreed. 
+The descriptors parameter to ftw specifies how many file descriptors it is allowed to consume.  The function runs faster the more descriptors it can use.  For each level in the directory hierarchy at most one descriptor is used, but for very deep ones any limit on open file descriptors for the process or the system may be exceeded. Moreover, file descriptor limits in a multi-threaded program apply to all the threads as a group, and therefore it is a good idea to supply a reasonable limit to the number of open descriptors. 
+The return value of the ftw function is 0 if all callback function calls returned 0 and all actions performed by the ftw succeeded.  If a function call failed (other than calling stat on an item) the function returns -1.  If a callback function returns a value other than 0 this value is returned as the return value of ftw. 
+When the sources are compiled with _FILE_OFFSET_BITS == 64 on a 32-bit system this function is in fact ftw64, i.e., the LFS interface transparently replaces the old interface. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int ftw64 (const char *filename, __ftw64_func_t func, int descriptors)
+Preliminary: | MT-Safe  | AS-Unsafe heap | AC-Unsafe mem fd | See POSIX Safety Concepts. 
+This function is similar to ftw but it can work on filesystems with large files.  File information is reported using a variable of type struct stat64 which is passed by reference to the callback function. 
+When the sources are compiled with _FILE_OFFSET_BITS == 64 on a 32-bit system this function is available under the name ftw and transparently replaces the old implementation. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int nftw (const char *filename, __nftw_func_t func, int descriptors, int flag)
+Preliminary: | MT-Safe cwd | AS-Unsafe heap | AC-Unsafe mem fd cwd | See POSIX Safety Concepts. 
+The nftw function works like the ftw functions.  They call the callback function func for all items found in the directory filename and below.  At most descriptors file descriptors are consumed during the nftw call. 
+One difference is that the callback function is of a different type.  It is of type struct FTW * and provides the callback function with the extra information described above. 
+A second difference is that nftw takes a fourth argument, which is 0 or a bitwise-OR combination of any of the following values. 
+	FTW_PHYS  
+While traversing the directory symbolic links are not followed.  Instead symbolic links are reported using the FTW_SL value for the type parameter to the callback function.  If the file referenced by a symbolic link does not exist FTW_SLN is returned instead. 
+	FTW_MOUNT  
+The callback function is only called for items which are on the same mounted filesystem as the directory given by the filename parameter to nftw. 
+	FTW_CHDIR  
+If this flag is given the current working directory is changed to the directory of the reported object before the callback function is called. When ntfw finally returns the current directory is restored to its original value. 
+	FTW_DEPTH  
+If this option is specified then all subdirectories and files within them are processed before processing the top directory itself (depth-first processing).  This also means the type flag given to the callback function is FTW_DP and not FTW_D. 
+	FTW_ACTIONRETVAL  
+If this option is specified then return values from callbacks are handled differently.  If the callback returns FTW_CONTINUE, walking continues normally.  FTW_STOP means walking stops and FTW_STOP is returned to the caller.  If FTW_SKIP_SUBTREE is returned by the callback with FTW_D argument, the subtree is skipped and walking continues with next sibling of the directory. If FTW_SKIP_SIBLINGS is returned by the callback, all siblings of the current entry are skipped and walking continues in its parent. No other return values should be returned from the callbacks if this option is set.  This option is a GNU extension. 
+The return value is computed in the same way as for ftw. nftw returns 0 if no failures occurred and all callback functions returned 0.  In case of internal errors, such as memory problems, the return value is -1 and errno is set accordingly.  If the return value of a callback invocation was non-zero then that value is returned. 
+When the sources are compiled with _FILE_OFFSET_BITS == 64 on a 32-bit system this function is in fact nftw64, i.e., the LFS interface transparently replaces the old interface. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int nftw64 (const char *filename, __nftw64_func_t func, int descriptors, int flag)
+Preliminary: | MT-Safe cwd | AS-Unsafe heap | AC-Unsafe mem fd cwd | See POSIX Safety Concepts. 
+This function is similar to nftw but it can work on filesystems with large files.  File information is reported using a variable of type struct stat64 which is passed by reference to the callback function. 
+When the sources are compiled with _FILE_OFFSET_BITS == 64 on a 32-bit system this function is available under the name nftw and transparently replaces the old implementation. 

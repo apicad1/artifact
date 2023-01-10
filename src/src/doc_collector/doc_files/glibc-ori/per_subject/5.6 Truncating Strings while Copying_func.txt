@@ -1,0 +1,111 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: char * strncpy (char *restrict to, const char *restrict from, size_t size)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function is similar to strcpy but always copies exactly size bytes into to. 
+If from does not contain a null byte in its first size bytes, strncpy copies just the first size bytes.  In this case no null terminator is written into to. 
+Otherwise from must be a string with length less than size.  In this case strncpy copies all of from, followed by enough null bytes to add up to size bytes in all. 
+The behavior of strncpy is undefined if the strings overlap. 
+This function was designed for now-rarely-used arrays consisting of non-null bytes followed by zero or more null bytes.  It needs to set all size bytes of the destination, even when size is much greater than the length of from.  As noted below, this function is generally a poor choice for processing text. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: wchar_t * wcsncpy (wchar_t *restrict wto, const wchar_t *restrict wfrom, size_t size)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function is similar to wcscpy but always copies exactly size wide characters into wto. 
+If wfrom does not contain a null wide character in its first size wide characters, then wcsncpy copies just the first size wide characters.  In this case no null terminator is written into wto. 
+Otherwise wfrom must be a wide string with length less than size.  In this case wcsncpy copies all of wfrom, followed by enough null wide characters to add up to size wide characters in all. 
+The behavior of wcsncpy is undefined if the strings overlap. 
+This function is the wide-character counterpart of strncpy and suffers from most of the problems that strncpy does.  For example, as noted below, this function is generally a poor choice for processing text. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: char * strndup (const char *s, size_t size)
+Preliminary: | MT-Safe  | AS-Unsafe heap | AC-Unsafe mem | See POSIX Safety Concepts. 
+This function is similar to strdup but always copies at most size bytes into the newly allocated string. 
+If the length of s is more than size, then strndup copies just the first size bytes and adds a closing null byte. Otherwise all bytes are copied and the string is terminated. 
+This function differs from strncpy in that it always terminates the destination string. 
+As noted below, this function is generally a poor choice for processing text. 
+strndup is a GNU extension. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: char * strndupa (const char *s, size_t size)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function is similar to strndup but like strdupa it allocates the new string using alloca see Variable Size Automatic.  The same advantages and limitations of strdupa are valid for strndupa, too. 
+This function is implemented only as a macro, just like strdupa. Just as strdupa this macro also must not be used inside the parameter list in a function call. 
+As noted below, this function is generally a poor choice for processing text. 
+strndupa is only available if GNU CC is used. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: char * stpncpy (char *restrict to, const char *restrict from, size_t size)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function is similar to stpcpy but copies always exactly size bytes into to. 
+If the length of from is more than size, then stpncpy copies just the first size bytes and returns a pointer to the byte directly following the one which was copied last.  Note that in this case there is no null terminator written into to. 
+If the length of from is less than size, then stpncpy copies all of from, followed by enough null bytes to add up to size bytes in all.  This behavior is rarely useful, but it is implemented to be useful in contexts where this behavior of the strncpy is used.  stpncpy returns a pointer to the first written null byte. 
+This function is not part of ISO or POSIX but was found useful while developing the GNU C Library itself. 
+Its behavior is undefined if the strings overlap.  The function is declared in string.h. 
+As noted below, this function is generally a poor choice for processing text. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: wchar_t * wcpncpy (wchar_t *restrict wto, const wchar_t *restrict wfrom, size_t size)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function is similar to wcpcpy but copies always exactly wsize wide characters into wto. 
+If the length of wfrom is more than size, then wcpncpy copies just the first size wide characters and returns a pointer to the wide character directly following the last non-null wide character which was copied last.  Note that in this case there is no null terminator written into wto. 
+If the length of wfrom is less than size, then wcpncpy copies all of wfrom, followed by enough null wide characters to add up to size wide characters in all.  This behavior is rarely useful, but it is implemented to be useful in contexts where this behavior of the wcsncpy is used.  wcpncpy returns a pointer to the first written null wide character. 
+This function is not part of ISO or POSIX but was found useful while developing the GNU C Library itself. 
+Its behavior is undefined if the strings overlap. 
+As noted below, this function is generally a poor choice for processing text. 
+wcpncpy is a GNU extension. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: char * strncat (char *restrict to, const char *restrict from, size_t size)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function is like strcat except that not more than size bytes from from are appended to the end of to, and from need not be null-terminated.  A single null byte is also always appended to to, so the total allocated size of to must be at least size + 1 bytes longer than its initial length. 
+The strncat function could be implemented like this: 
+
+EXAMPLE_BEGIN
+char *
+strncat (char *to, const char *from, size_t size)
+{
+  size_t len = strlen (to);
+  memcpy (to + len, from, strnlen (from, size));
+  to[len + strnlen (from, size)] = '\0';
+  return to;
+}
+EXAMPLE_END
+
+The behavior of strncat is undefined if the strings overlap. 
+As a companion to strncpy, strncat was designed for now-rarely-used arrays consisting of non-null bytes followed by zero or more null bytes.  As noted below, this function is generally a poor choice for processing text.  Also, this function has significant performance issues.  See Concatenating Strings. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: wchar_t * wcsncat (wchar_t *restrict wto, const wchar_t *restrict wfrom, size_t size)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function is like wcscat except that not more than size wide characters from from are appended to the end of to, and from need not be null-terminated.  A single null wide character is also always appended to to, so the total allocated size of to must be at least wcsnlen (wfrom, size) + 1 wide characters longer than its initial length. 
+The wcsncat function could be implemented like this: 
+
+EXAMPLE_BEGIN
+wchar_t *
+wcsncat (wchar_t *restrict wto, const wchar_t *restrict wfrom,
+         size_t size)
+{
+  size_t len = wcslen (wto);
+  memcpy (wto + len, wfrom, wcsnlen (wfrom, size) * sizeof (wchar_t));
+  wto[len + wcsnlen (wfrom, size)] = L'\0';
+  return wto;
+}
+EXAMPLE_END
+
+The behavior of wcsncat is undefined if the strings overlap. 
+As noted below, this function is generally a poor choice for processing text.  Also, this function has significant performance issues.  See Concatenating Strings. 

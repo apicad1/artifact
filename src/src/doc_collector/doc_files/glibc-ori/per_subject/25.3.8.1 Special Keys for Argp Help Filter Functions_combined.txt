@@ -1,0 +1,35 @@
+The following special values may be passed to an argp help filter function as the first argument in addition to key values for user options.  They specify which help text the text argument contains: 
+
+>>>>>>>>>>>>>>>>>>>>
+- ARGP_KEY_HELP_PRE_DOC  
+The help text preceding options. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ARGP_KEY_HELP_POST_DOC  
+The help text following options. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ARGP_KEY_HELP_HEADER  
+The option header string. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ARGP_KEY_HELP_EXTRA  
+This is used after all other documentation; text is zero for this key. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ARGP_KEY_HELP_DUP_ARGS_NOTE  
+The explanatory note printed when duplicate option arguments have been suppressed. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ARGP_KEY_HELP_ARGS_DOC  
+The argument doc string; formally the args_doc field from the argp parser.  See Argp Parsers. 

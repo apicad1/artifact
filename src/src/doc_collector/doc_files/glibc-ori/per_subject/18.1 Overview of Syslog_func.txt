@@ -1,0 +1,10 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- facility
+This identifies who submitted the message.  There are a small number of facilities defined.  The kernel, the mail subsystem, and an FTP server are examples of recognized facilities.  For the complete list, See syslog; vsyslog.  Keep in mind that these are essentially arbitrary classifications.  "Mail subsystem" doesn’t have any more meaning than the system administrator gives to it. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- priority
+This tells how important the content of the message is.  Examples of defined priority values are: debug, informational, warning and critical. For the complete list, see syslog; vsyslog.  Except for the fact that the priorities have a defined order, the meaning of each of these priorities is entirely determined by the system administrator. 

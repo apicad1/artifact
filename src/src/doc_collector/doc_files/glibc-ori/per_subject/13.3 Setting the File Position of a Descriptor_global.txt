@@ -1,0 +1,33 @@
+Just as you can set the file position of a stream with fseek, you can set the file position of a descriptor with lseek.  This specifies the position in the file for the next read or write operation.  See File Positioning, for more information on the file position and what it means. 
+To read the current file position value from a descriptor, use lseek (desc, 0, SEEK_CUR). 
+You can have multiple descriptors for the same file if you open the file more than once, or if you duplicate a descriptor with dup. Descriptors that come from separate calls to open have independent file positions; using lseek on one descriptor has no effect on the other.  For example, 
+
+EXAMPLE_BEGIN
+{
+  int d1, d2;
+  char buf[4];
+  d1 = open ("foo", O_RDONLY);
+  d2 = open ("foo", O_RDONLY);
+  lseek (d1, 1024, SEEK_SET);
+  read (d2, buf, 4);
+}
+EXAMPLE_END
+
+will read the first four characters of the file foo.  (The error-checking code necessary for a real program has been omitted here for brevity.) 
+By contrast, descriptors made by duplication share a common file position with the original descriptor that was duplicated.  Anything which alters the file position of one of the duplicates, including reading or writing data, affects all of them alike.  Thus, for example, 
+
+EXAMPLE_BEGIN
+{
+  int d1, d2, d3;
+  char buf1[4], buf2[4];
+  d1 = open ("foo", O_RDONLY);
+  d2 = dup (d1);
+  d3 = dup (d2);
+  lseek (d3, 1024, SEEK_SET);
+  read (d1, buf1, 4);
+  read (d2, buf2, 4);
+}
+EXAMPLE_END
+
+will read four characters starting with the 1024’th character of foo, and then four more characters starting with the 1028’th character. 
+These aliases for the ‘SEEK_…’ constants exist for the sake of compatibility with older BSD systems.  They are defined in two different header files: fcntl.h and sys/file.h. 

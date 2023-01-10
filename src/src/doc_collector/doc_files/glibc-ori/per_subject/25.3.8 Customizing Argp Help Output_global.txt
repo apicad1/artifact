@@ -1,0 +1,14 @@
+The help_filter field in a struct argp is a pointer to a function that filters the text of help messages before displaying them.  They have a function signature like: 
+
+EXAMPLE_BEGIN
+char *help-filter (int key, const char *text, void *input)
+EXAMPLE_END
+
+Where key is either a key from an option, in which case text is that option’s help text.  See Argp Option Vectors.  Alternately, one of the special keys with names beginning with ‘ARGP_KEY_HELP_’ might be used, describing which other help text text will contain. See Argp Help Filter Keys. 
+The function should return either text if it remains as-is, or a replacement string allocated using malloc.  This will be either be freed by argp or zero, which prints nothing.  The value of text is supplied after any translation has been done, so if any of the replacement text needs translation, it will be done by the filter function.  input is either the input supplied to argp_parse or it is zero, if argp_help was called directly by the user. 
+
+TABLE_BEGIN
+ • Keys    Special key values for help filter functions.
+
+TABLE_END
+

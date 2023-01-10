@@ -1,0 +1,124 @@
+curl:
+3/5
+(base) @test:~/api_misuse/evaluation/apimu4c_project/curl$ apicad detect --only --disable-code
+[2022-12-21 00:07:22] INFO(detection): Detecting for 11 functions
+[2022-12-21 00:07:22] INFO(detector): Processing mbedtls_pk_parse_keyfile
+[2022-12-21 00:07:22] INFO(detector): Processing SSL_CTX_use_PrivateKey
+[2022-12-21 00:07:22] INFO(detector): Processing Curl_ssl_sessionid_lock
+[2022-12-21 00:07:22] INFO(detector): Processing BIO_ctrl
+[2022-12-21 00:07:22] INFO(detector): Processing x509_crt_parse_file
+[2022-12-21 00:07:22] INFO(detector): Processing ssl_write
+[2022-12-21 00:07:22] INFO(detector): Processing BIO_new
+[2022-12-21 00:07:22] INFO(detector): Processing Curl_timeleft
+[2022-12-21 00:07:22] INFO(detector): Processing Curl_urldecode
+[2022-12-21 00:07:22] INFO(detector): Processing SSL_get_peer_cert_chain
+[2022-12-21 00:07:22] INFO(detector): Processing mbedtls_version_from_curl
+[2022-12-21 00:07:22] ERROR(BUGREPORT): BIO_new: /home/test/api_misuse/evaluation/apimu4c_project/curl/curl-curl-7_63_0/lib/vtls/openssl.c:3330:14, TYPE: retval √
+[2022-12-21 00:07:22] ERROR(BUGREPORT): BIO_new: /home/test/api_misuse/evaluation/apimu4c_project/curl/curl-curl-7_63_0/lib/vtls/openssl.c:740:12, TYPE: retval √
+[2022-12-21 00:07:22] ERROR(BUGREPORT): BIO_new: /home/test/api_misuse/evaluation/apimu4c_project/curl/curl-curl-7_63_0/lib/vtls/openssl.c:2764:22, TYPE: retval
+[2022-12-21 00:07:22] ERROR(BUGREPORT): BIO_new: /home/test/api_misuse/evaluation/apimu4c_project/curl/curl-curl-7_63_0/lib/vtls/openssl.c:3056:9, TYPE: retval √*
+[2022-12-21 00:07:22] ERROR(BUGREPORT): SSL_get_peer_cert_chain: /home/test/api_misuse/evaluation/apimu4c_project/curl/curl-curl-7_63_0/lib/vtls/openssl.c:1741:8, TYPE: retval
+[2022-12-21 00:07:22] ERROR(BUGREPORT): SSL_get_peer_cert_chain: /home/test/api_misuse/evaluation/apimu4c_project/curl/curl-curl-7_63_0/lib/vtls/openssl.c:3044:8, TYPE: retval √
+[2022-12-21 00:07:22] INFO(BUGREPORT): Total reports: 6-1=5
+
+httpd:
+7/8
+(base) @test:~/api_misuse/evaluation/apimu4c_project/httpd$ apicad detect --only --disable-code
+[2022-12-21 00:07:38] INFO(detection): Detecting for 10 functions
+[2022-12-21 00:07:38] INFO(detector): Processing BN_bn2dec
+[2022-12-21 00:07:38] INFO(detector): Processing apr_thread_mutex_lock
+[2022-12-21 00:07:38] INFO(detector): Processing BIO_new_file
+[2022-12-21 00:07:38] INFO(detector): Processing ssl_init_ctx_verify
+[2022-12-21 00:07:38] INFO(detector): Processing BIO_new
+[2022-12-21 00:07:38] INFO(detector): Processing apr_sockaddr_info_get
+[2022-12-21 00:07:38] INFO(detector): Processing X509_STORE_CTX_new
+[2022-12-21 00:07:38] INFO(detector): Processing X509_get_ext_d2i
+[2022-12-21 00:07:38] INFO(detector): Processing ap_pcfg_openfile
+[2022-12-21 00:07:38] INFO(detector): Processing DH_new
+[2022-12-21 00:07:38] ERROR(BUGREPORT): BN_bn2dec: /home/test/api_misuse/evaluation/apimu4c_project/httpd/httpd-2.4.37/modules/ssl/ssl_engine_vars.c:796:29, TYPE: retval √*
+[2022-12-21 00:07:38] ERROR(BUGREPORT): BN_bn2dec: /home/test/api_misuse/evaluation/apimu4c_project/httpd/httpd-2.4.37/modules/ssl/ssl_util_ssl.c:213:14, TYPE: retval √
+[2022-12-21 00:07:38] ERROR(BUGREPORT): BIO_new_file: /home/test/api_misuse/evaluation/apimu4c_project/httpd/httpd-2.4.37/modules/ssl/ssl_util_ssl.c:85:10, TYPE: retval √
+[2022-12-21 00:07:38] ERROR(BUGREPORT): BIO_new_file: /home/test/api_misuse/evaluation/apimu4c_project/httpd/httpd-2.4.37/modules/ssl/ssl_util_ssl.c:507:11, TYPE: retval √
+[2022-12-21 00:07:38] ERROR(BUGREPORT): BIO_new: /home/test/api_misuse/evaluation/apimu4c_project/httpd/httpd-2.4.37/modules/ssl/ssl_engine_vars.c:1111:24, TYPE: retval √*
+[2022-12-21 00:07:38] ERROR(BUGREPORT): BIO_new: /home/test/api_misuse/evaluation/apimu4c_project/httpd/httpd-2.4.37/modules/ssl/ssl_engine_io.c:2041:28, TYPE: retval √*
+[2022-12-21 00:07:38] ERROR(BUGREPORT): BIO_new: /home/test/api_misuse/evaluation/apimu4c_project/httpd/httpd-2.4.37/modules/ssl/ssl_util_ssl.c:274:11, TYPE: retval √
+[2022-12-21 00:07:38] ERROR(BUGREPORT): BIO_new: /home/test/api_misuse/evaluation/apimu4c_project/httpd/httpd-2.4.37/modules/ssl/ssl_util_ocsp.c:38:11, TYPE: retval √*
+[2022-12-21 00:07:38] ERROR(BUGREPORT): BIO_new: /home/test/api_misuse/evaluation/apimu4c_project/httpd/httpd-2.4.37/modules/ssl/ssl_engine_vars.c:466:15, TYPE: retval √
+[2022-12-21 00:07:38] ERROR(BUGREPORT): BIO_new: /home/test/api_misuse/evaluation/apimu4c_project/httpd/httpd-2.4.37/modules/ssl/ssl_engine_io.c:2076:35, TYPE: retval √*
+[2022-12-21 00:07:38] ERROR(BUGREPORT): X509_STORE_CTX_new: /home/test/api_misuse/evaluation/apimu4c_project/httpd/httpd-2.4.37/modules/ssl/ssl_engine_init.c:1587:12, TYPE: retval √
+[2022-12-21 00:07:38] ERROR(BUGREPORT): X509_STORE_CTX_new: /home/test/api_misuse/evaluation/apimu4c_project/httpd/httpd-2.4.37/modules/ssl/ssl_util_stapling.c:103:13, TYPE: retval √*
+[2022-12-21 00:07:38] ERROR(BUGREPORT): X509_STORE_CTX_new: /home/test/api_misuse/evaluation/apimu4c_project/httpd/httpd-2.4.37/modules/ssl/ssl_engine_kernel.c:916:30, TYPE: retval
+[2022-12-21 00:07:38] ERROR(BUGREPORT): DH_new: /home/test/api_misuse/evaluation/apimu4c_project/httpd/httpd-2.4.37/modules/ssl/ssl_engine_init.c:80:14, TYPE: retval √
+[2022-12-21 00:07:38] INFO(BUGREPORT): Total reports: 14-6=8
+
+openssl:
+
+(base) @test:~/api_misuse/evaluation/apimu4c_project/openssl$ apicad detect --only --disable-code
+26/43
+[2022-12-21 00:06:50] INFO(detection): Detecting for 21 functions
+[2022-12-21 00:06:50] INFO(detector): Processing EVP_CipherInit_ex
+[2022-12-21 00:06:50] INFO(detector): Processing ASN1_object_size
+[2022-12-21 00:06:50] INFO(detector): Processing EVP_MD_CTX_new
+[2022-12-21 00:06:50] INFO(detector): Processing BUF_MEM_grow_clean
+[2022-12-21 00:06:50] INFO(detector): Processing sk_SSL_CIPHER_new_null
+[2022-12-21 00:06:50] INFO(detector): Processing bn_wexpand
+[2022-12-21 00:06:51] INFO(detector): Processing OBJ_dup
+[2022-12-21 00:06:51] INFO(detector): Processing EC_GROUP_dup
+[2022-12-21 00:06:51] INFO(detector): Processing ssl_generate_pkey
+[2022-12-21 00:06:51] INFO(detector): Processing ASN1_TIME_diff
+[2022-12-21 00:06:51] INFO(detector): Processing i2a_ASN1_OBJECT
+[2022-12-21 00:06:51] INFO(detector): Processing OBJ_txt2obj
+[2022-12-21 00:06:51] INFO(detector): Processing PACKET_buf_init
+[2022-12-21 00:06:51] INFO(detector): Processing BN_CTX_get
+[2022-12-21 00:07:00] INFO(detector): Processing ASN1_GENERALIZEDTIME_set_string
+[2022-12-21 00:07:00] INFO(detector): Processing X509_STORE_CTX_new
+[2022-12-21 00:07:00] INFO(detector): Processing i2s_ASN1_INTEGER
+[2022-12-21 00:07:00] INFO(detector): Processing CRYPTO_THREAD_lock_new
+[2022-12-21 00:07:00] INFO(detector): Processing CRYPTO_realloc
+[2022-12-21 00:07:01] INFO(detector): Processing ASN1_STRING_to_UTF8
+[2022-12-21 00:07:01] INFO(detector): Processing X509_NAME_ENTRY_new
+[2022-12-21 00:07:01] ERROR(BUGREPORT): EVP_CipherInit_ex: /home/test/api_misuse/evaluation/apimu4c_project/openssl/openssl-1-1-pre8_patched/apps/speed.c:913:17, TYPE: retval
+[2022-12-21 00:07:01] ERROR(BUGREPORT): EVP_CipherInit_ex: /home/test/api_misuse/evaluation/apimu4c_project/openssl/openssl-1-1-pre8_patched/apps/speed.c:2532:21, TYPE: retval
+[2022-12-21 00:07:01] ERROR(BUGREPORT): EVP_CipherInit_ex: /home/test/api_misuse/evaluation/apimu4c_project/openssl/openssl-1-1-pre8_patched/apps/speed.c:907:17, TYPE: retval
+[2022-12-21 00:07:01] ERROR(BUGREPORT): EVP_CipherInit_ex: /home/test/api_misuse/evaluation/apimu4c_project/openssl/openssl-1-1-pre8_patched/apps/speed.c:2524:21, TYPE: retval
+[2022-12-21 00:07:01] ERROR(BUGREPORT): EVP_CipherInit_ex: /home/test/api_misuse/evaluation/apimu4c_project/openssl/openssl-1-1-pre8_patched/crypto/cms/cms_kari.c:205:5, TYPE: retval √
+[2022-12-21 00:07:01] ERROR(BUGREPORT): EVP_CipherInit_ex: /home/test/api_misuse/evaluation/apimu4c_project/openssl/openssl-1-1-pre8_patched/crypto/cms/cms_enc.c:129:9, TYPE: retval
+[2022-12-21 00:07:01] ERROR(BUGREPORT): EVP_CipherInit_ex: /home/test/api_misuse/evaluation/apimu4c_project/openssl/openssl-1-1-pre8_patched/crypto/cms/cms_enc.c:63:9, TYPE: retval
+[2022-12-21 00:07:01] ERROR(BUGREPORT): EVP_CipherInit_ex: /home/test/api_misuse/evaluation/apimu4c_project/openssl/openssl-1-1-pre8_patched/test/tls13encryptiontest.c:359:20, TYPE: retval
+[2022-12-21 00:07:01] ERROR(BUGREPORT): EVP_CipherInit_ex: /home/test/api_misuse/evaluation/apimu4c_project/openssl/openssl-1-1-pre8_patched/test/tls13encryptiontest.c:358:13, TYPE: retval
+[2022-12-21 00:07:01] ERROR(BUGREPORT): EVP_CipherInit_ex: /home/test/api_misuse/evaluation/apimu4c_project/openssl/openssl-1-1-pre8_patched/crypto/cms/cms_pwri.c:328:5, TYPE: retval √
+[2022-12-21 00:07:01] ERROR(BUGREPORT): EVP_CipherInit_ex: /home/test/api_misuse/evaluation/apimu4c_project/openssl/openssl-1-1-pre8_patched/test/bad_dtls_test.c:325:5, TYPE: retval
+[2022-12-21 00:07:01] ERROR(BUGREPORT): EVP_CipherInit_ex: /home/test/api_misuse/evaluation/apimu4c_project/openssl/openssl-1-1-pre8_patched/ssl/record/ssl3_record_tls13.c:144:9, TYPE: retval
+[2022-12-21 00:07:01] ERROR(BUGREPORT): EVP_CipherInit_ex: /home/test/api_misuse/evaluation/apimu4c_project/openssl/openssl-1-1-pre8_patched/ssl/tls13_enc.c:375:12, TYPE: retval
+[2022-12-21 00:07:01] ERROR(BUGREPORT): EVP_CipherInit_ex: /home/test/api_misuse/evaluation/apimu4c_project/openssl/openssl-1-1-pre8_patched/ssl/tls13_enc.c:371:9, TYPE: retval
+[2022-12-21 00:07:01] ERROR(BUGREPORT): EVP_CipherInit_ex: /home/test/api_misuse/evaluation/apimu4c_project/openssl/openssl-1-1-pre8_patched/crypto/pkcs7/pk7_doit.c:550:13, TYPE: retval
+[2022-12-21 00:07:01] ERROR(BUGREPORT): EVP_CipherInit_ex: /home/test/api_misuse/evaluation/apimu4c_project/openssl/openssl-1-1-pre8_patched/crypto/pkcs7/pk7_doit.c:293:9, TYPE: retval √
+[2022-12-21 00:07:01] ERROR(BUGREPORT): EVP_CipherInit_ex: /home/test/api_misuse/evaluation/apimu4c_project/openssl/openssl-1-1-pre8_patched/crypto/pkcs7/pk7_doit.c:517:13, TYPE: retval
+[2022-12-21 00:07:01] ERROR(BUGREPORT): EVP_CipherInit_ex: /home/test/api_misuse/evaluation/apimu4c_project/openssl/openssl-1-1-pre8_patched/crypto/pkcs7/pk7_doit.c:288:13, TYPE: retval √
+[2022-12-21 00:07:01] ERROR(BUGREPORT): EVP_CipherInit_ex: /home/test/api_misuse/evaluation/apimu4c_project/openssl/openssl-1-1-pre8_patched/crypto/rand/drbg_ctr.c:205:5, TYPE: retval √
+[2022-12-21 00:07:01] ERROR(BUGREPORT): EVP_CipherInit_ex: /home/test/api_misuse/evaluation/apimu4c_project/openssl/openssl-1-1-pre8_patched/ssl/s3_enc.c:241:5, TYPE: retval √
+[2022-12-21 00:07:01] ERROR(BUGREPORT): BUF_MEM_grow_clean: /home/test/api_misuse/evaluation/apimu4c_project/openssl/openssl-1-1-pre8_patched/crypto/asn1/tasn_dec.c:747:9, TYPE: retval arg.pre √
+[2022-12-21 00:07:01] ERROR(BUGREPORT): ASN1_TIME_diff: /home/test/api_misuse/evaluation/apimu4c_project/openssl/openssl-1-1-pre8_patched/apps/ca.c:1607:9, TYPE: retval √
+[2022-12-21 00:07:01] ERROR(BUGREPORT): BN_CTX_get: /home/test/api_misuse/evaluation/apimu4c_project/openssl/openssl-1-1-pre8_patched/crypto/ec/ec2_smpl.c:247:9, TYPE: retval √
+[2022-12-21 00:07:01] ERROR(BUGREPORT): BN_CTX_get: /home/test/api_misuse/evaluation/apimu4c_project/openssl/openssl-1-1-pre8_patched/crypto/ec/ecdh_ossl.c:53:9, TYPE: retval √
+[2022-12-21 00:07:01] ERROR(BUGREPORT): BN_CTX_get: /home/test/api_misuse/evaluation/apimu4c_project/openssl/openssl-1-1-pre8_patched/crypto/dh/dh_key.c:178:11, TYPE: retval √
+[2022-12-21 00:07:01] ERROR(BUGREPORT): ASN1_GENERALIZEDTIME_set_string: /home/test/api_misuse/evaluation/apimu4c_project/openssl/openssl-1-1-pre8_patched/crypto/ct/ct_prn.c:46:5, TYPE: retval √
+[2022-12-21 00:07:01] ERROR(BUGREPORT): ASN1_GENERALIZEDTIME_set_string: /home/test/api_misuse/evaluation/apimu4c_project/openssl/openssl-1-1-pre8_patched/crypto/ocsp/ocsp_ext.c:384:9, TYPE: retval √
+[2022-12-21 00:07:01] ERROR(BUGREPORT): X509_STORE_CTX_new: /home/test/api_misuse/evaluation/apimu4c_project/openssl/openssl-1-1-pre8_patched/apps/crl.c:193:15, TYPE: retval √
+[2022-12-21 00:07:01] ERROR(BUGREPORT): X509_STORE_CTX_new: /home/test/api_misuse/evaluation/apimu4c_project/openssl/openssl-1-1-pre8_patched/apps/s_server.c:548:13, TYPE: retval √
+[2022-12-21 00:07:01] ERROR(BUGREPORT): X509_STORE_CTX_new: /home/test/api_misuse/evaluation/apimu4c_project/openssl/openssl-1-1-pre8_patched/crypto/pkcs7/pk7_smime.c:260:16, TYPE: retval √
+[2022-12-21 00:07:01] ERROR(BUGREPORT): X509_STORE_CTX_new: /home/test/api_misuse/evaluation/apimu4c_project/openssl/openssl-1-1-pre8_patched/crypto/ts/ts_rsp_verify.c:173:16, TYPE: retval √
+[2022-12-21 00:07:01] ERROR(BUGREPORT): X509_STORE_CTX_new: /home/test/api_misuse/evaluation/apimu4c_project/openssl/openssl-1-1-pre8_patched/crypto/ocsp/ocsp_vfy.c:44:11, TYPE: retval √
+[2022-12-21 00:07:01] ERROR(BUGREPORT): X509_STORE_CTX_new: /home/test/api_misuse/evaluation/apimu4c_project/openssl/openssl-1-1-pre8_patched/crypto/cms/cms_smime.c:232:27, TYPE: retval √
+[2022-12-21 00:07:01] ERROR(BUGREPORT): X509_STORE_CTX_new: /home/test/api_misuse/evaluation/apimu4c_project/openssl/openssl-1-1-pre8_patched/test/crltest.c:235:27, TYPE: retval
+[2022-12-21 00:07:01] ERROR(BUGREPORT): X509_STORE_CTX_new: /home/test/api_misuse/evaluation/apimu4c_project/openssl/openssl-1-1-pre8_patched/test/danetest.c:64:10, TYPE: retval
+[2022-12-21 00:07:01] ERROR(BUGREPORT): i2s_ASN1_INTEGER: /home/test/api_misuse/evaluation/apimu4c_project/openssl/openssl-1-1-pre8_patched/crypto/x509v3/v3_cpols.c:463:23, TYPE: retval √
+[2022-12-21 00:07:01] ERROR(BUGREPORT): i2s_ASN1_INTEGER: /home/test/api_misuse/evaluation/apimu4c_project/openssl/openssl-1-1-pre8_patched/crypto/asn1/tasn_prn.c:397:9, TYPE: retval √
+[2022-12-21 00:07:01] ERROR(BUGREPORT): i2s_ASN1_INTEGER: /home/test/api_misuse/evaluation/apimu4c_project/openssl/openssl-1-1-pre8_patched/crypto/x509v3/v3_sxnet.c:68:15, TYPE: retval √*
+[2022-12-21 00:07:01] ERROR(BUGREPORT): CRYPTO_THREAD_lock_new: /home/test/api_misuse/evaluation/apimu4c_project/openssl/openssl-1-1-pre8_patched/ssl/ssl_cert.c:64:17, TYPE: retval √
+[2022-12-21 00:07:01] ERROR(BUGREPORT): CRYPTO_THREAD_lock_new: /home/test/api_misuse/evaluation/apimu4c_project/openssl/openssl-1-1-pre8_patched/crypto/bio/bio_lib.c:87:17, TYPE: retval √
+[2022-12-21 00:07:01] ERROR(BUGREPORT): CRYPTO_THREAD_lock_new: /home/test/api_misuse/evaluation/apimu4c_project/openssl/openssl-1-1-pre8_patched/crypto/bn/bn_blind.c:41:17, TYPE: retval √
+[2022-12-21 00:07:01] ERROR(BUGREPORT): CRYPTO_THREAD_lock_new: /home/test/api_misuse/evaluation/apimu4c_project/openssl/openssl-1-1-pre8_patched/test/threadstest.c:85:27, TYPE: retval
+[2022-12-21 00:07:01] ERROR(BUGREPORT): CRYPTO_THREAD_lock_new: /home/test/api_misuse/evaluation/apimu4c_project/openssl/openssl-1-1-pre8_patched/ssl/ssl_lib.c:687:15, TYPE: retval √
+[2022-12-21 00:07:01] ERROR(BUGREPORT): X509_NAME_ENTRY_new: /home/test/api_misuse/evaluation/apimu4c_project/openssl/openssl-1-1-pre8_patched/crypto/x509/x_name.c:333:20, TYPE: retval √
+[2022-12-21 00:07:01] INFO(BUGREPORT): Total reports: 44-1=43

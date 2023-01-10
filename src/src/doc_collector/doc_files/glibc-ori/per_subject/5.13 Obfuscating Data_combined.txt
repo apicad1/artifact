@@ -1,0 +1,10 @@
+The memfrob function reversibly obfuscates an array of binary data.  This is not true encryption; the obfuscated data still bears a clear relationship to the original, and no secret key is required to undo the obfuscation.  It is analogous to the “Rot13” cipher used on Usenet for obscuring offensive jokes, spoilers for works of fiction, and so on, but it can be applied to arbitrary binary data. 
+Programs that need true encryption—a transformation that completely obscures the original and cannot be reversed without knowledge of a secret key—should use a dedicated cryptography library, such as libgcrypt. 
+Programs that need to destroy data should use explicit_bzero (see Erasing Sensitive Data), or possibly strfry (see Shuffling Bytes). 
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void * memfrob (void *mem, size_t length)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The function memfrob obfuscates length bytes of data beginning at mem, in place.  Each byte is bitwise xor-ed with the binary pattern 00101010 (hexadecimal 0x2A).  The return value is always mem. 
+memfrob a second time on the same data returns it to its original state. 
+Portability Note:  This function is unique to the GNU C Library. It is declared in string.h. 

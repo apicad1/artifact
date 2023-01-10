@@ -1,0 +1,172 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Probe: memory_sbrk_more (void *$arg1, size_t $arg2)
+This probe is triggered after the main arena is extended by calling sbrk.  Argument $arg1 is the additional size requested to sbrk, and $arg2 is the pointer that marks the end of the sbrk area, returned in response to the request. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Probe: memory_sbrk_less (void *$arg1, size_t $arg2)
+This probe is triggered after the size of the main arena is decreased by calling sbrk.  Argument $arg1 is the size released by sbrk (the positive value, rather than the negative value passed to sbrk), and $arg2 is the pointer that marks the end of the sbrk area, returned in response to the request. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Probe: memory_heap_new (void *$arg1, size_t $arg2)
+This probe is triggered after a new heap is mmaped.  Argument $arg1 is a pointer to the base of the memory area, where the heap_info data structure is held, and $arg2 is the size of the heap. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Probe: memory_heap_free (void *$arg1, size_t $arg2)
+This probe is triggered before (unlike the other sbrk and heap probes) a heap is completely removed via munmap.  Argument $arg1 is a pointer to the heap, and $arg2 is the size of the heap. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Probe: memory_heap_more (void *$arg1, size_t $arg2)
+This probe is triggered after a trailing portion of an mmaped heap is extended.  Argument $arg1 is a pointer to the heap, and $arg2 is the new size of the heap. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Probe: memory_heap_less (void *$arg1, size_t $arg2)
+This probe is triggered after a trailing portion of an mmaped heap is released.  Argument $arg1 is a pointer to the heap, and $arg2 is the new size of the heap. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Probe: memory_malloc_retry (size_t $arg1)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Probe: memory_realloc_retry (size_t $arg1, void *$arg2)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Probe: memory_memalign_retry (size_t $arg1, size_t $arg2)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Probe: memory_calloc_retry (size_t $arg1)
+These probes are triggered when the corresponding functions fail to obtain the requested amount of memory from the arena in use, before they call arena_get_retry to select an alternate arena in which to retry the allocation.  Argument $arg1 is the amount of memory requested by the user; in the calloc case, that is the total size computed from both function arguments.  In the realloc case, $arg2 is the pointer to the memory area being resized.  In the memalign case, $arg2 is the alignment to be used for the request, which may be stricter than the value passed to the memalign function.  A memalign probe is also used by functions posix_memalign, valloc and pvalloc. 
+Note that the argument order does not match that of the corresponding two-argument functions, so that in all of these probes the user-requested allocation size is in $arg1. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Probe: memory_arena_retry (size_t $arg1, void *$arg2)
+This probe is triggered within arena_get_retry (the function called to select the alternate arena in which to retry an allocation that failed on the first attempt), before the selection of an alternate arena.  This probe is redundant, but much easier to use when it’s not important to determine which of the various memory allocation functions is failing to allocate on the first try.  Argument $arg1 is the same as in the function-specific probes, except for extra room for padding introduced by functions that have to ensure stricter alignment. Argument $arg2 is the arena in which allocation failed. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Probe: memory_arena_new (void *$arg1, size_t $arg2)
+This probe is triggered when malloc allocates and initializes an additional arena (not the main arena), but before the arena is assigned to the running thread or inserted into the internal linked list of arenas.  The arena’s malloc_state internal data structure is located at $arg1, within a newly-allocated heap big enough to hold at least $arg2 bytes. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Probe: memory_arena_reuse (void *$arg1, void *$arg2)
+This probe is triggered when malloc has just selected an existing arena to reuse, and (temporarily) reserved it for exclusive use. Argument $arg1 is a pointer to the newly-selected arena, and $arg2 is a pointer to the arena previously used by that thread. 
+This occurs within reused_arena, right after the mutex mentioned in probe memory_arena_reuse_wait is acquired; argument $arg1 will point to the same arena.  In this configuration, this will usually only occur once per thread.  The exception is when a thread first selected the main arena, but a subsequent allocation from it fails: then, and only then, may we switch to another arena to retry that allocation, and for further allocations within that thread. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Probe: memory_arena_reuse_wait (void *$arg1, void *$arg2, void *$arg3)
+This probe is triggered when malloc is about to wait for an arena to become available for reuse.  Argument $arg1 holds a pointer to the mutex the thread is going to wait on, $arg2 is a pointer to a newly-chosen arena to be reused, and $arg3 is a pointer to the arena previously used by that thread. 
+This occurs within reused_arena, when a thread first tries to allocate memory or needs a retry after a failure to allocate from the main arena, there isn’t any free arena, the maximum number of arenas has been reached, and an existing arena was chosen for reuse, but its mutex could not be immediately acquired.  The mutex in $arg1 is the mutex of the selected arena. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Probe: memory_arena_reuse_free_list (void *$arg1)
+This probe is triggered when malloc has chosen an arena that is in the free list for use by a thread, within the get_free_list function.  The argument $arg1 holds a pointer to the selected arena. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Probe: memory_mallopt (int $arg1, int $arg2)
+This probe is triggered when function mallopt is called to change malloc internal configuration parameters, before any change to the parameters is made.  The arguments $arg1 and $arg2 are the ones passed to the mallopt function. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Probe: memory_mallopt_mxfast (int $arg1, int $arg2)
+This probe is triggered shortly after the memory_mallopt probe, when the parameter to be changed is M_MXFAST, and the requested value is in an acceptable range.  Argument $arg1 is the requested value, and $arg2 is the previous value of this malloc parameter. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Probe: memory_mallopt_trim_threshold (int $arg1, int $arg2, int $arg3)
+This probe is triggered shortly after the memory_mallopt probe, when the parameter to be changed is M_TRIM_THRESHOLD.  Argument $arg1 is the requested value, $arg2 is the previous value of this malloc parameter, and $arg3 is nonzero if dynamic threshold adjustment was already disabled. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Probe: memory_mallopt_top_pad (int $arg1, int $arg2, int $arg3)
+This probe is triggered shortly after the memory_mallopt probe, when the parameter to be changed is M_TOP_PAD.  Argument $arg1 is the requested value, $arg2 is the previous value of this malloc parameter, and $arg3 is nonzero if dynamic threshold adjustment was already disabled. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Probe: memory_mallopt_mmap_threshold (int $arg1, int $arg2, int $arg3)
+This probe is triggered shortly after the memory_mallopt probe, when the parameter to be changed is M_MMAP_THRESHOLD, and the requested value is in an acceptable range.  Argument $arg1 is the requested value, $arg2 is the previous value of this malloc parameter, and $arg3 is nonzero if dynamic threshold adjustment was already disabled. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Probe: memory_mallopt_mmap_max (int $arg1, int $arg2, int $arg3)
+This probe is triggered shortly after the memory_mallopt probe, when the parameter to be changed is M_MMAP_MAX.  Argument $arg1 is the requested value, $arg2 is the previous value of this malloc parameter, and $arg3 is nonzero if dynamic threshold adjustment was already disabled. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Probe: memory_mallopt_perturb (int $arg1, int $arg2)
+This probe is triggered shortly after the memory_mallopt probe, when the parameter to be changed is M_PERTURB.  Argument $arg1 is the requested value, and $arg2 is the previous value of this malloc parameter. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Probe: memory_mallopt_arena_test (int $arg1, int $arg2)
+This probe is triggered shortly after the memory_mallopt probe, when the parameter to be changed is M_ARENA_TEST, and the requested value is in an acceptable range.  Argument $arg1 is the requested value, and $arg2 is the previous value of this malloc parameter. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Probe: memory_mallopt_arena_max (int $arg1, int $arg2)
+This probe is triggered shortly after the memory_mallopt probe, when the parameter to be changed is M_ARENA_MAX, and the requested value is in an acceptable range.  Argument $arg1 is the requested value, and $arg2 is the previous value of this malloc parameter. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Probe: memory_mallopt_free_dyn_thresholds (int $arg1, int $arg2)
+This probe is triggered when function free decides to adjust the dynamic brk/mmap thresholds.  Argument $arg1 and $arg2 are the adjusted mmap and trim thresholds, respectively. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Probe: memory_tunable_tcache_max_bytes (int $arg1, int $arg2)
+This probe is triggered when the glibc.malloc.tcache_max tunable is set.  Argument $arg1 is the requested value, and $arg2 is the previous value of this tunable. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Probe: memory_tunable_tcache_count (int $arg1, int $arg2)
+This probe is triggered when the glibc.malloc.tcache_count tunable is set.  Argument $arg1 is the requested value, and $arg2 is the previous value of this tunable. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Probe: memory_tunable_tcache_unsorted_limit (int $arg1, int $arg2)
+This probe is triggered when the glibc.malloc.tcache_unsorted_limit tunable is set.  Argument $arg1 is the requested value, and $arg2 is the previous value of this tunable. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Probe: memory_tcache_double_free (void *$arg1, int $arg2)
+This probe is triggered when free determines that the memory being freed has probably already been freed, and resides in the per-thread cache.  Note that there is an extremely unlikely chance that this probe will trigger due to random payload data remaining in the allocated memory matching the key used to detect double frees. This probe actually indicates that an expensive linear search of the tcache, looking for a double free, has happened.  Argument $arg1 is the memory location as passed to free, Argument $arg2 is the tcache bin it resides in. 

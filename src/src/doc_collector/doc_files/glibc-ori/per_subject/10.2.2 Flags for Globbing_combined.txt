@@ -1,0 +1,54 @@
+This section describes the standard flags that you can specify in the flags argument to glob.  Choose the flags you want, and combine them with the C bitwise OR operator |. 
+Note that there are More Flags for Globbing available as GNU extensions. 
+
+>>>>>>>>>>>>>>>>>>>>
+- GLOB_APPEND  
+Append the words from this expansion to the vector of words produced by previous calls to glob.  This way you can effectively expand several words as if they were concatenated with spaces between them. 
+In order for appending to work, you must not modify the contents of the word vector structure between calls to glob.  And, if you set GLOB_DOOFFS in the first call to glob, you must also set it when you append to the results. 
+Note that the pointer stored in gl_pathv may no longer be valid after you call glob the second time, because glob might have relocated the vector.  So always fetch gl_pathv from the glob_t structure after each glob call; never save the pointer across calls. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- GLOB_DOOFFS  
+Leave blank slots at the beginning of the vector of words. The gl_offs field says how many slots to leave. The blank slots contain null pointers. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- GLOB_ERR  
+Give up right away and report an error if there is any difficulty reading the directories that must be read in order to expand pattern fully.  Such difficulties might include a directory in which you don’t have the requisite access.  Normally, glob tries its best to keep on going despite any errors, reading whatever directories it can. 
+You can exercise even more control than this by specifying an error-handler function errfunc when you call glob.  If errfunc is not a null pointer, then glob doesn’t give up right away when it can’t read a directory; instead, it calls errfunc with two arguments, like this: 
+
+EXAMPLE_BEGIN
+(*errfunc) (filename, error-code)
+EXAMPLE_END
+
+The argument filename is the name of the directory that glob couldn’t open or couldn’t read, and error-code is the errno value that was reported to glob. 
+If the error handler function returns nonzero, then glob gives up right away.  Otherwise, it continues. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- GLOB_MARK  
+If the pattern matches the name of a directory, append ‘/’ to the directory’s name when returning it. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- GLOB_NOCHECK  
+If the pattern doesn’t match any file names, return the pattern itself as if it were a file name that had been matched.  (Normally, when the pattern doesn’t match anything, glob returns that there were no matches.) 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- GLOB_NOESCAPE  
+Don’t treat the ‘\’ character specially in patterns.  Normally, ‘\’ quotes the following character, turning off its special meaning (if any) so that it matches only itself.  When quoting is enabled, the pattern ‘\?’ matches only the string ‘?’, because the question mark in the pattern acts like an ordinary character. 
+If you use GLOB_NOESCAPE, then ‘\’ is an ordinary character. 
+glob does its work by calling the function fnmatch repeatedly.  It handles the flag GLOB_NOESCAPE by turning on the FNM_NOESCAPE flag in calls to fnmatch. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- GLOB_NOSORT  
+Don’t sort the file names; return them in no particular order. (In practice, the order will depend on the order of the entries in the directory.)  The only reason not to sort is to save time. 

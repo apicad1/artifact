@@ -1,0 +1,20 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: cookie_io_functions_t
+This is a structure type that holds the functions that define the communications protocol between the stream and its cookie.  It has the following members: 
+	cookie_read_function_t *read
+This is the function that reads data from the cookie.  If the value is a null pointer instead of a function, then read operations on this stream always return EOF.  
+	cookie_write_function_t *write
+This is the function that writes data to the cookie.  If the value is a null pointer instead of a function, then data written to the stream is discarded.  
+	cookie_seek_function_t *seek
+This is the function that performs the equivalent of file positioning on the cookie.  If the value is a null pointer instead of a function, calls to fseek or fseeko on this stream can only seek to locations within the buffer; any attempt to seek outside the buffer will return an ESPIPE error.  
+	cookie_close_function_t *close
+This function performs any appropriate cleanup on the cookie when closing the stream.  If the value is a null pointer instead of a function, nothing special is done to close the cookie when the stream is closed. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: FILE * fopencookie (void *cookie, const char *opentype, cookie_io_functions_t io-functions)
+Preliminary: | MT-Safe  | AS-Unsafe heap lock | AC-Unsafe mem lock | See POSIX Safety Concepts. 
+This function actually creates the stream for communicating with the cookie using the functions in the io-functions argument. The opentype argument is interpreted as for fopen; see Opening Streams.  (But note that the “truncate on open” option is ignored.)  The new stream is fully buffered. 
+The fopencookie function returns the newly created stream, or a null pointer in case of an error. 

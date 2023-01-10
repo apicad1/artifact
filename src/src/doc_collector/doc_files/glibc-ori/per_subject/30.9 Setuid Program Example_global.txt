@@ -1,0 +1,114 @@
+Here’s an example showing how to set up a program that changes its effective user ID. 
+This is part of a game program called caber-toss that manipulates a file scores that should be writable only by the game program itself.  The program assumes that its executable file will be installed with the setuid bit set and owned by the same user as the scores file.  Typically, a system administrator will set up an account like games for this purpose. 
+The executable file is given mode 4755, so that doing an ‘ls -l’ on it produces output like: 
+
+EXAMPLE_BEGIN
+-rwsr-xr-x   1 games    184422 Jul 30 15:17 caber-toss
+EXAMPLE_END
+
+The setuid bit shows up in the file modes as the ‘s’. 
+The scores file is given mode 644, and doing an ‘ls -l’ on it shows: 
+
+EXAMPLE_BEGIN
+-rw-r--r--  1 games           0 Jul 31 15:33 scores
+EXAMPLE_END
+
+Here are the parts of the program that show how to set up the changed user ID.  This program is conditionalized so that it makes use of the file IDs feature if it is supported, and otherwise uses setreuid to swap the effective and real user IDs. 
+
+EXAMPLE_BEGIN
+#include <stdio.h>
+#include <sys/types.h>
+#include <unistd.h>
+#include <stdlib.h>
+
+
+/* Remember the effective and real UIDs. */
+
+static uid_t euid, ruid;
+
+
+/* Restore the effective UID to its original value. */
+
+void
+do_setuid (void)
+{
+  int status;
+
+#ifdef _POSIX_SAVED_IDS
+  status = seteuid (euid);
+#else
+  status = setreuid (ruid, euid);
+#endif
+  if (status < 0) {
+    fprintf (stderr, "Couldn't set uid.\n");
+    exit (status);
+    }
+}
+
+
+/* Set the effective UID to the real UID. */
+
+void
+undo_setuid (void)
+{
+  int status;
+
+#ifdef _POSIX_SAVED_IDS
+  status = seteuid (ruid);
+#else
+  status = setreuid (euid, ruid);
+#endif
+  if (status < 0) {
+    fprintf (stderr, "Couldn't set uid.\n");
+    exit (status);
+    }
+}
+
+
+/* Main program. */
+
+int
+main (void)
+{
+  /* Remember the real and effective user IDs.  */
+  ruid = getuid ();
+  euid = geteuid ();
+  undo_setuid ();
+
+  /* Do the game and record the score.  */
+  …
+}
+EXAMPLE_END
+
+Notice how the first thing the main function does is to set the effective user ID back to the real user ID.  This is so that any other file accesses that are performed while the user is playing the game use the real user ID for determining permissions.  Only when the program needs to open the scores file does it switch back to the file user ID, like this: 
+
+EXAMPLE_BEGIN
+/* Record the score. */
+
+int
+record_score (int score)
+{
+  FILE *stream;
+  char *myname;
+
+  /* Open the scores file. */
+  do_setuid ();
+  stream = fopen (SCORES_FILE, "a");
+  undo_setuid ();
+
+  /* Write the score to the file. */
+  if (stream)
+    {
+      myname = cuserid (NULL);
+      if (score < 0)
+        fprintf (stream, "%10s: Couldn't lift the caber.\n", myname);
+      else
+        fprintf (stream, "%10s: %d feet.\n", myname, score);
+      fclose (stream);
+      return 0;
+    }
+  else
+    return -1;
+}
+EXAMPLE_END
+

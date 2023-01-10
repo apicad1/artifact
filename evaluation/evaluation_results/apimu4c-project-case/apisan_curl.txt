@@ -1,0 +1,628 @@
+Validation results: (report num, true num) 10 1
+	BIO_new
+		# BugReport(score=0.83, code=vtls/openssl.c:3241, key=(BIO_free, None), ctx=(BIO_new, ((1, 4294967295),))
+
+	BIO_read_filename(BIO_ctrl) 3 0
+		BugReport(score=1.19, code=vtls/openssl.c:3238, key=(BIO_ctrl, ((1, 1),)), ctx=EVP_PKEY_free
+		BugReport(score=1.18, code=vtls/openssl.c:751, key=(BIO_ctrl, None), ctx=BIO_free
+		BugReport(score=1.18, code=vtls/openssl.c:2769, key=(BIO_ctrl, None), ctx=BIO_free
+		*BugReport(score=0.89, code=vtls/openssl.c:3238, key=(BIO_ctrl, ((1, 1),)), ctx=PEM_write_bio_X509
+		*BugReport(score=0.89, code=vtls/openssl.c:3238, key=(BIO_ctrl, ((1, 1),)), ctx=Curl_ssl_push_certinfo_len
+		*BugReport(score=0.89, code=vtls/openssl.c:3238, key=(BIO_ctrl, ((1, 1),)), ctx=X509_get_pubkey
+		*BugReport(score=0.88, code=vtls/openssl.c:751, key=(BIO_ctrl, None), ctx=(BIO_s_mem, None)
+		*BugReport(score=0.88, code=vtls/openssl.c:2769, key=(BIO_ctrl, None), ctx=(BIO_s_mem, None)
+		*BugReport(score=0.88, code=vtls/openssl.c:751, key=(BIO_ctrl, None), ctx=(X509_get_subject_name, None)
+		*BugReport(score=0.88, code=vtls/openssl.c:2769, key=(BIO_ctrl, None), ctx=(X509_get_subject_name, None)
+		*BugReport(score=0.88, code=vtls/openssl.c:751, key=(BIO_ctrl, None), ctx=(BIO_free, None)
+		*BugReport(score=0.88, code=vtls/openssl.c:2769, key=(BIO_ctrl, None), ctx=(BIO_free, None)
+		*BugReport(score=0.88, code=vtls/openssl.c:751, key=(BIO_ctrl, None), ctx=(ASN1_TIME_print, None)
+		*BugReport(score=0.88, code=vtls/openssl.c:2769, key=(BIO_ctrl, None), ctx=(ASN1_TIME_print, None)
+		*BugReport(score=0.88, code=vtls/openssl.c:751, key=(BIO_ctrl, None), ctx=(BIO_ctrl, None)
+		*BugReport(score=0.88, code=vtls/openssl.c:2769, key=(BIO_ctrl, None), ctx=(BIO_ctrl, None)
+		*BugReport(score=0.88, code=vtls/openssl.c:751, key=(BIO_ctrl, None), ctx=(X509_get_issuer_name, None)
+		*BugReport(score=0.88, code=vtls/openssl.c:2769, key=(BIO_ctrl, None), ctx=(X509_get_issuer_name, None)
+		*BugReport(score=0.88, code=vtls/openssl.c:751, key=(BIO_ctrl, None), ctx=(SSL_get_peer_cert_chain, None)
+		*BugReport(score=0.88, code=vtls/openssl.c:2769, key=(BIO_ctrl, None), ctx=(SSL_get_peer_cert_chain, None)
+		# BugReport(score=0.86, code=vtls/openssl.c:718, key=(X509_free, None), ctx=(BIO_ctrl, None)
+		# BugReport(score=0.86, code=vtls/openssl.c:715, key=(X509_free, None), ctx=(BIO_ctrl, None)
+
+	SSL_CTX_use_PrivateKey
+		# BugReport(score=0.80, code=vtls/openssl.c:3228, key=(EVP_PKEY_free, None), ctx=(SSL_CTX_use_PrivateKey, ((1, 1),))
+
+	SSL_get_peer_cert_chain
+		# BugReport(score=0.88, code=vtls/openssl.c:751, key=(BIO_ctrl, None), ctx=(SSL_get_peer_cert_chain, None)
+		# BugReport(score=0.88, code=vtls/openssl.c:2769, key=(BIO_ctrl, None), ctx=(SSL_get_peer_cert_chain, None)
+
+	Curl_ssl_sessionid_lock 1 1
+		# BugReport(score=0.86, code=vtls/openssl.c:1077, key=(SSL_get_ex_new_index, ((0, 2147483647),)), ctx=(Curl_ssl_sessionid_lock, None)
+		1 BugReport(score=0.83, code=vtls/openssl.c:2261, key=(Curl_ssl_sessionid_lock, None), ctx=(Curl_ssl_sessionid_unlock, None)
+
+	Curl_urldecode 3 0
+		BugReport(score=0.85, code=ftp.c:3196, key=(Curl_urldecode, None), ctx=(Curl_urldecode, None)
+		BugReport(score=0.85, code=dict.c:100, key=(Curl_urldecode, None), ctx=(Curl_urldecode, None)
+		BugReport(score=0.85, code=gopher.c:102, key=(Curl_urldecode, None), ctx=(Curl_urldecode, None)
+
+	Curl_timeleft 3 0
+		BugReport(score=0.91, code=tftp.c:209, key=(Curl_timeleft, ((-2147483648, -1),)), ctx=Curl_failf
+		BugReport(score=0.82, code=transfer.c:1225, key=(Curl_timeleft, ((0, 2147483647),)), ctx=(Curl_failf, None)
+		BugReport(score=0.82, code=multi.c:1397, key=(Curl_timeleft, ((0, 2147483647),)), ctx=(Curl_failf, None)
+		# BugReport(score=0.80, code=tool_setopt.c:634, key=(curl_easy_setopt, None), ctx=(Curl_timeleft, None)
+		# BugReport(score=0.80, code=tool_setopt.c:663, key=(curl_easy_setopt, None), ctx=(Curl_timeleft, None)
+		# BugReport(score=0.80, code=tool_setopt.c:672, key=(curl_easy_setopt, None), ctx=(Curl_timeleft, None)
+
+	strdup(callback function)
+	calloc(callback function)
+	malloc(callback function)
+	x509_crt_parse_file None
+	ssl_write None
+	SSLNewContext None
+	mbedtls_pk_parse_keyfile None
+	mbedtls_version_from_curl None
+
+ALL raw results:
+=== rvchk
+============================== POTENTIAL BUGS ============================== 30
+BugReport(score=1.16, code=escape.c:70, key=Curl_saferealloc, ctx=((1, 4294967295),)
+BugReport(score=1.14, code=tool_operate.c:535, key=__strdup, ctx=((1, 4294967295),)
+BugReport(score=1.14, code=tool_operate.c:455, key=__strdup, ctx=((1, 4294967295),)
+BugReport(score=1.14, code=tool_formparse.c:577, key=__strdup, ctx=((1, 4294967295),)
+BugReport(score=1.14, code=tool_dirhie.c:112, key=__strdup, ctx=((1, 4294967295),)
+BugReport(score=0.97, code=tool_cb_hdr.c:103, key=curl_easy_getinfo, ctx=((0, 0),)
+BugReport(score=0.94, code=curl_sasl.c:599, key=Curl_sasl_start, ctx=((1, 60), (62, 4294967295))
+BugReport(score=0.94, code=dotdot.c:112, key=__builtin_strlen, ctx=((4, 4294967295),)
+BugReport(score=0.91, code=ftp.c:1474, key=strrchr, ctx=((0, 0),)
+BugReport(score=0.91, code=http_proxy.c:223, key=curl_maprintf, ctx=((1, 4294967295),)
+BugReport(score=0.91, code=hostip.c:1008, key=curl_maprintf, ctx=((1, 4294967295),)
+BugReport(score=0.91, code=hostip.c:463, key=curl_maprintf, ctx=((1, 4294967295),)
+BugReport(score=0.90, code=tool_cb_hdr.c:120, key=memcmp, ctx=((-2147483648, -1), (1, 2147483647))
+BugReport(score=0.90, code=tool_formparse.c:280, key=fopen, ctx=((1, 4294967295),)
+BugReport(score=0.89, code=http.c:2056, key=Curl_checkheaders, ctx=((0, 0),)
+BugReport(score=0.89, code=http.c:2040, key=Curl_checkheaders, ctx=((0, 0),)
+BugReport(score=0.88, code=ftp.c:4040, key=Curl_pp_statemach, ctx=((1, 4294967295),)
+BugReport(score=0.88, code=ftp.c:3074, key=Curl_pp_statemach, ctx=((1, 4294967295),)
+BugReport(score=0.88, code=ftp.c:4069, key=Curl_pp_statemach, ctx=((1, 4294967295),)
+BugReport(score=0.88, code=http_proxy.c:341, key=Curl_read, ctx=((-2147483648, -1), (1, 2147483647))
+BugReport(score=0.88, code=tool_setopt.c:437, key=c_escape, ctx=((1, 4294967295),)
+BugReport(score=0.86, code=http.c:3160, key=memchr, ctx=((0, 0),)
+BugReport(score=0.85, code=url.c:3191, key=strncmp, ctx=((-2147483648, -1), (1, 2147483647))
+BugReport(score=0.85, code=cookie.c:215, key=strncmp, ctx=((-2147483648, -1), (1, 2147483647))
+BugReport(score=0.85, code=url.c:2534, key=strncmp, ctx=((-2147483648, -1), (1, 2147483647))
+BugReport(score=0.83, code=multi.c:1250, key=Curl_resolver_wait_resolv, ctx=((0, 0),)
+BugReport(score=0.80, code=connect.c:306, key=setsockopt, ctx=((-2147483648, -1), (1, 2147483647))
+BugReport(score=0.80, code=mime.c:1781, key=match_header, ctx=((1, 4294967295),)
+BugReport(score=0.80, code=cookie.c:1093, key=fgets, ctx=((0, 0),)
+BugReport(score=0.80, code=pop3.c:1352, key=Curl_sasl_parse_url_auth_option, ctx=((1, 4294967295),)
+
+=== cpair
+============================== POTENTIAL BUGS ============================== 47
+BugReport(score=1.21, code=mime.c:1084, key=(curl_mime_free, None), ctx=free
+BugReport(score=1.19, code=vtls/openssl.c:3238, key=(Curl_ssl_push_certinfo_len, None), ctx=EVP_PKEY_free
+BugReport(score=1.19, code=vtls/openssl.c:3238, key=(BIO_ctrl, ((1, 1),)), ctx=EVP_PKEY_free
+BugReport(score=1.18, code=tool_setopt.c:397, key=(c_escape, ((1, 4294967295),)), ctx=free
+BugReport(score=1.18, code=vtls/openssl.c:751, key=(BIO_ctrl, None), ctx=BIO_free
+BugReport(score=1.18, code=vtls/openssl.c:2769, key=(BIO_ctrl, None), ctx=BIO_free
+BugReport(score=1.13, code=tool_easysrc.c:154, key=(slist_wc_free_all, None), ctx=easysrc_free
+BugReport(score=1.13, code=tool_easysrc.c:154, key=(slist_wc_free_all, None), ctx=curl_free
+BugReport(score=1.13, code=vtls/openssl.c:3241, key=(BIO_free, None), ctx=X509_free
+BugReport(score=0.91, code=tftp.c:209, key=(Curl_timeleft, ((-2147483648, -1),)), ctx=Curl_failf
+BugReport(score=0.89, code=vtls/openssl.c:3238, key=(Curl_ssl_push_certinfo_len, None), ctx=X509_get_pubkey
+BugReport(score=0.89, code=vtls/openssl.c:3238, key=(Curl_ssl_push_certinfo_len, None), ctx=PEM_write_bio_X509
+BugReport(score=0.89, code=vtls/openssl.c:3238, key=(BIO_ctrl, ((1, 1),)), ctx=PEM_write_bio_X509
+BugReport(score=0.89, code=vtls/openssl.c:3238, key=(BIO_ctrl, ((1, 1),)), ctx=Curl_ssl_push_certinfo_len
+BugReport(score=0.89, code=vtls/openssl.c:3238, key=(BIO_ctrl, ((1, 1),)), ctx=X509_get_pubkey
+BugReport(score=0.88, code=tool_setopt.c:397, key=(c_escape, ((1, 4294967295),)), ctx=easysrc_addf
+BugReport(score=0.85, code=vtls/openssl.c:1351, key=(ossl_strerror, None), ctx=Curl_failf
+BugReport(score=0.85, code=vtls/openssl.c:3774, key=(ossl_strerror, None), ctx=Curl_failf
+BugReport(score=0.85, code=vtls/openssl.c:3768, key=(ERR_get_error, None), ctx=Curl_failf
+BugReport(score=0.85, code=vtls/openssl.c:1348, key=(ERR_get_error, None), ctx=Curl_failf
+BugReport(score=0.84, code=dotdot.c:123, key=(__builtin_constant_p, ((0, 0),)), ctx=__builtin_strchr
+BugReport(score=0.84, code=dotdot.c:96, key=(__builtin_constant_p, ((0, 0),)), ctx=__builtin_strchr
+BugReport(score=0.84, code=smb.c:954, key=(__builtin_constant_p, ((0, 0),)), ctx=__builtin_strchr
+BugReport(score=0.84, code=http.c:238, key=(__builtin_constant_p, ((0, 0),)), ctx=__builtin_strchr
+BugReport(score=0.84, code=urlapi.c:615, key=(__builtin_constant_p, ((0, 0),)), ctx=__builtin_strchr
+BugReport(score=0.84, code=dotdot.c:108, key=(__builtin_constant_p, ((0, 0),)), ctx=__builtin_strchr
+BugReport(score=0.84, code=http.c:1397, key=(__builtin_constant_p, ((0, 0),)), ctx=__builtin_strchr
+BugReport(score=0.84, code=tool_getparam.c:1959, key=(__builtin_constant_p, ((0, 0),)), ctx=__builtin_strchr
+BugReport(score=0.84, code=urlapi.c:829, key=(__builtin_constant_p, ((0, 0),)), ctx=__builtin_strchr
+BugReport(score=0.84, code=dotdot.c:100, key=(__builtin_constant_p, ((0, 0),)), ctx=__builtin_strchr
+BugReport(score=0.84, code=dotdot.c:150, key=(__builtin_constant_p, ((0, 0),)), ctx=__builtin_strchr
+BugReport(score=0.84, code=dotdot.c:112, key=(__builtin_constant_p, ((0, 0),)), ctx=__builtin_strchr
+BugReport(score=0.84, code=curl_path.c:172, key=(__builtin_constant_p, ((0, 0),)), ctx=__builtin_strchr
+BugReport(score=0.84, code=dotdot.c:134, key=(__builtin_constant_p, ((0, 0),)), ctx=__builtin_strchr
+BugReport(score=0.83, code=vtls/vtls.c:1088, key=(Curl_MD5_update, None), ctx=Curl_MD5_init
+BugReport(score=0.83, code=vtls/openssl.c:2262, key=(Curl_ssl_getsessionid, ((1, 255),)), ctx=Curl_ssl_sessionid_unlock
+BugReport(score=0.81, code=tool_writeout.c:258, key=(curl_easy_getinfo, ((0, 0),)), ctx=curl_mfprintf
+BugReport(score=0.81, code=tool_xattr.c:63, key=(curl_easy_getinfo, ((0, 0),)), ctx=curl_mfprintf
+BugReport(score=0.81, code=tool_writeout.c:147, key=(curl_easy_getinfo, ((0, 0),)), ctx=curl_mfprintf
+BugReport(score=0.81, code=tool_writeout.c:252, key=(curl_easy_getinfo, ((0, 0),)), ctx=curl_mfprintf
+BugReport(score=0.81, code=tool_help.c:578, key=(curl_easy_getinfo, ((0, 0),)), ctx=curl_mfprintf
+BugReport(score=0.81, code=tool_writeout.c:246, key=(curl_easy_getinfo, ((0, 0),)), ctx=curl_mfprintf
+BugReport(score=0.80, code=connect.c:1123, key=(__errno_location, ((-2147483648, 10), (12, 114), (116, 2147483647))), ctx=Curl_strerror
+BugReport(score=0.80, code=socks.c:735, key=(Curl_blockread_all, None), ctx=Curl_failf
+BugReport(score=0.80, code=tool_operate.c:1257, key=(tool_setopt_slist, None), ctx=progressbarinit
+BugReport(score=0.80, code=tool_operate.c:1257, key=(tool_setopt_slist, None), ctx=tool_setopt_enum
+BugReport(score=0.80, code=tool_operate.c:1257, key=(tool_setopt_slist, None), ctx=customrequest_helper
+
+=== args
+============================== POTENTIAL BUGS ============================== 3
+BugReport(score=0.83, code=connect.c:839, key=(Curl_printable_address, 1, 2), ctx=False
+BugReport(score=0.80, code=connect.c:306, key=(setsockopt, 3, 4), ctx=False
+BugReport(score=0.80, code=mime.c:832, key=(match_header, 1, 2), ctx=False
+
+
+=== fsb
+============================== POTENTIAL BUGS ============================== 8
+BugReport(score=1.26, code=tool_cb_prg.c:170, key=(curl_mfprintf, 1), ctx=(False, False)
+BugReport(score=1.26, code=tool_writeout.c:319, key=(curl_mfprintf, 1), ctx=(False, False)
+BugReport(score=0.93, code=tool_getparam.c:347, key=(curl_strnequal, 0), ctx=(False, False)
+BugReport(score=0.93, code=tool_operate.c:121, key=(curl_strnequal, 0), ctx=(False, False)
+BugReport(score=0.93, code=http.c:2965, key=(curl_strnequal, 0), ctx=(False, False)
+BugReport(score=0.92, code=vauth/digest.c:202, key=(strstr, 1), ctx=(False, False)
+BugReport(score=0.89, code=tool_operate.c:2026, key=(helpf, 1), ctx=(False, False)
+BugReport(score=0.83, code=imap.c:278, key=(imap_matchresp, 2), ctx=(False, False)
+
+=== intovfl
+============================== POTENTIAL BUGS ============================== 66
+BugReport(score=1.30, code=ftp.c:2033, key=(ftp_state_use_port, 1), ctx=IntOvflChkType.Wrong
+BugReport(score=1.00, code=doh.c:305, key=(Curl_base64url_encode, 2), ctx=IntOvflChkType.Missing
+BugReport(score=1.00, code=doh.c:208, key=(Curl_base64url_encode, 2), ctx=IntOvflChkType.Missing
+BugReport(score=0.50, code=vtls/vtls.c:873, key=(strlen, 0), ctx=IntOvflChkType.Missing
+BugReport(score=0.50, code=socks.c:226, key=(strlen, 0), ctx=IntOvflChkType.Missing
+BugReport(score=0.50, code=telnet.c:764, key=(Curl_infof, 2), ctx=IntOvflChkType.Missing
+BugReport(score=0.50, code=connect.c:454, key=(Curl_infof, 2), ctx=IntOvflChkType.Missing
+BugReport(score=0.50, code=http.c:477, key=(Curl_infof, 2), ctx=IntOvflChkType.Missing
+BugReport(score=0.50, code=connect.c:460, key=(Curl_infof, 2), ctx=IntOvflChkType.Missing
+BugReport(score=0.50, code=tool_getparam.c:353, key=(malloc, 0), ctx=IntOvflChkType.Wrong
+BugReport(score=0.35, code=http.c:253, key=(memcpy, 2), ctx=IntOvflChkType.Wrong
+BugReport(score=0.33, code=socks.c:253, key=(Curl_write_plain, 3), ctx=IntOvflChkType.Missing
+BugReport(score=0.33, code=socks.c:243, key=(Curl_write_plain, 3), ctx=IntOvflChkType.Missing
+BugReport(score=0.25, code=mime.c:783, key=(memmove, 1), ctx=IntOvflChkType.Missing
+BugReport(score=0.25, code=sendf.c:75, key=(memmove, 1), ctx=IntOvflChkType.Missing
+BugReport(score=0.25, code=cookie.c:308, key=(memmove, 1), ctx=IntOvflChkType.Missing
+BugReport(score=0.23, code=curl_addrinfo.c:531, key=(memcpy, 0), ctx=IntOvflChkType.Missing
+BugReport(score=0.23, code=vauth/ntlm.c:621, key=(memcpy, 0), ctx=IntOvflChkType.Missing
+BugReport(score=0.23, code=curl_ntlm_core.c:808, key=(memcpy, 0), ctx=IntOvflChkType.Missing
+BugReport(score=0.23, code=curl_ntlm_core.c:758, key=(memcpy, 0), ctx=IntOvflChkType.Missing
+BugReport(score=0.23, code=curl_ntlm_core.c:755, key=(memcpy, 0), ctx=IntOvflChkType.Missing
+BugReport(score=0.23, code=vauth/cleartext.c:88, key=(memcpy, 0), ctx=IntOvflChkType.Missing
+BugReport(score=0.23, code=rtsp.c:643, key=(memcpy, 0), ctx=IntOvflChkType.Missing
+BugReport(score=0.23, code=socks.c:214, key=(memcpy, 0), ctx=IntOvflChkType.Missing
+BugReport(score=0.23, code=curl_ntlm_core.c:754, key=(memcpy, 0), ctx=IntOvflChkType.Missing
+BugReport(score=0.23, code=sendf.c:525, key=(memcpy, 0), ctx=IntOvflChkType.Missing
+BugReport(score=0.23, code=vauth/cleartext.c:90, key=(memcpy, 0), ctx=IntOvflChkType.Missing
+BugReport(score=0.20, code=tool_paramhlp.c:545, key=(malloc, 0), ctx=IntOvflChkType.Missing
+BugReport(score=0.20, code=tool_dirhie.c:116, key=(malloc, 0), ctx=IntOvflChkType.Missing
+BugReport(score=0.20, code=tool_getparam.c:2036, key=(malloc, 0), ctx=IntOvflChkType.Missing
+BugReport(score=0.20, code=tool_urlglob.c:618, key=(malloc, 0), ctx=IntOvflChkType.Missing
+BugReport(score=0.20, code=tool_cb_hdr.c:132, key=(malloc, 0), ctx=IntOvflChkType.Missing
+BugReport(score=0.20, code=tool_urlglob.c:444, key=(malloc, 0), ctx=IntOvflChkType.Missing
+BugReport(score=0.20, code=tool_cb_hdr.c:203, key=(malloc, 0), ctx=IntOvflChkType.Missing
+BugReport(score=0.14, code=escape.c:70, key=(Curl_saferealloc, 1), ctx=IntOvflChkType.Missing
+BugReport(score=0.14, code=doh.c:146, key=(Curl_saferealloc, 1), ctx=IntOvflChkType.Missing
+BugReport(score=0.14, code=http.c:1330, key=(Curl_saferealloc, 1), ctx=IntOvflChkType.Missing
+BugReport(score=0.14, code=http2.c:968, key=(Curl_saferealloc, 1), ctx=IntOvflChkType.Missing
+BugReport(score=0.14, code=rtsp.c:635, key=(Curl_saferealloc, 1), ctx=IntOvflChkType.Missing
+BugReport(score=0.14, code=escape.c:112, key=(Curl_saferealloc, 1), ctx=IntOvflChkType.Missing
+BugReport(score=0.14, code=http.c:3949, key=(Curl_client_write, 3), ctx=IntOvflChkType.Missing
+BugReport(score=0.14, code=pingpong.c:379, key=(Curl_client_write, 3), ctx=IntOvflChkType.Missing
+BugReport(score=0.14, code=imap.c:1338, key=(Curl_client_write, 3), ctx=IntOvflChkType.Missing
+BugReport(score=0.14, code=smtp.c:1042, key=(Curl_client_write, 3), ctx=IntOvflChkType.Missing
+BugReport(score=0.14, code=http_chunks.c:245, key=(Curl_client_write, 3), ctx=IntOvflChkType.Missing
+BugReport(score=0.14, code=imap.c:1041, key=(Curl_client_write, 3), ctx=IntOvflChkType.Missing
+BugReport(score=0.14, code=smtp.c:865, key=(Curl_client_write, 3), ctx=IntOvflChkType.Missing
+BugReport(score=0.05, code=vtls/vtls.c:860, key=(memcpy, 2), ctx=IntOvflChkType.Missing
+BugReport(score=0.05, code=mime.c:622, key=(memcpy, 2), ctx=IntOvflChkType.Missing
+BugReport(score=0.05, code=pingpong.c:309, key=(memcpy, 2), ctx=IntOvflChkType.Missing
+BugReport(score=0.05, code=tool_cb_hdr.c:206, key=(memcpy, 2), ctx=IntOvflChkType.Missing
+BugReport(score=0.05, code=tool_paramhlp.c:545, key=(memcpy, 2), ctx=IntOvflChkType.Missing
+BugReport(score=0.05, code=hostip.c:969, key=(memcpy, 2), ctx=IntOvflChkType.Missing
+BugReport(score=0.05, code=urlapi.c:776, key=(memcpy, 2), ctx=IntOvflChkType.Missing
+BugReport(score=0.05, code=hostip.c:931, key=(memcpy, 2), ctx=IntOvflChkType.Missing
+BugReport(score=0.05, code=http.c:1080, key=(memcpy, 2), ctx=IntOvflChkType.Missing
+BugReport(score=0.05, code=http2.c:714, key=(memcpy, 2), ctx=IntOvflChkType.Missing
+BugReport(score=0.05, code=pingpong.c:443, key=(memcpy, 2), ctx=IntOvflChkType.Missing
+BugReport(score=0.05, code=curl_addrinfo.c:533, key=(memcpy, 2), ctx=IntOvflChkType.Missing
+BugReport(score=0.05, code=http.c:3092, key=(memcpy, 2), ctx=IntOvflChkType.Missing
+BugReport(score=0.05, code=tool_paramhlp.c:569, key=(memcpy, 2), ctx=IntOvflChkType.Missing
+BugReport(score=0.05, code=vauth/ntlm.c:812, key=(memcpy, 2), ctx=IntOvflChkType.Missing
+BugReport(score=0.05, code=mime.c:732, key=(memcpy, 2), ctx=IntOvflChkType.Missing
+BugReport(score=0.05, code=doh.c:151, key=(memcpy, 2), ctx=IntOvflChkType.Missing
+BugReport(score=0.05, code=tool_getparam.c:2036, key=(memcpy, 2), ctx=IntOvflChkType.Missing
+BugReport(score=0.05, code=vtls/openssl.c:428, key=(memcpy, 2), ctx=IntOvflChkType.Missing
+
+=== cond
+============================== POTENTIAL BUGS ============================== 394
+BugReport(score=0.98, code=tool_getparam.c:347, key=(curl_strnequal, None), ctx=(strlen, None)
+BugReport(score=0.96, code=url.c:2330, key=(__builtin_strchr, ((1, 4294967295),)), ctx=(__builtin_constant_p, ((0, 0),))
+BugReport(score=0.96, code=url.c:2339, key=(__builtin_strchr, ((1, 4294967295),)), ctx=(__builtin_constant_p, ((0, 0),))
+BugReport(score=0.96, code=ftplistparser.c:871, key=(__builtin_strchr, ((1, 4294967295),)), ctx=(__builtin_constant_p, ((0, 0),))
+BugReport(score=0.96, code=url.c:2330, key=(__builtin_strchr, ((0, 0),)), ctx=(__builtin_constant_p, ((0, 0),))
+BugReport(score=0.96, code=url.c:2339, key=(__builtin_strchr, ((0, 0),)), ctx=(__builtin_constant_p, ((0, 0),))
+BugReport(score=0.96, code=ftplistparser.c:871, key=(__builtin_strchr, ((0, 0),)), ctx=(__builtin_constant_p, ((0, 0),))
+BugReport(score=0.95, code=http.c:2910, key=(Curl_get_upload_buffer, None), ctx=(Curl_conncontrol, None)
+BugReport(score=0.94, code=tool_xattr.c:63, key=(curl_easy_getinfo, ((1, 4294967295),)), ctx=(fputc, None)
+BugReport(score=0.94, code=tool_help.c:578, key=(curl_easy_getinfo, ((1, 4294967295),)), ctx=(fputc, None)
+BugReport(score=0.94, code=tool_xattr.c:63, key=(curl_easy_getinfo, ((1, 4294967295),)), ctx=(__builtin_constant_p, None)
+BugReport(score=0.94, code=tool_help.c:578, key=(curl_easy_getinfo, ((1, 4294967295),)), ctx=(__builtin_constant_p, None)
+BugReport(score=0.94, code=tool_xattr.c:63, key=(curl_easy_getinfo, ((1, 4294967295),)), ctx=(__builtin_constant_p, ((0, 0),))
+BugReport(score=0.94, code=tool_help.c:578, key=(curl_easy_getinfo, ((1, 4294967295),)), ctx=(__builtin_constant_p, ((0, 0),))
+BugReport(score=0.94, code=tool_xattr.c:63, key=(curl_easy_getinfo, ((1, 4294967295),)), ctx=(__builtin_strchr, ((1, 4294967295),))
+BugReport(score=0.94, code=tool_help.c:578, key=(curl_easy_getinfo, ((1, 4294967295),)), ctx=(__builtin_strchr, ((1, 4294967295),))
+BugReport(score=0.94, code=tool_xattr.c:63, key=(curl_easy_getinfo, ((0, 0),)), ctx=(fputc, None)
+BugReport(score=0.94, code=tool_help.c:578, key=(curl_easy_getinfo, ((0, 0),)), ctx=(fputc, None)
+BugReport(score=0.94, code=tool_xattr.c:63, key=(curl_easy_getinfo, ((0, 0),)), ctx=(__builtin_constant_p, None)
+BugReport(score=0.94, code=tool_help.c:578, key=(curl_easy_getinfo, ((0, 0),)), ctx=(__builtin_constant_p, None)
+BugReport(score=0.94, code=tool_xattr.c:63, key=(curl_easy_getinfo, ((0, 0),)), ctx=(__builtin_constant_p, ((0, 0),))
+BugReport(score=0.94, code=tool_help.c:578, key=(curl_easy_getinfo, ((0, 0),)), ctx=(__builtin_constant_p, ((0, 0),))
+BugReport(score=0.94, code=tool_xattr.c:63, key=(curl_easy_getinfo, ((0, 0),)), ctx=(__builtin_strchr, ((1, 4294967295),))
+BugReport(score=0.94, code=tool_help.c:578, key=(curl_easy_getinfo, ((0, 0),)), ctx=(__builtin_strchr, ((1, 4294967295),))
+BugReport(score=0.93, code=urlapi.c:1023, key=(Curl_strcasecompare, None), ctx=(Curl_strcasecompare, None)
+BugReport(score=0.93, code=hostcheck.c:106, key=(Curl_strcasecompare, None), ctx=(Curl_strcasecompare, None)
+BugReport(score=0.93, code=url.c:2310, key=(Curl_strcasecompare, None), ctx=(Curl_strcasecompare, None)
+BugReport(score=0.93, code=hostcheck.c:85, key=(Curl_strcasecompare, None), ctx=(Curl_strcasecompare, None)
+BugReport(score=0.93, code=conncache.c:92, key=(Curl_llist_destroy, None), ctx=(Curl_llist_destroy, None)
+BugReport(score=0.93, code=rtsp.c:583, key=(Curl_add_buffer, None), ctx=(nghttp2_session_get_stream_user_data, ((1, 4294967295),))
+BugReport(score=0.92, code=vtls/openssl.c:2832, key=(ERR_get_error, None), ctx=(ERR_error_string_n, None)
+BugReport(score=0.92, code=vtls/openssl.c:2832, key=(ERR_get_error, None), ctx=(ossl_strerror, None)
+BugReport(score=0.92, code=vtls/openssl.c:2856, key=(ossl_strerror, None), ctx=(ERR_get_error, None)
+BugReport(score=0.92, code=hostip.c:926, key=(__builtin_constant_p, ((0, 0),)), ctx=(__builtin_strchr, ((0, 0),))
+BugReport(score=0.92, code=http.c:1732, key=(__builtin_constant_p, ((0, 0),)), ctx=(__builtin_strchr, ((0, 0),))
+BugReport(score=0.92, code=http.c:1728, key=(__builtin_constant_p, ((0, 0),)), ctx=(__builtin_strchr, ((0, 0),))
+BugReport(score=0.92, code=curl_path.c:172, key=(__builtin_constant_p, ((0, 0),)), ctx=(__builtin_strchr, ((0, 0),))
+BugReport(score=0.92, code=smb.c:954, key=(__builtin_constant_p, ((0, 0),)), ctx=(__builtin_strchr, ((0, 0),))
+BugReport(score=0.92, code=tool_writeout.c:133, key=(__builtin_constant_p, ((0, 0),)), ctx=(__builtin_strchr, ((0, 0),))
+BugReport(score=0.92, code=hostip.c:949, key=(__builtin_constant_p, ((0, 0),)), ctx=(__builtin_strchr, ((0, 0),))
+BugReport(score=0.92, code=mime.c:1739, key=(curl_strequal, None), ctx=(curl_strequal, None)
+BugReport(score=0.91, code=tool_operhlp.c:77, key=(strstr, ((1, 4294967295),)), ctx=(__builtin_constant_p, None)
+BugReport(score=0.91, code=mime.c:1084, key=(curl_mime_free, None), ctx=(free, None)
+BugReport(score=0.91, code=setopt.c:803, key=(curl_strnequal, None), ctx=(curl_strnequal, None)
+BugReport(score=0.91, code=tool_cb_hdr.c:105, key=(curl_strnequal, None), ctx=(curl_strnequal, None)
+BugReport(score=0.91, code=tool_getparam.c:347, key=(curl_strnequal, None), ctx=(curl_strnequal, None)
+BugReport(score=0.91, code=http_ntlm.c:75, key=(curl_strnequal, None), ctx=(curl_strnequal, None)
+BugReport(score=0.90, code=ftp.c:3242, key=(Curl_pp_sendf, None), ctx=(Curl_pp_sendf, None)
+BugReport(score=0.90, code=ftp.c:2328, key=(Curl_pp_sendf, None), ctx=(Curl_pp_sendf, None)
+BugReport(score=0.90, code=ftp.c:1277, key=(Curl_pp_sendf, None), ctx=(Curl_pp_sendf, None)
+BugReport(score=0.90, code=tool_operhlp.c:77, key=(strstr, ((0, 0),)), ctx=(__builtin_constant_p, None)
+BugReport(score=0.90, code=mime.c:662, key=(fopen, ((1, 4294967295),)), ctx=(fclose, None)
+BugReport(score=0.90, code=speedcheck.c:49, key=(Curl_timediff, None), ctx=(Curl_now, None)
+BugReport(score=0.89, code=ftp.c:307, key=(curlx_nonblock, None), ctx=(curlx_nonblock, None)
+BugReport(score=0.88, code=ftp.c:2033, key=(ftp_state_use_port, None), ctx=(ftp_state_use_port, None)
+BugReport(score=0.88, code=doh.c:546, key=(get16bit, None), ctx=(get16bit, ((1, 1),))
+BugReport(score=0.88, code=doh.c:546, key=(get16bit, None), ctx=(get32bit, None)
+BugReport(score=0.88, code=doh.c:546, key=(get16bit, None), ctx=(memcpy, None)
+BugReport(score=0.88, code=tool_setopt.c:687, key=(c_escape, ((1, 4294967295),)), ctx=(c_escape, ((1, 4294967295),))
+BugReport(score=0.88, code=vtls/openssl.c:751, key=(BIO_ctrl, None), ctx=(BIO_s_mem, None)
+BugReport(score=0.88, code=vtls/openssl.c:2769, key=(BIO_ctrl, None), ctx=(BIO_s_mem, None)
+BugReport(score=0.88, code=vtls/openssl.c:751, key=(BIO_ctrl, None), ctx=(X509_get_subject_name, None)
+BugReport(score=0.88, code=vtls/openssl.c:2769, key=(BIO_ctrl, None), ctx=(X509_get_subject_name, None)
+BugReport(score=0.88, code=vtls/openssl.c:751, key=(BIO_ctrl, None), ctx=(BIO_free, None)
+BugReport(score=0.88, code=vtls/openssl.c:2769, key=(BIO_ctrl, None), ctx=(BIO_free, None)
+BugReport(score=0.88, code=vtls/openssl.c:751, key=(BIO_ctrl, None), ctx=(ASN1_TIME_print, None)
+BugReport(score=0.88, code=vtls/openssl.c:2769, key=(BIO_ctrl, None), ctx=(ASN1_TIME_print, None)
+BugReport(score=0.88, code=vtls/openssl.c:751, key=(BIO_ctrl, None), ctx=(BIO_ctrl, None)
+BugReport(score=0.88, code=vtls/openssl.c:2769, key=(BIO_ctrl, None), ctx=(BIO_ctrl, None)
+BugReport(score=0.88, code=vtls/openssl.c:751, key=(BIO_ctrl, None), ctx=(X509_get_issuer_name, None)
+BugReport(score=0.88, code=vtls/openssl.c:2769, key=(BIO_ctrl, None), ctx=(X509_get_issuer_name, None)
+BugReport(score=0.88, code=vtls/openssl.c:751, key=(BIO_ctrl, None), ctx=(SSL_get_peer_cert_chain, None)
+BugReport(score=0.88, code=vtls/openssl.c:2769, key=(BIO_ctrl, None), ctx=(SSL_get_peer_cert_chain, None)
+BugReport(score=0.87, code=tool_setopt.c:678, key=(__builtin_va_end, None), ctx=(__builtin_va_start, None)
+BugReport(score=0.87, code=share.c:177, key=(__builtin_va_end, None), ctx=(__builtin_va_start, None)
+BugReport(score=0.87, code=multi.c:2789, key=(__builtin_va_end, None), ctx=(__builtin_va_start, None)
+BugReport(score=0.86, code=vtls/mbedtls.c:460, key=(Curl_ssl_sessionid_unlock, None), ctx=(Curl_failf, None)
+BugReport(score=0.86, code=rtsp.c:583, key=(Curl_add_buffer, None), ctx=(Curl_add_buffer, None)
+BugReport(score=0.86, code=http2.c:707, key=(Curl_add_buffer, None), ctx=(Curl_add_buffer, None)
+BugReport(score=0.86, code=ftp.c:1097, key=(Curl_resolv_unlock, None), ctx=(Curl_infof, None)
+BugReport(score=0.86, code=file.c:531, key=(Curl_pgrsSetDownloadCounter, None), ctx=(Curl_pgrsSetUploadCounter, None)
+BugReport(score=0.86, code=http2.c:1324, key=(nghttp2_strerror, None), ctx=(Curl_infof, None)
+BugReport(score=0.86, code=tool_setopt.c:687, key=(c_escape, ((0, 0),)), ctx=(easysrc_addf, None)
+BugReport(score=0.86, code=vtls/openssl.c:718, key=(X509_free, None), ctx=(BIO_ctrl, None)
+BugReport(score=0.86, code=vtls/openssl.c:715, key=(X509_free, None), ctx=(BIO_ctrl, None)
+BugReport(score=0.86, code=vtls/openssl.c:718, key=(X509_free, None), ctx=(BIO_s_file, None)
+BugReport(score=0.86, code=vtls/openssl.c:715, key=(X509_free, None), ctx=(BIO_s_file, None)
+BugReport(score=0.86, code=vtls/openssl.c:1077, key=(SSL_get_ex_new_index, ((0, 2147483647),)), ctx=(Curl_infof, None)
+BugReport(score=0.86, code=vtls/openssl.c:1077, key=(SSL_get_ex_new_index, ((0, 2147483647),)), ctx=(Curl_ssl_sessionid_lock, None)
+BugReport(score=0.86, code=vtls/openssl.c:1077, key=(SSL_get_ex_new_index, ((0, 2147483647),)), ctx=(Curl_ssl_getsessionid, ((0, 0),))
+BugReport(score=0.86, code=vtls/openssl.c:1077, key=(SSL_get_ex_new_index, ((0, 2147483647),)), ctx=(Curl_failf, None)
+BugReport(score=0.86, code=vtls/openssl.c:1077, key=(SSL_get_ex_new_index, ((0, 2147483647),)), ctx=(Curl_ssl_getsessionid, ((1, 255),))
+BugReport(score=0.85, code=tool_getparam.c:1874, key=(__builtin_constant_p, None), ctx=(__builtin_constant_p, None)
+BugReport(score=0.85, code=tool_getparam.c:2029, key=(__builtin_constant_p, None), ctx=(__builtin_constant_p, None)
+BugReport(score=0.85, code=ftp.c:1468, key=(__builtin_constant_p, None), ctx=(__builtin_constant_p, None)
+BugReport(score=0.85, code=http_digest.c:144, key=(__builtin_constant_p, None), ctx=(__builtin_constant_p, None)
+BugReport(score=0.85, code=cookie.c:409, key=(__builtin_constant_p, None), ctx=(__builtin_constant_p, None)
+BugReport(score=0.85, code=smb.c:954, key=(__builtin_constant_p, None), ctx=(__builtin_constant_p, None)
+BugReport(score=0.85, code=tool_getparam.c:2095, key=(__builtin_constant_p, None), ctx=(__builtin_constant_p, None)
+BugReport(score=0.85, code=curl_gethostname.c:93, key=(__builtin_constant_p, None), ctx=(__builtin_constant_p, None)
+BugReport(score=0.85, code=http_proxy.c:245, key=(__builtin_constant_p, None), ctx=(__builtin_constant_p, None)
+BugReport(score=0.85, code=tool_getparam.c:2036, key=(__builtin_constant_p, None), ctx=(__builtin_constant_p, None)
+BugReport(score=0.85, code=tool_getparam.c:1474, key=(__builtin_constant_p, None), ctx=(__builtin_constant_p, None)
+BugReport(score=0.85, code=tool_getparam.c:1959, key=(__builtin_constant_p, None), ctx=(__builtin_constant_p, None)
+BugReport(score=0.85, code=tool_getparam.c:1893, key=(__builtin_constant_p, None), ctx=(__builtin_constant_p, None)
+BugReport(score=0.85, code=tool_writeout.c:133, key=(__builtin_constant_p, None), ctx=(__builtin_constant_p, None)
+BugReport(score=0.85, code=tool_getparam.c:2079, key=(__builtin_constant_p, None), ctx=(__builtin_constant_p, None)
+BugReport(score=0.85, code=tool_dirhie.c:112, key=(__builtin_constant_p, None), ctx=(__builtin_constant_p, None)
+BugReport(score=0.85, code=tool_getparam.c:2024, key=(__builtin_constant_p, None), ctx=(__builtin_constant_p, None)
+BugReport(score=0.85, code=curl_sasl.c:159, key=(__builtin_constant_p, None), ctx=(__builtin_constant_p, None)
+BugReport(score=0.85, code=ftp.c:1839, key=(__builtin_constant_p, None), ctx=(__builtin_constant_p, None)
+BugReport(score=0.85, code=dict.c:257, key=(__builtin_constant_p, None), ctx=(__builtin_constant_p, None)
+BugReport(score=0.85, code=tool_getparam.c:2018, key=(__builtin_constant_p, None), ctx=(__builtin_constant_p, None)
+BugReport(score=0.85, code=tool_getparam.c:2088, key=(__builtin_constant_p, None), ctx=(__builtin_constant_p, None)
+BugReport(score=0.85, code=file.c:253, key=(__builtin_constant_p, None), ctx=(__builtin_constant_p, None)
+BugReport(score=0.85, code=tool_urlglob.c:594, key=(__builtin_constant_p, None), ctx=(__builtin_constant_p, None)
+BugReport(score=0.85, code=tool_paramhlp.c:308, key=(__builtin_constant_p, None), ctx=(__builtin_constant_p, None)
+BugReport(score=0.85, code=tool_operhlp.c:155, key=(__builtin_constant_p, None), ctx=(__builtin_constant_p, None)
+BugReport(score=0.85, code=pop3.c:649, key=(__builtin_constant_p, None), ctx=(__builtin_constant_p, None)
+BugReport(score=0.85, code=url.c:3300, key=(__builtin_constant_p, None), ctx=(__builtin_constant_p, None)
+BugReport(score=0.85, code=tool_setopt.c:289, key=(easysrc_addf, None), ctx=(free, None)
+BugReport(score=0.85, code=tool_setopt.c:576, key=(easysrc_addf, None), ctx=(free, None)
+BugReport(score=0.85, code=tool_setopt.c:375, key=(easysrc_addf, None), ctx=(free, None)
+BugReport(score=0.85, code=tool_setopt.c:332, key=(easysrc_addf, None), ctx=(free, None)
+BugReport(score=0.85, code=tool_setopt.c:286, key=(easysrc_addf, None), ctx=(free, None)
+BugReport(score=0.85, code=ftp.c:3196, key=(Curl_urldecode, None), ctx=(Curl_urldecode, None)
+BugReport(score=0.85, code=dict.c:100, key=(Curl_urldecode, None), ctx=(Curl_urldecode, None)
+BugReport(score=0.85, code=gopher.c:102, key=(Curl_urldecode, None), ctx=(Curl_urldecode, None)
+BugReport(score=0.85, code=vtls/openssl.c:3768, key=(ERR_get_error, None), ctx=(Curl_failf, None)
+BugReport(score=0.85, code=vtls/openssl.c:1348, key=(ERR_get_error, None), ctx=(Curl_failf, None)
+BugReport(score=0.85, code=vtls/openssl.c:3774, key=(ossl_strerror, None), ctx=(Curl_failf, None)
+BugReport(score=0.85, code=vtls/openssl.c:1351, key=(ossl_strerror, None), ctx=(Curl_failf, None)
+BugReport(score=0.84, code=connect.c:1149, key=(Curl_strerror, None), ctx=(__errno_location, None)
+BugReport(score=0.84, code=sendf.c:480, key=(Curl_strerror, None), ctx=(__errno_location, None)
+BugReport(score=0.84, code=sendf.c:415, key=(Curl_strerror, None), ctx=(__errno_location, None)
+BugReport(score=0.84, code=ftp.c:1165, key=(Curl_strerror, None), ctx=(__errno_location, None)
+BugReport(score=0.84, code=connect.c:900, key=(Curl_strerror, None), ctx=(__errno_location, None)
+BugReport(score=0.83, code=vtls/vtls.c:1088, key=(Curl_MD5_update, None), ctx=(strlen, None)
+BugReport(score=0.83, code=vtls/vtls.c:1088, key=(Curl_MD5_update, None), ctx=(Curl_base64_decode, ((1, 4294967295),))
+BugReport(score=0.83, code=vtls/vtls.c:1088, key=(Curl_MD5_update, None), ctx=(strstr, ((1, 4294967295),))
+BugReport(score=0.83, code=vtls/vtls.c:1088, key=(Curl_MD5_update, None), ctx=(__builtin_constant_p, None)
+BugReport(score=0.83, code=vtls/vtls.c:1088, key=(Curl_MD5_update, None), ctx=(__builtin_strcmp, ((0, 0),))
+BugReport(score=0.83, code=vtls/vtls.c:1088, key=(Curl_MD5_update, None), ctx=(__strtok_r, ((1, 4294967295),))
+BugReport(score=0.83, code=vtls/vtls.c:1088, key=(Curl_MD5_update, None), ctx=(Curl_strcasecompare, None)
+BugReport(score=0.83, code=vtls/vtls.c:1088, key=(Curl_MD5_update, None), ctx=(__strtok_r_1c, ((1, 4294967295),))
+BugReport(score=0.83, code=vtls/vtls.c:1088, key=(Curl_MD5_update, None), ctx=(Curl_rand_hex, None)
+BugReport(score=0.83, code=vtls/vtls.c:1088, key=(Curl_MD5_update, None), ctx=(Curl_MD5_update, None)
+BugReport(score=0.83, code=vtls/vtls.c:1088, key=(Curl_MD5_update, None), ctx=(__strtok_r, ((0, 0),))
+BugReport(score=0.83, code=vtls/vtls.c:1088, key=(Curl_MD5_update, None), ctx=(__strtok_r_1c, ((0, 0),))
+BugReport(score=0.83, code=vtls/vtls.c:1088, key=(Curl_MD5_update, None), ctx=(auth_digest_get_qop_values, None)
+BugReport(score=0.83, code=vtls/openssl.c:2261, key=(Curl_ssl_sessionid_lock, None), ctx=(Curl_ssl_sessionid_unlock, None)
+BugReport(score=0.83, code=vtls/openssl.c:2262, key=(Curl_ssl_getsessionid, ((0, 0),)), ctx=(Curl_ssl_sessionid_unlock, None)
+BugReport(score=0.83, code=vtls/openssl.c:2262, key=(Curl_ssl_getsessionid, ((1, 255),)), ctx=(Curl_ssl_sessionid_unlock, None)
+BugReport(score=0.83, code=ftp.c:511, key=(Curl_timediff, ((-2147483648, -1), (1, 2147483647))), ctx=(__errno_location, None)
+BugReport(score=0.83, code=ftp.c:1205, key=(Curl_printable_address, None), ctx=(Curl_infof, None)
+BugReport(score=0.83, code=ftp.c:3468, key=(Curl_printable_address, None), ctx=(Curl_failf, None)
+BugReport(score=0.83, code=connect.c:839, key=(Curl_printable_address, None), ctx=(Curl_resolv_unlock, None)
+BugReport(score=0.83, code=mime.c:1739, key=(curl_strequal, None), ctx=(warnf, None)
+BugReport(score=0.83, code=tool_paramhlp.c:340, key=(curl_strequal, None), ctx=(warnf, None)
+BugReport(score=0.83, code=ftp.c:4366, key=(Curl_pp_statemach, ((0, 0),)), ctx=(state, None)
+BugReport(score=0.83, code=ftp.c:3677, key=(Curl_pp_statemach, ((0, 0),)), ctx=(state, None)
+BugReport(score=0.83, code=ftp.c:3057, key=(Curl_pp_statemach, ((0, 0),)), ctx=(state, None)
+BugReport(score=0.83, code=pop3.c:802, key=(pop3_perform_apop, None), ctx=(Curl_sasl_can_authenticate, ((1, 255),))
+BugReport(score=0.83, code=pop3.c:802, key=(pop3_perform_apop, None), ctx=(Curl_sasl_start, ((0, 0),))
+BugReport(score=0.83, code=pop3.c:802, key=(pop3_perform_apop, None), ctx=(pop3_perform_apop, None)
+BugReport(score=0.83, code=ftp.c:4366, key=(ftp_state_type, None), ctx=(Curl_pp_statemach, ((0, 0),))
+BugReport(score=0.83, code=ftp.c:4366, key=(ftp_state_type, None), ctx=(Curl_pp_statemach, ((1, 4294967295),))
+BugReport(score=0.83, code=gopher.c:113, key=(Curl_write, ((1, 4294967295),)), ctx=(Curl_write, ((1, 4294967295),))
+BugReport(score=0.83, code=gopher.c:90, key=(strlen, ((3, 4294967295),)), ctx=(__builtin_constant_p, None)
+BugReport(score=0.83, code=gopher.c:90, key=(strlen, ((3, 4294967295),)), ctx=(__builtin_constant_p, ((0, 0),))
+BugReport(score=0.83, code=gopher.c:90, key=(strlen, ((3, 4294967295),)), ctx=(__builtin_strchr, ((0, 0),))
+BugReport(score=0.83, code=http.c:1665, key=(Curl_compareheader, None), ctx=(strlen, None)
+BugReport(score=0.83, code=http.c:1665, key=(Curl_compareheader, None), ctx=(curl_strnequal, None)
+BugReport(score=0.83, code=http.c:1665, key=(Curl_compareheader, None), ctx=(Curl_infof, None)
+BugReport(score=0.83, code=http.c:1665, key=(Curl_compareheader, None), ctx=(Curl_conncontrol, None)
+BugReport(score=0.83, code=http.c:1665, key=(Curl_compareheader, None), ctx=(__builtin_constant_p, None)
+BugReport(score=0.83, code=http.c:1665, key=(Curl_compareheader, None), ctx=(__builtin_constant_p, ((0, 0),))
+BugReport(score=0.83, code=http.c:1665, key=(Curl_compareheader, None), ctx=(__builtin_strchr, ((1, 4294967295),))
+BugReport(score=0.83, code=transfer.c:983, key=(Curl_readrewind, None), ctx=(Curl_infof, None)
+BugReport(score=0.83, code=tool_easysrc.c:154, key=(slist_wc_free_all, None), ctx=(__builtin_constant_p, None)
+BugReport(score=0.83, code=tool_easysrc.c:154, key=(slist_wc_free_all, None), ctx=(__builtin_strcmp, None)
+BugReport(score=0.83, code=tool_easysrc.c:154, key=(slist_wc_free_all, None), ctx=(curl_mfprintf, None)
+BugReport(score=0.83, code=tool_easysrc.c:154, key=(slist_wc_free_all, None), ctx=(__builtin_va_start, None)
+BugReport(score=0.83, code=tool_easysrc.c:154, key=(slist_wc_free_all, None), ctx=(curl_mvaprintf, ((1, 4294967295),))
+BugReport(score=0.83, code=tool_easysrc.c:154, key=(slist_wc_free_all, None), ctx=(__builtin_va_end, None)
+BugReport(score=0.83, code=tool_easysrc.c:154, key=(slist_wc_free_all, None), ctx=(curl_free, None)
+BugReport(score=0.83, code=vtls/openssl.c:3241, key=(BIO_free, None), ctx=(BIO_new, ((1, 4294967295),))
+BugReport(score=0.83, code=vtls/openssl.c:3241, key=(BIO_free, None), ctx=(SSL_get_peer_certificate, ((1, 4294967295),))
+BugReport(score=0.83, code=vtls/openssl.c:3241, key=(BIO_free, None), ctx=(X509_NAME_print_ex, ((-2147483648, -1), (1, 2147483647)))
+BugReport(score=0.83, code=vtls/openssl.c:3241, key=(BIO_free, None), ctx=(memcpy, None)
+BugReport(score=0.83, code=vtls/openssl.c:3241, key=(BIO_free, None), ctx=(Curl_infof, None)
+BugReport(score=0.83, code=vtls/openssl.c:3241, key=(BIO_free, None), ctx=(BIO_free, None)
+BugReport(score=0.83, code=vtls/openssl.c:3241, key=(BIO_free, None), ctx=(verifyhost, None)
+BugReport(score=0.83, code=vtls/openssl.c:3241, key=(BIO_free, None), ctx=(X509_free, None)
+BugReport(score=0.83, code=vtls/openssl.c:3241, key=(BIO_free, None), ctx=(Curl_failf, None)
+BugReport(score=0.83, code=vtls/openssl.c:3241, key=(BIO_free, None), ctx=(BIO_s_file, None)
+BugReport(score=0.82, code=dotdot.c:150, key=(__builtin_constant_p, ((0, 0),)), ctx=(__builtin_strchr, ((1, 4294967295),))
+BugReport(score=0.82, code=dotdot.c:100, key=(__builtin_constant_p, ((0, 0),)), ctx=(__builtin_strchr, ((1, 4294967295),))
+BugReport(score=0.82, code=dotdot.c:87, key=(__builtin_constant_p, ((0, 0),)), ctx=(__builtin_strchr, ((1, 4294967295),))
+BugReport(score=0.82, code=urlapi.c:368, key=(__builtin_constant_p, ((0, 0),)), ctx=(__builtin_strchr, ((1, 4294967295),))
+BugReport(score=0.82, code=dotdot.c:112, key=(__builtin_constant_p, ((0, 0),)), ctx=(__builtin_strchr, ((1, 4294967295),))
+BugReport(score=0.82, code=dotdot.c:123, key=(__builtin_constant_p, ((0, 0),)), ctx=(__builtin_strchr, ((1, 4294967295),))
+BugReport(score=0.82, code=curl_path.c:172, key=(__builtin_constant_p, ((0, 0),)), ctx=(__builtin_strchr, ((1, 4294967295),))
+BugReport(score=0.82, code=cookie.c:762, key=(__builtin_constant_p, ((0, 0),)), ctx=(__builtin_strchr, ((1, 4294967295),))
+BugReport(score=0.82, code=cookie.c:773, key=(__builtin_constant_p, ((0, 0),)), ctx=(__builtin_strchr, ((1, 4294967295),))
+BugReport(score=0.82, code=cookie.c:776, key=(__builtin_constant_p, ((0, 0),)), ctx=(__builtin_strchr, ((1, 4294967295),))
+BugReport(score=0.82, code=urlapi.c:383, key=(__builtin_constant_p, ((0, 0),)), ctx=(__builtin_strchr, ((1, 4294967295),))
+BugReport(score=0.82, code=smb.c:954, key=(__builtin_constant_p, ((0, 0),)), ctx=(__builtin_strchr, ((1, 4294967295),))
+BugReport(score=0.82, code=dotdot.c:96, key=(__builtin_constant_p, ((0, 0),)), ctx=(__builtin_strchr, ((1, 4294967295),))
+BugReport(score=0.82, code=dotdot.c:108, key=(__builtin_constant_p, ((0, 0),)), ctx=(__builtin_strchr, ((1, 4294967295),))
+BugReport(score=0.82, code=dotdot.c:134, key=(__builtin_constant_p, ((0, 0),)), ctx=(__builtin_strchr, ((1, 4294967295),))
+BugReport(score=0.82, code=ftp.c:4366, key=(ftp_state_quote, None), ctx=(_state, None)
+BugReport(score=0.82, code=ftp.c:3950, key=(ftp_state_quote, None), ctx=(_state, None)
+BugReport(score=0.82, code=ftp.c:3672, key=(ftp_state_quote, None), ctx=(_state, None)
+BugReport(score=0.82, code=http.c:1405, key=(Curl_strncasecompare, None), ctx=(Curl_strncasecompare, None)
+BugReport(score=0.82, code=setopt.c:2513, key=(Curl_strncasecompare, None), ctx=(Curl_strncasecompare, None)
+BugReport(score=0.82, code=imap.c:230, key=(Curl_strncasecompare, None), ctx=(Curl_strncasecompare, None)
+BugReport(score=0.82, code=url.c:3283, key=(Curl_strncasecompare, None), ctx=(Curl_strncasecompare, None)
+BugReport(score=0.82, code=setopt.c:2505, key=(Curl_strncasecompare, None), ctx=(Curl_strncasecompare, None)
+BugReport(score=0.82, code=tool_cb_dbg.c:232, key=(curl_mfprintf, None), ctx=(__builtin_constant_p, None)
+BugReport(score=0.82, code=tool_cb_dbg.c:267, key=(curl_mfprintf, None), ctx=(__builtin_constant_p, None)
+BugReport(score=0.82, code=tool_formparse.c:308, key=(curl_mfprintf, None), ctx=(__builtin_constant_p, None)
+BugReport(score=0.82, code=tool_cb_prg.c:170, key=(curl_mfprintf, None), ctx=(__builtin_constant_p, None)
+BugReport(score=0.82, code=tool_cb_dbg.c:236, key=(curl_mfprintf, None), ctx=(__builtin_constant_p, None)
+BugReport(score=0.82, code=tool_urlglob.c:474, key=(curl_mfprintf, None), ctx=(__builtin_constant_p, None)
+BugReport(score=0.82, code=tool_formparse.c:150, key=(curl_mfprintf, None), ctx=(__builtin_constant_p, None)
+BugReport(score=0.82, code=tool_formparse.c:139, key=(curl_mfprintf, None), ctx=(__builtin_constant_p, None)
+BugReport(score=0.82, code=tool_msgs.c:119, key=(curl_mfprintf, None), ctx=(__builtin_constant_p, None)
+BugReport(score=0.82, code=transfer.c:1225, key=(Curl_timeleft, ((0, 2147483647),)), ctx=(Curl_failf, None)
+BugReport(score=0.82, code=multi.c:1397, key=(Curl_timeleft, ((0, 2147483647),)), ctx=(Curl_failf, None)
+BugReport(score=0.82, code=mime.c:1084, key=(curl_mime_free, None), ctx=(__builtin_constant_p, None)
+BugReport(score=0.82, code=tool_cfgable.c:147, key=(curl_mime_free, None), ctx=(__builtin_constant_p, None)
+BugReport(score=0.82, code=mime.c:1084, key=(curl_mime_free, None), ctx=(__strdup, ((1, 4294967295),))
+BugReport(score=0.82, code=tool_cfgable.c:147, key=(curl_mime_free, None), ctx=(__strdup, ((1, 4294967295),))
+BugReport(score=0.82, code=mime.c:1084, key=(curl_mime_free, None), ctx=(__builtin_constant_p, ((0, 0),))
+BugReport(score=0.82, code=tool_cfgable.c:147, key=(curl_mime_free, None), ctx=(__builtin_constant_p, ((0, 0),))
+BugReport(score=0.82, code=mime.c:1084, key=(curl_mime_free, None), ctx=(__builtin_strchr, ((1, 4294967295),))
+BugReport(score=0.82, code=tool_cfgable.c:147, key=(curl_mime_free, None), ctx=(__builtin_strchr, ((1, 4294967295),))
+BugReport(score=0.82, code=mime.c:1084, key=(curl_mime_free, None), ctx=(__builtin_strcmp, ((-2147483648, -1), (1, 2147483647)))
+BugReport(score=0.82, code=tool_cfgable.c:147, key=(curl_mime_free, None), ctx=(__builtin_strcmp, ((-2147483648, -1), (1, 2147483647)))
+BugReport(score=0.82, code=mime.c:1084, key=(curl_mime_free, None), ctx=(get_param_part, ((0, 2147483647),))
+BugReport(score=0.82, code=tool_cfgable.c:147, key=(curl_mime_free, None), ctx=(get_param_part, ((0, 2147483647),))
+BugReport(score=0.82, code=mime.c:1084, key=(curl_mime_free, None), ctx=(curl_mime_init, ((1, 4294967295),))
+BugReport(score=0.82, code=tool_cfgable.c:147, key=(curl_mime_free, None), ctx=(curl_mime_init, ((1, 4294967295),))
+BugReport(score=0.82, code=mime.c:1084, key=(curl_mime_free, None), ctx=(curl_mime_addpart, ((1, 4294967295),))
+BugReport(score=0.82, code=tool_cfgable.c:147, key=(curl_mime_free, None), ctx=(curl_mime_addpart, ((1, 4294967295),))
+BugReport(score=0.82, code=mime.c:1084, key=(curl_mime_free, None), ctx=(curl_mime_headers, None)
+BugReport(score=0.82, code=tool_cfgable.c:147, key=(curl_mime_free, None), ctx=(curl_mime_headers, None)
+BugReport(score=0.82, code=mime.c:1084, key=(curl_mime_free, None), ctx=(file_or_stdin, ((26, 26),))
+BugReport(score=0.82, code=tool_cfgable.c:147, key=(curl_mime_free, None), ctx=(file_or_stdin, ((26, 26),))
+BugReport(score=0.82, code=mime.c:1084, key=(curl_mime_free, None), ctx=(warnf, None)
+BugReport(score=0.82, code=tool_cfgable.c:147, key=(curl_mime_free, None), ctx=(warnf, None)
+BugReport(score=0.82, code=mime.c:1084, key=(curl_mime_free, None), ctx=(curl_mime_filename, None)
+BugReport(score=0.82, code=tool_cfgable.c:147, key=(curl_mime_free, None), ctx=(curl_mime_filename, None)
+BugReport(score=0.82, code=mime.c:1084, key=(curl_mime_free, None), ctx=(curl_mime_type, None)
+BugReport(score=0.82, code=tool_cfgable.c:147, key=(curl_mime_free, None), ctx=(curl_mime_type, None)
+BugReport(score=0.82, code=mime.c:1084, key=(curl_mime_free, None), ctx=(curl_mime_encoder, None)
+BugReport(score=0.82, code=tool_cfgable.c:147, key=(curl_mime_free, None), ctx=(curl_mime_encoder, None)
+BugReport(score=0.82, code=ftp.c:4366, key=(Curl_pp_statemach, ((1, 4294967295),)), ctx=(state, None)
+BugReport(score=0.82, code=ftp.c:3677, key=(Curl_pp_statemach, ((1, 4294967295),)), ctx=(state, None)
+BugReport(score=0.82, code=ftp.c:3950, key=(Curl_pp_statemach, ((1, 4294967295),)), ctx=(state, None)
+BugReport(score=0.82, code=ftp.c:3057, key=(Curl_pp_statemach, ((1, 4294967295),)), ctx=(state, None)
+BugReport(score=0.81, code=http.c:658, key=(Curl_checkheaders, ((0, 0),)), ctx=(Curl_pgrsSetUploadCounter, None)
+BugReport(score=0.81, code=http.c:672, key=(Curl_checkheaders, ((0, 0),)), ctx=(Curl_pgrsSetUploadCounter, None)
+BugReport(score=0.81, code=http.c:1662, key=(Curl_checkheaders, ((0, 0),)), ctx=(Curl_pgrsSetUploadCounter, None)
+BugReport(score=0.81, code=pingpong.c:119, key=(Curl_pgrsUpdate, None), ctx=(Curl_pgrsUpdate, None)
+BugReport(score=0.81, code=http.c:2928, key=(Curl_pgrsUpdate, None), ctx=(Curl_pgrsUpdate, None)
+BugReport(score=0.81, code=rtsp.c:613, key=(Curl_pgrsUpdate, None), ctx=(Curl_pgrsUpdate, None)
+BugReport(score=0.81, code=content_encoding.c:331, key=(__builtin_strlen, ((4, 4294967295),)), ctx=(__builtin_strcmp, ((-2147483648, -1), (1, 2147483647)))
+BugReport(score=0.81, code=tool_formparse.c:450, key=(__builtin_strlen, ((4, 4294967295),)), ctx=(__builtin_strcmp, ((-2147483648, -1), (1, 2147483647)))
+BugReport(score=0.81, code=cookie.c:811, key=(__builtin_strlen, ((4, 4294967295),)), ctx=(__builtin_strcmp, ((-2147483648, -1), (1, 2147483647)))
+BugReport(score=0.81, code=tool_help.c:578, key=(curl_easy_getinfo, ((0, 0),)), ctx=(curl_mfprintf, None)
+BugReport(score=0.81, code=tool_writeout.c:147, key=(curl_easy_getinfo, ((0, 0),)), ctx=(curl_mfprintf, None)
+BugReport(score=0.81, code=tool_xattr.c:63, key=(curl_easy_getinfo, ((0, 0),)), ctx=(curl_mfprintf, None)
+BugReport(score=0.81, code=tool_writeout.c:258, key=(curl_easy_getinfo, ((0, 0),)), ctx=(curl_mfprintf, None)
+BugReport(score=0.81, code=tool_writeout.c:252, key=(curl_easy_getinfo, ((0, 0),)), ctx=(curl_mfprintf, None)
+BugReport(score=0.81, code=tool_writeout.c:246, key=(curl_easy_getinfo, ((0, 0),)), ctx=(curl_mfprintf, None)
+BugReport(score=0.80, code=vtls/vtls.c:379, key=(Curl_free_primary_ssl_config, None), ctx=(Curl_llist_destroy, None)
+BugReport(score=0.80, code=vauth/digest.c:542, key=(Curl_isspace, None), ctx=(strlen, None)
+BugReport(score=0.80, code=../lib/strtoofft.c:223, key=(Curl_isspace, None), ctx=(strlen, None)
+BugReport(score=0.80, code=vauth/digest.c:640, key=(Curl_isspace, None), ctx=(strlen, None)
+BugReport(score=0.80, code=imap.c:1068, key=(sscanf, ((-2147483648, 0), (2, 2147483647))), ctx=(strlen, None)
+BugReport(score=0.80, code=tool_msgs.c:59, key=(Curl_isspace, ((0, 0),)), ctx=(curl_strnequal, None)
+BugReport(score=0.80, code=smtp.c:554, key=(Curl_checkheaders, ((1, 4294967295),)), ctx=(Curl_failf, None)
+BugReport(score=0.80, code=http.c:1662, key=(Curl_checkheaders, ((1, 4294967295),)), ctx=(Curl_failf, None)
+BugReport(score=0.80, code=share.c:200, key=(Curl_hash_destroy, None), ctx=(Curl_llist_destroy, None)
+BugReport(score=0.80, code=share.c:200, key=(Curl_hash_destroy, None), ctx=(Curl_hash_destroy, None)
+BugReport(score=0.80, code=tool_getparam.c:1928, key=(Curl_isdigit, None), ctx=(Curl_isdigit, None)
+BugReport(score=0.80, code=http.c:3855, key=(Curl_isdigit, None), ctx=(Curl_isdigit, None)
+BugReport(score=0.80, code=http2.c:245, key=(Curl_timediff, None), ctx=(Curl_timediff, None)
+BugReport(score=0.80, code=speedcheck.c:49, key=(Curl_timediff, None), ctx=(Curl_timediff, None)
+BugReport(score=0.80, code=select.c:224, key=(Curl_timediff, None), ctx=(Curl_failf, None)
+BugReport(score=0.80, code=select.c:113, key=(Curl_timediff, None), ctx=(Curl_failf, None)
+BugReport(score=0.80, code=imap.c:1076, key=(Curl_strcasecompare, ((-2147483648, -1), (1, 2147483647))), ctx=(strlen, None)
+BugReport(score=0.80, code=cookie.c:409, key=(Curl_strcasecompare, ((-2147483648, -1), (1, 2147483647))), ctx=(strlen, None)
+BugReport(score=0.80, code=url.c:2424, key=(Curl_strcasecompare, ((-2147483648, -1), (1, 2147483647))), ctx=(strlen, None)
+BugReport(score=0.80, code=connect.c:835, key=(__errno_location, ((-2147483648, 10), (12, 114), (116, 2147483647))), ctx=(Curl_num_addresses, ((-2147483648, 1),))
+BugReport(score=0.80, code=connect.c:362, key=(Curl_resolver_wait_resolv, ((0, 0),)), ctx=(Curl_infof, None)
+BugReport(score=0.80, code=mime.c:832, key=(match_header, ((1, 4294967295),)), ctx=(strlen, None)
+BugReport(score=0.80, code=mime.c:1555, key=(match_header, ((1, 4294967295),)), ctx=(mimesetstate, None)
+BugReport(score=0.80, code=ftp.c:3706, key=(strrchr, ((1, 4294967295),)), ctx=(strrchr, ((1, 4294967295),))
+BugReport(score=0.80, code=ftp.c:4151, key=(strrchr, ((1, 4294967295),)), ctx=(strrchr, ((1, 4294967295),))
+BugReport(score=0.80, code=ftp.c:3706, key=(strrchr, ((1, 4294967295),)), ctx=(strrchr, ((0, 0),))
+BugReport(score=0.80, code=ftp.c:4151, key=(strrchr, ((1, 4294967295),)), ctx=(strrchr, ((0, 0),))
+BugReport(score=0.80, code=ftp.c:3706, key=(strrchr, ((0, 0),)), ctx=(strrchr, ((1, 4294967295),))
+BugReport(score=0.80, code=ftp.c:4151, key=(strrchr, ((0, 0),)), ctx=(strrchr, ((1, 4294967295),))
+BugReport(score=0.80, code=ftp.c:3706, key=(strrchr, ((0, 0),)), ctx=(strrchr, ((0, 0),))
+BugReport(score=0.80, code=ftp.c:4151, key=(strrchr, ((0, 0),)), ctx=(strrchr, ((0, 0),))
+BugReport(score=0.80, code=asyn-thread.c:432, key=(destroy_async_data, None), ctx=(Curl_thread_destroy, None)
+BugReport(score=0.80, code=asyn-thread.c:432, key=(destroy_async_data, None), ctx=(Curl_freeaddrinfo, None)
+BugReport(score=0.80, code=tftp.c:1323, key=(tftp_connect_for_tx, None), ctx=(Curl_setup_transfer, None)
+BugReport(score=0.80, code=tftp.c:1323, key=(tftp_connect_for_rx, None), ctx=(Curl_setup_transfer, None)
+BugReport(score=0.80, code=pingpong.c:198, key=(Curl_pp_init, None), ctx=(Curl_conncontrol, None)
+BugReport(score=0.80, code=pingpong.c:198, key=(Curl_pp_init, None), ctx=(Curl_pp_statemach, None)
+BugReport(score=0.80, code=netrc.c:127, key=(fgets, ((1, 4294967295),)), ctx=(strlen, None)
+BugReport(score=0.80, code=pingpong.c:112, key=(Curl_socket_check, ((-1, -1),)), ctx=(Curl_infof, None)
+BugReport(score=0.80, code=url.c:306, key=(curl_url_cleanup, None), ctx=(free_urlhandle, None)
+BugReport(score=0.80, code=http2.c:1694, key=(nghttp2_session_send, ((0, 0),)), ctx=(Curl_infof, None)
+BugReport(score=0.80, code=http2.c:2084, key=(nghttp2_session_send, ((0, 0),)), ctx=(nghttp2_is_fatal, None)
+BugReport(score=0.80, code=http2.c:2084, key=(nghttp2_session_send, ((0, 0),)), ctx=(nghttp2_submit_priority, None)
+BugReport(score=0.80, code=http2.c:2084, key=(nghttp2_session_send, ((0, 0),)), ctx=(nghttp2_session_send, ((0, 0),))
+BugReport(score=0.80, code=http2.c:2084, key=(nghttp2_session_send, ((0, 0),)), ctx=(nghttp2_session_mem_recv, None)
+BugReport(score=0.80, code=http2.c:1694, key=(nghttp2_session_send, ((-2147483648, -1), (1, 2147483647))), ctx=(Curl_infof, None)
+BugReport(score=0.80, code=http2.c:2084, key=(nghttp2_session_send, ((-2147483648, -1), (1, 2147483647))), ctx=(nghttp2_session_send, ((-2147483648, -1), (1, 2147483647)))
+BugReport(score=0.80, code=http2.c:1694, key=(nghttp2_session_send, ((-2147483648, -1), (1, 2147483647))), ctx=(nghttp2_priority_spec_init, None)
+BugReport(score=0.80, code=http2.c:1694, key=(nghttp2_session_send, ((-2147483648, -1), (1, 2147483647))), ctx=(h2_pri_spec, None)
+BugReport(score=0.80, code=socks.c:264, key=(Curl_blockread_all, None), ctx=(Curl_socket_check, ((-2147483648, -2), (0, 2147483647)))
+BugReport(score=0.80, code=socks.c:544, key=(Curl_blockread_all, None), ctx=(Curl_write_plain, None)
+BugReport(score=0.80, code=socks.c:264, key=(Curl_blockread_all, None), ctx=(strlen, ((0, 255),))
+BugReport(score=0.80, code=tool_setopt.c:634, key=(curl_easy_setopt, None), ctx=(curl_slist_append, ((1, 4294967295),))
+BugReport(score=0.80, code=tool_setopt.c:663, key=(curl_easy_setopt, None), ctx=(curl_slist_append, ((1, 4294967295),))
+BugReport(score=0.80, code=tool_setopt.c:672, key=(curl_easy_setopt, None), ctx=(curl_slist_append, ((1, 4294967295),))
+BugReport(score=0.80, code=tool_setopt.c:634, key=(curl_easy_setopt, None), ctx=(doh_encode, None)
+BugReport(score=0.80, code=tool_setopt.c:663, key=(curl_easy_setopt, None), ctx=(doh_encode, None)
+BugReport(score=0.80, code=tool_setopt.c:672, key=(curl_easy_setopt, None), ctx=(doh_encode, None)
+BugReport(score=0.80, code=tool_setopt.c:634, key=(curl_easy_setopt, None), ctx=(Curl_base64url_encode, None)
+BugReport(score=0.80, code=tool_setopt.c:663, key=(curl_easy_setopt, None), ctx=(Curl_base64url_encode, None)
+BugReport(score=0.80, code=tool_setopt.c:672, key=(curl_easy_setopt, None), ctx=(Curl_base64url_encode, None)
+BugReport(score=0.80, code=tool_setopt.c:634, key=(curl_easy_setopt, None), ctx=(curl_maprintf, ((1, 4294967295),))
+BugReport(score=0.80, code=tool_setopt.c:663, key=(curl_easy_setopt, None), ctx=(curl_maprintf, ((1, 4294967295),))
+BugReport(score=0.80, code=tool_setopt.c:672, key=(curl_easy_setopt, None), ctx=(curl_maprintf, ((1, 4294967295),))
+BugReport(score=0.80, code=tool_setopt.c:634, key=(curl_easy_setopt, None), ctx=(Curl_timeleft, None)
+BugReport(score=0.80, code=tool_setopt.c:663, key=(curl_easy_setopt, None), ctx=(Curl_timeleft, None)
+BugReport(score=0.80, code=tool_setopt.c:672, key=(curl_easy_setopt, None), ctx=(Curl_timeleft, None)
+BugReport(score=0.80, code=tool_setopt.c:634, key=(curl_easy_setopt, None), ctx=(Curl_open, ((0, 0),))
+BugReport(score=0.80, code=tool_setopt.c:663, key=(curl_easy_setopt, None), ctx=(Curl_open, ((0, 0),))
+BugReport(score=0.80, code=tool_setopt.c:672, key=(curl_easy_setopt, None), ctx=(Curl_open, ((0, 0),))
+BugReport(score=0.80, code=tool_setopt.c:634, key=(curl_easy_setopt, None), ctx=(Curl_close, None)
+BugReport(score=0.80, code=tool_setopt.c:663, key=(curl_easy_setopt, None), ctx=(Curl_close, None)
+BugReport(score=0.80, code=tool_setopt.c:672, key=(curl_easy_setopt, None), ctx=(Curl_close, None)
+BugReport(score=0.80, code=tool_setopt.c:634, key=(curl_easy_setopt, None), ctx=(curl_easy_setopt, None)
+BugReport(score=0.80, code=tool_setopt.c:663, key=(curl_easy_setopt, None), ctx=(curl_easy_setopt, None)
+BugReport(score=0.80, code=tool_setopt.c:672, key=(curl_easy_setopt, None), ctx=(curl_easy_setopt, None)
+BugReport(score=0.80, code=tool_setopt.c:634, key=(curl_easy_setopt, None), ctx=(curl_slist_free_all, None)
+BugReport(score=0.80, code=tool_setopt.c:663, key=(curl_easy_setopt, None), ctx=(curl_slist_free_all, None)
+BugReport(score=0.80, code=tool_setopt.c:672, key=(curl_easy_setopt, None), ctx=(curl_slist_free_all, None)
+BugReport(score=0.80, code=tool_setopt.c:634, key=(curl_easy_setopt, None), ctx=(curl_easy_cleanup, None)
+BugReport(score=0.80, code=tool_setopt.c:663, key=(curl_easy_setopt, None), ctx=(curl_easy_cleanup, None)
+BugReport(score=0.80, code=tool_setopt.c:672, key=(curl_easy_setopt, None), ctx=(curl_easy_cleanup, None)
+BugReport(score=0.80, code=doh.c:295, key=(curl_easy_setopt, None), ctx=(__builtin_constant_p, None)
+BugReport(score=0.80, code=tool_setopt.c:663, key=(curl_easy_setopt, None), ctx=(__builtin_constant_p, None)
+BugReport(score=0.80, code=tool_setopt.c:672, key=(curl_easy_setopt, None), ctx=(__builtin_constant_p, None)
+BugReport(score=0.80, code=tool_parsecfg.c:341, key=(realloc, ((0, 0),)), ctx=(realloc, ((1, 4294967295),))
+BugReport(score=0.80, code=vauth/ntlm.c:631, key=(Curl_ntlm_core_lm_resp, None), ctx=(Curl_ntlm_core_mk_lm_hash, None)
+BugReport(score=0.80, code=vauth/ntlm.c:631, key=(Curl_ntlm_core_lm_resp, None), ctx=(Curl_ntlm_core_lm_resp, None)
+BugReport(score=0.80, code=vtls/openssl.c:3228, key=(EVP_PKEY_free, None), ctx=(SSL_CTX_set_default_passwd_cb_userdata, None)
+BugReport(score=0.80, code=vtls/openssl.c:3228, key=(EVP_PKEY_free, None), ctx=(SSL_CTX_set_default_passwd_cb, None)
+BugReport(score=0.80, code=vtls/openssl.c:3228, key=(EVP_PKEY_free, None), ctx=(Curl_failf, None)
+BugReport(score=0.80, code=vtls/openssl.c:3228, key=(EVP_PKEY_free, None), ctx=(SSL_CTX_check_private_key, ((-2147483648, -1), (1, 2147483647)))
+BugReport(score=0.80, code=vtls/openssl.c:3228, key=(EVP_PKEY_free, None), ctx=(Curl_strcasecompare, None)
+BugReport(score=0.80, code=vtls/openssl.c:3228, key=(EVP_PKEY_free, None), ctx=(Curl_strncasecompare, ((-2147483648, -1), (1, 2147483647)))
+BugReport(score=0.80, code=vtls/openssl.c:3228, key=(EVP_PKEY_free, None), ctx=(ENGINE_by_id, ((1, 4294967295),))
+BugReport(score=0.80, code=vtls/openssl.c:3228, key=(EVP_PKEY_free, None), ctx=(ENGINE_init, ((-2147483648, -1), (1, 2147483647)))
+BugReport(score=0.80, code=vtls/openssl.c:3228, key=(EVP_PKEY_free, None), ctx=(UI_create_method, ((1, 4294967295),))
+BugReport(score=0.80, code=vtls/openssl.c:3228, key=(EVP_PKEY_free, None), ctx=(UI_OpenSSL, None)
+BugReport(score=0.80, code=vtls/openssl.c:3228, key=(EVP_PKEY_free, None), ctx=(UI_method_get_opener, None)
+BugReport(score=0.80, code=vtls/openssl.c:3228, key=(EVP_PKEY_free, None), ctx=(UI_method_set_opener, None)
+BugReport(score=0.80, code=vtls/openssl.c:3228, key=(EVP_PKEY_free, None), ctx=(UI_method_get_closer, None)
+BugReport(score=0.80, code=vtls/openssl.c:3228, key=(EVP_PKEY_free, None), ctx=(UI_method_set_closer, None)
+BugReport(score=0.80, code=vtls/openssl.c:3228, key=(EVP_PKEY_free, None), ctx=(UI_method_set_reader, None)
+BugReport(score=0.80, code=vtls/openssl.c:3228, key=(EVP_PKEY_free, None), ctx=(UI_method_set_writer, None)
+BugReport(score=0.80, code=vtls/openssl.c:3228, key=(EVP_PKEY_free, None), ctx=(UI_destroy_method, None)
+BugReport(score=0.80, code=vtls/openssl.c:3228, key=(EVP_PKEY_free, None), ctx=(SSL_CTX_use_PrivateKey, ((1, 1),))
+BugReport(score=0.80, code=vtls/openssl.c:3228, key=(EVP_PKEY_free, None), ctx=(X509_free, None)
+BugReport(score=0.80, code=vtls/openssl.c:3228, key=(EVP_PKEY_free, None), ctx=(BIO_s_file, None)
+BugReport(score=0.80, code=vtls/openssl.c:3228, key=(EVP_PKEY_free, None), ctx=(d2i_PKCS12_bio, ((1, 4294967295),))
+BugReport(score=0.80, code=vtls/openssl.c:3228, key=(EVP_PKEY_free, None), ctx=(PKCS12_PBE_add, None)
+BugReport(score=0.80, code=vtls/openssl.c:3228, key=(EVP_PKEY_free, None), ctx=(PKCS12_parse, ((-2147483648, -1), (1, 2147483647)))
+BugReport(score=0.80, code=vtls/openssl.c:3228, key=(EVP_PKEY_free, None), ctx=(PKCS12_free, None)
+BugReport(score=0.80, code=vtls/openssl.c:3228, key=(EVP_PKEY_free, None), ctx=(SSL_CTX_use_certificate, ((1, 1),))
+BugReport(score=0.80, code=vtls/openssl.c:3228, key=(EVP_PKEY_free, None), ctx=(SSL_CTX_add_client_CA, ((-2147483648, -1), (1, 2147483647)))
+BugReport(score=0.80, code=vtls/openssl.c:3228, key=(EVP_PKEY_free, None), ctx=(SSL_CTX_ctrl, ((-2147483648, -1), (1, 2147483647)))
+BugReport(score=0.80, code=easy.c:773, key=(sigpipe_ignore, None), ctx=(sigaction, None)
+BugReport(score=0.80, code=easy.c:786, key=(sigpipe_restore, None), ctx=(sigaction, None)

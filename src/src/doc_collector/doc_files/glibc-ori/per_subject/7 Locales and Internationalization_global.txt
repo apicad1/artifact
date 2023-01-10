@@ -1,0 +1,28 @@
+Different countries and cultures have varying conventions for how to communicate.  These conventions range from very simple ones, such as the format for representing dates and times, to very complex ones, such as the language spoken. 
+Internationalization of software means programming it to be able to adapt to the user’s favorite conventions.  In ISO C, internationalization works by means of locales.  Each locale specifies a collection of conventions, one convention for each purpose. The user chooses a set of conventions by specifying a locale (via environment variables). 
+All programs inherit the chosen locale as part of their environment. Provided the programs are written to obey the choice of locale, they will follow the conventions preferred by the user. 
+
+TABLE_BEGIN
+ • Effects of Locale    Actions affected by the choice of
+                                 locale.
+
+ • Choosing Locale    How the user specifies a locale.
+
+ • Locale Categories    Different purposes for which you can
+                                 select a locale.
+
+ • Setting the Locale    How a program specifies the locale
+                                 with library functions.
+
+ • Standard Locales    Locale names available on all systems.
+
+ • Locale Names    Format of system-specific locale names.
+
+ • Locale Information    How to access the information for the locale.
+
+ • Formatting Numbers    A dedicated function to format numbers.
+
+ • Yes-or-No Questions    Check a Response against the locale.
+
+TABLE_END
+

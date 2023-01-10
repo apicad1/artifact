@@ -1,0 +1,247 @@
+The library has functions and variables designed to make it easy for your program to report informative error messages in the customary format about the failure of a library call.  The functions strerror and perror give you the standard error message for a given error code; the variable program_invocation_short_name gives you convenient access to the name of the program that encountered the error. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: char * strerror (int errnum)
+Preliminary: | MT-Unsafe race:strerror | AS-Unsafe heap i18n | AC-Unsafe mem | See POSIX Safety Concepts. 
+The strerror function maps the error code (see Checking for Errors) specified by the errnum argument to a descriptive error message string.  The return value is a pointer to this string. 
+The value errnum normally comes from the variable errno. 
+You should not modify the string returned by strerror.  Also, if you make subsequent calls to strerror, the string might be overwritten.  (But it’s guaranteed that no library function ever calls strerror behind your back.) 
+The function strerror is declared in string.h. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: char * strerror_r (int errnum, char *buf, size_t n)
+Preliminary: | MT-Safe  | AS-Unsafe i18n | AC-Unsafe  | See POSIX Safety Concepts. 
+The strerror_r function works like strerror but instead of returning the error message in a statically allocated buffer shared by all threads in the process, it returns a private copy for the thread.  This might be either some permanent global data or a message string in the user supplied buffer starting at buf with the length of n bytes. 
+At most n characters are written (including the NUL byte) so it is up to the user to select a buffer large enough. 
+This function should always be used in multi-threaded programs since there is no way to guarantee the string returned by strerror really belongs to the last call of the current thread. 
+The function strerror_r is a GNU extension and it is declared in string.h. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void perror (const char *message)
+Preliminary: | MT-Safe race:stderr | AS-Unsafe corrupt i18n heap lock | AC-Unsafe corrupt lock mem fd | See POSIX Safety Concepts. 
+This function prints an error message to the stream stderr; see Standard Streams.  The orientation of stderr is not changed. 
+If you call perror with a message that is either a null pointer or an empty string, perror just prints the error message corresponding to errno, adding a trailing newline. 
+If you supply a non-null message argument, then perror prefixes its output with this string.  It adds a colon and a space character to separate the message from the error string corresponding to errno. 
+The function perror is declared in stdio.h. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: const char * strerrorname_np (int errnum)
+| MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function returns the name describing the error errnum or NULL if there is no known constant with this value (e.g "EINVAL" for EINVAL). 
+
+This function is a GNU extension, declared in the header file string.h. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: const char * strerrordesc_np (int errnum)
+| MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function returns the message describing the error errnum or NULL if there is no known constant with this value (e.g "Invalid argument" for EINVAL).  Different than strerror the returned description is not translated. 
+
+This function is a GNU extension, declared in the header file string.h. 
+<<<<<<<<<<<<<<<<<<<<
+
+strerror and perror produce the exact same message for any given error code; the precise text varies from system to system.  With the GNU C Library, the messages are fairly short; there are no multi-line messages or embedded newlines.  Each error message begins with a capital letter and does not include any terminating punctuation. 
+Many programs that don’t read input from the terminal are designed to exit if any system call fails.  By convention, the error message from such a program should start with the program’s name, sans directories. You can find that name in the variable program_invocation_short_name; the full file name is stored the variable program_invocation_name. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Variable: char * program_invocation_name
+This variable’s value is the name that was used to invoke the program running in the current process.  It is the same as argv[0].  Note that this is not necessarily a useful file name; often it contains no directory names.  See Program Arguments. 
+This variable is a GNU extension and is declared in errno.h. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Variable: char * program_invocation_short_name
+This variable’s value is the name that was used to invoke the program running in the current process, with directory names removed.  (That is to say, it is the same as program_invocation_name minus everything up to the last slash, if any.) 
+This variable is a GNU extension and is declared in errno.h. 
+<<<<<<<<<<<<<<<<<<<<
+
+The library initialization code sets up both of these variables before calling main. 
+Portability Note: If you want your program to work with non-GNU libraries, you must save the value of argv[0] in main, and then strip off the directory names yourself.  We added these extensions to make it possible to write self-contained error-reporting subroutines that require no explicit cooperation from main. 
+Here is an example showing how to handle failure to open a file correctly.  The function open_sesame tries to open the named file for reading and returns a stream if successful.  The fopen library function returns a null pointer if it couldn’t open the file for some reason.  In that situation, open_sesame constructs an appropriate error message using the strerror function, and terminates the program.  If we were going to make some other library calls before passing the error code to strerror, we’d have to save it in a local variable instead, because those other library functions might overwrite errno in the meantime. 
+
+EXAMPLE_BEGIN
+#define _GNU_SOURCE
+
+#include <errno.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+FILE *
+open_sesame (char *name)
+{
+  FILE *stream;
+
+  errno = 0;
+  stream = fopen (name, "r");
+  if (stream == NULL)
+    {
+      fprintf (stderr, "%s: Couldn't open file %s; %s\n",
+               program_invocation_short_name, name, strerror (errno));
+      exit (EXIT_FAILURE);
+    }
+  else
+    return stream;
+}
+EXAMPLE_END
+
+Using perror has the advantage that the function is portable and available on all systems implementing ISO C.  But often the text perror generates is not what is wanted and there is no way to extend or change what perror does.  The GNU coding standard, for instance, requires error messages to be preceded by the program name and programs which read some input files should provide information about the input file name and the line number in case an error is encountered while reading the file.  For these occasions there are two functions available which are widely used throughout the GNU project. These functions are declared in error.h. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void error (int status, int errnum, const char *format, …)
+Preliminary: | MT-Safe locale | AS-Unsafe corrupt heap i18n | AC-Safe  | See POSIX Safety Concepts. 
+The error function can be used to report general problems during program execution.  The format argument is a format string just like those given to the printf family of functions.  The arguments required for the format can follow the format parameter. Just like perror, error also can report an error code in textual form.  But unlike perror the error value is explicitly passed to the function in the errnum parameter.  This eliminates the problem mentioned above that the error reporting function must be called immediately after the function causing the error since otherwise errno might have a different value. 
+error prints first the program name.  If the application defined a global variable error_print_progname and points it to a function this function will be called to print the program name. Otherwise the string from the global variable program_name is used.  The program name is followed by a colon and a space which in turn is followed by the output produced by the format string.  If the errnum parameter is non-zero the format string output is followed by a colon and a space, followed by the error message for the error code errnum.  In any case is the output terminated with a newline. 
+The output is directed to the stderr stream.  If the stderr wasn’t oriented before the call it will be narrow-oriented afterwards. 
+The function will return unless the status parameter has a non-zero value.  In this case the function will call exit with the status value for its parameter and therefore never return.  If error returns, the global variable error_message_count is incremented by one to keep track of the number of errors reported. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void error_at_line (int status, int errnum, const char *fname, unsigned int lineno, const char *format, …)
+Preliminary: | MT-Unsafe race:error_at_line/error_one_per_line locale | AS-Unsafe corrupt heap i18n | AC-Unsafe corrupt/error_one_per_line | See POSIX Safety Concepts. 
+The error_at_line function is very similar to the error function.  The only differences are the additional parameters fname and lineno.  The handling of the other parameters is identical to that of error except that between the program name and the string generated by the format string additional text is inserted. 
+Directly following the program name a colon, followed by the file name pointed to by fname, another colon, and the value of lineno is printed. 
+This additional output of course is meant to be used to locate an error in an input file (like a programming language source code file etc). 
+If the global variable error_one_per_line is set to a non-zero value error_at_line will avoid printing consecutive messages for the same file and line.  Repetition which are not directly following each other are not caught. 
+Just like error this function only returns if status is zero.  Otherwise exit is called with the non-zero value.  If error returns, the global variable error_message_count is incremented by one to keep track of the number of errors reported. 
+<<<<<<<<<<<<<<<<<<<<
+
+As mentioned above, the error and error_at_line functions can be customized by defining a variable named error_print_progname. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Variable: void (*error_print_progname) (void)
+If the error_print_progname variable is defined to a non-zero value the function pointed to is called by error or error_at_line.  It is expected to print the program name or do something similarly useful. 
+The function is expected to print to the stderr stream and must be able to handle whatever orientation the stream has. 
+The variable is global and shared by all threads. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Variable: unsigned int error_message_count
+The error_message_count variable is incremented whenever one of the functions error or error_at_line returns.  The variable is global and shared by all threads. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Variable: int error_one_per_line
+The error_one_per_line variable influences only error_at_line.  Normally the error_at_line function creates output for every invocation.  If error_one_per_line is set to a non-zero value error_at_line keeps track of the last file name and line number for which an error was reported and avoids directly following messages for the same file and line.  This variable is global and shared by all threads. 
+<<<<<<<<<<<<<<<<<<<<
+
+A program which read some input file and reports errors in it could look like this: 
+
+EXAMPLE_BEGIN
+{
+  char *line = NULL;
+  size_t len = 0;
+  unsigned int lineno = 0;
+
+  error_message_count = 0;
+  while (! feof_unlocked (fp))
+    {
+      ssize_t n = getline (&line, &len, fp);
+      if (n <= 0)
+        /* End of file or error.  */
+        break;
+      ++lineno;
+
+      /* Process the line.  */
+      …
+
+      if (Detect error in line)
+        error_at_line (0, errval, filename, lineno,
+                       "some error text %s", some_variable);
+    }
+
+  if (error_message_count != 0)
+    error (EXIT_FAILURE, 0, "%u errors found", error_message_count);
+}
+EXAMPLE_END
+
+error and error_at_line are clearly the functions of choice and enable the programmer to write applications which follow the GNU coding standard.  The GNU C Library additionally contains functions which are used in BSD for the same purpose.  These functions are declared in err.h.  It is generally advised to not use these functions.  They are included only for compatibility. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void warn (const char *format, …)
+Preliminary: | MT-Safe locale | AS-Unsafe corrupt heap i18n | AC-Unsafe corrupt lock mem | See POSIX Safety Concepts. 
+The warn function is roughly equivalent to a call like 
+
+EXAMPLE_BEGIN
+  error (0, errno, format, the parameters)
+EXAMPLE_END
+
+except that the global variables error respects and modifies are not used. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void vwarn (const char *format, va_list ap)
+Preliminary: | MT-Safe locale | AS-Unsafe corrupt heap i18n | AC-Unsafe corrupt lock mem | See POSIX Safety Concepts. 
+The vwarn function is just like warn except that the parameters for the handling of the format string format are passed in as a value of type va_list. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void warnx (const char *format, …)
+Preliminary: | MT-Safe locale | AS-Unsafe corrupt heap | AC-Unsafe corrupt lock mem | See POSIX Safety Concepts. 
+The warnx function is roughly equivalent to a call like 
+
+EXAMPLE_BEGIN
+  error (0, 0, format, the parameters)
+EXAMPLE_END
+
+except that the global variables error respects and modifies are not used.  The difference to warn is that no error number string is printed. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void vwarnx (const char *format, va_list ap)
+Preliminary: | MT-Safe locale | AS-Unsafe corrupt heap | AC-Unsafe corrupt lock mem | See POSIX Safety Concepts. 
+The vwarnx function is just like warnx except that the parameters for the handling of the format string format are passed in as a value of type va_list. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void err (int status, const char *format, …)
+Preliminary: | MT-Safe locale | AS-Unsafe corrupt heap i18n | AC-Unsafe corrupt lock mem | See POSIX Safety Concepts. 
+The err function is roughly equivalent to a call like 
+
+EXAMPLE_BEGIN
+  error (status, errno, format, the parameters)
+EXAMPLE_END
+
+except that the global variables error respects and modifies are not used and that the program is exited even if status is zero. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void verr (int status, const char *format, va_list ap)
+Preliminary: | MT-Safe locale | AS-Unsafe corrupt heap i18n | AC-Unsafe corrupt lock mem | See POSIX Safety Concepts. 
+The verr function is just like err except that the parameters for the handling of the format string format are passed in as a value of type va_list. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void errx (int status, const char *format, …)
+Preliminary: | MT-Safe locale | AS-Unsafe corrupt heap | AC-Unsafe corrupt lock mem | See POSIX Safety Concepts. 
+The errx function is roughly equivalent to a call like 
+
+EXAMPLE_BEGIN
+  error (status, 0, format, the parameters)
+EXAMPLE_END
+
+except that the global variables error respects and modifies are not used and that the program is exited even if status is zero.  The difference to err is that no error number string is printed. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void verrx (int status, const char *format, va_list ap)
+Preliminary: | MT-Safe locale | AS-Unsafe corrupt heap | AC-Unsafe corrupt lock mem | See POSIX Safety Concepts. 
+The verrx function is just like errx except that the parameters for the handling of the format string format are passed in as a value of type va_list. 

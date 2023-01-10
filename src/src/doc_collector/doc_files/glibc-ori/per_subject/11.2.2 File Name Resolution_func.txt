@@ -1,0 +1,34 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- /a
+The file named a, in the root directory. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- /a/b
+The file named b, in the directory named a in the root directory. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- a
+The file named a, in the current working directory. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- /a/./b
+This is the same as /a/b. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ./a
+The file named a, in the current working directory. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ../a
+The file named a, in the parent directory of the current working directory. 

@@ -1,0 +1,1 @@
+The functions and data structures for accessing the system group database are declared in the header file grp.h.  

@@ -1,0 +1,194 @@
+The ‘str’ functions are declared in stdlib.h and those beginning with ‘wcs’ are declared in wchar.h.  One might wonder about the use of restrict in the prototypes of the functions in this section.  It is seemingly useless but the ISO C standard uses it (for the functions defined there) so we have to do it as well. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: long int strtol (const char *restrict string, char **restrict tailptr, int base)
+Preliminary: | MT-Safe locale | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The strtol (“string-to-long”) function converts the initial part of string to a signed integer, which is returned as a value of type long int. 
+This function attempts to decompose string as follows: 
+  A (possibly empty) sequence of whitespace characters.  Which characters are whitespace is determined by the isspace function (see Classification of Characters).  These are discarded.   An optional plus or minus sign (‘+’ or ‘-’).   A nonempty sequence of digits in the radix specified by base.  If base is zero, decimal radix is assumed unless the series of digits begins with ‘0’ (specifying octal radix), or ‘0x’ or ‘0X’ (specifying hexadecimal radix); in other words, the same syntax used for integer constants in C.  Otherwise base must have a value between 2 and 36. If base is 16, the digits may optionally be preceded by ‘0x’ or ‘0X’.  If base has no legal value the value returned is 0l and the global variable errno is set to EINVAL.   Any remaining characters in the string.  If tailptr is not a null pointer, strtol stores a pointer to this tail in *tailptr. 
+If the string is empty, contains only whitespace, or does not contain an initial substring that has the expected syntax for an integer in the specified base, no conversion is performed.  In this case, strtol returns a value of zero and the value stored in *tailptr is the value of string. 
+In a locale other than the standard "C" locale, this function may recognize additional implementation-dependent syntax. 
+If the string has valid syntax for an integer but the value is not representable because of overflow, strtol returns either LONG_MAX or LONG_MIN (see Range of Type), as appropriate for the sign of the value.  It also sets errno to ERANGE to indicate there was overflow. 
+You should not check for errors by examining the return value of strtol, because the string might be a valid representation of 0l, LONG_MAX, or LONG_MIN.  Instead, check whether tailptr points to what you expect after the number (e.g. '\0' if the string should end after the number).  You also need to clear errno before the call and check it afterward, in case there was overflow. 
+There is an example at the end of this section. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: long int wcstol (const wchar_t *restrict string, wchar_t **restrict tailptr, int base)
+Preliminary: | MT-Safe locale | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The wcstol function is equivalent to the strtol function in nearly all aspects but handles wide character strings. 
+The wcstol function was introduced in Amendment 1 of ISO C90. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: unsigned long int strtoul (const char *restrict string, char **restrict tailptr, int base)
+Preliminary: | MT-Safe locale | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The strtoul (“string-to-unsigned-long”) function is like strtol except it converts to an unsigned long int value. The syntax is the same as described above for strtol.  The value returned on overflow is ULONG_MAX (see Range of Type). 
+If string depicts a negative number, strtoul acts the same as strtol but casts the result to an unsigned integer.  That means for example that strtoul on "-1" returns ULONG_MAX and an input more negative than LONG_MIN returns (ULONG_MAX + 1) / 2. 
+strtoul sets errno to EINVAL if base is out of range, or ERANGE on overflow. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: unsigned long int wcstoul (const wchar_t *restrict string, wchar_t **restrict tailptr, int base)
+Preliminary: | MT-Safe locale | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The wcstoul function is equivalent to the strtoul function in nearly all aspects but handles wide character strings. 
+The wcstoul function was introduced in Amendment 1 of ISO C90. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: long long int strtoll (const char *restrict string, char **restrict tailptr, int base)
+Preliminary: | MT-Safe locale | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The strtoll function is like strtol except that it returns a long long int value, and accepts numbers with a correspondingly larger range. 
+If the string has valid syntax for an integer but the value is not representable because of overflow, strtoll returns either LLONG_MAX or LLONG_MIN (see Range of Type), as appropriate for the sign of the value.  It also sets errno to ERANGE to indicate there was overflow. 
+The strtoll function was introduced in ISO C99. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: long long int wcstoll (const wchar_t *restrict string, wchar_t **restrict tailptr, int base)
+Preliminary: | MT-Safe locale | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The wcstoll function is equivalent to the strtoll function in nearly all aspects but handles wide character strings. 
+The wcstoll function was introduced in Amendment 1 of ISO C90. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: long long int strtoq (const char *restrict string, char **restrict tailptr, int base)
+Preliminary: | MT-Safe locale | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+strtoq (“string-to-quad-word”) is the BSD name for strtoll. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: long long int wcstoq (const wchar_t *restrict string, wchar_t **restrict tailptr, int base)
+Preliminary: | MT-Safe locale | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The wcstoq function is equivalent to the strtoq function in nearly all aspects but handles wide character strings. 
+The wcstoq function is a GNU extension. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: unsigned long long int strtoull (const char *restrict string, char **restrict tailptr, int base)
+Preliminary: | MT-Safe locale | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The strtoull function is related to strtoll the same way strtoul is related to strtol. 
+The strtoull function was introduced in ISO C99. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: unsigned long long int wcstoull (const wchar_t *restrict string, wchar_t **restrict tailptr, int base)
+Preliminary: | MT-Safe locale | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The wcstoull function is equivalent to the strtoull function in nearly all aspects but handles wide character strings. 
+The wcstoull function was introduced in Amendment 1 of ISO C90. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: unsigned long long int strtouq (const char *restrict string, char **restrict tailptr, int base)
+Preliminary: | MT-Safe locale | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+strtouq is the BSD name for strtoull. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: unsigned long long int wcstouq (const wchar_t *restrict string, wchar_t **restrict tailptr, int base)
+Preliminary: | MT-Safe locale | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The wcstouq function is equivalent to the strtouq function in nearly all aspects but handles wide character strings. 
+The wcstouq function is a GNU extension. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: intmax_t strtoimax (const char *restrict string, char **restrict tailptr, int base)
+Preliminary: | MT-Safe locale | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The strtoimax function is like strtol except that it returns a intmax_t value, and accepts numbers of a corresponding range. 
+If the string has valid syntax for an integer but the value is not representable because of overflow, strtoimax returns either INTMAX_MAX or INTMAX_MIN (see Integers), as appropriate for the sign of the value.  It also sets errno to ERANGE to indicate there was overflow. 
+See Integers for a description of the intmax_t type.  The strtoimax function was introduced in ISO C99. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: intmax_t wcstoimax (const wchar_t *restrict string, wchar_t **restrict tailptr, int base)
+Preliminary: | MT-Safe locale | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The wcstoimax function is equivalent to the strtoimax function in nearly all aspects but handles wide character strings. 
+The wcstoimax function was introduced in ISO C99. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: uintmax_t strtoumax (const char *restrict string, char **restrict tailptr, int base)
+Preliminary: | MT-Safe locale | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The strtoumax function is related to strtoimax the same way that strtoul is related to strtol. 
+See Integers for a description of the intmax_t type.  The strtoumax function was introduced in ISO C99. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: uintmax_t wcstoumax (const wchar_t *restrict string, wchar_t **restrict tailptr, int base)
+Preliminary: | MT-Safe locale | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The wcstoumax function is equivalent to the strtoumax function in nearly all aspects but handles wide character strings. 
+The wcstoumax function was introduced in ISO C99. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: long int atol (const char *string)
+Preliminary: | MT-Safe locale | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function is similar to the strtol function with a base argument of 10, except that it need not detect overflow errors. The atol function is provided mostly for compatibility with existing code; using strtol is more robust. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int atoi (const char *string)
+Preliminary: | MT-Safe locale | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function is like atol, except that it returns an int. The atoi function is also considered obsolete; use strtol instead. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: long long int atoll (const char *string)
+Preliminary: | MT-Safe locale | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function is similar to atol, except it returns a long long int. 
+The atoll function was introduced in ISO C99.  It too is obsolete (despite having just been added); use strtoll instead. 
+<<<<<<<<<<<<<<<<<<<<
+
+All the functions mentioned in this section so far do not handle alternative representations of characters as described in the locale data.  Some locales specify thousands separator and the way they have to be used which can help to make large numbers more readable.  To read such numbers one has to use the scanf functions with the ‘'’ flag. 
+Here is a function which parses a string as a sequence of integers and returns the sum of them: 
+
+EXAMPLE_BEGIN
+int
+sum_ints_from_string (char *string)
+{
+  int sum = 0;
+
+  while (1) {
+    char *tail;
+    int next;
+
+    /* Skip whitespace by hand, to detect the end.  */
+    while (isspace (*string)) string++;
+    if (*string == 0)
+      break;
+
+    /* There is more nonwhitespace,  */
+    /* so it ought to be another number.  */
+    errno = 0;
+    /* Parse it.  */
+    next = strtol (string, &tail, 0);
+    /* Add it in, if not overflow.  */
+    if (errno)
+      printf ("Overflow\n");
+    else
+      sum += next;
+    /* Advance past it.  */
+    string = tail;
+  }
+
+  return sum;
+}
+EXAMPLE_END
+

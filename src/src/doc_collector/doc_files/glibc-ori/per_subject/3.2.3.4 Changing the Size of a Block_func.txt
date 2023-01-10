@@ -1,0 +1,16 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void * realloc (void *ptr, size_t newsize)
+Preliminary: | MT-Safe  | AS-Unsafe lock | AC-Unsafe lock fd mem | See POSIX Safety Concepts. 
+The realloc function changes the size of the block whose address is ptr to be newsize. 
+Since the space after the end of the block may be in use, realloc may find it necessary to copy the block to a new address where more free space is available.  The value of realloc is the new address of the block.  If the block needs to be moved, realloc copies the old contents. 
+If you pass a null pointer for ptr, realloc behaves just like ‘malloc (newsize)’. Otherwise, if newsize is zero realloc frees the block and returns NULL. Otherwise, if realloc cannot reallocate the requested size it returns NULL and sets errno; the original block is left undisturbed. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void * reallocarray (void *ptr, size_t nmemb, size_t size)
+Preliminary: | MT-Safe  | AS-Unsafe lock | AC-Unsafe lock fd mem | See POSIX Safety Concepts. 
+The reallocarray function changes the size of the block whose address is ptr to be long enough to contain a vector of nmemb elements, each of size size.  It is equivalent to ‘realloc (ptr, nmemb * size)’, except that reallocarray fails safely if the multiplication overflows, by setting errno to ENOMEM, returning a null pointer, and leaving the original block unchanged. 
+reallocarray should be used instead of realloc when the new size of the allocated block is the result of a multiplication that might overflow. 
+Portability Note: This function is not part of any standard.  It was first introduced in OpenBSD 5.6. 

@@ -1,0 +1,18 @@
+Obstacks work by allocating space for themselves in large chunks, and then parceling out space in the chunks to satisfy your requests.  Chunks are normally 4096 bytes long unless you specify a different chunk size. The chunk size includes 8 bytes of overhead that are not actually used for storing objects.  Regardless of the specified size, longer chunks will be allocated when necessary for long objects. 
+The obstack library allocates chunks by calling the function obstack_chunk_alloc, which you must define.  When a chunk is no longer needed because you have freed all the objects in it, the obstack library frees the chunk by calling obstack_chunk_free, which you must also define. 
+These two must be defined (as macros) or declared (as functions) in each source file that uses obstack_init (see Creating Obstacks). Most often they are defined as macros like this: 
+
+EXAMPLE_BEGIN
+#define obstack_chunk_alloc malloc
+#define obstack_chunk_free free
+EXAMPLE_END
+
+Note that these are simple macros (no arguments).  Macro definitions with arguments will not work!  It is necessary that obstack_chunk_alloc or obstack_chunk_free, alone, expand into a function name if it is not itself a function name. 
+If you allocate chunks with malloc, the chunk size should be a power of 2.  The default chunk size, 4096, was chosen because it is long enough to satisfy many typical requests on the obstack yet short enough not to waste too much memory in the portion of the last chunk not yet used. 
+Since this macro expands to an lvalue, you can specify a new chunk size by assigning it a new value.  Doing so does not affect the chunks already allocated, but will change the size of chunks allocated for that particular obstack in the future.  It is unlikely to be useful to make the chunk size smaller, but making it larger might improve efficiency if you are allocating many objects whose size is comparable to the chunk size.  Here is how to do so cleanly: 
+
+EXAMPLE_BEGIN
+if (obstack_chunk_size (obstack_ptr) < new-chunk-size)
+  obstack_chunk_size (obstack_ptr) = new-chunk-size;
+EXAMPLE_END
+

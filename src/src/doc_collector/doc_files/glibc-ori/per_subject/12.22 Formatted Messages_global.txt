@@ -1,0 +1,11 @@
+On systems which are based on System V messages of programs (especially the system tools) are printed in a strict form using the fmtmsg function.  The uniformity sometimes helps the user to interpret messages and the strictness tests of the fmtmsg function ensure that the programmer follows some minimal requirements. 
+
+TABLE_BEGIN
+ • Printing Formatted Messages    The fmtmsg function.
+
+ • Adding Severity Classes    Add more severity classes.
+
+ • Example    How to use fmtmsg and addseverity.
+
+TABLE_END
+

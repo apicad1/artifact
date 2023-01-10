@@ -1,0 +1,15 @@
+Together with the setlocale function the ISO C people invented the localeconv function.  It is a masterpiece of poor design.  It is expensive to use, not extensible, and not generally usable as it provides access to only LC_MONETARY and LC_NUMERIC related information.  Nevertheless, if it is applicable to a given situation it should be used since it is very portable.  The function strfmon formats monetary amounts according to the selected locale using this information.    
+If a member of the structure struct lconv has type char, and the value is CHAR_MAX, it means that the current locale has no value for that parameter. 
+
+TABLE_BEGIN
+ • General Numeric    Parameters for formatting numbers and
+                                 currency amounts.
+
+ • Currency Symbol    How to print the symbol that identifies an
+                                 amount of money (e.g. ‘$’).
+
+ • Sign of Money Amount    How to print the (positive or negative) sign
+                                 for a monetary amount, if one exists.
+
+TABLE_END
+

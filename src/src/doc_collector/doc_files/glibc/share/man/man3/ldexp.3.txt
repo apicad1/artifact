@@ -1,0 +1,71 @@
+LDEXP(3)                                        Linux Programmer's Manual                                       LDEXP(3)
+
+NAME
+       ldexp, ldexpf, ldexpl - multiply floating-point number by integral power of 2
+
+SYNOPSIS
+       #include <math.h>
+
+       double ldexp(double x, int exp);
+       float ldexpf(float x, int exp);
+       long double ldexpl(long double x, int exp);
+
+       Link with -lm.
+
+   Feature Test Macro Requirements for glibc (see feature_test_macros(7)):
+
+       ldexpf(), ldexpl():
+           _ISOC99_SOURCE || _POSIX_C_SOURCE >= 200112L
+               || /* Since glibc 2.19: */ _DEFAULT_SOURCE
+               || /* Glibc <= 2.19: */ _BSD_SOURCE || _SVID_SOURCE
+
+DESCRIPTION
+       These functions return the result of multiplying the floating-point number x by 2 raised to the power exp.
+
+RETURN VALUE
+       On success, these functions return x * (2^exp).
+
+       If exp is zero, then x is returned.
+
+       If x is a NaN, a NaN is returned.
+
+       If x is positive infinity (negative infinity), positive infinity (negative infinity) is returned.
+
+       If the result underflows, a range error occurs, and zero is returned.
+
+       If  the  result  overflows, a range error occurs, and the functions return HUGE_VAL, HUGE_VALF, or HUGE_VALL, re‐
+       spectively, with a sign the same as x.
+
+ERRORS
+       See math_error(7) for information on how to determine whether an error has occurred when calling these functions.
+
+       The following errors can occur:
+
+       Range error, overflow
+              errno is set to ERANGE.  An overflow floating-point exception (FE_OVERFLOW) is raised.
+
+       Range error, underflow
+              errno is set to ERANGE.  An underflow floating-point exception (FE_UNDERFLOW) is raised.
+
+ATTRIBUTES
+       For an explanation of the terms used in this section, see attributes(7).
+
+       ┌──────────────────────────────────────────────────────────────────────────────────────┬───────────────┬─────────┐
+       │Interface                                                                             │ Attribute     │ Value   │
+       ├──────────────────────────────────────────────────────────────────────────────────────┼───────────────┼─────────┤
+       │ldexp(), ldexpf(), ldexpl()                                                           │ Thread safety │ MT-Safe │
+       └──────────────────────────────────────────────────────────────────────────────────────┴───────────────┴─────────┘
+
+CONFORMING TO
+       C99, POSIX.1-2001, POSIX.1-2008.
+
+       The variant returning double also conforms to SVr4, 4.3BSD, C89.
+
+SEE ALSO
+       frexp(3), modf(3), scalbln(3)
+
+COLOPHON
+       This page is part of release 5.13 of the Linux man-pages project.  A  description  of  the  project,  information
+       about reporting bugs, and the latest version of this page, can be found at https://www.kernel.org/doc/man-pages/.
+
+                                                       2021-03-22                                               LDEXP(3)

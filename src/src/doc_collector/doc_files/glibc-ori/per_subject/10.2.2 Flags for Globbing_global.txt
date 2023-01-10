@@ -1,0 +1,2 @@
+This section describes the standard flags that you can specify in the flags argument to glob.  Choose the flags you want, and combine them with the C bitwise OR operator |. 
+Note that there are More Flags for Globbing available as GNU extensions. 

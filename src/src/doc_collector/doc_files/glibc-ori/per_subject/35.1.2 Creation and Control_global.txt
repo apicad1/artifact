@@ -1,0 +1,3 @@
+The GNU C Library implements a set of functions that allow the user to easily create and use threads.  Additional functionality is provided to control the behavior of threads. 
+The following data types are defined for managing threads: 
+The following functions are used for working with threads: 

@@ -1,0 +1,21 @@
+POSIX.2 defines a way to get string-valued parameters from the operating system with the function confstr: 
+Currently there is just one parameter you can read with confstr: 
+The way to use confstr without any arbitrary limit on string size is to call it twice: first call it to get the length, allocate the buffer accordingly, and then call confstr again to fill the buffer, like this: 
+
+EXAMPLE_BEGIN
+char *
+get_default_path (void)
+{
+  size_t len = confstr (_CS_PATH, NULL, 0);
+  char *buffer = (char *) xmalloc (len);
+
+  if (confstr (_CS_PATH, buf, len + 1) == 0)
+    {
+      free (buffer);
+      return NULL;
+    }
+
+  return buffer;
+}
+EXAMPLE_END
+

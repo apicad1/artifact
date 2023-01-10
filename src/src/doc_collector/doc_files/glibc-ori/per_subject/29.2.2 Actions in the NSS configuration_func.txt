@@ -1,0 +1,44 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘success’  
+No error occurred and the wanted entry is returned.  The default action for this is return. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘notfound’  
+The lookup process works ok but the needed value was not found.  The default action is continue. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘unavail’  
+
+The service is permanently unavailable.  This can either mean the needed file is not available, or, for DNS, the server is not available or does not allow queries.  The default action is continue. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘tryagain’  
+The service is temporarily unavailable.  This could mean a file is locked or a server currently cannot accept more connections.  The default action is continue. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘return’  
+If the status matches, stop the lookup process at this service specification.  If an entry is available, provide it to the application. If an error occurred, report it to the application.  In case of a prior ‘merge’ action, the data is combined with previous lookup results, as explained below. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘continue’  
+If the status matches, proceed with the lookup process at the next entry, discarding the result of the current lookup (and any merged data).  An exception is the ‘initgroups’ database and the ‘success’ status, where ‘continue’ acts like merge below. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘merge’  
+Proceed with the lookup process, retaining the current lookup result. This action is useful only with the ‘success’ status.  If a subsequent service lookup succeeds and has a matching ‘return’ specification, the results are merged, the lookup process ends, and the merged results are returned to the application.  If the following service has a matching ‘merge’ action, the lookup process continues, retaining the combined data from this and any previous lookups. 
+After a merge action, errors from subsequent lookups are ignored, and the data gathered so far will be returned. 
+The ‘merge’ only applies to the ‘success’ status.  It is currently implemented for the ‘group’ database and its group members field, ‘gr_mem’.  If specified for other databases, it causes the lookup to fail (if the status matches). 
+When processing ‘merge’ for ‘group’ membership, the group GID and name must be identical for both entries.  If only one or the other is a match, the behavior is undefined. 

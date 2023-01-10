@@ -1,0 +1,12 @@
+When your system has configurable system limits, you can use the sysconf function to find out the value that applies to any particular machine.  The function and the associated parameter constants are declared in the header file unistd.h. 
+
+TABLE_BEGIN
+ • Sysconf Definition    Detailed specifications of sysconf.
+
+ • Constants for Sysconf    The list of parameters sysconf can read.
+
+ • Examples of Sysconf    How to use sysconf and the parameter
+				 macros properly together.
+
+TABLE_END
+

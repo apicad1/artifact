@@ -1,0 +1,2 @@
+These are the usual arcsine, arccosine and arctangent functions, which are the inverses of the sine, cosine and tangent functions respectively. 
+ISO C99 defines complex versions of the inverse trig functions. 

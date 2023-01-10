@@ -1,0 +1,1 @@
+For convenience the ISO C90 standard also defines functions to convert entire strings instead of single characters.  These functions suffer from the same problems as their reentrant counterparts from Amendment 1 to ISO C90; see Converting Strings. 

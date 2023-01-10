@@ -1,0 +1,45 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: struct passwd * fgetpwent (FILE *stream)
+Preliminary: | MT-Unsafe race:fpwent | AS-Unsafe corrupt lock | AC-Unsafe corrupt lock | See POSIX Safety Concepts. 
+This function reads the next user entry from stream and returns a pointer to the entry.  The structure is statically allocated and is rewritten on subsequent calls to fgetpwent.  You must copy the contents of the structure if you wish to save the information. 
+The stream must correspond to a file in the same format as the standard user database file. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int fgetpwent_r (FILE *stream, struct passwd *result_buf, char *buffer, size_t buflen, struct passwd **result)
+Preliminary: | MT-Safe  | AS-Unsafe corrupt | AC-Unsafe corrupt lock | See POSIX Safety Concepts. 
+This function is similar to fgetpwent in that it reads the next user entry from stream.  But the result is returned in the structure pointed to by result_buf.  The first buflen bytes of the additional buffer pointed to by buffer are used to contain additional information, normally strings which are pointed to by the elements of the result structure. 
+The stream must correspond to a file in the same format as the standard user database file. 
+If the function returns zero result points to the structure with the wanted data (normally this is in result_buf).  If errors occurred the return value is nonzero and result contains a null pointer. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void setpwent (void)
+Preliminary: | MT-Unsafe race:pwent locale | AS-Unsafe dlopen plugin heap lock | AC-Unsafe corrupt lock fd mem | See POSIX Safety Concepts. 
+This function initializes a stream which getpwent and getpwent_r use to read the user database. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: struct passwd * getpwent (void)
+Preliminary: | MT-Unsafe race:pwent race:pwentbuf locale | AS-Unsafe dlopen plugin heap lock | AC-Unsafe corrupt lock fd mem | See POSIX Safety Concepts. 
+The getpwent function reads the next entry from the stream initialized by setpwent.  It returns a pointer to the entry.  The structure is statically allocated and is rewritten on subsequent calls to getpwent.  You must copy the contents of the structure if you wish to save the information. 
+A null pointer is returned when no more entries are available. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int getpwent_r (struct passwd *result_buf, char *buffer, size_t buflen, struct passwd **result)
+Preliminary: | MT-Unsafe race:pwent locale | AS-Unsafe dlopen plugin heap lock | AC-Unsafe corrupt lock fd mem | See POSIX Safety Concepts. 
+This function is similar to getpwent in that it returns the next entry from the stream initialized by setpwent.  Like fgetpwent_r, it uses the user-supplied buffers in result_buf and buffer to return the information requested. 
+The return values are the same as for fgetpwent_r. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void endpwent (void)
+Preliminary: | MT-Unsafe race:pwent locale | AS-Unsafe dlopen plugin heap lock | AC-Unsafe corrupt lock fd mem | See POSIX Safety Concepts. 
+This function closes the internal stream used by getpwent or getpwent_r. 

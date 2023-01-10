@@ -1,0 +1,114 @@
+{
+    "getpwuid_r": {
+        "validation": true,
+        "arg.post": [
+            false,
+            false,
+            false,
+            false,
+            true
+        ]
+    },
+    "hcreate_r": {
+        "validation": true,
+        "arg.pre": [
+            false,
+            true
+        ]
+    },
+    "initstate_r": {
+        "validation": true,
+        "arg.pre": [
+            false,
+            true,
+            false,
+            false
+        ]
+    },
+    "BIO_set_mem_eof_return": {
+        "validation": true,
+        "arg.pre": [
+            false,
+            true
+        ]
+    },
+    "d2i_PrivateKey_ex": {
+        "validation": true,
+        "arg.pre": [
+            true,
+            false,
+            false,
+            false,
+            false,
+            false
+        ]
+    },
+    "EC_POINT_point2buf": {
+        "validation": true,
+        "arg.pre": [
+            false,
+            false,
+            false,
+            true,
+            false
+        ]
+    },
+    "EVP_ENCODE_CTX_copy": {
+        "validation": true,
+        "arg.pre": [
+            true,
+            false
+        ]
+    },
+    "EVP_SignInit_ex": {
+        "validation": true,
+        "arg.pre": [
+            true,
+            false,
+            false
+        ]
+    },
+    "OSSL_LIB_CTX_new_from_dispatch": {
+        "validation": true,
+        "arg.pre": [
+            true,
+            false
+        ]
+    },
+    "PEM_read_bio": {
+        "validation": "will be changed but no need to be checked for revealing status",
+        "arg.post": [
+            false,
+            true,
+            true,
+            true,
+            true
+        ]
+    },
+    "RSA_meth_new": {
+        "validation": true,
+        "arg.pre": [
+            true,
+            false
+        ]
+    },
+    "SSL_select_next_proto": {
+        "validation": "partial",
+        "arg.pre": [
+            false,
+            false,
+            false,
+            true,
+            false,
+            true
+        ]
+    },
+    "X509_VERIFY_PARAM_set1_ip": {
+        "validation": true,
+        "arg.pre": [
+            false,
+            false,
+            true
+        ]
+    }
+}

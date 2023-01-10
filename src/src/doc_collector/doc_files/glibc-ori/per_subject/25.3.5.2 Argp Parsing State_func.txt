@@ -1,0 +1,30 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: struct argp_state
+This structure has the following fields, which may be modified as noted: 
+	const struct argp *const root_argp
+The top level argp parser being parsed.  Note that this is often not the same struct argp passed into argp_parse by the invoking program.  See Argp.  It is an internal argp parser that contains options implemented by argp_parse itself, such as ‘--help’.  
+	int argc
+	char **argv
+The argument vector being parsed.  This may be modified.  
+	int next
+The index in argv of the next argument to be parsed.  This may be modified.  One way to consume all remaining arguments in the input is to set state->next = state->argc, perhaps after recording the value of the next field to find the consumed arguments.  The current option can be re-parsed immediately by decrementing this field, then modifying state->argv[state->next] to reflect the option that should be reexamined.  
+	unsigned flags
+The flags supplied to argp_parse.  These may be modified, although some flags may only take effect when argp_parse is first invoked.  See Argp Flags.  
+	unsigned arg_num
+While calling a parsing function with the key argument ARGP_KEY_ARG, this represents the number of the current arg, starting at 0.  It is incremented after each ARGP_KEY_ARG call returns.  At all other times, this is the number of ARGP_KEY_ARG arguments that have been processed.  
+	int quoted
+If non-zero, the index in argv of the first argument following a special ‘--’ argument.  This prevents anything that follows from being interpreted as an option.  It is only set after argument parsing has proceeded past this point.  
+	void *input
+An arbitrary pointer passed in from the caller of argp_parse, in the input argument.  
+	void **child_inputs
+These are values that will be passed to child parsers.  This vector will be the same length as the number of children in the current parser.  Each child parser will be given the value of state->child_inputs[i] as its state->input field, where i is the index of the child in the this parser’s children field.  See Argp Children.  
+	void *hook
+For the parser function’s use.  Initialized to 0, but otherwise ignored by argp.  
+	char *name
+The name used when printing messages.  This is initialized to argv[0], or program_invocation_name if argv[0] is unavailable.  
+	FILE *err_stream
+	FILE *out_stream
+The stdio streams used when argp prints.  Error messages are printed to err_stream, all other output, such as ‘--help’ output) to out_stream.  These are initialized to stderr and stdout respectively.  See Standard Streams.  
+	void *pstate
+Private, for use by the argp implementation. 

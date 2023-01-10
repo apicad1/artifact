@@ -1,0 +1,16 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Tunable namespace: glibc.rtld
+Dynamic linker behavior can be modified by setting the following tunables in the rtld namespace: 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Tunable: glibc.rtld.nns
+Sets the number of supported dynamic link namespaces (see dlmopen). Currently this limit can be set between 1 and 16 inclusive, the default is 4. Each link namespace consumes some memory in all thread, and thus raising the limit will increase the amount of memory each thread uses. Raising the limit is useful when your application uses more than 4 dynamic link namespaces as created by dlmopen with an lmid argument of LM_ID_NEWLM. Dynamic linker audit modules are loaded in their own dynamic link namespaces, but they are not accounted for in glibc.rtld.nns.  They implicitly increase the per-thread memory usage as necessary, so this tunable does not need to be changed to allow many audit modules e.g. via LD_AUDIT. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Tunable: glibc.rtld.optional_static_tls
+Sets the amount of surplus static TLS in bytes to allocate at program startup.  Every thread created allocates this amount of specified surplus static TLS. This is a minimum value and additional space may be allocated for internal purposes including alignment.  Optional static TLS is used for optimizing dynamic TLS access for platforms that support such optimizations e.g. TLS descriptors or optimized TLS access for POWER (DT_PPC64_OPT and DT_PPC_OPT).  In order to make the best use of such optimizations the value should be as many bytes as would be required to hold all TLS variables in all dynamic loaded shared libraries.  The value cannot be known by the dynamic loader because it doesn’t know the expected set of shared libraries which will be loaded.  The existing static TLS space cannot be changed once allocated at process startup.  The default allocation of optional static TLS is 512 bytes and is allocated in every thread. 

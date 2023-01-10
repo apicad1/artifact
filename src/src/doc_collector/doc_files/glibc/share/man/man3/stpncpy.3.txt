@@ -1,0 +1,53 @@
+STPNCPY(3)                                      Linux Programmer's Manual                                     STPNCPY(3)
+
+NAME
+       stpncpy - copy a fixed-size string, returning a pointer to its end
+
+SYNOPSIS
+       #include <string.h>
+
+       char *stpncpy(char *restrict dest, const char *restrict src, size_t n);
+
+   Feature Test Macro Requirements for glibc (see feature_test_macros(7)):
+
+       stpncpy():
+           Since glibc 2.10:
+               _POSIX_C_SOURCE >= 200809L
+           Before glibc 2.10:
+               _GNU_SOURCE
+
+DESCRIPTION
+       The  stpncpy()  function copies at most n characters from the string pointed to by src, including the terminating
+       null byte ('\0'), to the array pointed to by dest.  Exactly n characters are written  at  dest.   If  the  length
+       strlen(src)  is  smaller  than  n,  the remaining characters in the array pointed to by dest are filled with null
+       bytes ('\0'), If the length strlen(src) is greater than or equal to n, the string pointed to by dest will not  be
+       null-terminated.
+
+       The strings may not overlap.
+
+       The programmer must ensure that there is room for at least n characters at dest.
+
+RETURN VALUE
+       stpncpy() returns a pointer to the terminating null byte in dest, or, if dest is not null-terminated, dest+n.
+
+ATTRIBUTES
+       For an explanation of the terms used in this section, see attributes(7).
+
+       ┌──────────────────────────────────────────────────────────────────────────────────────┬───────────────┬─────────┐
+       │Interface                                                                             │ Attribute     │ Value   │
+       ├──────────────────────────────────────────────────────────────────────────────────────┼───────────────┼─────────┤
+       │stpncpy()                                                                             │ Thread safety │ MT-Safe │
+       └──────────────────────────────────────────────────────────────────────────────────────┴───────────────┴─────────┘
+
+CONFORMING TO
+       This function was added to POSIX.1-2008.  Before that, it was a GNU extension.  It first appeared in version 1.07
+       of the GNU C library in 1993.
+
+SEE ALSO
+       strncpy(3), wcpncpy(3)
+
+COLOPHON
+       This page is part of release 5.13 of the Linux man-pages project.  A  description  of  the  project,  information
+       about reporting bugs, and the latest version of this page, can be found at https://www.kernel.org/doc/man-pages/.
+
+GNU                                                    2021-03-22                                             STPNCPY(3)

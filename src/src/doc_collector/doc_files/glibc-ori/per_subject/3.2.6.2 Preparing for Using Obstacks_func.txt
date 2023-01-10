@@ -1,0 +1,18 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int obstack_init (struct obstack *obstack-ptr)
+Preliminary: | MT-Safe race:obstack-ptr | AS-Safe  | AC-Safe mem | See POSIX Safety Concepts. 
+Initialize obstack obstack-ptr for allocation of objects.  This function calls the obstack’s obstack_chunk_alloc function.  If allocation of memory fails, the function pointed to by obstack_alloc_failed_handler is called.  The obstack_init function always returns 1 (Compatibility notice: Former versions of obstack returned 0 if allocation failed). 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Variable: obstack_alloc_failed_handler
+The value of this variable is a pointer to a function that obstack uses when obstack_chunk_alloc fails to allocate memory.  The default action is to print a message and abort. You should supply a function that either calls exit (see Program Termination) or longjmp (see Non-Local Exits) and doesn’t return. 
+
+EXAMPLE_BEGIN
+void my_obstack_alloc_failed (void)
+…
+obstack_alloc_failed_handler = &my_obstack_alloc_failed;
+EXAMPLE_END
+

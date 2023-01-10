@@ -1,0 +1,4 @@
+ISO C99 introduces support for complex numbers in C.  This is done with a new type qualifier, complex.  It is a keyword if and only if complex.h has been included.  There are three complex types, corresponding to the three real types:  float complex, double complex, and long double complex. 
+Likewise, on machines that have support for _FloatN or _FloatNx enabled, the complex types _FloatN complex and _FloatNx complex are also available if complex.h has been included; see Mathematics. 
+To construct complex numbers you need a way to indicate the imaginary part of a number.  There is no standard notation for an imaginary floating point constant.  Instead, complex.h defines two macros that can be used to create complex numbers. 
+_Complex_I is a bit of a mouthful.  complex.h also defines a shorter name for the same constant. 

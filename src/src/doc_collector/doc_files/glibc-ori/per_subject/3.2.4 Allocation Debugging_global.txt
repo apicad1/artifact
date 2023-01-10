@@ -1,0 +1,14 @@
+A complicated task when programming with languages which do not use garbage collected dynamic memory allocation is to find memory leaks. Long running programs must ensure that dynamically allocated objects are freed at the end of their lifetime.  If this does not happen the system runs out of memory, sooner or later. 
+The malloc implementation in the GNU C Library provides some simple means to detect such leaks and obtain some information to find the location.  To do this the application must be started in a special mode which is enabled by an environment variable.  There are no speed penalties for the program if the debugging mode is not enabled. 
+
+TABLE_BEGIN
+ • Tracing malloc    How to install the tracing functionality.
+
+ • Using the Memory Debugger    Example programs excerpts.
+
+ • Tips for the Memory Debugger    Some more or less clever ideas.
+
+ • Interpreting the traces    What do all these lines mean?
+
+TABLE_END
+

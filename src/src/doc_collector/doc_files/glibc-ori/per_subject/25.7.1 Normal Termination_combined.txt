@@ -1,0 +1,10 @@
+A process terminates normally when its program signals it is done by calling exit.  Returning from main is equivalent to calling exit, and the value that main returns is used as the argument to exit. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void exit (int status)
+Preliminary: | MT-Unsafe race:exit | AS-Unsafe corrupt | AC-Unsafe corrupt lock | See POSIX Safety Concepts. 
+The exit function tells the system that the program is done, which causes it to terminate the process. 
+status is the program’s exit status, which becomes part of the process’ termination status.  This function does not return. 
+<<<<<<<<<<<<<<<<<<<<
+
+Normal termination causes the following actions: 

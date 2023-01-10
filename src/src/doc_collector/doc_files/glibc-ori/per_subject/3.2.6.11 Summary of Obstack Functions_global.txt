@@ -1,0 +1,1 @@
+Here is a summary of all the functions associated with obstacks.  Each takes the address of an obstack (struct obstack *) as its first argument. 

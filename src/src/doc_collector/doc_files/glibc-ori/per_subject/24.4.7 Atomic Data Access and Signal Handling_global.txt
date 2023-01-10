@@ -1,0 +1,12 @@
+Whether the data in your application concerns atoms, or mere text, you have to be careful about the fact that access to a single datum is not necessarily atomic.  This means that it can take more than one instruction to read or write a single object.  In such cases, a signal handler might be invoked in the middle of reading or writing the object. 
+There are three ways you can cope with this problem.  You can use data types that are always accessed atomically; you can carefully arrange that nothing untoward happens if an access is interrupted, or you can block all signals around any access that had better not be interrupted (see Blocking Signals). 
+
+TABLE_BEGIN
+ • Non-atomic Example    A program illustrating interrupted access.
+
+ • Types    Data types that guarantee no interruption.
+
+ • Usage    Proving that interruption is harmless.
+
+TABLE_END
+

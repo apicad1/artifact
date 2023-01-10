@@ -1,0 +1,2 @@
+The result of globbing is a vector of file names (strings).  To return this vector, glob uses a special data type, glob_t, which is a structure.  You pass glob the address of the structure, and it fills in the structure’s fields to tell you about the results. 
+For use in the glob64 function glob.h contains another definition for a very similar type.  glob64_t differs from glob_t only in the types of the members gl_readdir, gl_stat, and gl_lstat. 

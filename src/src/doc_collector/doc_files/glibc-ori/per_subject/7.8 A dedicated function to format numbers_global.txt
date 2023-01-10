@@ -1,0 +1,53 @@
+We have seen that the structure returned by localeconv as well as the values given to nl_langinfo allow you to retrieve the various pieces of locale-specific information to format numbers and monetary amounts.  We have also seen that the underlying rules are quite complex. 
+Therefore the X/Open standards introduce a function which uses such locale information, making it easier for the user to format numbers according to these rules. 
+A few examples should make clear how the function works.  It is assumed that all the following pieces of code are executed in a program which uses the USA locale (en_US).  The simplest form of the format is this: 
+
+EXAMPLE_BEGIN
+strfmon (buf, 100, "@%n@%n@%n@", 123.45, -567.89, 12345.678);
+EXAMPLE_END
+
+The output produced is 
+
+EXAMPLE_BEGIN
+"@$123.45@-$567.89@$12,345.68@"
+EXAMPLE_END
+
+We can notice several things here.  First, the widths of the output numbers are different.  We have not specified a width in the format string, and so this is no wonder.  Second, the third number is printed using thousands separators.  The thousands separator for the en_US locale is a comma.  The number is also rounded. .678 is rounded to .68 since the format does not specify a precision and the default value in the locale is 2.  Finally, note that the national currency symbol is printed since ‘%n’ was used, not ‘i’.  The next example shows how we can align the output. 
+
+EXAMPLE_BEGIN
+strfmon (buf, 100, "@%=*11n@%=*11n@%=*11n@", 123.45, -567.89, 12345.678);
+EXAMPLE_END
+
+The output this time is: 
+
+EXAMPLE_BEGIN
+"@    $123.45@   -$567.89@ $12,345.68@"
+EXAMPLE_END
+
+Two things stand out.  Firstly, all fields have the same width (eleven characters) since this is the width given in the format and since no number required more characters to be printed.  The second important point is that the fill character is not used.  This is correct since the white space was not used to achieve a precision given by a ‘#’ modifier, but instead to fill to the given width.  The difference becomes obvious if we now add a width specification. 
+
+EXAMPLE_BEGIN
+strfmon (buf, 100, "@%=*11#5n@%=*11#5n@%=*11#5n@",
+         123.45, -567.89, 12345.678);
+EXAMPLE_END
+
+The output is 
+
+EXAMPLE_BEGIN
+"@ $***123.45@-$***567.89@ $12,456.68@"
+EXAMPLE_END
+
+Here we can see that all the currency symbols are now aligned, and that the space between the currency sign and the number is filled with the selected fill character.  Note that although the width is selected to be 5 and 123.45 has three digits left of the decimal point, the space is filled with three asterisks.  This is correct since, as explained above, the width does not include the positions used to store thousands separators.  One last example should explain the remaining functionality. 
+
+EXAMPLE_BEGIN
+strfmon (buf, 100, "@%=0(16#5.3i@%=0(16#5.3i@%=0(16#5.3i@",
+         123.45, -567.89, 12345.678);
+EXAMPLE_END
+
+This rather complex format string produces the following output: 
+
+EXAMPLE_BEGIN
+"@ USD 000123,450 @(USD 000567.890)@ USD 12,345.678 @"
+EXAMPLE_END
+
+The most noticeable change is the alternative way of representing negative numbers.  In financial circles this is often done using parentheses, and this is what the ‘(’ flag selected.  The fill character is now ‘0’.  Note that this ‘0’ character is not regarded as a numeric zero, and therefore the first and second numbers are not printed using a thousands separator.  Since we used the format specifier ‘i’ instead of ‘n’, the international form of the currency symbol is used.  This is a four letter string, in this case "USD ".  The last point is that since the precision right of the decimal point is selected to be three, the first and second numbers are printed with an extra zero at the end and the third number is printed without rounding. 

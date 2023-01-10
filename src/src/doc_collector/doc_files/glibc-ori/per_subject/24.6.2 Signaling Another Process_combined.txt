@@ -1,0 +1,45 @@
+The kill function can be used to send a signal to another process. In spite of its name, it can be used for a lot of things other than causing a process to terminate.  Some examples of situations where you might want to send signals between processes are: 
+  A parent process starts a child to perform a task—perhaps having the child running an infinite loop—and then terminates the child when the task is no longer needed.   A process executes as part of a group, and needs to terminate or notify the other processes in the group when an error or other event occurs.   Two processes need to synchronize while working together. 
+This section assumes that you know a little bit about how processes work.  For more information on this subject, see Processes. 
+The kill function is declared in signal.h.  
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int kill (pid_t pid, int signum)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The kill function sends the signal signum to the process or process group specified by pid.  Besides the signals listed in Standard Signals, signum can also have a value of zero to check the validity of the pid. 
+The pid specifies the process or process group to receive the signal: 
+	pid > 0
+The process whose identifier is pid.  (On Linux, the signal is sent to the entire process even if pid is a thread ID distinct from the process ID.)  
+	pid == 0
+All processes in the same process group as the sender.  
+	pid < -1
+The process group whose identifier is -pid.  
+	pid == -1
+If the process is privileged, send the signal to all processes except for some special system processes.  Otherwise, send the signal to all processes with the same effective user ID. 
+A process can send a signal to itself with a call like kill (getpid(), signum).  If kill is used by a process to send a signal to itself, and the signal is not blocked, then kill delivers at least one signal (which might be some other pending unblocked signal instead of the signal signum) to that process before it returns. 
+The return value from kill is zero if the signal can be sent successfully.  Otherwise, no signal is sent, and a value of -1 is returned.  If pid specifies sending a signal to several processes, kill succeeds if it can send the signal to at least one of them. There’s no way you can tell which of the processes got the signal or whether all of them did. 
+The following errno error conditions are defined for this function: 
+	EINVAL
+The signum argument is an invalid or unsupported number.  
+	EPERM
+You do not have the privilege to send a signal to the process or any of the processes in the process group named by pid.  
+	ESRCH
+The pid argument does not refer to an existing process or group. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int tgkill (pid_t pid, pid_t tid, int signum)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The tgkill function sends the signal signum to the thread or process with ID tid, like the kill function, but only if the process ID of the thread tid is equal to pid.  If the target thread belongs to another process, the function fails with ESRCH. 
+The tgkill function can be used to avoid sending a signal to a thread in the wrong process if the caller ensures that the passed pid value is not reused by the kernel (for example, if it is the process ID of the current process, as returned by getpid). 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int killpg (int pgid, int signum)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This is similar to kill, but sends signal signum to the process group pgid.  This function is provided for compatibility with BSD; using kill to do this is more portable. 
+<<<<<<<<<<<<<<<<<<<<
+
+As a simple example of kill, the call kill (getpid (), sig) has the same effect as raise (sig). 

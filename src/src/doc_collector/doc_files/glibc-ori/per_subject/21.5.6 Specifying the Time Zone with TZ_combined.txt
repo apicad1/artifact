@@ -1,0 +1,78 @@
+In POSIX systems, a user can specify the time zone by means of the TZ environment variable.  For information about how to set environment variables, see Environment Variables.  The functions for accessing the time zone are declared in time.h.   
+You should not normally need to set TZ.  If the system is configured properly, the default time zone will be correct.  You might set TZ if you are using a computer over a network from a different time zone, and would like times reported to you in the time zone local to you, rather than what is local to the computer. 
+In POSIX.1 systems the value of the TZ variable can be in one of three formats.  With the GNU C Library, the most common format is the last one, which can specify a selection from a large database of time zone information for many regions of the world.  The first two formats are used to describe the time zone information directly, which is both more cumbersome and less precise.  But the POSIX.1 standard only specifies the details of the first two formats, so it is good to be familiar with them in case you come across a POSIX.1 system that doesn’t support a time zone information database. 
+The first format is used when there is no Daylight Saving Time (or summer time) in the local time zone: 
+
+EXAMPLE_BEGIN
+std offset
+EXAMPLE_END
+
+The std string specifies the name of the time zone.  It must be three or more characters long and must not contain a leading colon, embedded digits, commas, nor plus and minus signs.  There is no space character separating the time zone name from the offset, so these restrictions are necessary to parse the specification correctly. 
+The offset specifies the time value you must add to the local time to get a Coordinated Universal Time value.  It has syntax like [+|-]hh[:mm[:ss]].  This is positive if the local time zone is west of the Prime Meridian and negative if it is east.  The hour must be between 0 and 24, and the minute and seconds between 0 and 59. 
+For example, here is how we would specify Eastern Standard Time, but without any Daylight Saving Time alternative: 
+
+EXAMPLE_BEGIN
+EST+5
+EXAMPLE_END
+
+The second format is used when there is Daylight Saving Time: 
+
+EXAMPLE_BEGIN
+std offset dst [offset],start[/time],end[/time]
+EXAMPLE_END
+
+The initial std and offset specify the standard time zone, as described above.  The dst string and offset specify the name and offset for the corresponding Daylight Saving Time zone; if the offset is omitted, it defaults to one hour ahead of standard time. 
+The remainder of the specification describes when Daylight Saving Time is in effect.  The start field is when Daylight Saving Time goes into effect and the end field is when the change is made back to standard time.  The following formats are recognized for these fields: 
+
+>>>>>>>>>>>>>>>>>>>>
+- Jn
+This specifies the Julian day, with n between 1 and 365. February 29 is never counted, even in leap years. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- n
+This specifies the Julian day, with n between 0 and 365. February 29 is counted in leap years. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Mm.w.d
+This specifies day d of week w of month m.  The day d must be between 0 (Sunday) and 6.  The week w must be between 1 and 5; week 1 is the first week in which day d occurs, and week 5 specifies the last d day in the month.  The month m should be between 1 and 12. 
+<<<<<<<<<<<<<<<<<<<<
+
+The time fields specify when, in the local time currently in effect, the change to the other time occurs.  If omitted, the default is 02:00:00.  The hours part of the time fields can range from -167 through 167; this is an extension to POSIX.1, which allows only the range 0 through 24. 
+Here are some example TZ values, including the appropriate Daylight Saving Time and its dates of applicability.  In North American Eastern Standard Time (EST) and Eastern Daylight Time (EDT), the normal offset from UTC is 5 hours; since this is west of the prime meridian, the sign is positive.  Summer time begins on March’s second Sunday at 2:00am, and ends on November’s first Sunday at 2:00am. 
+
+EXAMPLE_BEGIN
+EST+5EDT,M3.2.0/2,M11.1.0/2
+EXAMPLE_END
+
+Israel Standard Time (IST) and Israel Daylight Time (IDT) are 2 hours ahead of the prime meridian in winter, springing forward an hour on March’s fourth Thursday at 26:00 (i.e., 02:00 on the first Friday on or after March 23), and falling back on October’s last Sunday at 02:00. 
+
+EXAMPLE_BEGIN
+IST-2IDT,M3.4.4/26,M10.5.0
+EXAMPLE_END
+
+Western Argentina Summer Time (WARST) is 3 hours behind the prime meridian all year.  There is a dummy fall-back transition on December 31 at 25:00 daylight saving time (i.e., 24:00 standard time, equivalent to January 1 at 00:00 standard time), and a simultaneous spring-forward transition on January 1 at 00:00 standard time, so daylight saving time is in effect all year and the initial WART is a placeholder. 
+
+EXAMPLE_BEGIN
+WART4WARST,J1/0,J365/25
+EXAMPLE_END
+
+Western Greenland Time (WGT) and Western Greenland Summer Time (WGST) are 3 hours behind UTC in the winter.  Its clocks follow the European Union rules of springing forward by one hour on March’s last Sunday at 01:00 UTC (-02:00 local time) and falling back on October’s last Sunday at 01:00 UTC (-01:00 local time). 
+
+EXAMPLE_BEGIN
+WGT3WGST,M3.5.0/-2,M10.5.0/-1
+EXAMPLE_END
+
+The schedule of Daylight Saving Time in any particular jurisdiction has changed over the years.  To be strictly correct, the conversion of dates and times in the past should be based on the schedule that was in effect then.  However, this format has no facilities to let you specify how the schedule has changed from year to year.  The most you can do is specify one particular schedule—usually the present day schedule—and this is used to convert any date, no matter when.  For precise time zone specifications, it is best to use the time zone information database (see below). 
+The third format looks like this: 
+
+EXAMPLE_BEGIN
+:characters
+EXAMPLE_END
+
+Each operating system interprets this format differently; in the GNU C Library, characters is the name of a file which describes the time zone. 
+If the TZ environment variable does not have a value, the operation chooses a time zone by default.  In the GNU C Library, the default time zone is like the specification ‘TZ=:/etc/localtime’ (or ‘TZ=:/usr/local/etc/localtime’, depending on how the GNU C Library was configured; see Installation).  Other C libraries use their own rule for choosing the default time zone, so there is little we can say about them. 
+If characters begins with a slash, it is an absolute file name; otherwise the library looks for the file /usr/share/zoneinfo/characters.  The zoneinfo directory contains data files describing local time zones in many different parts of the world.  The names represent major cities, with subdirectories for geographical areas; for example, America/New_York, Europe/London, Asia/Hong_Kong. These data files are installed by the system administrator, who also sets /etc/localtime to point to the data file for the local time zone.  The files typically come from the Time Zone Database of time zone and daylight saving time information for most regions of the world, which is maintained by a community of volunteers and put in the public domain. 

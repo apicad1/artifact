@@ -1,0 +1,82 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int semctl (int semid, int semnum, int cmd);
+Preliminary: | MT-Safe  | AS-Safe  | AC-Unsafe corrupt/linux | See POSIX Safety Concepts. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int semget (key_t key, int nsems, int semflg);
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int semop (int semid, struct sembuf *sops, size_t nsops);
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int semtimedop (int semid, struct sembuf *sops, size_t nsops, const struct timespec *timeout);
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int sem_init (sem_t *sem, int pshared, unsigned int value);
+Preliminary: | MT-Safe  | AS-Safe  | AC-Unsafe corrupt | See POSIX Safety Concepts. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int sem_destroy (sem_t *sem);
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: sem_t *sem_open (const char *name, int oflag, ...);
+Preliminary: | MT-Safe  | AS-Unsafe init | AC-Unsafe init | See POSIX Safety Concepts. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int sem_close (sem_t *sem);
+Preliminary: | MT-Safe  | AS-Unsafe lock | AC-Unsafe lock | See POSIX Safety Concepts. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int sem_unlink (const char *name);
+Preliminary: | MT-Safe  | AS-Unsafe init | AC-Unsafe corrupt | See POSIX Safety Concepts. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int sem_wait (sem_t *sem);
+Preliminary: | MT-Safe  | AS-Safe  | AC-Unsafe corrupt | See POSIX Safety Concepts. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int sem_timedwait (sem_t *sem, const struct timespec *abstime);
+Preliminary: | MT-Safe  | AS-Safe  | AC-Unsafe corrupt | See POSIX Safety Concepts. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int sem_trywait (sem_t *sem);
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int sem_post (sem_t *sem);
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int sem_getvalue (sem_t *sem, int *sval);
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 

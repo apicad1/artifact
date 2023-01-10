@@ -1,0 +1,7 @@
+At any time, each process has an effective user ID, a effective group ID, and a set of supplementary group IDs.  These IDs determine the privileges of the process.  They are collectively called the persona of the process, because they determine “who it is” for purposes of access control. 
+Your login shell starts out with a persona which consists of your user ID, your default group ID, and your supplementary group IDs (if you are in more than one group).  In normal circumstances, all your other processes inherit these values. 
+A process also has a real user ID which identifies the user who created the process, and a real group ID which identifies that user’s default group.  These values do not play a role in access control, so we do not consider them part of the persona.  But they are also important. 
+Both the real and effective user ID can be changed during the lifetime of a process.  See Why Change Persona. 
+For details on how a process’s effective user ID and group IDs affect its permission to access files, see Access Permission. 
+The effective user ID of a process also controls permissions for sending signals using the kill function.  See Signaling Another Process. 
+Finally, there are many operations which can only be performed by a process whose effective user ID is zero.  A process with this user ID is a privileged process.  Commonly the user name root is associated with user ID 0, but there may be other user names with this ID. 

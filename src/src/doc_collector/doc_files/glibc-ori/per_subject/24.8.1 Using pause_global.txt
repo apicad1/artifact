@@ -1,0 +1,1 @@
+The simple way to wait until a signal arrives is to call pause. Please read about its disadvantages, in the following section, before you use it. 

@@ -1,0 +1,128 @@
+Messages can be printed to standard error and/or to the console.  To select the destination the programmer can use the following two values, bitwise OR combined if wanted, for the classification parameter of fmtmsg: 
+
+>>>>>>>>>>>>>>>>>>>>
+- MM_PRINT  
+Display the message in standard error. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- MM_CONSOLE  
+Display the message on the system console. 
+<<<<<<<<<<<<<<<<<<<<
+
+The erroneous piece of the system can be signalled by exactly one of the following values which also is bitwise ORed with the classification parameter to fmtmsg: 
+
+>>>>>>>>>>>>>>>>>>>>
+- MM_HARD  
+The source of the condition is some hardware. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- MM_SOFT  
+The source of the condition is some software. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- MM_FIRM  
+The source of the condition is some firmware. 
+<<<<<<<<<<<<<<<<<<<<
+
+A third component of the classification parameter to fmtmsg can describe the part of the system which detects the problem.  This is done by using exactly one of the following values: 
+
+>>>>>>>>>>>>>>>>>>>>
+- MM_APPL  
+The erroneous condition is detected by the application. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- MM_UTIL  
+The erroneous condition is detected by a utility. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- MM_OPSYS  
+The erroneous condition is detected by the operating system. 
+<<<<<<<<<<<<<<<<<<<<
+
+A last component of classification can signal the results of this message.  Exactly one of the following values can be used: 
+
+>>>>>>>>>>>>>>>>>>>>
+- MM_RECOVER  
+It is a recoverable error. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- MM_NRECOV  
+It is a non-recoverable error. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int fmtmsg (long int classification, const char *label, int severity, const char *text, const char *action, const char *tag)
+Preliminary: | MT-Safe  | AS-Unsafe lock | AC-Safe  | See POSIX Safety Concepts. 
+Display a message described by its parameters on the device(s) specified in the classification parameter.  The label parameter identifies the source of the message.  The string should consist of two colon separated parts where the first part has not more than 10 and the second part not more than 14 characters.  The text parameter describes the condition of the error, the action parameter possible steps to recover from the error and the tag parameter is a reference to the online documentation where more information can be found.  It should contain the label value and a unique identification number. 
+Each of the parameters can be a special value which means this value is to be omitted.  The symbolic names for these values are: 
+	MM_NULLLBL  
+Ignore label parameter. 
+	MM_NULLSEV  
+Ignore severity parameter. 
+	MM_NULLMC  
+Ignore classification parameter.  This implies that nothing is actually printed. 
+	MM_NULLTXT  
+Ignore text parameter. 
+	MM_NULLACT  
+Ignore action parameter. 
+	MM_NULLTAG  
+Ignore tag parameter. 
+There is another way certain fields can be omitted from the output to standard error.  This is described below in the description of environment variables influencing the behavior. 
+The severity parameter can have one of the values in the following table:  
+	MM_NOSEV  
+Nothing is printed, this value is the same as MM_NULLSEV. 
+	MM_HALT  
+This value is printed as HALT. 
+	MM_ERROR  
+This value is printed as ERROR. 
+	MM_WARNING  
+This value is printed as WARNING. 
+	MM_INFO  
+This value is printed as INFO. 
+The numeric value of these five macros are between 0 and 4.  Using the environment variable SEV_LEVEL or using the addseverity function one can add more severity levels with their corresponding string to print.  This is described below (see Adding Severity Classes). 
+If no parameter is ignored the output looks like this: 
+
+EXAMPLE_BEGIN
+label: severity-string: text
+TO FIX: action tag
+EXAMPLE_END
+
+The colons, new line characters and the TO FIX string are inserted if necessary, i.e., if the corresponding parameter is not ignored. 
+This function is specified in the X/Open Portability Guide.  It is also available on all systems derived from System V. 
+The function returns the value MM_OK if no error occurred.  If only the printing to standard error failed, it returns MM_NOMSG. If printing to the console fails, it returns MM_NOCON.  If nothing is printed MM_NOTOK is returned.  Among situations where all outputs fail this last value is also returned if a parameter value is incorrect. 
+<<<<<<<<<<<<<<<<<<<<
+
+There are two environment variables which influence the behavior of fmtmsg.  The first is MSGVERB.  It is used to control the output actually happening on standard error (not the console output).  Each of the five fields can explicitly be enabled.  To do this the user has to put the MSGVERB variable with a format like the following in the environment before calling the fmtmsg function the first time: 
+
+EXAMPLE_BEGIN
+MSGVERB=keyword[:keyword[:…]]
+EXAMPLE_END
+
+Valid keywords are label, severity, text, action, and tag.  If the environment variable is not given or is the empty string, a not supported keyword is given or the value is somehow else invalid, no part of the message is masked out. 
+The second environment variable which influences the behavior of fmtmsg is SEV_LEVEL.  This variable and the change in the behavior of fmtmsg is not specified in the X/Open Portability Guide.  It is available in System V systems, though.  It can be used to introduce new severity levels.  By default, only the five severity levels described above are available.  Any other numeric value would make fmtmsg print nothing. 
+If the user puts SEV_LEVEL with a format like 
+
+EXAMPLE_BEGIN
+SEV_LEVEL=[description[:description[:…]]]
+EXAMPLE_END
+
+in the environment of the process before the first call to fmtmsg, where description has a value of the form 
+
+EXAMPLE_BEGIN
+severity-keyword,level,printstring
+EXAMPLE_END
+
+The severity-keyword part is not used by fmtmsg but it has to be present.  The level part is a string representation of a number.  The numeric value must be a number greater than 4.  This value must be used in the severity parameter of fmtmsg to select this class.  It is not possible to overwrite any of the predefined classes.  The printstring is the string printed when a message of this class is processed by fmtmsg (see above, fmtsmg does not print the numeric value but instead the string representation). 

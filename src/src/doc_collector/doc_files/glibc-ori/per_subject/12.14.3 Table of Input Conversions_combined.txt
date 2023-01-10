@@ -1,0 +1,87 @@
+Here is a table that summarizes the various conversion specifications: 
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘%d’
+Matches an optionally signed integer written in decimal.  See Numeric Input Conversions. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘%i’
+Matches an optionally signed integer in any of the formats that the C language defines for specifying an integer constant.  See Numeric Input Conversions. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘%o’
+Matches an unsigned integer written in octal radix. See Numeric Input Conversions. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘%u’
+Matches an unsigned integer written in decimal radix. See Numeric Input Conversions. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘%x’, ‘%X’
+Matches an unsigned integer written in hexadecimal radix. See Numeric Input Conversions. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘%e’, ‘%f’, ‘%g’, ‘%E’, ‘%G’
+Matches an optionally signed floating-point number.  See Numeric Input Conversions. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘%s’
+Matches a string containing only non-whitespace characters. See String Input Conversions.  The presence of the ‘l’ modifier determines whether the output is stored as a wide character string or a multibyte string.  If ‘%s’ is used in a wide character function the string is converted as with multiple calls to wcrtomb into a multibyte string.  This means that the buffer must provide room for MB_CUR_MAX bytes for each wide character read.  In case ‘%ls’ is used in a multibyte function the result is converted into wide characters as with multiple calls of mbrtowc before being stored in the user provided buffer. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘%S’
+This is an alias for ‘%ls’ which is supported for compatibility with the Unix standard. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘%[’
+Matches a string of characters that belong to a specified set. See String Input Conversions.  The presence of the ‘l’ modifier determines whether the output is stored as a wide character string or a multibyte string.  If ‘%[’ is used in a wide character function the string is converted as with multiple calls to wcrtomb into a multibyte string.  This means that the buffer must provide room for MB_CUR_MAX bytes for each wide character read.  In case ‘%l[’ is used in a multibyte function the result is converted into wide characters as with multiple calls of mbrtowc before being stored in the user provided buffer. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘%c’
+Matches a string of one or more characters; the number of characters read is controlled by the maximum field width given for the conversion. See String Input Conversions. 
+If ‘%c’ is used in a wide stream function the read value is converted from a wide character to the corresponding multibyte character before storing it.  Note that this conversion can produce more than one byte of output and therefore the provided buffer must be large enough for up to MB_CUR_MAX bytes for each character.  If ‘%lc’ is used in a multibyte function the input is treated as a multibyte sequence (and not bytes) and the result is converted as with calls to mbrtowc. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘%C’
+This is an alias for ‘%lc’ which is supported for compatibility with the Unix standard. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘%p’
+Matches a pointer value in the same implementation-defined format used by the ‘%p’ output conversion for printf.  See Other Input Conversions. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘%n’
+This conversion doesn’t read any characters; it records the number of characters read so far by this call.  See Other Input Conversions. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘%%’
+This matches a literal ‘%’ character in the input stream.  No corresponding argument is used.  See Other Input Conversions. 
+<<<<<<<<<<<<<<<<<<<<
+
+If the syntax of a conversion specification is invalid, the behavior is undefined.  If there aren’t enough function arguments provided to supply addresses for all the conversion specifications in the template strings that perform assignments, or if the arguments are not of the correct types, the behavior is also undefined.  On the other hand, extra arguments are simply ignored. 

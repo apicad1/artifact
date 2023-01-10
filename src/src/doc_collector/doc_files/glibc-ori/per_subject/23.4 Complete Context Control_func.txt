@@ -1,0 +1,51 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: ucontext_t
+The ucontext_t type is defined as a structure with at least the following elements: 
+	ucontext_t *uc_link
+This is a pointer to the next context structure which is used if the context described in the current structure returns.  
+	sigset_t uc_sigmask
+Set of signals which are blocked when this context is used.  
+	stack_t uc_stack
+Stack used for this context.  The value need not be (and normally is not) the stack pointer.  See Signal Stack.  
+	mcontext_t uc_mcontext
+This element contains the actual state of the process.  The mcontext_t type is also defined in this header but the definition should be treated as opaque.  Any use of knowledge of the type makes applications less portable.  
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int getcontext (ucontext_t *ucp)
+Preliminary: | MT-Safe race:ucp | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The getcontext function initializes the variable pointed to by ucp with the context of the calling thread.  The context contains the content of the registers, the signal mask, and the current stack. Executing the contents would start at the point where the getcontext call just returned. 
+Compatibility Note: Depending on the operating system, information about the current context’s stack may be in the uc_stack field of ucp, or it may instead be in architecture-specific subfields of the uc_mcontext field. 
+The function returns 0 if successful.  Otherwise it returns -1 and sets errno accordingly. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void makecontext (ucontext_t *ucp, void (*func) (void), int argc, …)
+Preliminary: | MT-Safe race:ucp | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The ucp parameter passed to makecontext shall be initialized by a call to getcontext.  The context will be modified in a way such that if the context is resumed it will start by calling the function func which gets argc integer arguments passed.  The integer arguments which are to be passed should follow the argc parameter in the call to makecontext. 
+Before the call to this function the uc_stack and uc_link element of the ucp structure should be initialized.  The uc_stack element describes the stack which is used for this context.  No two contexts which are used at the same time should use the same memory region for a stack. 
+The uc_link element of the object pointed to by ucp should be a pointer to the context to be executed when the function func returns or it should be a null pointer.  See setcontext for more information about the exact use. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int setcontext (const ucontext_t *ucp)
+Preliminary: | MT-Safe race:ucp | AS-Unsafe corrupt | AC-Unsafe corrupt | See POSIX Safety Concepts. 
+The setcontext function restores the context described by ucp.  The context is not modified and can be reused as often as wanted. 
+If the context was created by getcontext execution resumes with the registers filled with the same values and the same stack as if the getcontext call just returned. 
+If the context was modified with a call to makecontext execution continues with the function passed to makecontext which gets the specified parameters passed.  If this function returns execution is resumed in the context which was referenced by the uc_link element of the context structure passed to makecontext at the time of the call.  If uc_link was a null pointer the application terminates normally with an exit status value of EXIT_SUCCESS (see Program Termination). 
+If the context was created by a call to a signal handler or from any other source then the behaviour of setcontext is unspecified. 
+Since the context contains information about the stack no two threads should use the same context at the same time.  The result in most cases would be disastrous. 
+The setcontext function does not return unless an error occurred in which case it returns -1. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int swapcontext (ucontext_t *restrict oucp, const ucontext_t *restrict ucp)
+Preliminary: | MT-Safe race:oucp race:ucp | AS-Unsafe corrupt | AC-Unsafe corrupt | See POSIX Safety Concepts. 
+The swapcontext function is similar to setcontext but instead of just replacing the current context the latter is first saved in the object pointed to by oucp as if this was a call to getcontext.  The saved context would resume after the call to swapcontext. 
+Once the current context is saved the context described in ucp is installed and execution continues as described in this context. 
+If swapcontext succeeds the function does not return unless the context oucp is used without prior modification by makecontext.  The return value in this case is 0.  If the function fails it returns -1 and sets errno accordingly. 

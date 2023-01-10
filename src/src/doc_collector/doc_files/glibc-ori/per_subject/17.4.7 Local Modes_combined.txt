@@ -1,0 +1,107 @@
+This section describes the flags for the c_lflag member of the struct termios structure.  These flags generally control higher-level aspects of input processing than the input modes flags described in Input Modes, such as echoing, signals, and the choice of canonical or noncanonical input. 
+The c_lflag member itself is an integer, and you change the flags and fields using the operators &, |, and ^.  Don’t try to specify the entire value for c_lflag—instead, change only specific flags and leave the rest untouched (see Setting Modes). 
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: tcflag_t ICANON
+This bit, if set, enables canonical input processing mode.  Otherwise, input is processed in noncanonical mode.  See Canonical or Not. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: tcflag_t ECHO
+If this bit is set, echoing of input characters back to the terminal is enabled.  
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: tcflag_t ECHOE
+If this bit is set, echoing indicates erasure of input with the ERASE character by erasing the last character in the current line from the screen.  Otherwise, the character erased is re-echoed to show what has happened (suitable for a printing terminal). 
+This bit only controls the display behavior; the ICANON bit by itself controls actual recognition of the ERASE character and erasure of input, without which ECHOE is simply irrelevant. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: tcflag_t ECHOPRT
+This bit, like ECHOE, enables display of the ERASE character in a way that is geared to a hardcopy terminal.  When you type the ERASE character, a ‘\’ character is printed followed by the first character erased.  Typing the ERASE character again just prints the next character erased.  Then, the next time you type a normal character, a ‘/’ character is printed before the character echoes. 
+This is a BSD extension, and exists only in BSD systems and GNU/Linux and GNU/Hurd systems. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: tcflag_t ECHOK
+This bit enables special display of the KILL character by moving to a new line after echoing the KILL character normally.  The behavior of ECHOKE (below) is nicer to look at. 
+If this bit is not set, the KILL character echoes just as it would if it were not the KILL character.  Then it is up to the user to remember that the KILL character has erased the preceding input; there is no indication of this on the screen. 
+This bit only controls the display behavior; the ICANON bit by itself controls actual recognition of the KILL character and erasure of input, without which ECHOK is simply irrelevant. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: tcflag_t ECHOKE
+This bit is similar to ECHOK.  It enables special display of the KILL character by erasing on the screen the entire line that has been killed.  This is a BSD extension, and exists only in BSD systems and GNU/Linux and GNU/Hurd systems. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: tcflag_t ECHONL
+If this bit is set and the ICANON bit is also set, then the newline ('\n') character is echoed even if the ECHO bit is not set. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: tcflag_t ECHOCTL
+If this bit is set and the ECHO bit is also set, echo control characters with ‘^’ followed by the corresponding text character. Thus, control-A echoes as ‘^A’.  This is usually the preferred mode for interactive input, because echoing a control character back to the terminal could have some undesired effect on the terminal. 
+This is a BSD extension, and exists only in BSD systems and GNU/Linux and GNU/Hurd systems. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: tcflag_t ISIG
+This bit controls whether the INTR, QUIT, and SUSP characters are recognized.  The functions associated with these characters are performed if and only if this bit is set.  Being in canonical or noncanonical input mode has no effect on the interpretation of these characters. 
+You should use caution when disabling recognition of these characters. Programs that cannot be interrupted interactively are very user-unfriendly.  If you clear this bit, your program should provide some alternate interface that allows the user to interactively send the signals associated with these characters, or to escape from the program.  
+See Signal Characters. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: tcflag_t IEXTEN
+POSIX.1 gives IEXTEN implementation-defined meaning, so you cannot rely on this interpretation on all systems. 
+On BSD systems and GNU/Linux and GNU/Hurd systems, it enables the LNEXT and DISCARD characters. See Other Special. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: tcflag_t NOFLSH
+Normally, the INTR, QUIT, and SUSP characters cause input and output queues for the terminal to be cleared.  If this bit is set, the queues are not cleared. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: tcflag_t TOSTOP
+If this bit is set and the system supports job control, then SIGTTOU signals are generated by background processes that attempt to write to the terminal.  See Access to the Terminal. 
+<<<<<<<<<<<<<<<<<<<<
+
+The following bits are BSD extensions; they exist only on BSD systems and GNU/Hurd systems. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: tcflag_t ALTWERASE
+This bit determines how far the WERASE character should erase.  The WERASE character erases back to the beginning of a word; the question is, where do words begin? 
+If this bit is clear, then the beginning of a word is a nonwhitespace character following a whitespace character.  If the bit is set, then the beginning of a word is an alphanumeric character or underscore following a character which is none of those. 
+See Editing Characters, for more information about the WERASE character. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: tcflag_t FLUSHO
+This is the bit that toggles when the user types the DISCARD character. While this bit is set, all output is discarded.  See Other Special. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: tcflag_t NOKERNINFO
+Setting this bit disables handling of the STATUS character. See Other Special. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: tcflag_t PENDIN
+If this bit is set, it indicates that there is a line of input that needs to be reprinted.  Typing the REPRINT character sets this bit; the bit remains set until reprinting is finished.  See Editing Characters. 

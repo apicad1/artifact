@@ -1,0 +1,329 @@
+{
+    "globfree": {
+        "casuality": {
+            "validation": true,
+            "pre": [
+                "glob"
+            ],
+            "post": []
+        }
+    },
+    "hcreate_r": {
+        "casuality": {
+            "validation": true,
+            "pre": [],
+            "post": [
+                "hdestroy"
+            ]
+        }
+    },
+    "regcomp": {
+        "casuality": {
+            "validation": true,
+            "pre": [
+                "regexec"
+            ],
+            "post": []
+        }
+    },
+    "setmntent": {
+        "casuality": {
+            "validation": "partial",
+            "pre": [],
+            "post": [
+                "endmntent",
+                "fclose"
+            ]
+        }
+    },
+    "sigfillset": {
+        "casuality": {
+            "validation": true,
+            "pre": [],
+            "post": [
+                "sigaddset",
+                "sigdelset",
+                "sigismember"
+            ]
+        }
+    },
+    "ADMISSION_SYNTAX_new": {
+        "casuality": {
+            "validation": true,
+            "pre": [],
+            "post": [
+                "ADMISSION_SYNTAX_free"
+            ]
+        }
+    },
+    "ASN1_STRING_TABLE_add": {
+        "casuality": {
+            "validation": true,
+            "pre": [],
+            "post": [
+                "ASN1_STRING_TABLE_cleanup"
+            ]
+        }
+    },
+    "ASRange_new": {
+        "casuality": {
+            "validation": true,
+            "pre": [],
+            "post": [
+                "ASRange_free"
+            ]
+        }
+    },
+    "CMS_ReceiptRequest_free": {
+        "casuality": {
+            "validation": true,
+            "pre": [
+                "CMS_ReceiptRequest_new"
+            ],
+            "post": []
+        }
+    },
+    "DSA_set_flags": {
+        "casuality": {
+            "validation": true,
+            "pre": [],
+            "post": [
+                "DSA_clear_flags"
+            ]
+        }
+    },
+    "EC_KEY_get_flags": {
+        "casuality": {
+            "validation": true,
+            "pre": [],
+            "post": [
+                "EC_KEY_clear_flags"
+            ]
+        }
+    },
+    "ENGINE_init": {
+        "casuality": {
+            "validation": true,
+            "pre": [],
+            "post": [
+                "ENGINE_finish"
+            ]
+        }
+    },
+    "ESS_CERT_ID_V2_free": {
+        "casuality": {
+            "validation": true,
+            "pre": [
+                "ESS_CERT_ID_V2_new"
+            ],
+            "post": []
+        }
+    },
+    "GENERAL_SUBTREE_free": {
+        "casuality": {
+            "validation": true,
+            "pre": [
+                "GENERAL_SUBTREE_new"
+            ],
+            "post": []
+        }
+    },
+    "OCSP_RESPID_new": {
+        "casuality": {
+            "validation": true,
+            "pre": [],
+            "post": [
+                "OCSP_RESPID_free"
+            ]
+        }
+    },
+    "OCSP_SERVICELOC_free": {
+        "casuality": {
+            "validation": true,
+            "pre": [
+                "OCSP_SERVICELOC_new"
+            ],
+            "post": []
+        }
+    },
+    "OPENSSL_INIT_set_config_filename": {
+        "casuality": {
+            "validation": true,
+            "pre": [],
+            "post": [
+                "OPENSSL_INIT_free"
+            ]
+        }
+    },
+    "OSSL_HTTP_REQ_CTX_set_expected": {
+        "casuality": {
+            "validation": "partial",
+            "pre": [],
+            "post": [
+                "OSSL_HTTP_REQ_CTX_set1_req"
+            ]
+        }
+    },
+    "OSSL_SELF_TEST_new": {
+        "casuality": {
+            "validation": true,
+            "pre": [],
+            "post": [
+                "OSSL_SELF_TEST_free"
+            ]
+        }
+    },
+    "OTHERNAME_free": {
+        "casuality": {
+            "validation": true,
+            "pre": [
+                "OTHERNAME_new"
+            ],
+            "post": []
+        }
+    },
+    "PBEPARAM_free": {
+        "validation": true,
+        "casuality": {
+            "pre": [
+                "PBEPARAM_new"
+            ],
+            "post": []
+        }
+    },
+    "PBKDF2PARAM_new": {
+        "casuality": {
+            "validation": true,
+            "pre": [],
+            "post": [
+                "PBKDF2PARAM_free"
+            ]
+        }
+    },
+    "PEM_bytes_read_bio_secmem": {
+        "casuality": {
+            "validation": true,
+            "pre": [],
+            "post": [
+                "OPENSSL_secure_free"
+            ]
+        }
+    },
+    "PKCS12_free": {
+        "casuality": {
+            "validation": true,
+            "pre": [
+                "PKCS12_new"
+            ],
+            "post": []
+        }
+    },
+    "PKCS12_SAFEBAG_free": {
+        "casuality": {
+            "validation": true,
+            "pre": [
+                "PKCS12_SAFEBAG_new"
+            ],
+            "post": []
+        }
+    },
+    "PKCS7_ENC_CONTENT_free": {
+        "casuality": {
+            "validation": true,
+            "pre": [
+                "PKCS7_ENC_CONTENT_new"
+            ],
+            "post": []
+        }
+    },
+    "PKCS7_SIGNER_INFO_free": {
+        "casuality": {
+            "validation": true,
+            "pre": [
+                "PKCS7_SIGNER_INFO_new"
+            ],
+            "post": []
+        }
+    },
+    "PKCS8_PRIV_KEY_INFO_free": {
+        "casuality": {
+            "validation": true,
+            "pre": [
+                "PKCS8_PRIV_KEY_INFO_new"
+            ],
+            "post": []
+        }
+    },
+    "RSA_PSS_PARAMS_free": {
+        "casuality": {
+            "validation": true,
+            "pre": [
+                "RSA_PSS_PARAMS_new"
+            ],
+            "post": []
+        }
+    },
+    "RSA_PSS_PARAMS_new": {
+        "casuality": {
+            "validation": true,
+            "pre": [],
+            "post": [
+                "RSA_PSS_PARAMS_free"
+            ]
+        }
+    },
+    "SSL_dane_enable": {
+        "casuality": {
+            "validation": true,
+            "pre": [],
+            "post": [
+                "SSL_connect"
+            ]
+        }
+    },
+    "SXNET_free": {
+        "casuality": {
+            "validation": true,
+            "pre": [
+                "SXNET_new"
+            ],
+            "post": []
+        }
+    },
+    "TS_REQ_new": {
+        "casuality": {
+            "validation": true,
+            "pre": [],
+            "post": [
+                "TS_REQ_free"
+            ]
+        }
+    },
+    "UI_new_method": {
+        "casuality": {
+            "validation": true,
+            "pre": [],
+            "post": [
+                "UI_free"
+            ]
+        }
+    },
+    "X509_ATTRIBUTE_free": {
+        "casuality": {
+            "validation": true,
+            "pre": [
+                "X509_ATTRIBUTE_new"
+            ],
+            "post": []
+        }
+    },
+    "X509_CERT_AUX_free": {
+        "casuality": {
+            "validation": true,
+            "pre": [
+                "X509_CERT_AUX_new"
+            ],
+            "post": []
+        }
+    }
+}

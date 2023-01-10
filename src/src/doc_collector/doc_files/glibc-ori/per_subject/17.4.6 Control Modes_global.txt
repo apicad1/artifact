@@ -1,0 +1,4 @@
+This section describes the terminal flags and fields that control parameters usually associated with asynchronous serial data transmission.  These flags may not make sense for other kinds of terminal ports (such as a network connection pseudo-terminal).  All of these are contained in the c_cflag member of the struct termios structure. 
+The c_cflag member itself is an integer, and you change the flags and fields using the operators &, |, and ^.  Don’t try to specify the entire value for c_cflag—instead, change only specific flags and leave the rest untouched (see Setting Modes). 
+The control mode flags also includes a field for the number of bits per character.  You can use the CSIZE macro as a mask to extract the value, like this: settings.c_cflag & CSIZE. 
+The following four bits are BSD extensions; these exist only on BSD systems and GNU/Hurd systems. 

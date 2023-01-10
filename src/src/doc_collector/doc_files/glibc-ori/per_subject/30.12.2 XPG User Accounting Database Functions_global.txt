@@ -1,0 +1,4 @@
+These functions, described in the X/Open Portability Guide, are declared in the header file utmpx.h.  
+The following macros are defined for use as values for the ut_type member of the utmpx structure.  The values are integer constants and are, in the GNU C Library, identical to the definitions in utmp.h. 
+The size of the ut_line, ut_id and ut_user arrays can be found using the sizeof operator. 
+You can translate between a traditional struct utmp and an XPG struct utmpx with the following functions.  In the GNU C Library, these functions are merely copies, since the two structures are identical. 

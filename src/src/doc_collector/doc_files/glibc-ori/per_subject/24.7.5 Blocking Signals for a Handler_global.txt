@@ -1,0 +1,32 @@
+When a signal handler is invoked, you usually want it to be able to finish without being interrupted by another signal.  From the moment the handler starts until the moment it finishes, you must block signals that might confuse it or corrupt its data. 
+When a handler function is invoked on a signal, that signal is automatically blocked (in addition to any other signals that are already in the process’s signal mask) during the time the handler is running. If you set up a handler for SIGTSTP, for instance, then the arrival of that signal forces further SIGTSTP signals to wait during the execution of the handler. 
+However, by default, other kinds of signals are not blocked; they can arrive during handler execution. 
+The reliable way to block other kinds of signals during the execution of the handler is to use the sa_mask member of the sigaction structure. 
+Here is an example: 
+
+EXAMPLE_BEGIN
+#include <signal.h>
+#include <stddef.h>
+
+void catch_stop ();
+
+void
+install_handler (void)
+{
+  struct sigaction setup_action;
+  sigset_t block_mask;
+
+  sigemptyset (&block_mask);
+  /* Block other terminal-generated signals while handler runs. */
+  sigaddset (&block_mask, SIGINT);
+  sigaddset (&block_mask, SIGQUIT);
+  setup_action.sa_handler = catch_stop;
+  setup_action.sa_mask = block_mask;
+  setup_action.sa_flags = 0;
+  sigaction (SIGTSTP, &setup_action, NULL);
+}
+EXAMPLE_END
+
+This is more reliable than blocking the other signals explicitly in the code for the handler.  If you block signals explicitly in the handler, you can’t avoid at least a short interval at the beginning of the handler where they are not yet blocked. 
+You cannot remove signals from the process’s current mask using this mechanism.  However, you can make calls to sigprocmask within your handler to block or unblock signals as you wish. 
+In any case, when the handler returns, the system restores the mask that was in place before the handler was entered.  If any signals that become unblocked by this restoration are pending, the process will receive those signals immediately, before returning to the code that was interrupted. 

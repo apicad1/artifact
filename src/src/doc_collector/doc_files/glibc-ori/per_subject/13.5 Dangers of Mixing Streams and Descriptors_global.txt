@@ -1,0 +1,13 @@
+You can have multiple file descriptors and streams (let’s call both streams and descriptors “channels” for short) connected to the same file, but you must take care to avoid confusion between channels.  There are two cases to consider: linked channels that share a single file position value, and independent channels that have their own file positions. 
+It’s best to use just one channel in your program for actual data transfer to any given file, except when all the access is for input. For example, if you open a pipe (something you can only do at the file descriptor level), either do all I/O with the descriptor, or construct a stream from the descriptor with fdopen and then do all I/O with the stream. 
+
+TABLE_BEGIN
+ • Linked Channels    Dealing with channels sharing a file position.
+
+ • Independent Channels    Dealing with separately opened, unlinked channels.
+
+ • Cleaning Streams    Cleaning a stream makes it safe to use
+                            another channel.
+
+TABLE_END
+

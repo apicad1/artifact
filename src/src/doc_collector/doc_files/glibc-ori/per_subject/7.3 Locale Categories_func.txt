@@ -1,0 +1,46 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- LC_COLLATE  
+This category applies to collation of strings (functions strcoll and strxfrm); see Collation Functions. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- LC_CTYPE  
+This category applies to classification and conversion of characters, and to multibyte and wide characters; see Character Handling, and Character Set Handling. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- LC_MONETARY  
+This category applies to formatting monetary values; see General Numeric. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- LC_NUMERIC  
+This category applies to formatting numeric values that are not monetary; see General Numeric. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- LC_TIME  
+This category applies to formatting date and time values; see Formatting Calendar Time. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- LC_MESSAGES  
+This category applies to selecting the language used in the user interface for message translation (see The Uniforum approach; see Message catalogs a la X/Open)  and contains regular expressions for affirmative and negative responses. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- LC_ALL  
+This is not a category; it is only a macro that you can use with setlocale to set a single locale for all purposes.  Setting this environment variable overwrites all selections by the other LC_* variables or LANG. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- LANG  
+If this environment variable is defined, its value specifies the locale to use for all purposes except as overridden by the variables above. 

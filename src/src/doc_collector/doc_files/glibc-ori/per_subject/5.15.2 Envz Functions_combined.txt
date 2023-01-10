@@ -1,0 +1,46 @@
+Envz vectors are just argz vectors with additional constraints on the form of each element; as such, argz functions can also be used on them, where it makes sense. 
+Each element in an envz vector is a name-value pair, separated by a '=' byte; if multiple '=' bytes are present in an element, those after the first are considered part of the value, and treated like all other non-'\0' bytes. 
+If no '=' bytes are present in an element, that element is considered the name of a “null” entry, as distinct from an entry with an empty value: envz_get will return 0 if given the name of null entry, whereas an entry with an empty value would result in a value of ""; envz_entry will still find such entries, however.  Null entries can be removed with the envz_strip function. 
+As with argz functions, envz functions that may allocate memory (and thus fail) have a return type of error_t, and return either 0 or ENOMEM. 
+These functions are declared in the standard include file envz.h. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: char * envz_entry (const char *envz, size_t envz_len, const char *name)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The envz_entry function finds the entry in envz with the name name, and returns a pointer to the whole entry—that is, the argz element which begins with name followed by a '=' byte.  If there is no entry with that name, 0 is returned. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: char * envz_get (const char *envz, size_t envz_len, const char *name)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The envz_get function finds the entry in envz with the name name (like envz_entry), and returns a pointer to the value portion of that entry (following the '=').  If there is no entry with that name (or only a null entry), 0 is returned. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: error_t envz_add (char **envz, size_t *envz_len, const char *name, const char *value)
+Preliminary: | MT-Safe  | AS-Unsafe heap | AC-Unsafe mem | See POSIX Safety Concepts. 
+The envz_add function adds an entry to *envz (updating *envz and *envz_len) with the name name, and value value.  If an entry with the same name already exists in envz, it is removed first.  If value is 0, then the new entry will be the special null type of entry (mentioned above). 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: error_t envz_merge (char **envz, size_t *envz_len, const char *envz2, size_t envz2_len, int override)
+Preliminary: | MT-Safe  | AS-Unsafe heap | AC-Unsafe mem | See POSIX Safety Concepts. 
+The envz_merge function adds each entry in envz2 to envz, as if with envz_add, updating *envz and *envz_len.  If override is true, then values in envz2 will supersede those with the same name in envz, otherwise not. 
+Null entries are treated just like other entries in this respect, so a null entry in envz can prevent an entry of the same name in envz2 from being added to envz, if override is false. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void envz_strip (char **envz, size_t *envz_len)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The envz_strip function removes any null entries from envz, updating *envz and *envz_len. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void envz_remove (char **envz, size_t *envz_len, const char *name)
+Preliminary: | MT-Safe  | AS-Unsafe heap | AC-Unsafe mem | See POSIX Safety Concepts. 
+The envz_remove function removes an entry named name from envz, updating *envz and *envz_len. 

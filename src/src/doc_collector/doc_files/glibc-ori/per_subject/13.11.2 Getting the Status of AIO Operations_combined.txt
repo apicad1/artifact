@@ -1,0 +1,34 @@
+As already described in the documentation of the functions in the last section, it must be possible to get information about the status of an I/O request.  When the operation is performed truly asynchronously (as with aio_read and aio_write and with lio_listio when the mode is LIO_NOWAIT), one sometimes needs to know whether a specific request already terminated and if so, what the result was. The following two functions allow you to get this kind of information. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int aio_error (const struct aiocb *aiocbp)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function determines the error state of the request described by the struct aiocb variable pointed to by aiocbp.  If the request has not yet terminated the value returned is always EINPROGRESS.  Once the request has terminated the value aio_error returns is either 0 if the request completed successfully or it returns the value which would be stored in the errno variable if the request would have been done using read, write, or fsync. 
+The function can return ENOSYS if it is not implemented.  It could also return EINVAL if the aiocbp parameter does not refer to an asynchronous operation whose return status is not yet known. 
+When the sources are compiled with _FILE_OFFSET_BITS == 64 this function is in fact aio_error64 since the LFS interface transparently replaces the normal implementation. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int aio_error64 (const struct aiocb64 *aiocbp)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function is similar to aio_error with the only difference that the argument is a reference to a variable of type struct aiocb64. 
+When the sources are compiled with _FILE_OFFSET_BITS == 64 this function is available under the name aio_error and so transparently replaces the interface for small files on 32 bit machines. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: ssize_t aio_return (struct aiocb *aiocbp)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function can be used to retrieve the return status of the operation carried out by the request described in the variable pointed to by aiocbp.  As long as the error status of this request as returned by aio_error is EINPROGRESS the return value of this function is undefined. 
+Once the request is finished this function can be used exactly once to retrieve the return value.  Following calls might lead to undefined behavior.  The return value itself is the value which would have been returned by the read, write, or fsync call. 
+The function can return ENOSYS if it is not implemented.  It could also return EINVAL if the aiocbp parameter does not refer to an asynchronous operation whose return status is not yet known. 
+When the sources are compiled with _FILE_OFFSET_BITS == 64 this function is in fact aio_return64 since the LFS interface transparently replaces the normal implementation. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: ssize_t aio_return64 (struct aiocb64 *aiocbp)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function is similar to aio_return with the only difference that the argument is a reference to a variable of type struct aiocb64. 
+When the sources are compiled with _FILE_OFFSET_BITS == 64 this function is available under the name aio_return and so transparently replaces the interface for small files on 32 bit machines. 

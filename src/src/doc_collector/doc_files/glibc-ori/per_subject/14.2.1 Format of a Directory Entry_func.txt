@@ -1,0 +1,15 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: struct dirent
+This is a structure type used to return information about directory entries.  It contains the following fields: 
+	char d_name[]
+This is the null-terminated file name component.  This is the only field you can count on in all POSIX systems.  
+	ino_t d_fileno
+This is the file serial number.  For BSD compatibility, you can also refer to this member as d_ino.  On GNU/Linux and GNU/Hurd systems and most POSIX systems, for most files this the same as the st_ino member that stat will return for the file.  See File Attributes.  
+	unsigned char d_namlen
+This is the length of the file name, not including the terminating null character.  Its type is unsigned char because that is the integer type of the appropriate size.  This member is a BSD extension. The symbol _DIRENT_HAVE_D_NAMLEN is defined if this member is available.  
+	unsigned char d_type
+This is the type of the file, possibly unknown.  The following constants are defined for its value:   DT_UNKNOWN   The type is unknown.  Only some filesystems have full support to return the type of the file, others might always return this value.   DT_REG   A regular file.   DT_DIR   A directory.   DT_FIFO   A named pipe, or FIFO.  See FIFO Special Files.   DT_SOCK   A local-domain socket.    DT_CHR   A character device.   DT_BLK   A block device.   DT_LNK   A symbolic link.    This member is a BSD extension.  The symbol _DIRENT_HAVE_D_TYPE is defined if this member is available.  On systems where it is used, it corresponds to the file type bits in the st_mode member of struct stat.  If the value cannot be determined the member value is DT_UNKNOWN.  These two macros convert between d_type values and st_mode values:   Function: int IFTODT (mode_t mode)  Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts.   This returns the d_type value corresponding to mode.    Function: mode_t DTTOIF (int dtype)  Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts.   This returns the st_mode value corresponding to dtype.  
+This structure may contain additional members in the future.  Their availability is always announced in the compilation environment by a macro named _DIRENT_HAVE_D_xxx where xxx is replaced by the name of the new member.  For instance, the member d_reclen available on some systems is announced through the macro _DIRENT_HAVE_D_RECLEN. 
+When a file has multiple names, each name has its own directory entry. The only way you can tell that the directory entries belong to a single file is that they have the same value for the d_fileno field. 
+File attributes such as size, modification times etc., are part of the file itself, not of any particular directory entry.  See File Attributes. 

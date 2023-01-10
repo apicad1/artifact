@@ -1,0 +1,16 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int fclose (FILE *stream)
+Preliminary: | MT-Safe  | AS-Unsafe heap lock | AC-Unsafe lock mem fd | See POSIX Safety Concepts. 
+This function causes stream to be closed and the connection to the corresponding file to be broken.  Any buffered output is written and any buffered input is discarded.  The fclose function returns a value of 0 if the file was closed successfully, and EOF if an error was detected. 
+It is important to check for errors when you call fclose to close an output stream, because real, everyday errors can be detected at this time.  For example, when fclose writes the remaining buffered output, it might get an error because the disk is full.  Even if you know the buffer is empty, errors can still occur when closing a file if you are using NFS. 
+The function fclose is declared in stdio.h. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int fcloseall (void)
+Preliminary: | MT-Unsafe race:streams | AS-Unsafe  | AC-Safe  | See POSIX Safety Concepts. 
+This function causes all open streams of the process to be closed and the connections to corresponding files to be broken.  All buffered data is written and any buffered input is discarded.  The fcloseall function returns a value of 0 if all the files were closed successfully, and EOF if an error was detected. 
+This function should be used only in special situations, e.g., when an error occurred and the program must be aborted.  Normally each single stream should be closed separately so that problems with individual streams can be identified.  It is also problematic since the standard streams (see Standard Streams) will also be closed. 
+The function fcloseall is declared in stdio.h. 

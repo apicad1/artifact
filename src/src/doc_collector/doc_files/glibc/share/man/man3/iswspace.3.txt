@@ -1,0 +1,49 @@
+ISWSPACE(3)                                     Linux Programmer's Manual                                    ISWSPACE(3)
+
+NAME
+       iswspace - test for whitespace wide character
+
+SYNOPSIS
+       #include <wctype.h>
+
+       int iswspace(wint_t wc);
+
+DESCRIPTION
+       The  iswspace()  function  is the wide-character equivalent of the isspace(3) function.  It tests whether wc is a
+       wide character belonging to the wide-character class "space".
+
+       The wide-character class "space" is disjoint from the wide-character class "graph" and  therefore  also  disjoint
+       from its subclasses "alnum", "alpha", "upper", "lower", "digit", "xdigit", "punct".
+
+       The wide-character class "space" contains the wide-character class "blank".
+
+       The  wide-character  class  "space" always contains at least the space character and the control characters '\f',
+       '\n', '\r', '\t', '\v'.
+
+RETURN VALUE
+       The iswspace() function returns nonzero if wc is a wide character belonging to the wide-character class  "space".
+       Otherwise, it returns zero.
+
+ATTRIBUTES
+       For an explanation of the terms used in this section, see attributes(7).
+
+       ┌───────────────────────────────────────────────────────────────────────────────┬───────────────┬────────────────┐
+       │Interface                                                                      │ Attribute     │ Value          │
+       ├───────────────────────────────────────────────────────────────────────────────┼───────────────┼────────────────┤
+       │iswspace()                                                                     │ Thread safety │ MT-Safe locale │
+       └───────────────────────────────────────────────────────────────────────────────┴───────────────┴────────────────┘
+
+CONFORMING TO
+       POSIX.1-2001, POSIX.1-2008, C99.
+
+NOTES
+       The behavior of iswspace() depends on the LC_CTYPE category of the current locale.
+
+SEE ALSO
+       isspace(3), iswctype(3)
+
+COLOPHON
+       This  page  is  part  of  release 5.13 of the Linux man-pages project.  A description of the project, information
+       about reporting bugs, and the latest version of this page, can be found at https://www.kernel.org/doc/man-pages/.
+
+GNU                                                    2021-03-22                                            ISWSPACE(3)

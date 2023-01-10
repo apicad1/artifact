@@ -1,0 +1,44 @@
+POSIX defines certain system-specific options that not all POSIX systems support.  Since these options are provided in the kernel, not in the library, simply using the GNU C Library does not guarantee any of these features are supported; it depends on the system you are using. 
+You can test for the availability of a given option using the macros in this section, together with the function sysconf.  The macros are defined only if you include unistd.h. 
+For the following macros, if the macro is defined in unistd.h, then the option is supported.  Otherwise, the option may or may not be supported; use sysconf to find out.  See Sysconf. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int _POSIX_JOB_CONTROL
+If this symbol is defined, it indicates that the system supports job control.  Otherwise, the implementation behaves as if all processes within a session belong to a single process group.  See Job Control. Systems conforming to the 2001 revision of POSIX, or newer, will always define this symbol. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int _POSIX_SAVED_IDS
+If this symbol is defined, it indicates that the system remembers the effective user and group IDs of a process before it executes an executable file with the set-user-ID or set-group-ID bits set, and that explicitly changing the effective user or group IDs back to these values is permitted.  If this option is not defined, then if a nonprivileged process changes its effective user or group ID to the real user or group ID of the process, it can’t change it back again.  See Enable/Disable Setuid. 
+<<<<<<<<<<<<<<<<<<<<
+
+For the following macros, if the macro is defined in unistd.h, then its value indicates whether the option is supported.  A value of -1 means no, and any other value means yes.  If the macro is not defined, then the option may or may not be supported; use sysconf to find out.  See Sysconf. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int _POSIX2_C_DEV
+If this symbol is defined, it indicates that the system has the POSIX.2 C compiler command, c89.  The GNU C Library always defines this as 1, on the assumption that you would not have installed it if you didn’t have a C compiler. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int _POSIX2_FORT_DEV
+If this symbol is defined, it indicates that the system has the POSIX.2 Fortran compiler command, fort77.  The GNU C Library never defines this, because we don’t know what the system has. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int _POSIX2_FORT_RUN
+If this symbol is defined, it indicates that the system has the POSIX.2 asa command to interpret Fortran carriage control.  The GNU C Library never defines this, because we don’t know what the system has. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int _POSIX2_LOCALEDEF
+If this symbol is defined, it indicates that the system has the POSIX.2 localedef command.  The GNU C Library never defines this, because we don’t know what the system has. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int _POSIX2_SW_DEV
+If this symbol is defined, it indicates that the system has the POSIX.2 commands ar, make, and strip.  The GNU C Library always defines this as 1, on the assumption that you had to have ar and make to install the library, and it’s unlikely that strip would be absent when those are present. 

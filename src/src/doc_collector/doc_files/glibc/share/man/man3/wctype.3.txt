@@ -1,0 +1,58 @@
+WCTYPE(3)                                       Linux Programmer's Manual                                      WCTYPE(3)
+
+NAME
+       wctype - wide-character classification
+
+SYNOPSIS
+       #include <wctype.h>
+
+       wctype_t wctype(const char *name);
+
+DESCRIPTION
+       The  wctype_t  type  represents a property which a wide character may or may not have.  In other words, it repre‐
+       sents a class of wide characters.  This type's nature is implementation-dependent, but  the  special  value  (wc‐
+       type_t)  0 denotes an invalid property.  Nonzero wctype_t values can be passed to the iswctype(3) function to ac‐
+       tually test whether a given wide character has the property.
+
+       The wctype() function returns a property, given by its name.  The set of valid names depends on the LC_CTYPE cat‐
+       egory of the current locale, but the following names are valid in all locales.
+
+           "alnum" - realizes the isalnum(3) classification function
+           "alpha" - realizes the isalpha(3) classification function
+           "blank" - realizes the isblank(3) classification function
+           "cntrl" - realizes the iscntrl(3) classification function
+           "digit" - realizes the isdigit(3) classification function
+           "graph" - realizes the isgraph(3) classification function
+           "lower" - realizes the islower(3) classification function
+           "print" - realizes the isprint(3) classification function
+           "punct" - realizes the ispunct(3) classification function
+           "space" - realizes the isspace(3) classification function
+           "upper" - realizes the isupper(3) classification function
+           "xdigit" - realizes the isxdigit(3) classification function
+
+RETURN VALUE
+       The wctype() function returns a property descriptor if the name is valid.  Otherwise, it returns (wctype_t) 0.
+
+ATTRIBUTES
+       For an explanation of the terms used in this section, see attributes(7).
+
+       ┌───────────────────────────────────────────────────────────────────────────────┬───────────────┬────────────────┐
+       │Interface                                                                      │ Attribute     │ Value          │
+       ├───────────────────────────────────────────────────────────────────────────────┼───────────────┼────────────────┤
+       │wctype()                                                                       │ Thread safety │ MT-Safe locale │
+       └───────────────────────────────────────────────────────────────────────────────┴───────────────┴────────────────┘
+
+CONFORMING TO
+       POSIX.1-2001, POSIX.1-2008, C99.
+
+NOTES
+       The behavior of wctype() depends on the LC_CTYPE category of the current locale.
+
+SEE ALSO
+       iswctype(3)
+
+COLOPHON
+       This  page  is  part  of  release 5.13 of the Linux man-pages project.  A description of the project, information
+       about reporting bugs, and the latest version of this page, can be found at https://www.kernel.org/doc/man-pages/.
+
+GNU                                                    2021-03-22                                              WCTYPE(3)

@@ -1,0 +1,136 @@
+In some locales, the conventions for lexicographic ordering differ from the strict numeric ordering of character codes.  For example, in Spanish most glyphs with diacritical marks such as accents are not considered distinct letters for the purposes of collation.  On the other hand, in Czech the two-character sequence ‘ch’ is treated as a single letter that is collated between ‘h’ and ‘i’. 
+You can use the functions strcoll and strxfrm (declared in the headers file string.h) and wcscoll and wcsxfrm (declared in the headers file wchar) to compare strings using a collation ordering appropriate for the current locale.  The locale used by these functions in particular can be specified by setting the locale for the LC_COLLATE category; see Locales.   
+In the standard C locale, the collation sequence for strcoll is the same as that for strcmp.  Similarly, wcscoll and wcscmp are the same in this situation. 
+Effectively, the way these functions work is by applying a mapping to transform the characters in a multibyte string to a byte sequence that represents the string’s position in the collating sequence of the current locale. Comparing two such byte sequences in a simple fashion is equivalent to comparing the strings with the locale’s collating sequence. 
+The functions strcoll and wcscoll perform this translation implicitly, in order to do one comparison.  By contrast, strxfrm and wcsxfrm perform the mapping explicitly.  If you are making multiple comparisons using the same string or set of strings, it is likely to be more efficient to use strxfrm or wcsxfrm to transform all the strings just once, and subsequently compare the transformed strings with strcmp or wcscmp. 
+Here is an example of sorting an array of strings, using strcoll to compare them.  The actual sort algorithm is not written here; it comes from qsort (see Array Sort Function).  The job of the code shown here is to say how to compare the strings while sorting them. (Later on in this section, we will show a way to do this more efficiently using strxfrm.) 
+
+EXAMPLE_BEGIN
+/* This is the comparison function used with qsort. */
+
+int
+compare_elements (const void *v1, const void *v2)
+{
+  char * const *p1 = v1;
+  char * const *p2 = v2;
+
+  return strcoll (*p1, *p2);
+}
+
+/* This is the entry point—the function to sort
+   strings using the locale’s collating sequence. */
+
+void
+sort_strings (char **array, int nstrings)
+{
+  /* Sort temp_array by comparing the strings. */
+  qsort (array, nstrings,
+         sizeof (char *), compare_elements);
+}
+EXAMPLE_END
+
+Here is an example of how you can use strxfrm when you plan to do many comparisons.  It does the same thing as the previous example, but much faster, because it has to transform each string only once, no matter how many times it is compared with other strings.  Even the time needed to allocate and free storage is much less than the time we save, when there are many strings. 
+
+EXAMPLE_BEGIN
+struct sorter { char *input; char *transformed; };
+
+/* This is the comparison function used with qsort
+   to sort an array of struct sorter. */
+
+int
+compare_elements (const void *v1, const void *v2)
+{
+  const struct sorter *p1 = v1;
+  const struct sorter *p2 = v2;
+
+  return strcmp (p1->transformed, p2->transformed);
+}
+
+/* This is the entry point—the function to sort
+   strings using the locale’s collating sequence. */
+
+void
+sort_strings_fast (char **array, int nstrings)
+{
+  struct sorter temp_array[nstrings];
+  int i;
+
+  /* Set up temp_array.  Each element contains
+     one input string and its transformed string. */
+  for (i = 0; i < nstrings; i++)
+    {
+      size_t length = strlen (array[i]) * 2;
+      char *transformed;
+      size_t transformed_length;
+
+      temp_array[i].input = array[i];
+
+      /* First try a buffer perhaps big enough.  */
+      transformed = (char *) xmalloc (length);
+
+      /* Transform array[i].  */
+      transformed_length = strxfrm (transformed, array[i], length);
+
+      /* If the buffer was not large enough, resize it
+         and try again.  */
+      if (transformed_length >= length)
+        {
+          /* Allocate the needed space. +1 for terminating
+             '\0' byte.  */
+          transformed = xrealloc (transformed,
+                                  transformed_length + 1);
+
+          /* The return value is not interesting because we know
+             how long the transformed string is.  */
+          (void) strxfrm (transformed, array[i],
+                          transformed_length + 1);
+        }
+
+      temp_array[i].transformed = transformed;
+    }
+
+  /* Sort temp_array by comparing transformed strings. */
+  qsort (temp_array, nstrings,
+         sizeof (struct sorter), compare_elements);
+
+  /* Put the elements back in the permanent array
+     in their sorted order. */
+  for (i = 0; i < nstrings; i++)
+    array[i] = temp_array[i].input;
+
+  /* Free the strings we allocated. */
+  for (i = 0; i < nstrings; i++)
+    free (temp_array[i].transformed);
+}
+EXAMPLE_END
+
+The interesting part of this code for the wide character version would look like this: 
+
+EXAMPLE_BEGIN
+void
+sort_strings_fast (wchar_t **array, int nstrings)
+{
+  …
+      /* Transform array[i].  */
+      transformed_length = wcsxfrm (transformed, array[i], length);
+
+      /* If the buffer was not large enough, resize it
+         and try again.  */
+      if (transformed_length >= length)
+        {
+          /* Allocate the needed space. +1 for terminating
+             L'\0' wide character.  */
+          transformed = xreallocarray (transformed,
+                                       transformed_length + 1,
+                                       sizeof *transformed);
+
+          /* The return value is not interesting because we know
+             how long the transformed string is.  */
+          (void) wcsxfrm (transformed, array[i],
+                          transformed_length + 1);
+        }
+  …
+EXAMPLE_END
+
+Note the additional multiplication with sizeof (wchar_t) in the realloc call. 
+Compatibility Note: The string collation functions are a new feature of ISO C90.  Older C dialects have no equivalent feature. The wide character versions were introduced in Amendment 1 to ISO C90. 

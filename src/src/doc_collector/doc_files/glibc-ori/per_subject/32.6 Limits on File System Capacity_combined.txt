@@ -1,0 +1,54 @@
+The POSIX.1 standard specifies a number of parameters that describe the limitations of the file system.  It’s possible for the system to have a fixed, uniform limit for a parameter, but this isn’t the usual case.  On most systems, it’s possible for different file systems (and, for some parameters, even different files) to have different maximum limits.  For example, this is very likely if you use NFS to mount some of the file systems from other machines. 
+Each of the following macros is defined in limits.h only if the system has a fixed, uniform limit for the parameter in question.  If the system allows different file systems or files to have different limits, then the macro is undefined; use pathconf or fpathconf to find out the limit that applies to a particular file.  See Pathconf. 
+Each parameter also has another macro, with a name starting with ‘_POSIX’, which gives the lowest value that the limit is allowed to have on any POSIX system.  See File Minimums. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int LINK_MAX
+The uniform system limit (if any) for the number of names for a given file.  See Hard Links. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int MAX_CANON
+The uniform system limit (if any) for the amount of text in a line of input when input editing is enabled.  See Canonical or Not. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int MAX_INPUT
+The uniform system limit (if any) for the total number of characters typed ahead as input.  See I/O Queues. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int NAME_MAX
+The uniform system limit (if any) for the length of a file name component, not including the terminating null character. 
+Portability Note: On some systems, the GNU C Library defines NAME_MAX, but does not actually enforce this limit. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int PATH_MAX
+The uniform system limit (if any) for the length of an entire file name (that is, the argument given to system calls such as open), including the terminating null character. 
+Portability Note: The GNU C Library does not enforce this limit even if PATH_MAX is defined. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int PIPE_BUF
+The uniform system limit (if any) for the number of bytes that can be written atomically to a pipe.  If multiple processes are writing to the same pipe simultaneously, output from different processes might be interleaved in chunks of this size.  See Pipes and FIFOs. 
+<<<<<<<<<<<<<<<<<<<<
+
+These are alternative macro names for some of the same information. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int MAXNAMLEN
+This is the BSD name for NAME_MAX.  It is defined in dirent.h. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int FILENAME_MAX
+The value of this macro is an integer constant expression that represents the maximum length of a file name string.  It is defined in stdio.h. 
+Unlike PATH_MAX, this macro is defined even if there is no actual limit imposed.  In such a case, its value is typically a very large number.  This is always the case on GNU/Hurd systems. 
+Usage Note: Don’t use FILENAME_MAX as the size of an array in which to store a file name!  You can’t possibly make an array that big!  Use dynamic allocation (see Memory Allocation) instead. 

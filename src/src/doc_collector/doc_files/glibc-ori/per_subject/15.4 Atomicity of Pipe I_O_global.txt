@@ -1,0 +1,3 @@
+Reading or writing pipe data is atomic if the size of data written is not greater than PIPE_BUF.  This means that the data transfer seems to be an instantaneous unit, in that nothing else in the system can observe a state in which it is partially complete.  Atomic I/O may not begin right away (it may need to wait for buffer space or for data), but once it does begin it finishes immediately. 
+Reading or writing a larger amount of data may not be atomic; for example, output data from other processes sharing the descriptor may be interspersed.  Also, once PIPE_BUF characters have been written, further writes will block until some characters are read. 
+See Limits for Files, for information about the PIPE_BUF parameter. 

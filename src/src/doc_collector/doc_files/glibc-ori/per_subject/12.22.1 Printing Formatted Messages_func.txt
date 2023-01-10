@@ -1,0 +1,101 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- MM_PRINT  
+Display the message in standard error. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- MM_CONSOLE  
+Display the message on the system console. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- MM_HARD  
+The source of the condition is some hardware. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- MM_SOFT  
+The source of the condition is some software. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- MM_FIRM  
+The source of the condition is some firmware. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- MM_APPL  
+The erroneous condition is detected by the application. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- MM_UTIL  
+The erroneous condition is detected by a utility. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- MM_OPSYS  
+The erroneous condition is detected by the operating system. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- MM_RECOVER  
+It is a recoverable error. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- MM_NRECOV  
+It is a non-recoverable error. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int fmtmsg (long int classification, const char *label, int severity, const char *text, const char *action, const char *tag)
+Preliminary: | MT-Safe  | AS-Unsafe lock | AC-Safe  | See POSIX Safety Concepts. 
+Display a message described by its parameters on the device(s) specified in the classification parameter.  The label parameter identifies the source of the message.  The string should consist of two colon separated parts where the first part has not more than 10 and the second part not more than 14 characters.  The text parameter describes the condition of the error, the action parameter possible steps to recover from the error and the tag parameter is a reference to the online documentation where more information can be found.  It should contain the label value and a unique identification number. 
+Each of the parameters can be a special value which means this value is to be omitted.  The symbolic names for these values are: 
+	MM_NULLLBL  
+Ignore label parameter. 
+	MM_NULLSEV  
+Ignore severity parameter. 
+	MM_NULLMC  
+Ignore classification parameter.  This implies that nothing is actually printed. 
+	MM_NULLTXT  
+Ignore text parameter. 
+	MM_NULLACT  
+Ignore action parameter. 
+	MM_NULLTAG  
+Ignore tag parameter. 
+There is another way certain fields can be omitted from the output to standard error.  This is described below in the description of environment variables influencing the behavior. 
+The severity parameter can have one of the values in the following table:  
+	MM_NOSEV  
+Nothing is printed, this value is the same as MM_NULLSEV. 
+	MM_HALT  
+This value is printed as HALT. 
+	MM_ERROR  
+This value is printed as ERROR. 
+	MM_WARNING  
+This value is printed as WARNING. 
+	MM_INFO  
+This value is printed as INFO. 
+The numeric value of these five macros are between 0 and 4.  Using the environment variable SEV_LEVEL or using the addseverity function one can add more severity levels with their corresponding string to print.  This is described below (see Adding Severity Classes). 
+If no parameter is ignored the output looks like this: 
+
+EXAMPLE_BEGIN
+label: severity-string: text
+TO FIX: action tag
+EXAMPLE_END
+
+The colons, new line characters and the TO FIX string are inserted if necessary, i.e., if the corresponding parameter is not ignored. 
+This function is specified in the X/Open Portability Guide.  It is also available on all systems derived from System V. 
+The function returns the value MM_OK if no error occurred.  If only the printing to standard error failed, it returns MM_NOMSG. If printing to the console fails, it returns MM_NOCON.  If nothing is printed MM_NOTOK is returned.  Among situations where all outputs fail this last value is also returned if a parameter value is incorrect. 

@@ -1,0 +1,57 @@
+This section describes miscellaneous conversions for printf. 
+The ‘%c’ conversion prints a single character.  In case there is no ‘l’ modifier the int argument is first converted to an unsigned char.  Then, if used in a wide stream function, the character is converted into the corresponding wide character.  The ‘-’ flag can be used to specify left-justification in the field, but no other flags are defined, and no precision or type modifier can be given.  For example: 
+
+EXAMPLE_BEGIN
+printf ("%c%c%c%c%c", 'h', 'e', 'l', 'l', 'o');
+EXAMPLE_END
+
+prints ‘hello’. 
+If there is an ‘l’ modifier present the argument is expected to be of type wint_t.  If used in a multibyte function the wide character is converted into a multibyte character before being added to the output.  In this case more than one output byte can be produced. 
+The ‘%s’ conversion prints a string.  If no ‘l’ modifier is present the corresponding argument must be of type char * (or const char *).  If used in a wide stream function the string is first converted to a wide character string.  A precision can be specified to indicate the maximum number of characters to write; otherwise characters in the string up to but not including the terminating null character are written to the output stream.  The ‘-’ flag can be used to specify left-justification in the field, but no other flags or type modifiers are defined for this conversion. For example: 
+
+EXAMPLE_BEGIN
+printf ("%3s%-6s", "no", "where");
+EXAMPLE_END
+
+prints ‘ nowhere ’. 
+If there is an ‘l’ modifier present, the argument is expected to be of type wchar_t (or const wchar_t *). 
+If you accidentally pass a null pointer as the argument for a ‘%s’ conversion, the GNU C Library prints it as ‘(null)’.  We think this is more useful than crashing.  But it’s not good practice to pass a null argument intentionally. 
+The ‘%m’ conversion prints the string corresponding to the error code in errno.  See Error Messages.  Thus: 
+
+EXAMPLE_BEGIN
+fprintf (stderr, "can't open `%s': %m\n", filename);
+EXAMPLE_END
+
+is equivalent to: 
+
+EXAMPLE_BEGIN
+fprintf (stderr, "can't open `%s': %s\n", filename, strerror (errno));
+EXAMPLE_END
+
+The ‘%m’ conversion is a GNU C Library extension. 
+The ‘%p’ conversion prints a pointer value.  The corresponding argument must be of type void *.  In practice, you can use any type of pointer. 
+In the GNU C Library, non-null pointers are printed as unsigned integers, as if a ‘%#x’ conversion were used.  Null pointers print as ‘(nil)’.  (Pointers might print differently in other systems.) 
+For example: 
+
+EXAMPLE_BEGIN
+printf ("%p", "testing");
+EXAMPLE_END
+
+prints ‘0x’ followed by a hexadecimal number—the address of the string constant "testing".  It does not print the word ‘testing’. 
+You can supply the ‘-’ flag with the ‘%p’ conversion to specify left-justification, but no other flags, precision, or type modifiers are defined. 
+The ‘%n’ conversion is unlike any of the other output conversions. It uses an argument which must be a pointer to an int, but instead of printing anything it stores the number of characters printed so far by this call at that location.  The ‘h’ and ‘l’ type modifiers are permitted to specify that the argument is of type short int * or long int * instead of int *, but no flags, field width, or precision are permitted. 
+For example, 
+
+EXAMPLE_BEGIN
+int nchar;
+printf ("%d %s%n\n", 3, "bears", &nchar);
+EXAMPLE_END
+
+prints: 
+
+EXAMPLE_BEGIN
+3 bears
+EXAMPLE_END
+
+and sets nchar to 7, because ‘3 bears’ is seven characters. 
+The ‘%%’ conversion prints a literal ‘%’ character.  This conversion doesn’t use an argument, and no flags, field width, precision, or type modifiers are permitted. 

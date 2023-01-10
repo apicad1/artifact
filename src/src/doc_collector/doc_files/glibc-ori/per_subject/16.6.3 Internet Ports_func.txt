@@ -1,0 +1,10 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int IPPORT_RESERVED
+Port numbers less than IPPORT_RESERVED are reserved for superuser use. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int IPPORT_USERRESERVED
+Port numbers greater than or equal to IPPORT_USERRESERVED are reserved for explicit use; they will never be allocated automatically. 

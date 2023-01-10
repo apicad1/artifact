@@ -1,0 +1,41 @@
+The first note is probably not astonishing but still occasionally a cause of problems.  The iswXXX functions can be implemented using macros and in fact, the GNU C Library does this.  They are still available as real functions but when the wctype.h header is included the macros will be used.  This is the same as the char type versions of these functions. 
+The second note covers something new.  It can be best illustrated by a (real-world) example.  The first piece of code is an excerpt from the original code.  It is truncated a bit but the intention should be clear. 
+
+EXAMPLE_BEGIN
+int
+is_in_class (int c, const char *class)
+{
+  if (strcmp (class, "alnum") == 0)
+    return isalnum (c);
+  if (strcmp (class, "alpha") == 0)
+    return isalpha (c);
+  if (strcmp (class, "cntrl") == 0)
+    return iscntrl (c);
+  …
+  return 0;
+}
+EXAMPLE_END
+
+Now, with the wctype and iswctype you can avoid the if cascades, but rewriting the code as follows is wrong: 
+
+EXAMPLE_BEGIN
+int
+is_in_class (int c, const char *class)
+{
+  wctype_t desc = wctype (class);
+  return desc ? iswctype ((wint_t) c, desc) : 0;
+}
+EXAMPLE_END
+
+The problem is that it is not guaranteed that the wide character representation of a single-byte character can be found using casting. In fact, usually this fails miserably.  The correct solution to this problem is to write the code as follows: 
+
+EXAMPLE_BEGIN
+int
+is_in_class (int c, const char *class)
+{
+  wctype_t desc = wctype (class);
+  return desc ? iswctype (btowc (c), desc) : 0;
+}
+EXAMPLE_END
+
+See Converting a Character, for more information on btowc. Note that this change probably does not improve the performance of the program a lot since the wctype function still has to make the string comparisons.  It gets really interesting if the is_in_class function is called more than once for the same class name.  In this case the variable desc could be computed once and reused for all the calls.  Therefore the above form of the function is probably not the final one. 

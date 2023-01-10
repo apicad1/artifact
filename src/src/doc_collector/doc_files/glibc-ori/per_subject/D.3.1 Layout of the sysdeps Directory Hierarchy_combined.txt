@@ -1,0 +1,75 @@
+A GNU configuration name has three parts: the CPU type, the manufacturer’s name, and the operating system.  configure uses these to pick the list of system-dependent directories to look for.  If the ‘--nfp’ option is not passed to configure, the directory machine/fpu is also used.  The operating system often has a base operating system; for example, if the operating system is ‘Linux’, the base operating system is ‘unix/sysv’. The algorithm used to pick the list of directories is simple: configure makes a list of the base operating system, manufacturer, CPU type, and operating system, in that order.  It then concatenates all these together with slashes in between, to produce a directory name; for example, the configuration ‘i686-linux-gnu’ results in unix/sysv/linux/i386/i686.  configure then tries removing each element of the list in turn, so unix/sysv/linux and unix/sysv are also tried, among others. Since the precise version number of the operating system is often not important, and it would be very inconvenient, for example, to have identical irix6.2 and irix6.3 directories, configure tries successively less specific operating system names by removing trailing suffixes starting with a period. 
+As an example, here is the complete list of directories that would be tried for the configuration ‘i686-linux-gnu’: 
+
+EXAMPLE_BEGIN
+sysdeps/i386/elf
+sysdeps/unix/sysv/linux/i386
+sysdeps/unix/sysv/linux
+sysdeps/gnu
+sysdeps/unix/common
+sysdeps/unix/mman
+sysdeps/unix/inet
+sysdeps/unix/sysv/i386/i686
+sysdeps/unix/sysv/i386
+sysdeps/unix/sysv
+sysdeps/unix/i386
+sysdeps/unix
+sysdeps/posix
+sysdeps/i386/i686
+sysdeps/i386/i486
+sysdeps/libm-i387/i686
+sysdeps/i386/fpu
+sysdeps/libm-i387
+sysdeps/i386
+sysdeps/wordsize-32
+sysdeps/ieee754
+sysdeps/libm-ieee754
+sysdeps/generic
+EXAMPLE_END
+
+Different machine architectures are conventionally subdirectories at the top level of the sysdeps directory tree.  For example, sysdeps/sparc and sysdeps/m68k.  These contain files specific to those machine architectures, but not specific to any particular operating system.  There might be subdirectories for specializations of those architectures, such as sysdeps/m68k/68020.  Code which is specific to the floating-point coprocessor used with a particular machine should go in sysdeps/machine/fpu. 
+There are a few directories at the top level of the sysdeps hierarchy that are not for particular machine architectures. 
+
+>>>>>>>>>>>>>>>>>>>>
+- generic
+As described above (see Porting), this is the subdirectory that every configuration implicitly uses after all others. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ieee754
+This directory is for code using the IEEE 754 floating-point format, where the C type float is IEEE 754 single-precision format, and double is IEEE 754 double-precision format.  Usually this directory is referred to in the Implies file in a machine architecture-specific directory, such as m68k/Implies. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- libm-ieee754
+This directory contains an implementation of a mathematical library usable on platforms which use IEEE 754 conformant floating-point arithmetic. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- libm-i387
+This is a special case.  Ideally the code should be in sysdeps/i386/fpu but for various reasons it is kept aside. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- posix
+This directory contains implementations of things in the library in terms of POSIX.1 functions.  This includes some of the POSIX.1 functions themselves.  Of course, POSIX.1 cannot be completely implemented in terms of itself, so a configuration using just posix cannot be complete. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- unix
+This is the directory for Unix-like things.  See Porting to Unix. unix implies posix.  There are some special-purpose subdirectories of unix: 
+	unix/common
+This directory is for things common to both BSD and System V release 4. Both unix/bsd and unix/sysv/sysv4 imply unix/common.  
+	unix/inet
+This directory is for socket and related functions on Unix systems. unix/inet/Subdirs enables the inet top-level subdirectory. unix/common implies unix/inet. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- mach
+This is the directory for things based on the Mach microkernel from CMU (including GNU/Hurd systems).  Other basic operating systems (VMS, for example) would have their own directories at the top level of the sysdeps hierarchy, parallel to unix and mach. 

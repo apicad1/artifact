@@ -1,0 +1,8 @@
+You can specify limits for the resource usage of a process.  When the process tries to exceed a limit, it may get a signal, or the system call by which it tried to do so may fail, depending on the resource.  Each process initially inherits its limit values from its parent, but it can subsequently change them. 
+There are two per-process limits associated with a resource:  
+The symbols for use with getrlimit, setrlimit, getrlimit64, and setrlimit64 are defined in sys/resource.h. 
+For the LFS functions a similar type is defined in sys/resource.h. 
+Here is a list of resources for which you can specify a limit.  Memory and file sizes are measured in bytes. 
+The following are historical functions to do some of what the functions above do.  The functions above are better choices. 
+ulimit and the command symbols are declared in ulimit.h.  
+vlimit and its resource symbols are declared in sys/vlimit.h.  

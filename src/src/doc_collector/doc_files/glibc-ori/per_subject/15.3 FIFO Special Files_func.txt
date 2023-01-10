@@ -1,0 +1,12 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int mkfifo (const char *filename, mode_t mode)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The mkfifo function makes a FIFO special file with name filename.  The mode argument is used to set the file’s permissions; see Setting Permissions. 
+The normal, successful return value from mkfifo is 0.  In the case of an error, -1 is returned.  In addition to the usual file name errors (see File Name Errors), the following errno error conditions are defined for this function: 
+	EEXIST
+The named file already exists.  
+	ENOSPC
+The directory or file system cannot be extended.  
+	EROFS
+The directory that would contain the file resides on a read-only file system. 

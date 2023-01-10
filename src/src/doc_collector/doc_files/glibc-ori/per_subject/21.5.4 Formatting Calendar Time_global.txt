@@ -1,0 +1,1 @@
+The functions described in this section format calendar time values as strings.  These functions are declared in the header file time.h.  

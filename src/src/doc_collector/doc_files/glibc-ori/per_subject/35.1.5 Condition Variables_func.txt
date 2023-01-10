@@ -1,0 +1,50 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: cnd_t
+The cnd_t uniquely identifies a condition variable object. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int cnd_init (cnd_t *cond)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+cnd_init initializes a new condition variable, identified by cond. 
+This function may return thrd_success, thrd_nomem, or thrd_error. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int cnd_signal (cnd_t *cond)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+cnd_signal unblocks one thread that is currently waiting on the condition variable pointed to by cond.  If a thread is successfully unblocked, this function returns thrd_success.  If no threads are blocked, this function does nothing and returns thrd_success.  Otherwise, this function returns thrd_error. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int cnd_broadcast (cnd_t *cond)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+cnd_broadcast unblocks all the threads that are currently waiting on the condition variable pointed to by cond.  This function returns thrd_success on success.  If no threads are blocked, this function does nothing and returns thrd_success. Otherwise, this function returns thrd_error. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int cnd_wait (cnd_t *cond, mtx_t *mutex)
+Preliminary: | MT-Safe  | AS-Unsafe lock | AC-Unsafe lock | See POSIX Safety Concepts. 
+cnd_wait atomically unlocks the mutex pointed to by mutex and blocks on the condition variable pointed to by cond until the thread is signaled by cnd_signal or cnd_broadcast. The mutex is locked again before the function returns. 
+This function returns either thrd_success or thrd_error. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int cnd_timedwait (cnd_t *restrict cond, mtx_t *restrict mutex, const struct timespec *restrict time_point)
+Preliminary: | MT-Safe  | AS-Unsafe lock | AC-Unsafe lock | See POSIX Safety Concepts. 
+cnd_timedwait atomically unlocks the mutex pointed to by mutex and blocks on the condition variable pointed to by cond until the thread is signaled by cnd_signal or cnd_broadcast, or until the calendar time pointed to by time_point has been reached.  The mutex is locked again before the function returns. 
+As for mtx_timedlock, since this function takes an absolute time, if a duration is required, the calendar time must be calculated manually.  See Time Basics, and Calendar Time. 
+This function may return thrd_success, thrd_nomem, or thrd_error. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void cnd_destroy (cnd_t *cond)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+cnd_destroy destroys the condition variable pointed to by cond.  If there are threads waiting on cond, the behavior is undefined. 

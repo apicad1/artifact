@@ -1,0 +1,43 @@
+INDEX(3)                                        Linux Programmer's Manual                                       INDEX(3)
+
+NAME
+       index, rindex - locate character in string
+
+SYNOPSIS
+       #include <strings.h>
+
+       char *index(const char *s, int c);
+
+       char *rindex(const char *s, int c);
+
+DESCRIPTION
+       The index() function returns a pointer to the first occurrence of the character c in the string s.
+
+       The rindex() function returns a pointer to the last occurrence of the character c in the string s.
+
+       The terminating null byte ('\0') is considered to be a part of the strings.
+
+RETURN VALUE
+       The  index()  and  rindex()  functions  return a pointer to the matched character or NULL if the character is not
+       found.
+
+ATTRIBUTES
+       For an explanation of the terms used in this section, see attributes(7).
+
+       ┌──────────────────┬───────────────┬─────────┐
+       │Interface         │ Attribute     │ Value   │
+       ├──────────────────┼───────────────┼─────────┤
+       │index(), rindex() │ Thread safety │ MT-Safe │
+       └──────────────────┴───────────────┴─────────┘
+CONFORMING TO
+       4.3BSD; marked as LEGACY in POSIX.1-2001.  POSIX.1-2008 removes the specifications of index() and rindex(),  rec‐
+       ommending strchr(3) and strrchr(3) instead.
+
+SEE ALSO
+       memchr(3), strchr(3), string(3), strpbrk(3), strrchr(3), strsep(3), strspn(3), strstr(3), strtok(3)
+
+COLOPHON
+       This  page  is  part  of  release 5.05 of the Linux man-pages project.  A description of the project, information
+       about reporting bugs, and the latest version of this page, can be found at https://www.kernel.org/doc/man-pages/.
+
+GNU                                                    2019-03-06                                               INDEX(3)

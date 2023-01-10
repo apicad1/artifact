@@ -1,0 +1,27 @@
+Blocking a signal means telling the operating system to hold it and deliver it later.  Generally, a program does not block signals indefinitely—it might as well ignore them by setting their actions to SIG_IGN.  But it is useful to block signals briefly, to prevent them from interrupting sensitive operations.  For instance: 
+  You can use the sigprocmask function to block signals while you modify global variables that are also modified by the handlers for these signals.   You can set sa_mask in your sigaction call to block certain signals while a particular signal handler runs.  This way, the signal handler can run without being interrupted itself by signals. 
+
+TABLE_BEGIN
+ • Why Block    The purpose of blocking signals.
+
+ • Signal Sets    How to specify which signals to
+                                         block.
+
+ • Process Signal Mask    Blocking delivery of signals to your
+				         process during normal execution.
+
+ • Testing for Delivery    Blocking to Test for Delivery of
+                                         a Signal.
+
+ • Blocking for Handler    Blocking additional signals while a
+				         handler is being run.
+
+ • Checking for Pending Signals    Checking for Pending Signals
+
+ • Remembering a Signal    How you can get almost the same
+                                         effect as blocking a signal, by
+                                         handling it and setting a flag
+                                         to be tested later.
+
+TABLE_END
+

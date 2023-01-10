@@ -1,0 +1,50 @@
+The last sections described what the programmer can do to internationalize the messages of the program.  But it is finally up to the user to select the message s/he wants to see.  S/He must understand them. 
+The POSIX locale model uses the environment variables LC_COLLATE, LC_CTYPE, LC_MESSAGES, LC_MONETARY, LC_NUMERIC, and LC_TIME to select the locale which is to be used.  This way the user can influence lots of functions.  As we mentioned above, the gettext functions also take advantage of this. 
+To understand how this happens it is necessary to take a look at the various components of the filename which gets computed to locate a message catalog.  It is composed as follows: 
+
+EXAMPLE_BEGIN
+dir_name/locale/LC_category/domain_name.mo
+EXAMPLE_END
+
+The default value for dir_name is system specific.  It is computed from the value given as the prefix while configuring the C library. This value normally is /usr or /.  For the former the complete dir_name is: 
+
+EXAMPLE_BEGIN
+/usr/share/locale
+EXAMPLE_END
+
+We can use /usr/share since the .mo files containing the message catalogs are system independent, so all systems can use the same files.  If the program executed the bindtextdomain function for the message domain that is currently handled, the dir_name component is exactly the value which was given to the function as the second parameter.  I.e., bindtextdomain allows overwriting the only system dependent and fixed value to make it possible to address files anywhere in the filesystem. 
+The category is the name of the locale category which was selected in the program code.  For gettext and dgettext this is always LC_MESSAGES, for dcgettext this is selected by the value of the third parameter.  As said above it should be avoided to ever use a category other than LC_MESSAGES. 
+The locale component is computed based on the category used.  Just like for the setlocale function here comes the user selection into the play.  Some environment variables are examined in a fixed order and the first environment variable set determines the return value of the lookup process.  In detail, for the category LC_xxx the following variables in this order are examined: 
+This looks very familiar.  With the exception of the LANGUAGE environment variable this is exactly the lookup order the setlocale function uses.  But why introduce the LANGUAGE variable? 
+The reason is that the syntax of the values these variables can have is different to what is expected by the setlocale function.  If we would set LC_ALL to a value following the extended syntax that would mean the setlocale function will never be able to use the value of this variable as well.  An additional variable removes this problem plus we can select the language independently of the locale setting which sometimes is useful. 
+While for the LC_xxx variables the value should consist of exactly one specification of a locale the LANGUAGE variable’s value can consist of a colon separated list of locale names.  The attentive reader will realize that this is the way we manage to implement one of our additional demands above: we want to be able to specify an ordered list of languages. 
+Back to the constructed filename we have only one component missing. The domain_name part is the name which was either registered using the textdomain function or which was given to dgettext or dcgettext as the first parameter.  Now it becomes obvious that a good choice for the domain name in the program code is a string which is closely related to the program/package name.  E.g., for the GNU C Library the domain name is libc. 
+A limited piece of example code should show how the program is supposed to work: 
+
+EXAMPLE_BEGIN
+{
+  setlocale (LC_ALL, "");
+  textdomain ("test-package");
+  bindtextdomain ("test-package", "/usr/local/share/locale");
+  puts (gettext ("Hello, world!"));
+}
+EXAMPLE_END
+
+At the program start the default domain is messages, and the default locale is "C".  The setlocale call sets the locale according to the user’s environment variables; remember that correct functioning of gettext relies on the correct setting of the LC_MESSAGES locale (for looking up the message catalog) and of the LC_CTYPE locale (for the character set conversion). The textdomain call changes the default domain to test-package.  The bindtextdomain call specifies that the message catalogs for the domain test-package can be found below the directory /usr/local/share/locale. 
+If the user sets in her/his environment the variable LANGUAGE to de the gettext function will try to use the translations from the file 
+
+EXAMPLE_BEGIN
+/usr/local/share/locale/de/LC_MESSAGES/test-package.mo
+EXAMPLE_END
+
+From the above descriptions it should be clear which component of this filename is determined by which source. 
+In the above example we assumed the LANGUAGE environment variable to be de.  This might be an appropriate selection but what happens if the user wants to use LC_ALL because of the wider usability and here the required value is de_DE.ISO-8859-1?  We already mentioned above that a situation like this is not infrequent. E.g., a person might prefer reading a dialect and if this is not available fall back on the standard language. 
+The gettext functions know about situations like this and can handle them gracefully.  The functions recognize the format of the value of the environment variable.  It can split the value is different pieces and by leaving out the only or the other part it can construct new values.  This happens of course in a predictable way.  To understand this one must know the format of the environment variable value.  There is one more or less standardized form, originally from the X/Open specification: 
+language[_territory[.codeset]][@modifier] 
+Less specific locale names will be stripped in the order of the following list: 
+The language field will never be dropped for obvious reasons. 
+The only new thing is the normalized codeset entry.  This is another goodie which is introduced to help reduce the chaos which derives from the inability of people to standardize the names of character sets.  Instead of ISO-8859-1 one can often see 8859-1, 88591, iso8859-1, or iso_8859-1.  The normalized codeset value is generated from the user-provided character set name by applying the following rules: 
+So all of the above names will be normalized to iso88591.  This allows the program user much more freedom in choosing the locale name. 
+Even this extended functionality still does not help to solve the problem that completely different names can be used to denote the same locale (e.g., de and german).  To be of help in this situation the locale implementation and also the gettext functions know about aliases. 
+The file /usr/share/locale/locale.alias (replace /usr with whatever prefix you used for configuring the C library) contains a mapping of alternative names to more regular names.  The system manager is free to add new entries to fill her/his own needs.  The selected locale from the environment is compared with the entries in the first column of this file ignoring the case.  If they match, the value of the second column is used instead for the further handling. 
+In the description of the format of the environment variables we already mentioned the character set as a factor in the selection of the message catalog.  In fact, only catalogs which contain text written using the character set of the system/program can be used (directly; there will come a solution for this some day).  This means for the user that s/he will always have to take care of this.  If in the collection of the message catalogs there are files for the same language but coded using different character sets the user has to be careful. 

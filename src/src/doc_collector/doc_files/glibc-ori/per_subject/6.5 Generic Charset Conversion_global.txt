@@ -1,0 +1,19 @@
+The conversion functions mentioned so far in this chapter all had in common that they operate on character sets that are not directly specified by the functions.  The multibyte encoding used is specified by the currently selected locale for the LC_CTYPE category.  The wide character set is fixed by the implementation (in the case of the GNU C Library it is always UCS-4 encoded ISO 10646). 
+This has of course several problems when it comes to general character conversion: 
+  For every conversion where neither the source nor the destination character set is the character set of the locale for the LC_CTYPE category, one has to change the LC_CTYPE locale using setlocale.  Changing the LC_CTYPE locale introduces major problems for the rest of the programs since several more functions (e.g., the character classification functions, see Classification of Characters) use the LC_CTYPE category.   Parallel conversions to and from different character sets are not possible since the LC_CTYPE selection is global and shared by all threads.   If neither the source nor the destination character set is the character set used for wchar_t representation, there is at least a two-step process necessary to convert a text using the functions above.  One would have to select the source character set as the multibyte encoding, convert the text into a wchar_t text, select the destination character set as the multibyte encoding, and convert the wide character text to the multibyte (= destination) character set.  Even if this is possible (which is not guaranteed) it is a very tiring work.  Plus it suffers from the other two raised points even more due to the steady changing of the locale. 
+The XPG2 standard defines a completely new set of functions, which has none of these limitations.  They are not at all coupled to the selected locales, and they have no constraints on the character sets selected for source and destination.  Only the set of available conversions limits them.  The standard does not specify that any conversion at all must be available.  Such availability is a measure of the quality of the implementation. 
+In the following text first the interface to iconv and then the conversion function, will be described.  Comparisons with other implementations will show what obstacles stand in the way of portable applications.  Finally, the implementation is described in so far as might interest the advanced user who wants to extend conversion capabilities. 
+
+TABLE_BEGIN
+ • Generic Conversion Interface    Generic Character Set Conversion Interface.
+
+ • iconv Examples    A complete iconv example.
+
+ • Other iconv Implementations    Some Details about other iconv
+                                     Implementations.
+
+ • glibc iconv Implementation    The iconv Implementation in the GNU C
+                                     library.
+
+TABLE_END
+

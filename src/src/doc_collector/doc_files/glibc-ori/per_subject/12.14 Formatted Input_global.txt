@@ -1,0 +1,23 @@
+The functions described in this section (scanf and related functions) provide facilities for formatted input analogous to the formatted output facilities.  These functions provide a mechanism for reading arbitrary values under the control of a format string or template string. 
+
+TABLE_BEGIN
+ • Formatted Input Basics    Some basics to get you started.
+
+ • Input Conversion Syntax    Syntax of conversion specifications.
+
+ • Table of Input Conversions    Summary of input conversions and what they do.
+
+ • Numeric Input Conversions    Details of conversions for reading numbers.
+
+ • String Input Conversions    Details of conversions for reading strings.
+
+ • Dynamic String Input    String conversions that malloc the buffer.
+
+ • Other Input Conversions    Details of miscellaneous other conversions.
+
+ • Formatted Input Functions    Descriptions of the actual functions.
+
+ • Variable Arguments Input    vscanf and friends.
+
+TABLE_END
+

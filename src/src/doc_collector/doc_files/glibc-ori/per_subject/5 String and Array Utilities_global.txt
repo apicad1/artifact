@@ -1,0 +1,41 @@
+Operations on strings (null-terminated byte sequences) are an important part of many programs.  The GNU C Library provides an extensive set of string utility functions, including functions for copying, concatenating, comparing, and searching strings.  Many of these functions can also operate on arbitrary regions of storage; for example, the memcpy function can be used to copy the contents of any kind of array. 
+It’s fairly common for beginning C programmers to “reinvent the wheel” by duplicating this functionality in their own code, but it pays to become familiar with the library functions and to make use of them, since this offers benefits in maintenance, efficiency, and portability. 
+For instance, you could easily compare one string to another in two lines of C code, but if you use the built-in strcmp function, you’re less likely to make a mistake.  And, since these library functions are typically highly optimized, your program may run faster too. 
+
+TABLE_BEGIN
+ • Representation of Strings    Introduction to basic concepts.
+
+ • String/Array Conventions    Whether to use a string function or an
+				 arbitrary array function.
+
+ • String Length    Determining the length of a string.
+
+ • Copying Strings and Arrays    Functions to copy strings and arrays.
+
+ • Concatenating Strings    Functions to concatenate strings while copying.
+
+ • Truncating Strings    Functions to truncate strings while copying.
+
+ • String/Array Comparison    Functions for byte-wise and character-wise
+				 comparison.
+
+ • Collation Functions    Functions for collating strings.
+
+ • Search Functions    Searching for a specific element or substring.
+
+ • Finding Tokens in a String    Splitting a string into tokens by looking
+				 for delimiters.
+
+ • Erasing Sensitive Data    Clearing memory which contains sensitive
+                                 data, after it’s no longer needed.
+
+ • Shuffling Bytes    Or how to flash-cook a string.
+
+ • Obfuscating Data    Reversibly obscuring data from casual view.
+
+ • Encode Binary Data    Encoding and Decoding of Binary Data.
+
+ • Argz and Envz Vectors    Null-separated string vectors.
+
+TABLE_END
+

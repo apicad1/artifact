@@ -1,0 +1,4 @@
+After opening a stream (but before any other operations have been performed on it), you can explicitly specify what kind of buffering you want it to have using the setvbuf function.  
+The facilities listed in this section are declared in the header file stdio.h.  
+It is possible to query whether a given stream is line buffered or not using a non-standard function introduced in Solaris and available in the GNU C Library. 
+Two more extensions allow to determine the size of the buffer and how much of it is used.  These functions were also introduced in Solaris. 

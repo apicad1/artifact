@@ -1,0 +1,69 @@
+TCGETPGRP(3)                                    Linux Programmer's Manual                                   TCGETPGRP(3)
+
+NAME
+       tcgetpgrp, tcsetpgrp - get and set terminal foreground process group
+
+SYNOPSIS
+       #include <unistd.h>
+
+       pid_t tcgetpgrp(int fd);
+
+       int tcsetpgrp(int fd, pid_t pgrp);
+
+DESCRIPTION
+       The  function tcgetpgrp() returns the process group ID of the foreground process group on the terminal associated
+       to fd, which must be the controlling terminal of the calling process.
+
+       The function tcsetpgrp() makes the process group with process group ID pgrp the foreground process group  on  the
+       terminal associated to fd, which must be the controlling terminal of the calling process, and still be associated
+       with its session.  Moreover, pgrp must be a (nonempty) process group belonging to the same session as the calling
+       process.
+
+       If tcsetpgrp() is called by a member of a background process group in its session, and the calling process is not
+       blocking or ignoring SIGTTOU, a SIGTTOU signal is sent to all members of this background process group.
+
+RETURN VALUE
+       When fd refers to the controlling terminal of the calling process, the function tcgetpgrp() will return the fore‐
+       ground  process  group  ID of that terminal if there is one, and some value larger than 1 that is not presently a
+       process group ID otherwise.  When fd does not refer to the controlling terminal of the calling process, -1 is re‐
+       turned, and errno is set appropriately.
+
+       When successful, tcsetpgrp() returns 0.  Otherwise, it returns -1, and errno is set appropriately.
+
+ERRORS
+       EBADF  fd is not a valid file descriptor.
+
+       EINVAL pgrp has an unsupported value.
+
+       ENOTTY The calling process does not have a controlling terminal, or it has one but it is not described by fd, or,
+              for tcsetpgrp(), this controlling terminal is no  longer  associated  with  the  session  of  the  calling
+              process.
+
+       EPERM  pgrp  has a supported value, but is not the process group ID of a process in the same session as the call‐
+              ing process.
+
+ATTRIBUTES
+       For an explanation of the terms used in this section, see attributes(7).
+
+       ┌─────────────────────────┬───────────────┬─────────┐
+       │Interface                │ Attribute     │ Value   │
+       ├─────────────────────────┼───────────────┼─────────┤
+       │tcgetpgrp(), tcsetpgrp() │ Thread safety │ MT-Safe │
+       └─────────────────────────┴───────────────┴─────────┘
+CONFORMING TO
+       POSIX.1-2001, POSIX.1-2008.
+
+NOTES
+       These functions are implemented via the TIOCGPGRP and TIOCSPGRP ioctls.
+
+   History
+       The ioctls appeared in 4.2BSD.  The functions are POSIX inventions.
+
+SEE ALSO
+       setpgid(2), setsid(2), credentials(7)
+
+COLOPHON
+       This page is part of release 5.05 of the Linux man-pages project.  A  description  of  the  project,  information
+       about reporting bugs, and the latest version of this page, can be found at https://www.kernel.org/doc/man-pages/.
+
+GNU                                                    2015-08-08                                           TCGETPGRP(3)

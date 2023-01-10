@@ -1,0 +1,21 @@
+In BSD Unix systems, setjmp and longjmp also save and restore the set of blocked signals; see Blocking Signals.  However, the POSIX.1 standard requires setjmp and longjmp not to change the set of blocked signals, and provides an additional pair of functions (sigsetjmp and siglongjmp) to get the BSD behavior. 
+The behavior of setjmp and longjmp in the GNU C Library is controlled by feature test macros; see Feature Test Macros.  The default in the GNU C Library is the POSIX.1 behavior rather than the BSD behavior. 
+The facilities in this section are declared in the header file setjmp.h.  
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: sigjmp_buf
+This is similar to jmp_buf, except that it can also store state information about the set of blocked signals. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int sigsetjmp (sigjmp_buf state, int savesigs)
+Preliminary: | MT-Safe  | AS-Unsafe lock/hurd | AC-Unsafe lock/hurd | See POSIX Safety Concepts. 
+This is similar to setjmp.  If savesigs is nonzero, the set of blocked signals is saved in state and will be restored if a siglongjmp is later performed with this state. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void siglongjmp (sigjmp_buf state, int value)
+Preliminary: | MT-Safe  | AS-Unsafe plugin corrupt lock/hurd | AC-Unsafe corrupt lock/hurd | See POSIX Safety Concepts. 
+This is similar to longjmp except for the type of its state argument.  If the sigsetjmp call that set this state used a nonzero savesigs flag, siglongjmp also restores the set of blocked signals. 

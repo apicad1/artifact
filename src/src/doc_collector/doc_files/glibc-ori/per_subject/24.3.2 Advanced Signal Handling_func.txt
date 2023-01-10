@@ -1,0 +1,21 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: struct sigaction
+Structures of type struct sigaction are used in the sigaction function to specify all the information about how to handle a particular signal.  This structure contains at least the following members: 
+	sighandler_t sa_handler
+This is used in the same way as the action argument to the signal function.  The value can be SIG_DFL, SIG_IGN, or a function pointer.  See Basic Signal Handling.  
+	sigset_t sa_mask
+This specifies a set of signals to be blocked while the handler runs. Blocking is explained in Blocking for Handler.  Note that the signal that was delivered is automatically blocked by default before its handler is started; this is true regardless of the value in sa_mask.  If you want that signal not to be blocked within its handler, you must write code in the handler to unblock it.  
+	int sa_flags
+This specifies various flags which can affect the behavior of the signal.  These are described in more detail in Flags for Sigaction. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int sigaction (int signum, const struct sigaction *restrict action, struct sigaction *restrict old-action)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The action argument is used to set up a new action for the signal signum, while the old-action argument is used to return information about the action previously associated with this signal. (In other words, old-action has the same purpose as the signal function’s return value—you can check to see what the old action in effect for the signal was, and restore it later if you want.) 
+Either action or old-action can be a null pointer.  If old-action is a null pointer, this simply suppresses the return of information about the old action.  If action is a null pointer, the action associated with the signal signum is unchanged; this allows you to inquire about how a signal is being handled without changing that handling. 
+The return value from sigaction is zero if it succeeds, and -1 on failure.  The following errno error conditions are defined for this function: 
+	EINVAL
+The signum argument is not valid, or you are trying to trap or ignore SIGKILL or SIGSTOP. 

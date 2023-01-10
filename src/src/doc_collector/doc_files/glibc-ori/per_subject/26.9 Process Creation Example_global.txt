@@ -1,0 +1,41 @@
+Here is an example program showing how you might write a function similar to the built-in system.  It executes its command argument using the equivalent of ‘sh -c command’. 
+
+EXAMPLE_BEGIN
+#include <stddef.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+
+/* Execute the command using this shell program.  */
+#define SHELL "/bin/sh"
+
+int
+my_system (const char *command)
+{
+  int status;
+  pid_t pid;
+
+
+  pid = fork ();
+  if (pid == 0)
+    {
+      /* This is the child process.  Execute the shell command. */
+      execl (SHELL, SHELL, "-c", command, NULL);
+      _exit (EXIT_FAILURE);
+    }
+  else if (pid < 0)
+    /* The fork failed.  Report failure.  */
+    status = -1;
+  else
+    /* This is the parent process.  Wait for the child to complete.  */
+    if (waitpid (pid, &status, 0) != pid)
+      status = -1;
+  return status;
+}
+EXAMPLE_END
+
+There are a couple of things you should pay attention to in this example. 
+Remember that the first argv argument supplied to the program represents the name of the program being executed.  That is why, in the call to execl, SHELL is supplied once to name the program to execute and a second time to supply a value for argv[0]. 
+The execl call in the child process doesn’t return if it is successful.  If it fails, you must do something to make the child process terminate.  Just returning a bad status code with return would leave two processes running the original program.  Instead, the right behavior is for the child process to report failure to its parent process. 
+Call _exit to accomplish this.  The reason for using _exit instead of exit is to avoid flushing fully buffered streams such as stdout.  The buffers of these streams probably contain data that was copied from the parent process by the fork, data that will be output eventually by the parent process.  Calling exit in the child would output the data twice.  See Termination Internals. 

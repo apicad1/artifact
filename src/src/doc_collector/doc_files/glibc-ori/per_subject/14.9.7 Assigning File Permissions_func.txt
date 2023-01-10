@@ -1,0 +1,58 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: mode_t umask (mode_t mask)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The umask function sets the file creation mask of the current process to mask, and returns the previous value of the file creation mask. 
+Here is an example showing how to read the mask with umask without changing it permanently: 
+
+EXAMPLE_BEGIN
+mode_t
+read_umask (void)
+{
+  mode_t mask = umask (0);
+  umask (mask);
+  return mask;
+}
+EXAMPLE_END
+
+However, on GNU/Hurd systems it is better to use getumask if you just want to read the mask value, because it is reentrant. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: mode_t getumask (void)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+Return the current value of the file creation mask for the current process.  This function is a GNU extension and is only available on GNU/Hurd systems. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int chmod (const char *filename, mode_t mode)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The chmod function sets the access permission bits for the file named by filename to mode. 
+If filename is a symbolic link, chmod changes the permissions of the file pointed to by the link, not those of the link itself. 
+This function returns 0 if successful and -1 if not.  In addition to the usual file name errors (see File Name Errors), the following errno error conditions are defined for this function: 
+	ENOENT
+The named file doesn’t exist.  
+	EPERM
+This process does not have permission to change the access permissions of this file.  Only the file’s owner (as judged by the effective user ID of the process) or a privileged user can change them.  
+	EROFS
+The file resides on a read-only file system.  
+	EFTYPE
+mode has the S_ISVTX bit (the “sticky bit”) set, and the named file is not a directory.  Some systems do not allow setting the sticky bit on non-directory files, and some do (and only some of those assign a useful meaning to the bit for non-directory files).  You only get EFTYPE on systems where the sticky bit has no useful meaning for non-directory files, so it is always safe to just clear the bit in mode and call chmod again.  See Permission Bits, for full details on the sticky bit. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int fchmod (int filedes, mode_t mode)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This is like chmod, except that it changes the permissions of the currently open file given by filedes. 
+The return value from fchmod is 0 on success and -1 on failure.  The following errno error codes are defined for this function: 
+	EBADF
+The filedes argument is not a valid file descriptor.  
+	EINVAL
+The filedes argument corresponds to a pipe or socket, or something else that doesn’t really have access permissions.  
+	EPERM
+This process does not have permission to change the access permissions of this file.  Only the file’s owner (as judged by the effective user ID of the process) or a privileged user can change them.  
+	EROFS
+The file resides on a read-only file system. 

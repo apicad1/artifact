@@ -1,0 +1,23 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: tcflag_t OPOST
+If this bit is set, output data is processed in some unspecified way so that it is displayed appropriately on the terminal device.  This typically includes mapping newline characters ('\n') onto carriage return and linefeed pairs. 
+If this bit isn’t set, the characters are transmitted as-is. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: tcflag_t ONLCR
+If this bit is set, convert the newline character on output into a pair of characters, carriage return followed by linefeed. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: tcflag_t OXTABS
+If this bit is set, convert tab characters on output into the appropriate number of spaces to emulate a tab stop every eight columns.  This bit exists only on BSD systems and GNU/Hurd systems; on GNU/Linux systems it is available as XTABS. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: tcflag_t ONOEOT
+If this bit is set, discard C-d characters (code 004) on output.  These characters cause many dial-up terminals to disconnect. This bit exists only on BSD systems and GNU/Hurd systems. 

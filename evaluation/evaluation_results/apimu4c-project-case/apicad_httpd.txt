@@ -1,0 +1,81 @@
+√: is a bug in Project-Case benchmark
+√*: is a bug which is comfirmed in later versions but not in Project-Case benchmark
+*: TBD
+×: not a real bug
+
+9/15
+(base) @test:~/api_misuse/evaluation/apimu4c_project/httpd$ apicad detect --only
+[2022-12-19 14:53:02] INFO(detection): Detecting for 10 functions
+[2022-12-19 14:53:02] INFO(detector): Processing BN_bn2dec
+[2022-12-19 14:53:02] INFO(detector): Processing apr_thread_mutex_lock
+[2022-12-19 14:53:03] INFO(detector): Processing BIO_new_file
+[2022-12-19 14:53:03] INFO(detector): Processing ssl_init_ctx_verify
+[2022-12-19 14:53:03] INFO(detector): Processing BIO_new
+[2022-12-19 14:53:03] INFO(detector): Processing apr_sockaddr_info_get
+[2022-12-19 14:53:03] INFO(detector): Processing X509_STORE_CTX_new
+[2022-12-19 14:53:03] INFO(detector): Processing X509_get_ext_d2i
+[2022-12-19 14:53:03] INFO(detector): Processing ap_pcfg_openfile
+[2022-12-19 14:53:03] INFO(detector): Processing DH_new
+[2022-12-19 14:53:03] ERROR(BUGREPORT): BIO_new_file: /home/test/api_misuse/evaluation/apimu4c_project/httpd/httpd-2.4.37/modules/ssl/ssl_util_ssl.c:85:10, TYPE: retval √
+[2022-12-19 14:53:03] ERROR(BUGREPORT): BIO_new_file: /home/test/api_misuse/evaluation/apimu4c_project/httpd/httpd-2.4.37/modules/ssl/ssl_util_ssl.c:507:11, TYPE: retval √
+[2022-12-19 14:53:03] ERROR(BUGREPORT): BIO_new: /home/test/api_misuse/evaluation/apimu4c_project/httpd/httpd-2.4.37/modules/ssl/ssl_engine_vars.c:1111:24, TYPE: retval √*
+[2022-12-19 14:53:03] ERROR(BUGREPORT): BIO_new: /home/test/api_misuse/evaluation/apimu4c_project/httpd/httpd-2.4.37/modules/ssl/ssl_engine_io.c:2041:28, TYPE: retval √*
+[2022-12-19 14:53:03] ERROR(BUGREPORT): BIO_new: /home/test/api_misuse/evaluation/apimu4c_project/httpd/httpd-2.4.37/modules/ssl/ssl_util_ssl.c:274:11, TYPE: retval √
+[2022-12-19 14:53:03] ERROR(BUGREPORT): BIO_new: /home/test/api_misuse/evaluation/apimu4c_project/httpd/httpd-2.4.37/modules/ssl/ssl_util_ocsp.c:38:11, TYPE: retval √*
+[2022-12-19 14:53:03] ERROR(BUGREPORT): BIO_new: /home/test/api_misuse/evaluation/apimu4c_project/httpd/httpd-2.4.37/modules/ssl/ssl_engine_vars.c:466:15, TYPE: retval √
+[2022-12-19 14:53:03] ERROR(BUGREPORT): BIO_new: /home/test/api_misuse/evaluation/apimu4c_project/httpd/httpd-2.4.37/modules/ssl/ssl_engine_io.c:2076:35, TYPE: retval √*
+[2022-12-19 14:53:03] ERROR(BUGREPORT): apr_sockaddr_info_get: /home/test/api_misuse/evaluation/apimu4c_project/httpd/httpd-2.4.37/modules/ssl/ssl_util_ocsp.c:86:10, TYPE: retval √
+[2022-12-19 14:53:03] ERROR(BUGREPORT): apr_sockaddr_info_get: /home/test/api_misuse/evaluation/apimu4c_project/httpd/httpd-2.4.37/server/listen.c:689:13, TYPE: retval √*
+[2022-12-19 14:53:03] ERROR(BUGREPORT): apr_sockaddr_info_get: /home/test/api_misuse/evaluation/apimu4c_project/httpd/httpd-2.4.37/modules/cluster/mod_heartmonitor.c:873:10, TYPE: retval √
+[2022-12-19 14:53:03] ERROR(BUGREPORT): apr_sockaddr_info_get: /home/test/api_misuse/evaluation/apimu4c_project/httpd/httpd-2.4.37/modules/proxy/proxy_util.c:2420:13, TYPE: retval
+[2022-12-19 14:53:03] ERROR(BUGREPORT): apr_sockaddr_info_get: /home/test/api_misuse/evaluation/apimu4c_project/httpd/httpd-2.4.37/modules/proxy/mod_proxy_ftp.c:1588:9, TYPE: retval
+[2022-12-19 14:53:03] ERROR(BUGREPORT): apr_sockaddr_info_get: /home/test/api_misuse/evaluation/apimu4c_project/httpd/httpd-2.4.37/modules/proxy/mod_proxy_ftp.c:1545:17, TYPE: retval √*
+[2022-12-19 14:53:03] ERROR(BUGREPORT): X509_get_ext_d2i: /home/test/api_misuse/evaluation/apimu4c_project/httpd/httpd-2.4.37/modules/ssl/ssl_util_ssl.c:201:10, TYPE: retval √
+[2022-12-19 14:53:03] ERROR(BUGREPORT): apr_thread_mutex_lock: /home/test/api_misuse/evaluation/apimu4c_project/httpd/httpd-2.4.37/modules/proxy/mod_proxy_ftp.c:1112:24, TYPE: causality
+[2022-12-19 14:53:03] ERROR(BUGREPORT): BIO_new: /home/test/api_misuse/evaluation/apimu4c_project/httpd/httpd-2.4.37/modules/ssl/ssl_util_ocsp.c:361:16, TYPE: causality √
+[2022-12-19 14:53:03] ERROR(BUGREPORT): BIO_new: /home/test/api_misuse/evaluation/apimu4c_project/httpd/httpd-2.4.37/modules/ssl/ssl_util_ssl.c:97:21, TYPE: causality
+[2022-12-19 14:53:03] ERROR(BUGREPORT): X509_STORE_CTX_new: /home/test/api_misuse/evaluation/apimu4c_project/httpd/httpd-2.4.37/modules/ssl/ssl_util_stapling.c:103:13, TYPE: causality
+[2022-12-19 14:53:03] ERROR(BUGREPORT): X509_get_ext_d2i: /home/test/api_misuse/evaluation/apimu4c_project/httpd/httpd-2.4.37/modules/ssl/ssl_engine_ocsp.c:30:14, TYPE: causality
+[2022-12-19 14:53:03] ERROR(BUGREPORT): ap_pcfg_openfile: /home/test/api_misuse/evaluation/apimu4c_project/httpd/httpd-2.4.37/modules/metadata/mod_remoteip.c:287:10, TYPE: causality √
+[2022-12-19 14:53:03] INFO(BUGREPORT): Total reports: 21-6=15
+
+12/18
+(base) @test:~/api_misuse/evaluation/apimu4c_project/httpd$ apicad detect --only --enable-doc
+[2022-12-19 14:53:18] INFO(detection): Detecting for 10 functions
+[2022-12-19 14:53:18] INFO(detector): Processing BN_bn2dec
+[2022-12-19 14:53:18] INFO(detector): Processing apr_thread_mutex_lock
+[2022-12-19 14:53:19] INFO(detector): Processing BIO_new_file
+[2022-12-19 14:53:19] INFO(detector): Processing ssl_init_ctx_verify
+[2022-12-19 14:53:19] INFO(detector): Processing BIO_new
+[2022-12-19 14:53:19] INFO(detector): Processing apr_sockaddr_info_get
+[2022-12-19 14:53:19] INFO(detector): Processing X509_STORE_CTX_new
+[2022-12-19 14:53:19] INFO(detector): Processing X509_get_ext_d2i
+[2022-12-19 14:53:19] INFO(detector): Processing ap_pcfg_openfile
+[2022-12-19 14:53:19] INFO(detector): Processing DH_new
+[2022-12-19 14:53:19] ERROR(BUGREPORT): BN_bn2dec: /home/test/api_misuse/evaluation/apimu4c_project/httpd/httpd-2.4.37/modules/ssl/ssl_engine_vars.c:796:29, TYPE: retval √*
+[2022-12-19 14:53:19] ERROR(BUGREPORT): BN_bn2dec: /home/test/api_misuse/evaluation/apimu4c_project/httpd/httpd-2.4.37/modules/ssl/ssl_util_ssl.c:213:14, TYPE: retval √
+[2022-12-19 14:53:19] ERROR(BUGREPORT): BIO_new_file: /home/test/api_misuse/evaluation/apimu4c_project/httpd/httpd-2.4.37/modules/ssl/ssl_util_ssl.c:85:10, TYPE: retval √
+[2022-12-19 14:53:19] ERROR(BUGREPORT): BIO_new_file: /home/test/api_misuse/evaluation/apimu4c_project/httpd/httpd-2.4.37/modules/ssl/ssl_util_ssl.c:507:11, TYPE: retval √
+[2022-12-19 14:53:19] ERROR(BUGREPORT): BIO_new: /home/test/api_misuse/evaluation/apimu4c_project/httpd/httpd-2.4.37/modules/ssl/ssl_engine_vars.c:1111:24, TYPE: retval √*
+[2022-12-19 14:53:19] ERROR(BUGREPORT): BIO_new: /home/test/api_misuse/evaluation/apimu4c_project/httpd/httpd-2.4.37/modules/ssl/ssl_engine_io.c:2041:28, TYPE: retval √*
+[2022-12-19 14:53:19] ERROR(BUGREPORT): BIO_new: /home/test/api_misuse/evaluation/apimu4c_project/httpd/httpd-2.4.37/modules/ssl/ssl_util_ssl.c:274:11, TYPE: retval √
+[2022-12-19 14:53:19] ERROR(BUGREPORT): BIO_new: /home/test/api_misuse/evaluation/apimu4c_project/httpd/httpd-2.4.37/modules/ssl/ssl_util_ocsp.c:38:11, TYPE: retval √*
+[2022-12-19 14:53:19] ERROR(BUGREPORT): BIO_new: /home/test/api_misuse/evaluation/apimu4c_project/httpd/httpd-2.4.37/modules/ssl/ssl_engine_vars.c:466:15, TYPE: retval √
+[2022-12-19 14:53:19] ERROR(BUGREPORT): BIO_new: /home/test/api_misuse/evaluation/apimu4c_project/httpd/httpd-2.4.37/modules/ssl/ssl_engine_io.c:2076:35, TYPE: retval √*
+[2022-12-19 14:53:19] ERROR(BUGREPORT): apr_sockaddr_info_get: /home/test/api_misuse/evaluation/apimu4c_project/httpd/httpd-2.4.37/modules/ssl/ssl_util_ocsp.c:86:10, TYPE: retval √
+[2022-12-19 14:53:19] ERROR(BUGREPORT): apr_sockaddr_info_get: /home/test/api_misuse/evaluation/apimu4c_project/httpd/httpd-2.4.37/server/listen.c:689:13, TYPE: retval √*
+[2022-12-19 14:53:19] ERROR(BUGREPORT): apr_sockaddr_info_get: /home/test/api_misuse/evaluation/apimu4c_project/httpd/httpd-2.4.37/modules/cluster/mod_heartmonitor.c:873:10, TYPE: retval √
+[2022-12-19 14:53:19] ERROR(BUGREPORT): apr_sockaddr_info_get: /home/test/api_misuse/evaluation/apimu4c_project/httpd/httpd-2.4.37/modules/proxy/proxy_util.c:2420:13, TYPE: retval
+[2022-12-19 14:53:19] ERROR(BUGREPORT): apr_sockaddr_info_get: /home/test/api_misuse/evaluation/apimu4c_project/httpd/httpd-2.4.37/modules/proxy/mod_proxy_ftp.c:1588:9, TYPE: retval
+[2022-12-19 14:53:19] ERROR(BUGREPORT): apr_sockaddr_info_get: /home/test/api_misuse/evaluation/apimu4c_project/httpd/httpd-2.4.37/modules/proxy/mod_proxy_ftp.c:1545:17, TYPE: retval √*
+[2022-12-19 14:53:19] ERROR(BUGREPORT): X509_STORE_CTX_new: /home/test/api_misuse/evaluation/apimu4c_project/httpd/httpd-2.4.37/modules/ssl/ssl_engine_init.c:1587:12, TYPE: retval √
+[2022-12-19 14:53:19] ERROR(BUGREPORT): X509_STORE_CTX_new: /home/test/api_misuse/evaluation/apimu4c_project/httpd/httpd-2.4.37/modules/ssl/ssl_util_stapling.c:103:13, TYPE: retval causality √*
+[2022-12-19 14:53:19] ERROR(BUGREPORT): X509_STORE_CTX_new: /home/test/api_misuse/evaluation/apimu4c_project/httpd/httpd-2.4.37/modules/ssl/ssl_engine_kernel.c:916:30, TYPE: retval
+[2022-12-19 14:53:19] ERROR(BUGREPORT): X509_get_ext_d2i: /home/test/api_misuse/evaluation/apimu4c_project/httpd/httpd-2.4.37/modules/ssl/ssl_util_ssl.c:201:10, TYPE: retval √
+[2022-12-19 14:53:19] ERROR(BUGREPORT): DH_new: /home/test/api_misuse/evaluation/apimu4c_project/httpd/httpd-2.4.37/modules/ssl/ssl_engine_init.c:80:14, TYPE: retval √
+[2022-12-19 14:53:19] ERROR(BUGREPORT): apr_thread_mutex_lock: /home/test/api_misuse/evaluation/apimu4c_project/httpd/httpd-2.4.37/modules/proxy/mod_proxy_ftp.c:1112:24, TYPE: causality
+[2022-12-19 14:53:19] ERROR(BUGREPORT): BIO_new: /home/test/api_misuse/evaluation/apimu4c_project/httpd/httpd-2.4.37/modules/ssl/ssl_util_ocsp.c:361:16, TYPE: causality √
+[2022-12-19 14:53:19] ERROR(BUGREPORT): BIO_new: /home/test/api_misuse/evaluation/apimu4c_project/httpd/httpd-2.4.37/modules/ssl/ssl_util_ssl.c:97:21, TYPE: causality
+[2022-12-19 14:53:19] ERROR(BUGREPORT): X509_get_ext_d2i: /home/test/api_misuse/evaluation/apimu4c_project/httpd/httpd-2.4.37/modules/ssl/ssl_engine_ocsp.c:30:14, TYPE: causality
+[2022-12-19 14:53:19] ERROR(BUGREPORT): ap_pcfg_openfile: /home/test/api_misuse/evaluation/apimu4c_project/httpd/httpd-2.4.37/modules/metadata/mod_remoteip.c:287:10, TYPE: causality √
+[2022-12-19 14:53:19] INFO(BUGREPORT): Total reports: 26-8=18

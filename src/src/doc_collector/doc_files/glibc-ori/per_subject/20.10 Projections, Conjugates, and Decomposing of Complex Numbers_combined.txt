@@ -1,0 +1,140 @@
+ISO C99 also defines functions that perform basic operations on complex numbers, such as decomposition and conjugation.  The prototypes for all these functions are in complex.h.  All functions are available in three variants, one for each of the three complex types. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: double creal (complex double z)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: float crealf (complex float z)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: long double creall (complex long double z)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: _FloatN crealfN (complex _FloatN z)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: _FloatNx crealfNx (complex _FloatNx z)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+These functions return the real part of the complex number z. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: double cimag (complex double z)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: float cimagf (complex float z)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: long double cimagl (complex long double z)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: _FloatN cimagfN (complex _FloatN z)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: _FloatNx cimagfNx (complex _FloatNx z)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+These functions return the imaginary part of the complex number z. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: complex double conj (complex double z)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: complex float conjf (complex float z)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: complex long double conjl (complex long double z)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: complex _FloatN conjfN (complex _FloatN z)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: complex _FloatNx conjfNx (complex _FloatNx z)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+These functions return the conjugate value of the complex number z.  The conjugate of a complex number has the same real part and a negated imaginary part.  In other words, ‘conj(a + bi) = a + -bi’. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: double carg (complex double z)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: float cargf (complex float z)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: long double cargl (complex long double z)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: _FloatN cargfN (complex _FloatN z)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: _FloatNx cargfNx (complex _FloatNx z)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+These functions return the argument of the complex number z. The argument of a complex number is the angle in the complex plane between the positive real axis and a line passing through zero and the number.  This angle is measured in the usual fashion and ranges from -π to π. 
+carg has a branch cut along the negative real axis. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: complex double cproj (complex double z)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: complex float cprojf (complex float z)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: complex long double cprojl (complex long double z)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: complex _FloatN cprojfN (complex _FloatN z)
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: complex _FloatNx cprojfNx (complex _FloatNx z)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+These functions return the projection of the complex value z onto the Riemann sphere.  Values with an infinite imaginary part are projected to positive infinity on the real axis, even if the real part is NaN.  If the real part is infinite, the result is equivalent to 
+
+EXAMPLE_BEGIN
+INFINITY + I * copysign (0.0, cimag (z))
+EXAMPLE_END
+

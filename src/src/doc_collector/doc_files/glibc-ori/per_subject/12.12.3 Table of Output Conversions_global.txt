@@ -1,0 +1,2 @@
+Here is a table summarizing what all the different conversions do: 
+If the syntax of a conversion specification is invalid, unpredictable things will happen, so don’t do this.  If there aren’t enough function arguments provided to supply values for all the conversion specifications in the template string, or if the arguments are not of the correct types, the results are unpredictable.  If you supply more arguments than conversion specifications, the extra argument values are simply ignored; this is sometimes useful. 

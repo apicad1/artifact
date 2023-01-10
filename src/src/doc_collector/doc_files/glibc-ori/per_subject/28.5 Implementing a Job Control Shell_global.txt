@@ -1,0 +1,21 @@
+This section describes what a shell must do to implement job control, by presenting an extensive sample program to illustrate the concepts involved. 
+
+TABLE_BEGIN
+ • Data Structures    Introduction to the sample shell.
+
+ • Initializing the Shell    What the shell must do to take
+				 responsibility for job control.
+
+ • Launching Jobs    Creating jobs to execute commands.
+
+ • Foreground and Background    Putting a job in foreground of background.
+
+ • Stopped and Terminated Jobs    Reporting job status.
+
+ • Continuing Stopped Jobs    How to continue a stopped job in
+				 the foreground or background.
+
+ • Missing Pieces    Other parts of the shell.
+
+TABLE_END
+

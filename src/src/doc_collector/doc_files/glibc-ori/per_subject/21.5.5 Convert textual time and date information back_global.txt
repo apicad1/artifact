@@ -1,0 +1,10 @@
+The ISO C standard does not specify any functions which can convert the output of the strftime function back into a binary format. This led to a variety of more-or-less successful implementations with different interfaces over the years.  Then the Unix standard was extended by the addition of two functions: strptime and getdate.  Both have strange interfaces but at least they are widely available. 
+
+TABLE_BEGIN
+ • Low-Level Time String Parsing    Interpret string according to given format.
+
+ • General Time String Parsing    User-friendly function to parse data and
+                                    time strings.
+
+TABLE_END
+

@@ -1,0 +1,1 @@
+These functions, derived from BSD, are available in the separate libutil library, and declared in pty.h. 

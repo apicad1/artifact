@@ -1,0 +1,27 @@
+The functions described in this section are used to wait for a child process to terminate or stop, and determine its status.  These functions are declared in the header file sys/wait.h.  
+These symbolic constants are defined as values for the pid argument to the waitpid function. 
+These symbolic constants are defined as flags for the options argument to the waitpid function.  You can bitwise-OR the flags together to obtain a value to use as the argument. 
+Here’s an example of how to use waitpid to get the status from all child processes that have terminated, without ever waiting.  This function is designed to be a handler for SIGCHLD, the signal that indicates that at least one child process has terminated. 
+
+EXAMPLE_BEGIN
+void
+sigchld_handler (int signum)
+{
+  int pid, status, serrno;
+  serrno = errno;
+  while (1)
+    {
+      pid = waitpid (WAIT_ANY, &status, WNOHANG);
+      if (pid < 0)
+        {
+          perror ("waitpid");
+          break;
+        }
+      if (pid == 0)
+        break;
+      notice_termination (pid, status);
+    }
+  errno = serrno;
+}
+EXAMPLE_END
+

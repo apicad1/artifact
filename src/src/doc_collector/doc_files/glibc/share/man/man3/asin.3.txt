@@ -1,0 +1,64 @@
+ASIN(3)                                         Linux Programmer's Manual                                        ASIN(3)
+
+NAME
+       asin, asinf, asinl - arc sine function
+
+SYNOPSIS
+       #include <math.h>
+
+       double asin(double x);
+       float asinf(float x);
+       long double asinl(long double x);
+
+       Link with -lm.
+
+   Feature Test Macro Requirements for glibc (see feature_test_macros(7)):
+
+       asinf(), asinl():
+           _ISOC99_SOURCE || _POSIX_C_SOURCE >= 200112L
+               || /* Since glibc 2.19: */ _DEFAULT_SOURCE
+               || /* Glibc <= 2.19: */ _BSD_SOURCE || _SVID_SOURCE
+
+DESCRIPTION
+       These functions calculate the principal value of the arc sine of x; that is the value whose sine is x.
+
+RETURN VALUE
+       On  success,  these  functions return the principal value of the arc sine of x in radians; the return value is in
+       the range [-pi/2, pi/2].
+
+       If x is a NaN, a NaN is returned.
+
+       If x is +0 (-0), +0 (-0) is returned.
+
+       If x is outside the range [-1, 1], a domain error occurs, and a NaN is returned.
+
+ERRORS
+       See math_error(7) for information on how to determine whether an error has occurred when calling these functions.
+
+       The following errors can occur:
+
+       Domain error: x is outside the range [-1, 1]
+              errno is set to EDOM.  An invalid floating-point exception (FE_INVALID) is raised.
+
+ATTRIBUTES
+       For an explanation of the terms used in this section, see attributes(7).
+
+       ┌──────────────────────────────────────────────────────────────────────────────────────┬───────────────┬─────────┐
+       │Interface                                                                             │ Attribute     │ Value   │
+       ├──────────────────────────────────────────────────────────────────────────────────────┼───────────────┼─────────┤
+       │asin(), asinf(), asinl()                                                              │ Thread safety │ MT-Safe │
+       └──────────────────────────────────────────────────────────────────────────────────────┴───────────────┴─────────┘
+
+CONFORMING TO
+       C99, POSIX.1-2001, POSIX.1-2008.
+
+       The variant returning double also conforms to SVr4, 4.3BSD, C89.
+
+SEE ALSO
+       acos(3), atan(3), atan2(3), casin(3), cos(3), sin(3), tan(3)
+
+COLOPHON
+       This page is part of release 5.13 of the Linux man-pages project.  A  description  of  the  project,  information
+       about reporting bugs, and the latest version of this page, can be found at https://www.kernel.org/doc/man-pages/.
+
+                                                       2021-03-22                                                ASIN(3)

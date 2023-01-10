@@ -1,0 +1,13 @@
+The archetypal use of wildcards is for matching against the files in a directory, and making a list of all the matches.  This is called globbing. 
+You could do this using fnmatch, by reading the directory entries one by one and testing each one with fnmatch.  But that would be slow (and complex, since you would have to handle subdirectories by hand). 
+The library provides a function glob to make this particular use of wildcards convenient.  glob and the other symbols in this section are declared in glob.h. 
+
+TABLE_BEGIN
+ • Calling Glob    Basic use of glob.
+
+ • Flags for Globbing    Flags that enable various options in glob.
+
+ • More Flags for Globbing    GNU specific extensions to glob.
+
+TABLE_END
+

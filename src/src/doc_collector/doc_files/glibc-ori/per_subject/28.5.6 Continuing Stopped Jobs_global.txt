@@ -1,0 +1,31 @@
+The shell can continue a stopped job by sending a SIGCONT signal to its process group.  If the job is being continued in the foreground, the shell should first invoke tcsetpgrp to give the job access to the terminal, and restore the saved terminal settings.  After continuing a job in the foreground, the shell should wait for the job to stop or complete, as if the job had just been launched in the foreground. 
+The sample shell program handles both newly created and continued jobs with the same pair of functions, put_job_in_foreground and put_job_in_background.  The definitions of these functions were given in Foreground and Background.  When continuing a stopped job, a nonzero value is passed as the cont argument to ensure that the SIGCONT signal is sent and the terminal modes reset, as appropriate. 
+This leaves only a function for updating the shell’s internal bookkeeping about the job being continued: 
+
+EXAMPLE_BEGIN
+/* Mark a stopped job J as being running again.  */
+
+void
+mark_job_as_running (job *j)
+{
+  Process *p;
+
+  for (p = j->first_process; p; p = p->next)
+    p->stopped = 0;
+  j->notified = 0;
+}
+
+
+/* Continue the job J.  */
+
+void
+continue_job (job *j, int foreground)
+{
+  mark_job_as_running (j);
+  if (foreground)
+    put_job_in_foreground (j, 1);
+  else
+    put_job_in_background (j, 1);
+}
+EXAMPLE_END
+

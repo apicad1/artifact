@@ -1,0 +1,15 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int getpeername (int socket, struct sockaddr *addr, socklen_t *length-ptr)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The getpeername function returns the address of the socket that socket is connected to; it stores the address in the memory space specified by addr and length-ptr.  It stores the length of the address in *length-ptr. 
+See Socket Addresses, for information about the format of the address.  In some operating systems, getpeername works only for sockets in the Internet domain. 
+The return value is 0 on success and -1 on error.  The following errno error conditions are defined for this function: 
+	EBADF
+The argument socket is not a valid file descriptor.  
+	ENOTSOCK
+The descriptor socket is not a socket.  
+	ENOTCONN
+The socket socket is not connected.  
+	ENOBUFS
+There are not enough internal buffers available. 

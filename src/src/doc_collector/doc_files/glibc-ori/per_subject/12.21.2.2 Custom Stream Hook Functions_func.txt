@@ -1,0 +1,22 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: cookie_read_function_t
+This is the data type that the read function for a custom stream should have. If you declare the function as shown above, this is the type it will have. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: cookie_write_function_t
+The data type of the write function for a custom stream. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: cookie_seek_function_t
+The data type of the seek function for a custom stream. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: cookie_close_function_t
+The data type of the close function for a custom stream. 

@@ -1,0 +1,2 @@
+These functions are provided for obtaining the absolute value (or magnitude) of a number.  The absolute value of a real number x is x if x is positive, -x if x is negative.  For a complex number z, whose real part is x and whose imaginary part is y, the absolute value is sqrt (x*x + y*y). 
+Prototypes for abs, labs and llabs are in stdlib.h; imaxabs is declared in inttypes.h; the fabs functions are declared in math.h; the cabs functions are declared in complex.h. 

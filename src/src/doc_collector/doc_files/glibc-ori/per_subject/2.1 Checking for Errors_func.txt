@@ -1,0 +1,9 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Variable: volatile int errno
+The variable errno contains the system error number.  You can change the value of errno. 
+Since errno is declared volatile, it might be changed asynchronously by a signal handler; see Defining Handlers. However, a properly written signal handler saves and restores the value of errno, so you generally do not need to worry about this possibility except when writing signal handlers. 
+The initial value of errno at program startup is zero.  In many cases, when a library function encounters an error, it will set errno to a non-zero value to indicate what specific error condition occurred.  The documentation for each function lists the error conditions that are possible for that function.  Not all library functions use this mechanism; some return an error code directly, instead. 
+Warning: Many library functions may set errno to some meaningless non-zero value even if they did not encounter any errors, and even if they return error codes directly.  Therefore, it is usually incorrect to check whether an error occurred by inspecting the value of errno.  The proper way to check for error is documented for each function. 
+Portability Note: ISO C specifies errno as a “modifiable lvalue” rather than as a variable, permitting it to be implemented as a macro.  For example, its expansion might involve a function call, like *__errno_location ().  In fact, that is what it is on GNU/Linux and GNU/Hurd systems.  The GNU C Library, on each system, does whatever is right for the particular system. 
+There are a few library functions, like sqrt and atan, that return a perfectly legitimate value in case of an error, but also set errno.  For these functions, if you want to check to see whether an error occurred, the recommended method is to set errno to zero before calling the function, and then check its value afterward. 

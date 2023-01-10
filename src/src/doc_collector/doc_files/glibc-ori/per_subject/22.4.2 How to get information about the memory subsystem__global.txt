@@ -1,0 +1,17 @@
+The page size of the virtual memory the process sees is essential to know in several situations.  Some programming interfaces (e.g., mmap, see Memory-mapped I/O) require the user to provide information adjusted to the page size.  In the case of mmap it is necessary to provide a length argument which is a multiple of the page size.  Another place where the knowledge about the page size is useful is in memory allocation.  If one allocates pieces of memory in larger chunks which are then subdivided by the application code it is useful to adjust the size of the larger blocks to the page size.  If the total memory requirement for the block is close (but not larger) to a multiple of the page size the kernel’s memory handling can work more effectively since it only has to allocate memory pages which are fully used.  (To do this optimization it is necessary to know a bit about the memory allocator which will require a bit of memory itself for each block and this overhead must not push the total size over the page size multiple.) 
+The page size traditionally was a compile time constant.  But recent development of processors changed this.  Processors now support different page sizes and they can possibly even vary among different processes on the same system.  Therefore the system should be queried at runtime about the current page size and no assumptions (except about it being a power of two) should be made. 
+The correct interface to query about the page size is sysconf (see Sysconf Definition) with the parameter _SC_PAGESIZE. There is a much older interface available, too. 
+Widely available on System V derived systems is a method to get information about the physical memory the system has.  The call 
+
+EXAMPLE_BEGIN
+  sysconf (_SC_PHYS_PAGES)
+EXAMPLE_END
+
+returns the total number of pages of physical memory the system has. This does not mean all this memory is available.  This information can be found using 
+
+EXAMPLE_BEGIN
+  sysconf (_SC_AVPHYS_PAGES)
+EXAMPLE_END
+
+These two values help to optimize applications.  The value returned for _SC_AVPHYS_PAGES is the amount of memory the application can use without hindering any other process (given that no other process increases its memory usage).  The value returned for _SC_PHYS_PAGES is more or less a hard limit for the working set. If all applications together constantly use more than that amount of memory the system is in trouble. 
+The GNU C Library provides in addition to these already described way to get this information two functions.  They are declared in the file sys/sysinfo.h.  Programmers should prefer to use the sysconf method described above. 

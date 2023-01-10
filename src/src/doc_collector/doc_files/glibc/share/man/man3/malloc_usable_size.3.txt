@@ -1,0 +1,46 @@
+MALLOC_USABLE_SIZE(3)                           Linux Programmer's Manual                          MALLOC_USABLE_SIZE(3)
+
+NAME
+       malloc_usable_size - obtain size of block of memory allocated from heap
+
+SYNOPSIS
+       #include <malloc.h>
+
+       size_t malloc_usable_size(void *ptr);
+
+DESCRIPTION
+       The malloc_usable_size() function returns the number of usable bytes in the block pointed to by ptr, a pointer to
+       a block of memory allocated by malloc(3) or a related function.
+
+RETURN VALUE
+       malloc_usable_size() returns the number of usable bytes in the block of allocated memory pointed to by  ptr.   If
+       ptr is NULL, 0 is returned.
+
+ATTRIBUTES
+       For an explanation of the terms used in this section, see attributes(7).
+
+       ┌──────────────────────────────────────────────────────────────────────────────────────┬───────────────┬─────────┐
+       │Interface                                                                             │ Attribute     │ Value   │
+       ├──────────────────────────────────────────────────────────────────────────────────────┼───────────────┼─────────┤
+       │malloc_usable_size()                                                                  │ Thread safety │ MT-Safe │
+       └──────────────────────────────────────────────────────────────────────────────────────┴───────────────┴─────────┘
+
+CONFORMING TO
+       This function is a GNU extension.
+
+NOTES
+       The  value  returned  by malloc_usable_size() may be greater than the requested size of the allocation because of
+       alignment and minimum size constraints.  Although the excess bytes can be overwritten by the application  without
+       ill  effects,  this  is not good programming practice: the number of excess bytes in an allocation depends on the
+       underlying implementation.
+
+       The main use of this function is for debugging and introspection.
+
+SEE ALSO
+       malloc(3)
+
+COLOPHON
+       This page is part of release 5.13 of the Linux man-pages project.  A  description  of  the  project,  information
+       about reporting bugs, and the latest version of this page, can be found at https://www.kernel.org/doc/man-pages/.
+
+GNU                                                    2021-03-22                                  MALLOC_USABLE_SIZE(3)

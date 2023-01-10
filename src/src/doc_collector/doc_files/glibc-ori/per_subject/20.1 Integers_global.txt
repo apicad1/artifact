@@ -1,0 +1,16 @@
+The C language defines several integer data types: integer, short integer, long integer, and character, all in both signed and unsigned varieties. The GNU C compiler extends the language to contain long long integers as well.  
+The C integer types were intended to allow code to be portable among machines with different inherent data sizes (word sizes), so each type may have different ranges on different machines.  The problem with this is that a program often needs to be written for a particular range of integers, and sometimes must be written for a particular size of storage, regardless of what machine the program runs on. 
+To address this problem, the GNU C Library contains C type definitions you can use to declare integers that meet your exact needs.  Because the GNU C Library header files are customized to a specific machine, your program source code doesn’t have to be. 
+These typedefs are in stdint.h.  
+If you require that an integer be represented in exactly N bits, use one of the following types, with the obvious mapping to bit size and signedness: 
+  int8_t  int16_t  int32_t  int64_t  uint8_t  uint16_t  uint32_t  uint64_t 
+If your C compiler and target machine do not allow integers of a certain size, the corresponding above type does not exist. 
+If you don’t need a specific storage size, but want the smallest data structure with at least N bits, use one of these: 
+  int_least8_t  int_least16_t  int_least32_t  int_least64_t  uint_least8_t  uint_least16_t  uint_least32_t  uint_least64_t 
+If you don’t need a specific storage size, but want the data structure that allows the fastest access while having at least N bits (and among data structures with the same access speed, the smallest one), use one of these: 
+  int_fast8_t  int_fast16_t  int_fast32_t  int_fast64_t  uint_fast8_t  uint_fast16_t  uint_fast32_t  uint_fast64_t 
+If you want an integer with the widest range possible on the platform on which it is being used, use one of the following.  If you use these, you should write code that takes into account the variable size and range of the integer. 
+  intmax_t  uintmax_t 
+The GNU C Library also provides macros that tell you the maximum and minimum possible values for each integer data type.  The macro names follow these examples: INT32_MAX, UINT8_MAX, INT_FAST32_MIN, INT_LEAST64_MIN, UINTMAX_MAX, INTMAX_MAX, INTMAX_MIN.  Note that there are no macros for unsigned integer minima.  These are always zero.  Similiarly, there are macros such as INTMAX_WIDTH for the width of these types. Those macros for integer type widths come from TS 18661-1:2014.   
+There are similar macros for use with C’s built in integer types which should come with your C compiler.  These are described in Data Type Measurements. 
+Don’t forget you can use the C sizeof function with any of these data types to get the number of bytes of storage each uses. 

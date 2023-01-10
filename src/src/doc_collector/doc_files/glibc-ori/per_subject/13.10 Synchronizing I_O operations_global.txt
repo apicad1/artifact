@@ -1,0 +1,4 @@
+In most modern operating systems, the normal I/O operations are not executed synchronously.  I.e., even if a write system call returns, this does not mean the data is actually written to the media, e.g., the disk. 
+In situations where synchronization points are necessary, you can use special functions which ensure that all operations finish before they return. 
+Programs more often want to ensure that data written to a given file is committed, rather than all data in the system.  For this, sync is overkill. 
+Sometimes it is not even necessary to write all data associated with a file descriptor.  E.g., in database files which do not change in size it is enough to write all the file content data to the device. Meta-information, like the modification time etc., are not that important and leaving such information uncommitted does not prevent a successful recovery of the file in case of a problem. 

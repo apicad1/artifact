@@ -1,0 +1,4 @@
+The IEEE 754 standard defines five exceptions that can occur during a calculation.  Each corresponds to a particular sort of error, such as overflow. 
+When exceptions occur (when exceptions are raised, in the language of the standard), one of two things can happen.  By default the exception is simply noted in the floating-point status word, and the program continues as if nothing had happened.  The operation produces a default value, which depends on the exception (see the table below).  Your program can check the status word to find out which exceptions happened. 
+Alternatively, you can enable traps for exceptions.  In that case, when an exception is raised, your program will receive the SIGFPE signal.  The default action for this signal is to terminate the program.  See Signal Handling, for how you can change the effect of the signal. 
+The exceptions defined in IEEE 754 are: 

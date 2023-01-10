@@ -1,0 +1,2 @@
+The POSIX.2 standard specifies certain system limits that you can access through sysconf that apply to utility behavior rather than the behavior of the library or the operating system. 
+The GNU C Library defines macros for these limits, and sysconf returns values for them if you ask; but these values convey no meaningful information.  They are simply the smallest values that POSIX.2 permits. 

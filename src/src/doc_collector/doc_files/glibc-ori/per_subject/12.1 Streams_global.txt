@@ -1,0 +1,3 @@
+For historical reasons, the type of the C data structure that represents a stream is called FILE rather than “stream”.  Since most of the library functions deal with objects of type FILE *, sometimes the term file pointer is also used to mean “stream”.  This leads to unfortunate confusion over terminology in many books on C.  This manual, however, is careful to use the terms “file” and “stream” only in the technical sense.  
+The FILE type is declared in the header file stdio.h. 
+FILE objects are allocated and managed internally by the input/output library functions.  Don’t try to create your own objects of type FILE; let the library do it.  Your programs should deal only with pointers to these objects (that is, FILE * values) rather than the objects themselves. 

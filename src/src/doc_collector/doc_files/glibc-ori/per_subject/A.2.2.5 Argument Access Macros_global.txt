@@ -1,0 +1,17 @@
+Here are descriptions of the macros used to retrieve variable arguments. These macros are defined in the header file stdarg.h.  
+Sometimes it is necessary to parse the list of parameters more than once or one wants to remember a certain position in the parameter list.  To do this, one will have to make a copy of the current value of the argument.  But va_list is an opaque type and one cannot necessarily assign the value of one variable of type va_list to another variable of the same type. 
+If you want to use va_copy and be portable to pre-C99 systems, you should always be prepared for the possibility that this macro will not be available.  On architectures where a simple assignment is invalid, hopefully va_copy will be available, so one should always write something like this if concerned about pre-C99 portability: 
+
+EXAMPLE_BEGIN
+{
+  va_list ap, save;
+  …
+#ifdef va_copy
+  va_copy (save, ap);
+#else
+  save = ap;
+#endif
+  …
+}
+EXAMPLE_END
+

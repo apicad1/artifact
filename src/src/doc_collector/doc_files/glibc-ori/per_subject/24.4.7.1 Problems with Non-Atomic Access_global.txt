@@ -1,0 +1,33 @@
+Here is an example which shows what can happen if a signal handler runs in the middle of modifying a variable.  (Interrupting the reading of a variable can also lead to paradoxical results, but here we only show writing.) 
+
+EXAMPLE_BEGIN
+#include <signal.h>
+#include <stdio.h>
+
+volatile struct two_words { int a, b; } memory;
+
+void
+handler(int signum)
+{
+   printf ("%d,%d\n", memory.a, memory.b);
+   alarm (1);
+}
+
+int
+main (void)
+{
+   static struct two_words zeros = { 0, 0 }, ones = { 1, 1 };
+   signal (SIGALRM, handler);
+   memory = zeros;
+   alarm (1);
+   while (1)
+     {
+       memory = zeros;
+       memory = ones;
+     }
+}
+EXAMPLE_END
+
+This program fills memory with zeros, ones, zeros, ones, alternating forever; meanwhile, once per second, the alarm signal handler prints the current contents.  (Calling printf in the handler is safe in this program because it is certainly not being called outside the handler when the signal happens.) 
+Clearly, this program can print a pair of zeros or a pair of ones.  But that’s not all it can do!  On most machines, it takes several instructions to store a new value in memory, and the value is stored one word at a time.  If the signal is delivered in between these instructions, the handler might find that memory.a is zero and memory.b is one (or vice versa). 
+On some machines it may be possible to store a new value in memory with just one instruction that cannot be interrupted.  On these machines, the handler will always print two zeros or two ones. 

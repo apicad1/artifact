@@ -1,0 +1,1 @@
+The following flags may be or’d together in the flags field of a struct argp_option.  These flags control various aspects of how that option is parsed or displayed in help messages: 

@@ -1,0 +1,4 @@
+Once you have compiled a regular expression, as described in POSIX Regexp Compilation, you can match it against strings using regexec.  A match anywhere inside the string counts as success, unless the regular expression contains anchor characters (‘^’ or ‘$’). 
+You must match the regular expression with the same set of current locales that were in effect when you compiled the regular expression. 
+The function regexec accepts the following flags in the eflags argument: 
+Here are the possible nonzero values that regexec can return: 

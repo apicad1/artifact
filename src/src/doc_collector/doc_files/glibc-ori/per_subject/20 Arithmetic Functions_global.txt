@@ -1,0 +1,31 @@
+This chapter contains information about functions for doing basic arithmetic operations, such as splitting a float into its integer and fractional parts or retrieving the imaginary part of a complex value. These functions are declared in the header files math.h and complex.h. 
+
+TABLE_BEGIN
+ • Integers    Basic integer types and concepts
+
+ • Integer Division    Integer division with guaranteed rounding.
+
+ • Floating Point Numbers    Basic concepts.  IEEE 754.
+
+ • Floating Point Classes    The five kinds of floating-point number.
+
+ • Floating Point Errors    When something goes wrong in a calculation.
+
+ • Rounding    Controlling how results are rounded.
+
+ • Control Functions    Saving and restoring the FPU’s state.
+
+ • Arithmetic Functions    Fundamental operations provided by the library.
+
+ • Complex Numbers    The types.  Writing complex constants.
+
+ • Operations on Complex    Projection, conjugation, decomposition.
+
+ • Parsing of Numbers    Converting strings to numbers.
+
+ • Printing of Floats    Converting floating-point numbers to strings.
+
+ • System V Number Conversion    An archaic way to convert numbers to strings.
+
+TABLE_END
+

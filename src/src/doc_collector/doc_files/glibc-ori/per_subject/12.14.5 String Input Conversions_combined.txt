@@ -1,0 +1,46 @@
+This section describes the scanf input conversions for reading string and character values: ‘%s’, ‘%S’, ‘%[’, ‘%c’, and ‘%C’. 
+You have two options for how to receive the input from these conversions: 
+  Provide a buffer to store it in.  This is the default.  You should provide an argument of type char * or wchar_t * (the latter if the ‘l’ modifier is present).  Warning: To make a robust program, you must make sure that the input (plus its terminating null) cannot possibly exceed the size of the buffer you provide.  In general, the only way to do this is to specify a maximum field width one less than the buffer size.  If you provide the buffer, always specify a maximum field width to prevent overflow.   Ask scanf to allocate a big enough buffer, by specifying the ‘a’ flag character.  This is a GNU extension.  You should provide an argument of type char ** for the buffer address to be stored in.  See Dynamic String Input. 
+The ‘%c’ conversion is the simplest: it matches a fixed number of characters, always.  The maximum field width says how many characters to read; if you don’t specify the maximum, the default is 1.  This conversion doesn’t append a null character to the end of the text it reads.  It also does not skip over initial whitespace characters.  It reads precisely the next n characters, and fails if it cannot get that many.  Since there is always a maximum field width with ‘%c’ (whether specified, or 1 by default), you can always prevent overflow by making the buffer long enough. 
+If the format is ‘%lc’ or ‘%C’ the function stores wide characters which are converted using the conversion determined at the time the stream was opened from the external byte stream.  The number of bytes read from the medium is limited by MB_CUR_LEN * n but at most n wide characters get stored in the output string. 
+The ‘%s’ conversion matches a string of non-whitespace characters. It skips and discards initial whitespace, but stops when it encounters more whitespace after having read something.  It stores a null character at the end of the text that it reads. 
+For example, reading the input: 
+
+EXAMPLE_BEGIN
+ hello, world
+EXAMPLE_END
+
+with the conversion ‘%10c’ produces " hello, wo", but reading the same input with the conversion ‘%10s’ produces "hello,". 
+Warning: If you do not specify a field width for ‘%s’, then the number of characters read is limited only by where the next whitespace character appears.  This almost certainly means that invalid input can make your program crash—which is a bug. 
+The ‘%ls’ and ‘%S’ format are handled just like ‘%s’ except that the external byte sequence is converted using the conversion associated with the stream to wide characters with their own encoding. A width or precision specified with the format do not directly determine how many bytes are read from the stream since they measure wide characters.  But an upper limit can be computed by multiplying the value of the width or precision by MB_CUR_MAX. 
+To read in characters that belong to an arbitrary set of your choice, use the ‘%[’ conversion.  You specify the set between the ‘[’ character and a following ‘]’ character, using the same syntax used in regular expressions for explicit sets of characters.  As special cases: 
+  A literal ‘]’ character can be specified as the first character of the set.   An embedded ‘-’ character (that is, one that is not the first or last character of the set) is used to specify a range of characters.   If a caret character ‘^’ immediately follows the initial ‘[’, then the set of allowed input characters is everything except the characters listed. 
+The ‘%[’ conversion does not skip over initial whitespace characters. 
+Note that the character class syntax available in character sets that appear inside regular expressions (such as ‘[:alpha:]’) is not available in the ‘%[’ conversion. 
+Here are some examples of ‘%[’ conversions and what they mean: 
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘%25[1234567890]’
+Matches a string of up to 25 digits. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘%25[][]’
+Matches a string of up to 25 square brackets. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘%25[^ \f\n\r\t\v]’
+Matches a string up to 25 characters long that doesn’t contain any of the standard whitespace characters.  This is slightly different from ‘%s’, because if the input begins with a whitespace character, ‘%[’ reports a matching failure while ‘%s’ simply discards the initial whitespace. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘%25[a-z]’
+Matches up to 25 lowercase characters. 
+<<<<<<<<<<<<<<<<<<<<
+
+As for ‘%c’ and ‘%s’ the ‘%[’ format is also modified to produce wide characters if the ‘l’ modifier is present.  All what is said about ‘%ls’ above is true for ‘%l[’. 
+One more reminder: the ‘%s’ and ‘%[’ conversions are dangerous if you don’t specify a maximum width or use the ‘a’ flag, because input too long would overflow whatever buffer you have provided for it.  No matter how long your buffer is, a user could supply input that is longer.  A well-written program reports invalid input with a comprehensible error message, not with a crash. 

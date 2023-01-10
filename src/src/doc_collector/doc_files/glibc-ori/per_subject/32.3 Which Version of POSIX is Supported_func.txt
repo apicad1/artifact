@@ -1,0 +1,14 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: long int _POSIX_VERSION
+This constant represents the version of the POSIX.1 standard to which the implementation conforms.  For an implementation conforming to the 1995 POSIX.1 standard, the value is the integer 199506L. 
+_POSIX_VERSION is always defined (in unistd.h) in any POSIX system. 
+Usage Note: Don’t try to test whether the system supports POSIX by including unistd.h and then checking whether _POSIX_VERSION is defined.  On a non-POSIX system, this will probably fail because there is no unistd.h.  We do not know of any way you can reliably test at compilation time whether your target system supports POSIX or whether unistd.h exists. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: long int _POSIX2_C_VERSION
+This constant represents the version of the POSIX.2 standard which the library and system kernel support.  We don’t know what value this will be for the first version of the POSIX.2 standard, because the value is based on the year and month in which the standard is officially adopted. 
+The value of this symbol says nothing about the utilities installed on the system. 
+Usage Note: You can use this macro to tell whether a POSIX.1 system library supports POSIX.2 as well.  Any POSIX.1 system contains unistd.h, so include that file and then test defined (_POSIX2_C_VERSION). 

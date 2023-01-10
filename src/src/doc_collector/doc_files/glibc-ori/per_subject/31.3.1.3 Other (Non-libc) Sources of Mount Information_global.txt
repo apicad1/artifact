@@ -1,0 +1,1 @@
+On a system with a Linux kernel and the proc filesystem, you can get information on currently mounted filesystems from the file mounts in the proc filesystem.  Its format is similar to that of the mtab file, but represents what is truly mounted without relying on facilities outside the kernel to keep mtab up to date. 

@@ -1,0 +1,81 @@
+GETRPCENT(3)                                    Linux Programmer's Manual                                   GETRPCENT(3)
+
+NAME
+       getrpcent, getrpcbyname, getrpcbynumber, setrpcent, endrpcent - get RPC entry
+
+SYNOPSIS
+       #include <netdb.h>
+
+       struct rpcent *getrpcent(void);
+
+       struct rpcent *getrpcbyname(const char *name);
+       struct rpcent *getrpcbynumber(int number);
+
+       void setrpcent(int stayopen);
+       void endrpcent(void);
+
+DESCRIPTION
+       The  getrpcent(), getrpcbyname(), and getrpcbynumber() functions each return a pointer to an object with the fol‐
+       lowing structure containing the broken-out fields of an entry in the RPC program number data base.
+
+           struct rpcent {
+               char  *r_name;     /* name of server for this RPC program */
+               char **r_aliases;  /* alias list */
+               long   r_number;   /* RPC program number */
+           };
+
+       The members of this structure are:
+
+       r_name The name of the server for this RPC program.
+
+       r_aliases
+              A NULL-terminated list of alternate names for the RPC program.
+
+       r_number
+              The RPC program number for this service.
+
+       The getrpcent() function reads the next entry from the database.  A connection is opened to the database if  nec‐
+       essary.
+
+       The  setrpcent()  function  opens  a  connection to the database, and sets the next entry to the first entry.  If
+       stayopen is nonzero, then the connection to the database will not be closed between calls to one of the getrpc*()
+       functions.
+
+       The endrpcent() function closes the connection to the database.
+
+       The  getrpcbyname()  and  getrpcbynumber()  functions  sequentially search from the beginning of the file until a
+       matching RPC program name or program number is found, or until end-of-file is encountered.
+
+RETURN VALUE
+       On success, getrpcent(), getrpcbyname(), and getrpcbynumber() return a pointer to a statically  allocated  rpcent
+       structure.  NULL is returned on EOF or error.
+
+FILES
+       /etc/rpc
+              RPC program number database.
+
+ATTRIBUTES
+       For an explanation of the terms used in this section, see attributes(7).
+
+       ┌───────────────────────────────────────────────────────────────────────────────┬───────────────┬────────────────┐
+       │Interface                                                                      │ Attribute     │ Value          │
+       ├───────────────────────────────────────────────────────────────────────────────┼───────────────┼────────────────┤
+       │getrpcent(), getrpcbyname(), getrpcbynumber()                                  │ Thread safety │ MT-Unsafe      │
+       ├───────────────────────────────────────────────────────────────────────────────┼───────────────┼────────────────┤
+       │setrpcent(), endrpcent()                                                       │ Thread safety │ MT-Safe locale │
+       └───────────────────────────────────────────────────────────────────────────────┴───────────────┴────────────────┘
+
+CONFORMING TO
+       Not in POSIX.1.  Present on the BSDs, Solaris, and many other systems.
+
+BUGS
+       All information is contained in a static area so it must be copied if it is to be saved.
+
+SEE ALSO
+       getrpcent_r(3), rpc(5), rpcinfo(8), ypserv(8)
+
+COLOPHON
+       This  page  is  part  of  release 5.13 of the Linux man-pages project.  A description of the project, information
+       about reporting bugs, and the latest version of this page, can be found at https://www.kernel.org/doc/man-pages/.
+
+                                                       2021-03-22                                           GETRPCENT(3)

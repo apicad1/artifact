@@ -1,0 +1,10 @@
+The stream-based directory functions are not AS-Safe and cannot be used after vfork.  See POSIX Safety Concepts.  The functions below provide an alternative that can be used in these contexts. 
+Directory data is obtained from a file descriptor, as created by the open function, with or without the O_DIRECTORY flag. See Opening and Closing Files. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: ssize_t getdents64 (int fd, void *buffer, size_t length)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The getdents64 function reads at most length bytes of directory entry data from the file descriptor fd and stores it into the byte array starting at buffer. 
+On success, the function returns the number of bytes written to the buffer.  This number is zero if fd is already at the end of the directory stream.  On error, the function returns -1 and sets errno to the appropriate error code. 
+The data is stored as a sequence of struct dirent64 records, which can be traversed using the d_reclen member.  The buffer should be large enough to hold the largest possible directory entry. Note that some file systems support file names longer than NAME_MAX bytes (e.g., because they support up to 255 Unicode characters), so a buffer size of at least 1024 is recommended. 
+This function is specific to Linux. 

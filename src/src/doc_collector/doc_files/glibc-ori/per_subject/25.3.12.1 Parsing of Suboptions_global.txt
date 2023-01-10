@@ -1,0 +1,2 @@
+Having a single level of options is sometimes not enough.  There might be too many options which have to be available or a set of options is closely related. 
+For this case some programs use suboptions.  One of the most prominent programs is certainly mount(8).  The -o option take one argument which itself is a comma separated list of options.  To ease the programming of code like this the function getsubopt is available. 

@@ -1,0 +1,23 @@
+The most common communication styles involve making a connection to a particular other socket, and then exchanging data with that socket over and over.  Making a connection is asymmetric; one side (the client) acts to request a connection, while the other side (the server) makes a socket and waits for the connection request. 
+
+TABLE_BEGIN
+ • Connecting    What the client program must do.
+
+ • Listening    How a server program waits for requests.
+
+ • Accepting Connections    What the server does when it gets a request.
+
+ • Who is Connected    Getting the address of the
+				other side of a connection.
+
+ • Transferring Data    How to send and receive data.
+
+ • Byte Stream Example    An example program: a client for communicating
+			      over a byte stream socket in the Internet namespace.
+
+ • Server Example    A corresponding server program.
+
+ • Out-of-Band Data    This is an advanced feature.
+
+TABLE_END
+

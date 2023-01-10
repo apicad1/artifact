@@ -1,0 +1,12 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int MB_LEN_MAX
+MB_LEN_MAX specifies the maximum number of bytes in the multibyte sequence for a single character in any of the supported locales.  It is a compile-time constant and is defined in limits.h.  
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int MB_CUR_MAX
+MB_CUR_MAX expands into a positive integer expression that is the maximum number of bytes in a multibyte character in the current locale. The value is never greater than MB_LEN_MAX.  Unlike MB_LEN_MAX this macro need not be a compile-time constant, and in the GNU C Library it is not. 
+
+MB_CUR_MAX is defined in stdlib.h. 

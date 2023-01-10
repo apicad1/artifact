@@ -1,0 +1,61 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: char * l64a (long int n)
+Preliminary: | MT-Unsafe race:l64a | AS-Unsafe  | AC-Safe  | See POSIX Safety Concepts. 
+This function encodes a 32-bit input value using bytes from the basic character set.  It returns a pointer to a 7 byte buffer which contains an encoded version of n.  To encode a series of bytes the user must copy the returned string to a destination buffer.  It returns the empty string if n is zero, which is somewhat bizarre but mandated by the standard. Warning: Since a static buffer is used this function should not be used in multi-threaded programs.  There is no thread-safe alternative to this function in the C library. Compatibility Note: The XPG standard states that the return value of l64a is undefined if n is negative.  In the GNU implementation, l64a treats its argument as unsigned, so it will return a sensible encoding for any nonzero n; however, portable programs should not rely on this. 
+To encode a large buffer l64a must be called in a loop, once for each 32-bit word of the buffer.  For example, one could do something like this: 
+
+EXAMPLE_BEGIN
+char *
+encode (const void *buf, size_t len)
+{
+  /* We know in advance how long the buffer has to be. */
+  unsigned char *in = (unsigned char *) buf;
+  char *out = malloc (6 + ((len + 3) / 4) * 6 + 1);
+  char *cp = out, *p;
+
+  /* Encode the length. */
+  /* Using ‘htonl’ is necessary so that the data can be
+     decoded even on machines with different byte order.
+     ‘l64a’ can return a string shorter than 6 bytes, so 
+     we pad it with encoding of 0 ('.') at the end by 
+     hand. */
+
+  p = stpcpy (cp, l64a (htonl (len)));
+  cp = mempcpy (p, "......", 6 - (p - cp));
+
+  while (len > 3)
+    {
+      unsigned long int n = *in++;
+      n = (n << 8) | *in++;
+      n = (n << 8) | *in++;
+      n = (n << 8) | *in++;
+      len -= 4;
+      p = stpcpy (cp, l64a (htonl (n)));
+      cp = mempcpy (p, "......", 6 - (p - cp));
+    }
+  if (len > 0)
+    {
+      unsigned long int n = *in++;
+      if (--len > 0)
+        {
+          n = (n << 8) | *in++;
+          if (--len > 0)
+            n = (n << 8) | *in;
+        }
+      cp = stpcpy (cp, l64a (htonl (n)));
+    }
+  *cp = '\0';
+  return out;
+}
+EXAMPLE_END
+
+It is strange that the library does not provide the complete functionality needed but so be it. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: long int a64l (const char *string)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The parameter string should contain a string which was produced by a call to l64a.  The function processes at least 6 bytes of this string, and decodes the bytes it finds according to the table below.  It stops decoding when it finds a byte not in the table, rather like atoi; if you have a buffer which has been broken into lines, you must be careful to skip over the end-of-line bytes. 
+The decoded number is returned as a long int value. 

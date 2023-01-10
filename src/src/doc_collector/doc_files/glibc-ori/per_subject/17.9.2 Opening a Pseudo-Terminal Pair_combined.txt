@@ -1,0 +1,20 @@
+These functions, derived from BSD, are available in the separate libutil library, and declared in pty.h. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int openpty (int *amaster, int *aslave, char *name, const struct termios *termp, const struct winsize *winp)
+Preliminary: | MT-Safe locale | AS-Unsafe dlopen plugin heap lock | AC-Unsafe corrupt lock fd mem | See POSIX Safety Concepts. 
+This function allocates and opens a pseudo-terminal pair, returning the file descriptor for the master in *amaster, and the file descriptor for the slave in *aslave.  If the argument name is not a null pointer, the file name of the slave pseudo-terminal device is stored in *name.  If termp is not a null pointer, the terminal attributes of the slave are set to the ones specified in the structure that termp points to (see Terminal Modes). Likewise, if winp is not a null pointer, the screen size of the slave is set to the values specified in the structure that winp points to. 
+The normal return value from openpty is 0; a value of -1 is returned in case of failure.  The following errno conditions are defined for this function: 
+	ENOENT
+There are no free pseudo-terminal pairs available. 
+Warning: Using the openpty function with name not set to NULL is very dangerous because it provides no protection against overflowing the string name.  You should use the ttyname function on the file descriptor returned in *slave to find out the file name of the slave pseudo-terminal device instead. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int forkpty (int *amaster, char *name, const struct termios *termp, const struct winsize *winp)
+Preliminary: | MT-Safe locale | AS-Unsafe dlopen plugin heap lock | AC-Unsafe corrupt lock fd mem | See POSIX Safety Concepts. 
+This function is similar to the openpty function, but in addition, forks a new process (see Creating a Process) and makes the newly opened slave pseudo-terminal device the controlling terminal (see Controlling Terminal) for the child process. 
+If the operation is successful, there are then both parent and child processes and both see forkpty return, but with different values: it returns a value of 0 in the child process and returns the child’s process ID in the parent process. 
+If the allocation of a pseudo-terminal pair or the process creation failed, forkpty returns a value of -1 in the parent process. 
+Warning: The forkpty function has the same problems with respect to the name argument as openpty. 

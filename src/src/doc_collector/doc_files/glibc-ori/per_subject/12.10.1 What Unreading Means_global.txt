@@ -1,0 +1,28 @@
+Here is a pictorial explanation of unreading.  Suppose you have a stream reading a file that contains just six characters, the letters ‘foobar’.  Suppose you have read three characters so far.  The situation looks like this: 
+
+EXAMPLE_BEGIN
+f  o  o  b  a  r
+	 ^
+EXAMPLE_END
+
+so the next input character will be ‘b’. 
+If instead of reading ‘b’ you unread the letter ‘o’, you get a situation like this: 
+
+EXAMPLE_BEGIN
+f  o  o  b  a  r
+	 |
+      o--
+      ^
+EXAMPLE_END
+
+so that the next input characters will be ‘o’ and ‘b’. 
+If you unread ‘9’ instead of ‘o’, you get this situation: 
+
+EXAMPLE_BEGIN
+f  o  o  b  a  r
+	 |
+      9--
+      ^
+EXAMPLE_END
+
+so that the next input characters will be ‘9’ and ‘b’. 

@@ -1,0 +1,14 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int printf_size (FILE *fp, const struct printf_info *info, const void *const *args)
+Preliminary: | MT-Safe race:fp locale | AS-Unsafe corrupt heap | AC-Unsafe mem corrupt | See POSIX Safety Concepts. 
+Print a given floating point number as for the format %f except that there is a postfix character indicating the divisor for the number to make this less than 1000.  There are two possible divisors: powers of 1024 or powers of 1000.  Which one is used depends on the format character specified while registered this handler.  If the character is of lower case, 1024 is used.  For upper case characters, 1000 is used. 
+The postfix tag corresponds to bytes, kilobytes, megabytes, gigabytes, etc.  The full table is: 
+The default precision is 3, i.e., 1024 is printed with a lower-case format character as if it were %.3fk and will yield 1.000k. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int printf_size_info (const struct printf_info *info, size_t n, int *argtypes)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function will return in argtypes the information about the used parameters in the way the vfprintf implementation expects it.  The format always takes one argument. 

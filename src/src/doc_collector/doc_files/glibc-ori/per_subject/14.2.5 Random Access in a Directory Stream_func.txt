@@ -1,0 +1,19 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void rewinddir (DIR *dirstream)
+Preliminary: | MT-Safe  | AS-Unsafe lock | AC-Unsafe lock | See POSIX Safety Concepts. 
+The rewinddir function is used to reinitialize the directory stream dirstream, so that if you call readdir it returns information about the first entry in the directory again.  This function also notices if files have been added or removed to the directory since it was opened with opendir.  (Entries for these files might or might not be returned by readdir if they were added or removed since you last called opendir or rewinddir.) 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: long int telldir (DIR *dirstream)
+Preliminary: | MT-Safe  | AS-Unsafe heap/bsd lock/bsd | AC-Unsafe mem/bsd lock/bsd | See POSIX Safety Concepts. 
+The telldir function returns the file position of the directory stream dirstream.  You can use this value with seekdir to restore the directory stream to that position. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void seekdir (DIR *dirstream, long int pos)
+Preliminary: | MT-Safe  | AS-Unsafe heap/bsd lock/bsd | AC-Unsafe mem/bsd lock/bsd | See POSIX Safety Concepts. 
+The seekdir function sets the file position of the directory stream dirstream to pos.  The value pos must be the result of a previous call to telldir on this particular stream; closing and reopening the directory can invalidate values returned by telldir. 

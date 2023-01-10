@@ -1,0 +1,46 @@
+Each network interface has a name.  This usually consists of a few letters that relate to the type of interface, which may be followed by a number if there is more than one interface of that type.  Examples might be lo (the loopback interface) and eth0 (the first Ethernet interface). 
+Although such names are convenient for humans, it would be clumsy to have to use them whenever a program needs to refer to an interface.  In such situations an interface is referred to by its index, which is an arbitrarily-assigned small positive integer. 
+The following functions, constants and data types are declared in the header file net/if.h. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Constant: size_t IFNAMSIZ
+This constant defines the maximum buffer size needed to hold an interface name, including its terminating zero byte. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: unsigned int if_nametoindex (const char *ifname)
+Preliminary: | MT-Safe  | AS-Unsafe lock | AC-Unsafe lock fd | See POSIX Safety Concepts. 
+This function yields the interface index corresponding to a particular name.  If no interface exists with the name given, it returns 0. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: char * if_indextoname (unsigned int ifindex, char *ifname)
+Preliminary: | MT-Safe  | AS-Unsafe lock | AC-Unsafe lock fd | See POSIX Safety Concepts. 
+This function maps an interface index to its corresponding name.  The returned name is placed in the buffer pointed to by ifname, which must be at least IFNAMSIZ bytes in length.  If the index was invalid, the function’s return value is a null pointer, otherwise it is ifname. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: struct if_nameindex
+This data type is used to hold the information about a single interface.  It has the following members: 
+	unsigned int if_index;
+This is the interface index.  
+	char *if_name
+This is the null-terminated index name.  
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: struct if_nameindex * if_nameindex (void)
+Preliminary: | MT-Safe  | AS-Unsafe heap lock/hurd | AC-Unsafe lock/hurd fd mem | See POSIX Safety Concepts. 
+This function returns an array of if_nameindex structures, one for every interface that is present.  The end of the list is indicated by a structure with an interface of 0 and a null name pointer.  If an error occurs, this function returns a null pointer. 
+The returned structure must be freed with if_freenameindex after use. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void if_freenameindex (struct if_nameindex *ptr)
+Preliminary: | MT-Safe  | AS-Unsafe heap | AC-Unsafe mem | See POSIX Safety Concepts. 
+This function frees the structure returned by an earlier call to if_nameindex. 

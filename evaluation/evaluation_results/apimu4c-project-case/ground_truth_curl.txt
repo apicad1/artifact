@@ -1,0 +1,28 @@
+ID	file	line	callee	type
+curl1/curl3 	curl-curl-7_63_0/lib/vtls/openssl.c	739	BIO_new
+curl2	curl-curl-7_63_0/lib/vtls/openssl.c	751	BIO_read_filename(BIO_ctrl)
+curl4	curl-curl-7_63_0/lib/vtls/openssl.c	885	SSL_CTX_use_PrivateKey
+curl5	curl-curl-7_63_0/lib/vtls/openssl.c	1442 strdup(callback function)
+curl6	curl-curl-7_63_0/lib/vtls/openssl.c	2261 Curl_ssl_sessionid_lock
+curl7	curl-curl-7_63_0/lib/vtls/openssl.c	2997 BIO_new
+curl8	curl-curl-7_63_0/lib/vtls/openssl.c	3044 SSL_get_peer_cert_chain
+curl9	curl-curl-7_63_0/lib/vtls/openssl.c	3330 BIO_new
+curl10	curl-curl-7_63_0/lib/vtls/openssl.c	3393 BIO_new
+curl11	curl-curl-7_63_0/lib/vtls/polarssl_threadlock.c	56 calloc(callback function)
+curl12/curl13 	curl-curl-7_63_0/lib/tftp.c	489	tftp_send_first	Curl_urldecode
+curl14/curl15 	curl-curl-7_63_0/lib/escape.c 155 malloc(callback function)
+curl16	curl-curl-7_63_0/lib/vtls/mbedtls.c	219	mbedtls_version_from_curl
+curl17	curl-curl-7_63_0/lib/vtls/polarssl.c 392 Curl_ssl_sessionid_lock
+curl18	curl-curl-7_63_0/lib/vtls/polarssl.c 260 x509_crt_parse_file
+curl19	curl-curl-7_63_0/lib/vtls/polarssl.c 661 ssl_write
+curl20	curl-curl-7_63_0/lib/vtls/polarssl.c 750 Curl_timeleft
+curl21	curl-curl-7_63_0/lib/smtp.c	518	strdup(callback function)
+curl22	curl-curl-7_63_0/lib/smtp.c	531	strdup(callback function)
+curl23	curl-curl-7_63_0/lib/formdata.c	361	strdup(callback function)
+curl24	curl-curl-7_63_0/lib/formdata.c	788	malloc(callback function)
+curl25	curl-curl-7_63_0/lib/vtls/darwinssl.c 1412 SSLNewContext
+curl26	curl-curl-7_63_0/lib/vtls/mbedtls.c	345	mbedtls_pk_parse_keyfile
+curl27	curl-curl-7_63_0/lib/vtls/mbedtls.c	603	malloc(callback function)
+curl28	curl-curl-7_63_0/lib/vtls/mbedtls.c	715	malloc(callback function)
+curl29 	curl-curl-7_63_0/lib/vtls/mbedtls.c	628	calloc(callback function)
+curl30 	curl-curl-7_63_0/lib/vtls/openssl.c	260	malloc(callback function)

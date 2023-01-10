@@ -1,0 +1,14 @@
+The specific representation of floating point numbers varies from machine to machine.  Because floating point numbers are represented internally as approximate quantities, algorithms for manipulating floating point data often need to take account of the precise details of the machine’s floating point representation. 
+Some of the functions in the C library itself need this information; for example, the algorithms for printing and reading floating point numbers (see I/O on Streams) and for calculating trigonometric and irrational functions (see Mathematics) use it to avoid round-off error and loss of accuracy.  User programs that implement numerical analysis techniques also often need this information in order to minimize or compute error bounds. 
+The header file float.h describes the format used by your machine. 
+
+TABLE_BEGIN
+ • Floating Point Concepts    Definitions of terminology.
+
+ • Floating Point Parameters    Details of specific macros.
+
+ • IEEE Floating Point    The measurements for one common
+                                 representation.
+
+TABLE_END
+

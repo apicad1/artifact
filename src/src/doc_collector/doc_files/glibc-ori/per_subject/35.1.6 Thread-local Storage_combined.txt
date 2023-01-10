@@ -1,0 +1,57 @@
+The GNU C Library implements functions to provide thread-local storage, a mechanism by which variables can be defined to have unique per-thread storage, lifetimes that match the thread lifetime, and destructors that cleanup the unique per-thread storage. 
+Several data types and macros exist for working with thread-local storage: 
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: tss_t
+The tss_t data type identifies a thread-specific storage object.  Even if shared, every thread will have its own instance of the variable, with different values. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: tss_dtor_t
+The tss_dtor_t is a function pointer of type void (*) (void *), to be used as a thread-specific storage destructor.  The function will be called when the current thread calls thrd_exit (but never when calling tss_delete or exit). 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: thread_local
+thread_local is used to mark a variable with thread storage duration, which means it is created when the thread starts and cleaned up when the thread ends. 
+Note: For C++, C++11 or later is required to use the thread_local keyword. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: TSS_DTOR_ITERATIONS
+TSS_DTOR_ITERATIONS is an integer constant expression representing the maximum number of iterations over all thread-local destructors at the time of thread termination.  This value provides a bounded limit to the destruction of thread-local storage; e.g., consider a destructor that creates more thread-local storage. 
+<<<<<<<<<<<<<<<<<<<<
+
+The following functions are used to manage thread-local storage: 
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int tss_create (tss_t *tss_key, tss_dtor_t destructor)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+tss_create creates a new thread-specific storage key and stores it in the object pointed to by tss_key.  Although the same key value may be used by different threads, the values bound to the key by tss_set are maintained on a per-thread basis and persist for the life of the calling thread. 
+If destructor is not NULL, a destructor function will be set, and called when the thread finishes its execution by calling thrd_exit. 
+This function returns thrd_success if tss_key is successfully set to a unique value for the thread; otherwise, thrd_error is returned and the value of tss_key is undefined. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int tss_set (tss_t tss_key, void *val)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+tss_set sets the value of the thread-specific storage identified by tss_key for the current thread to val. Different threads may set different values to the same key. 
+This function returns either thrd_success or thrd_error. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void * tss_get (tss_t tss_key)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+tss_get returns the value identified by tss_key held in thread-specific storage for the current thread.  Different threads may get different values identified by the same key.  On failure, tss_get returns zero. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void tss_delete (tss_t tss_key)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+tss_delete destroys the thread-specific storage identified by tss_key. 

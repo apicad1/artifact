@@ -1,0 +1,3 @@
+Mutexes are not the only synchronization mechanisms available.  For some more complex tasks, the GNU C Library also implements condition variables, which allow the programmer to think at a higher level when solving complex synchronization problems.  They are used to synchronize threads waiting on a certain condition to happen. 
+The fundamental data type for condition variables is the cnd_t: 
+The following functions are used for working with condition variables: 

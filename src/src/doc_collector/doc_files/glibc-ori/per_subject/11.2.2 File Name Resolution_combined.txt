@@ -1,0 +1,44 @@
+A file name consists of file name components separated by slash (‘/’) characters.  On the systems that the GNU C Library supports, multiple successive ‘/’ characters are equivalent to a single ‘/’ character. 
+The process of determining what file a file name refers to is called file name resolution.  This is performed by examining the components that make up a file name in left-to-right order, and locating each successive component in the directory named by the previous component.  Of course, each of the files that are referenced as directories must actually exist, be directories instead of regular files, and have the appropriate permissions to be accessible by the process; otherwise the file name resolution fails. 
+If a file name begins with a ‘/’, the first component in the file name is located in the root directory of the process (usually all processes on the system have the same root directory).  Such a file name is called an absolute file name. 
+Otherwise, the first component in the file name is located in the current working directory (see Working Directory).  This kind of file name is called a relative file name. 
+The file name components . (“dot”) and .. (“dot-dot”) have special meanings.  Every directory has entries for these file name components.  The file name component . refers to the directory itself, while the file name component .. refers to its parent directory (the directory that contains the link for the directory in question).  As a special case, .. in the root directory refers to the root directory itself, since it has no parent; thus /.. is the same as /. 
+Here are some examples of file names: 
+
+>>>>>>>>>>>>>>>>>>>>
+- /a
+The file named a, in the root directory. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- /a/b
+The file named b, in the directory named a in the root directory. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- a
+The file named a, in the current working directory. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- /a/./b
+This is the same as /a/b. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ./a
+The file named a, in the current working directory. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ../a
+The file named a, in the parent directory of the current working directory. 
+<<<<<<<<<<<<<<<<<<<<
+
+A file name that names a directory may optionally end in a ‘/’. You can specify a file name of / to refer to the root directory, but the empty string is not a meaningful file name.  If you want to refer to the current working directory, use a file name of . or ./. 
+Unlike some other operating systems, GNU systems don’t have any built-in support for file types (or extensions) or file versions as part of its file name syntax.  Many programs and utilities use conventions for file names—for example, files containing C source code usually have names suffixed with ‘.c’—but there is nothing in the file system itself that enforces this kind of convention. 

@@ -1,0 +1,9 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: error_t argp_parse (const struct argp *argp, int argc, char **argv, unsigned flags, int *arg_index, void *input)
+Preliminary: | MT-Unsafe race:argpbuf locale env | AS-Unsafe heap i18n lock corrupt | AC-Unsafe mem lock corrupt | See POSIX Safety Concepts. 
+The argp_parse function parses the arguments in argv, of length argc, using the argp parser argp.  See Argp Parsers.  Passing a null pointer for argp is the same as using a struct argp containing all zeros. 
+flags is a set of flag bits that modify the parsing behavior. See Argp Flags.  input is passed through to the argp parser argp, and has meaning defined by argp.  A typical usage is to pass a pointer to a structure which is used for specifying parameters to the parser and passing back the results. 
+Unless the ARGP_NO_EXIT or ARGP_NO_HELP flags are included in flags, calling argp_parse may result in the program exiting.  This behavior is true if an error is detected, or when an unknown option is encountered.  See Program Termination. 
+If arg_index is non-null, the index of the first unparsed option in argv is returned as a value. 
+The return value is zero for successful parsing, or an error code (see Error Codes) if an error is detected.  Different argp parsers may return arbitrary error codes, but the standard error codes are: ENOMEM if a memory allocation error occurred, or EINVAL if an unknown option or option argument is encountered. 

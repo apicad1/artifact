@@ -1,0 +1,44 @@
+__SETFPUCW(3)                                   Linux Programmer's Manual                                  __SETFPUCW(3)
+
+NAME
+       __setfpucw - set FPU control word on i386 architecture (obsolete)
+
+SYNOPSIS
+       #include <i386/fpu_control.h>
+
+       void __setfpucw(unsigned short control_word);
+
+DESCRIPTION
+       __setfpucw()  transfers  control_word to the registers of the FPU (floating-point unit) on the i386 architecture.
+       This was used to control floating-point precision, rounding and floating-point exceptions.
+
+CONFORMING TO
+       This function was a nonstandard GNU extension.
+
+NOTES
+       As of glibc 2.1 this function does not exist anymore.  There are new  functions  from  C99,  with  prototypes  in
+       <fenv.h>,  to  control FPU rounding modes, like fegetround(3), fesetround(3), and the floating-point environment,
+       like fegetenv(3), feholdexcept(3), fesetenv(3), feupdateenv(3),  and  FPU  exception  handling,  like  feclearex‐
+       cept(3), fegetexceptflag(3), feraiseexcept(3), fesetexceptflag(3), and fetestexcept(3).
+
+       If  direct  access  to  the FPU control word is still needed, the _FPU_GETCW and _FPU_SETCW macros from <fpu_con‐
+       trol.h> can be used.
+
+EXAMPLES
+       __setfpucw(0x1372)
+
+       Set FPU control word on the i386 architecture to
+            - extended precision
+            - rounding to nearest
+            - exceptions on overflow, zero divide and NaN
+
+SEE ALSO
+       feclearexcept(3)
+
+       <fpu_control.h>
+
+COLOPHON
+       This page is part of release 5.13 of the Linux man-pages project.  A  description  of  the  project,  information
+       about reporting bugs, and the latest version of this page, can be found at https://www.kernel.org/doc/man-pages/.
+
+Linux                                                  2021-03-22                                          __SETFPUCW(3)

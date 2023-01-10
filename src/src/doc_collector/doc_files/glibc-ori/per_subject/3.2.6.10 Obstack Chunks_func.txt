@@ -1,0 +1,5 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int obstack_chunk_size (struct obstack *obstack-ptr)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This returns the chunk size of the given obstack. 

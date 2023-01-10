@@ -1,0 +1,12 @@
+IEEE 754 floating-point implementations allow the programmer to decide whether traps will occur for each of the exceptions, by setting bits in the control word.  In C, traps result in the program receiving the SIGFPE signal; see Signal Handling. 
+NB: IEEE 754 says that trap handlers are given details of the exceptional situation, and can set the result value.  C signals do not provide any mechanism to pass this information back and forth. Trapping exceptions in C is therefore not very useful. 
+It is sometimes necessary to save the state of the floating-point unit while you perform some calculation.  The library provides functions which save and restore the exception flags, the set of exceptions that generate traps, and the rounding mode.  This information is known as the floating-point environment. 
+The functions to save and restore the floating-point environment all use a variable of type fenv_t to store information.  This type is defined in fenv.h.  Its size and contents are implementation-defined.  You should not attempt to manipulate a variable of this type directly. 
+To save the state of the FPU, use one of these functions: 
+The functions which restore the floating-point environment can take these kinds of arguments: 
+  Pointers to fenv_t objects, which were initialized previously by a call to fegetenv or feholdexcept.   The special macro FE_DFL_ENV which represents the floating-point environment as it was available at program start.  Implementation defined macros with names starting with FE_ and having type fenv_t *.   If possible, the GNU C Library defines a macro FE_NOMASK_ENV which represents an environment where every exception raised causes a trap to occur.  You can test for this macro using #ifdef.  It is only defined if _GNU_SOURCE is defined.  Some platforms might define other predefined environments. 
+To set the floating-point environment, you can use either of these functions: 
+TS 18661-1:2014 defines additional functions to save and restore floating-point control modes (such as the rounding mode and whether traps are enabled) while leaving other status (such as raised flags) unchanged. 
+The special macro FE_DFL_MODE may be passed to fesetmode.  It represents the floating-point control modes at program start. 
+To control for individual exceptions if raising them causes a trap to occur, you can use the following two functions. 
+Portability Note: These functions are all GNU extensions. 

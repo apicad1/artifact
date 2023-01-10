@@ -1,0 +1,52 @@
+The GNU C Library provides several waiting functions that expect an explicit clockid_t argument. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int sem_clockwait (sem_t *sem, clockid_t clockid,
+const struct timespec *abstime) Behaves like sem_timedwait except the time abstime is measured against the clock specified by clockid rather than CLOCK_REALTIME.  Currently, clockid must be either CLOCK_MONOTONIC or CLOCK_REALTIME. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int pthread_cond_clockwait (pthread_cond_t *cond, pthread_mutex_t *mutex,
+clockid_t clockid, const struct timespec *abstime) Preliminary: | MT-Safe  | AS-Unsafe lock | AC-Unsafe lock | See POSIX Safety Concepts. 
+Behaves like pthread_cond_timedwait except the time abstime is measured against the clock specified by clockid rather than the clock specified or defaulted when pthread_cond_init was called.  Currently, clockid must be either CLOCK_MONOTONIC or CLOCK_REALTIME. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int pthread_rwlock_clockrdlock (pthread_rwlock_t *rwlock,
+clockid_t clockid, 				       const struct timespec *abstime) 
+Preliminary: | MT-Safe  | AS-Unsafe lock | AC-Unsafe lock | See POSIX Safety Concepts. 
+Behaves like pthread_rwlock_timedrdlock except the time abstime is measured against the clock specified by clockid rather than CLOCK_REALTIME.  Currently, clockid must be either CLOCK_MONOTONIC or CLOCK_REALTIME, otherwise EINVAL is returned. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int pthread_rwlock_clockwrlock (pthread_rwlock_t *rwlock,
+clockid_t clockid, 				       const struct timespec *abstime) 
+Preliminary: | MT-Safe  | AS-Unsafe lock | AC-Unsafe lock | See POSIX Safety Concepts. 
+Behaves like pthread_rwlock_timedwrlock except the time abstime is measured against the clock specified by clockid rather than CLOCK_REALTIME.  Currently, clockid must be either CLOCK_MONOTONIC or CLOCK_REALTIME, otherwise EINVAL is returned. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int pthread_tryjoin_np (pthread_t *thread,
+void **thread_return) 
+Preliminary: | MT-Safe  | AS-Unsafe lock | AC-Unsafe lock | See POSIX Safety Concepts. 
+Behaves like pthread_join except that it will return EBUSY immediately if the thread specified by thread has not yet terminated. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int pthread_timedjoin_np (pthread_t *thread,
+void **thread_return, 				      const struct timespec *abstime) 
+Preliminary: | MT-Safe  | AS-Unsafe lock | AC-Unsafe lock | See POSIX Safety Concepts. 
+Behaves like pthread_tryjoin_np except that it will block until the absolute time abstime measured against CLOCK_REALTIME is reached if the thread has not terminated by that time and return EBUSY. If abstime is equal to NULL then the function will wait forever in the same way as pthread_join. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int pthread_clockjoin_np (pthread_t *thread,
+void **thread_return,                                       clockid_t clockid, 				      const struct timespec *abstime) 
+Preliminary: | MT-Safe  | AS-Unsafe lock | AC-Unsafe lock | See POSIX Safety Concepts. 
+Behaves like pthread_timedjoin_np except that the absolute time in abstime is measured against the clock specified by clockid. Currently, clockid must be either CLOCK_MONOTONIC or CLOCK_REALTIME. 

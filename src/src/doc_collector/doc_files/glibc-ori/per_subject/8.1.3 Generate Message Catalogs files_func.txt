@@ -1,0 +1,38 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘-V’
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘--version’
+Print the version information and exit. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘-h’
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘--help’
+Print a usage message listing all available options, then exit successfully. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘--new’
+Do not merge the new messages from the input files with the old content of the output file.  The old content of the output file is discarded. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘-H’
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- ‘--header=name’
+This option is used to emit the symbolic names given to sets and messages in the input files for use in the program.  Details about how to use this are given in the next section.  The name parameter to this option specifies the name of the output file.  It will contain a number of C preprocessor #defines to associate a name with a number. 
+Please note that the generated file only contains the symbols from the input files.  If the output is merged with the previous content of the output file the possibly existing symbols from the file(s) which generated the old output files are not in the generated header file. 

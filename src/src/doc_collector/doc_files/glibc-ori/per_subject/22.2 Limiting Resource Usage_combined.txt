@@ -1,0 +1,193 @@
+You can specify limits for the resource usage of a process.  When the process tries to exceed a limit, it may get a signal, or the system call by which it tried to do so may fail, depending on the resource.  Each process initially inherits its limit values from its parent, but it can subsequently change them. 
+There are two per-process limits associated with a resource:  
+
+>>>>>>>>>>>>>>>>>>>>
+- current limit
+The current limit is the value the system will not allow usage to exceed.  It is also called the “soft limit” because the process being limited can generally raise the current limit at will.   
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- maximum limit
+The maximum limit is the maximum value to which a process is allowed to set its current limit.  It is also called the “hard limit” because there is no way for a process to get around it.  A process may lower its own maximum limit, but only the superuser may increase a maximum limit.   
+<<<<<<<<<<<<<<<<<<<<
+
+The symbols for use with getrlimit, setrlimit, getrlimit64, and setrlimit64 are defined in sys/resource.h. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int getrlimit (int resource, struct rlimit *rlp)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+Read the current and maximum limits for the resource resource and store them in *rlp. 
+The return value is 0 on success and -1 on failure.  The only possible errno error condition is EFAULT. 
+When the sources are compiled with _FILE_OFFSET_BITS == 64 on a 32-bit system this function is in fact getrlimit64.  Thus, the LFS interface transparently replaces the old interface. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int getrlimit64 (int resource, struct rlimit64 *rlp)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function is similar to getrlimit but its second parameter is a pointer to a variable of type struct rlimit64, which allows it to read values which wouldn’t fit in the member of a struct rlimit. 
+If the sources are compiled with _FILE_OFFSET_BITS == 64 on a 32-bit machine, this function is available under the name getrlimit and so transparently replaces the old interface. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int setrlimit (int resource, const struct rlimit *rlp)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+Store the current and maximum limits for the resource resource in *rlp. 
+The return value is 0 on success and -1 on failure.  The following errno error condition is possible: 
+	EPERM
+  The process tried to raise a current limit beyond the maximum limit.   The process tried to raise a maximum limit, but is not superuser.  
+When the sources are compiled with _FILE_OFFSET_BITS == 64 on a 32-bit system this function is in fact setrlimit64.  Thus, the LFS interface transparently replaces the old interface. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int setrlimit64 (int resource, const struct rlimit64 *rlp)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function is similar to setrlimit but its second parameter is a pointer to a variable of type struct rlimit64 which allows it to set values which wouldn’t fit in the member of a struct rlimit. 
+If the sources are compiled with _FILE_OFFSET_BITS == 64 on a 32-bit machine this function is available under the name setrlimit and so transparently replaces the old interface. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: struct rlimit
+This structure is used with getrlimit to receive limit values, and with setrlimit to specify limit values for a particular process and resource.  It has two fields: 
+	rlim_t rlim_cur
+The current limit  
+	rlim_t rlim_max
+The maximum limit. 
+For getrlimit, the structure is an output; it receives the current values.  For setrlimit, it specifies the new values. 
+<<<<<<<<<<<<<<<<<<<<
+
+For the LFS functions a similar type is defined in sys/resource.h. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: struct rlimit64
+This structure is analogous to the rlimit structure above, but its components have wider ranges.  It has two fields: 
+	rlim64_t rlim_cur
+This is analogous to rlimit.rlim_cur, but with a different type.  
+	rlim64_t rlim_max
+This is analogous to rlimit.rlim_max, but with a different type. 
+<<<<<<<<<<<<<<<<<<<<
+
+Here is a list of resources for which you can specify a limit.  Memory and file sizes are measured in bytes. 
+
+>>>>>>>>>>>>>>>>>>>>
+- RLIMIT_CPU  
+The maximum amount of CPU time the process can use.  If it runs for longer than this, it gets a signal: SIGXCPU.  The value is measured in seconds.  See Operation Error Signals. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- RLIMIT_FSIZE  
+The maximum size of file the process can create.  Trying to write a larger file causes a signal: SIGXFSZ.  See Operation Error Signals. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- RLIMIT_DATA  
+The maximum size of data memory for the process.  If the process tries to allocate data memory beyond this amount, the allocation function fails. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- RLIMIT_STACK  
+The maximum stack size for the process.  If the process tries to extend its stack past this size, it gets a SIGSEGV signal. See Program Error Signals. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- RLIMIT_CORE  
+The maximum size core file that this process can create.  If the process terminates and would dump a core file larger than this, then no core file is created.  So setting this limit to zero prevents core files from ever being created. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- RLIMIT_RSS  
+The maximum amount of physical memory that this process should get. This parameter is a guide for the system’s scheduler and memory allocator; the system may give the process more memory when there is a surplus. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- RLIMIT_MEMLOCK  
+The maximum amount of memory that can be locked into physical memory (so it will never be paged out). 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- RLIMIT_NPROC  
+The maximum number of processes that can be created with the same user ID. If you have reached the limit for your user ID, fork will fail with EAGAIN.  See Creating a Process. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- RLIMIT_NOFILE  
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- RLIMIT_OFILE  
+The maximum number of files that the process can open.  If it tries to open more files than this, its open attempt fails with errno EMFILE.  See Error Codes.  Not all systems support this limit; GNU does, and 4.4 BSD does. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- RLIMIT_AS  
+The maximum size of total memory that this process should get.  If the process tries to allocate more memory beyond this amount with, for example, brk, malloc, mmap or sbrk, the allocation function fails. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- RLIM_NLIMITS  
+The number of different resource limits.  Any valid resource operand must be less than RLIM_NLIMITS. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Constant: rlim_t RLIM_INFINITY
+This constant stands for a value of “infinity” when supplied as the limit value in setrlimit. 
+<<<<<<<<<<<<<<<<<<<<
+
+The following are historical functions to do some of what the functions above do.  The functions above are better choices. 
+ulimit and the command symbols are declared in ulimit.h.  
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: long int ulimit (int cmd, …)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+ulimit gets the current limit or sets the current and maximum limit for a particular resource for the calling process according to the command cmd. 
+If you are getting a limit, the command argument is the only argument. If you are setting a limit, there is a second argument: long int limit which is the value to which you are setting the limit. 
+The cmd values and the operations they specify are: 
+	GETFSIZE  
+Get the current limit on the size of a file, in units of 512 bytes.  
+	SETFSIZE  
+Set the current and maximum limit on the size of a file to limit * 512 bytes.  
+There are also some other cmd values that may do things on some systems, but they are not supported. 
+Only the superuser may increase a maximum limit. 
+When you successfully get a limit, the return value of ulimit is that limit, which is never negative.  When you successfully set a limit, the return value is zero.  When the function fails, the return value is -1 and errno is set according to the reason: 
+	EPERM
+A process tried to increase a maximum limit, but is not superuser. 
+<<<<<<<<<<<<<<<<<<<<
+
+vlimit and its resource symbols are declared in sys/vlimit.h.  
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int vlimit (int resource, int limit)
+Preliminary: | MT-Unsafe race:setrlimit | AS-Unsafe  | AC-Safe  | See POSIX Safety Concepts. 
+vlimit sets the current limit for a resource for a process. 
+resource identifies the resource: 
+	LIM_CPU  
+Maximum CPU time.  Same as RLIMIT_CPU for setrlimit. 
+	LIM_FSIZE  
+Maximum file size.  Same as RLIMIT_FSIZE for setrlimit. 
+	LIM_DATA  
+Maximum data memory.  Same as RLIMIT_DATA for setrlimit. 
+	LIM_STACK  
+Maximum stack size.  Same as RLIMIT_STACK for setrlimit. 
+	LIM_CORE  
+Maximum core file size.  Same as RLIMIT_COR for setrlimit. 
+	LIM_MAXRSS  
+Maximum physical memory.  Same as RLIMIT_RSS for setrlimit. 
+The return value is zero for success, and -1 with errno set accordingly for failure: 
+	EPERM
+The process tried to set its current limit beyond its maximum limit. 

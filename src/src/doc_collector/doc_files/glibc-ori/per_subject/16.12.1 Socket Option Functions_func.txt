@@ -1,0 +1,21 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int getsockopt (int socket, int level, int optname, void *optval, socklen_t *optlen-ptr)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The getsockopt function gets information about the value of option optname at level level for socket socket. 
+The option value is stored in the buffer that optval points to. Before the call, you should supply in *optlen-ptr the size of this buffer; on return, it contains the number of bytes of information actually stored in the buffer. 
+Most options interpret the optval buffer as a single int value. 
+The actual return value of getsockopt is 0 on success and -1 on failure.  The following errno error conditions are defined: 
+	EBADF
+The socket argument is not a valid file descriptor.  
+	ENOTSOCK
+The descriptor socket is not a socket.  
+	ENOPROTOOPT
+The optname doesn’t make sense for the given level. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int setsockopt (int socket, int level, int optname, const void *optval, socklen_t optlen)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This function is used to set the socket option optname at level level for socket socket.  The value of the option is passed in the buffer optval of size optlen. 

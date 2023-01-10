@@ -1,0 +1,7 @@
+Ordinary fixed arguments have individual names, and you can use these names to access their values.  But optional arguments have no names—nothing but ‘…’.  How can you access them? 
+The only way to access them is sequentially, in the order they were written, and you must use special macros from stdarg.h in the following three step process: 
+See Argument Macros, for the full definitions of va_start, va_arg and va_end. 
+Steps 1 and 3 must be performed in the function that accepts the optional arguments.  However, you can pass the va_list variable as an argument to another function and perform all or part of step 2 there. 
+You can perform the entire sequence of three steps multiple times within a single function invocation.  If you want to ignore the optional arguments, you can do these steps zero times. 
+You can have more than one argument pointer variable if you like.  You can initialize each variable with va_start when you wish, and then you can fetch arguments with each argument pointer as you wish. Each argument pointer variable will sequence through the same set of argument values, but at its own pace. 
+Portability note: With some compilers, once you pass an argument pointer value to a subroutine, you must not keep using the same argument pointer value after that subroutine returns.  For full portability, you should just pass it to va_end.  This is actually an ISO C requirement, but most ANSI C compilers work happily regardless. 

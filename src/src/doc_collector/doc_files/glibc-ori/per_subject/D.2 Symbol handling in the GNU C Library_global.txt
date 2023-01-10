@@ -1,0 +1,7 @@
+
+TABLE_BEGIN
+ • 64-bit time symbol handling     How to handle 64-bit time related
+                                    symbols in the GNU C Library.
+
+TABLE_END
+

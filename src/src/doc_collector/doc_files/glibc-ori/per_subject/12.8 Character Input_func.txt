@@ -1,0 +1,92 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int fgetc (FILE *stream)
+Preliminary: | MT-Safe  | AS-Unsafe corrupt | AC-Unsafe lock corrupt | See POSIX Safety Concepts. 
+This function reads the next character as an unsigned char from the stream stream and returns its value, converted to an int.  If an end-of-file condition or read error occurs, EOF is returned instead. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: wint_t fgetwc (FILE *stream)
+Preliminary: | MT-Safe  | AS-Unsafe corrupt | AC-Unsafe lock corrupt | See POSIX Safety Concepts. 
+This function reads the next wide character from the stream stream and returns its value.  If an end-of-file condition or read error occurs, WEOF is returned instead. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int fgetc_unlocked (FILE *stream)
+Preliminary: | MT-Safe race:stream | AS-Unsafe corrupt | AC-Unsafe corrupt | See POSIX Safety Concepts. 
+The fgetc_unlocked function is equivalent to the fgetc function except that it does not implicitly lock the stream. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: wint_t fgetwc_unlocked (FILE *stream)
+Preliminary: | MT-Safe race:stream | AS-Unsafe corrupt | AC-Unsafe corrupt | See POSIX Safety Concepts. 
+The fgetwc_unlocked function is equivalent to the fgetwc function except that it does not implicitly lock the stream. 
+This function is a GNU extension. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int getc (FILE *stream)
+Preliminary: | MT-Safe  | AS-Unsafe corrupt | AC-Unsafe lock corrupt | See POSIX Safety Concepts. 
+This is just like fgetc, except that it is permissible (and typical) for it to be implemented as a macro that evaluates the stream argument more than once.  getc is often highly optimized, so it is usually the best function to use to read a single character. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: wint_t getwc (FILE *stream)
+Preliminary: | MT-Safe  | AS-Unsafe corrupt | AC-Unsafe lock corrupt | See POSIX Safety Concepts. 
+This is just like fgetwc, except that it is permissible for it to be implemented as a macro that evaluates the stream argument more than once.  getwc can be highly optimized, so it is usually the best function to use to read a single wide character. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int getc_unlocked (FILE *stream)
+Preliminary: | MT-Safe race:stream | AS-Unsafe corrupt | AC-Unsafe corrupt | See POSIX Safety Concepts. 
+The getc_unlocked function is equivalent to the getc function except that it does not implicitly lock the stream. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: wint_t getwc_unlocked (FILE *stream)
+Preliminary: | MT-Safe race:stream | AS-Unsafe corrupt | AC-Unsafe corrupt | See POSIX Safety Concepts. 
+The getwc_unlocked function is equivalent to the getwc function except that it does not implicitly lock the stream. 
+This function is a GNU extension. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int getchar (void)
+Preliminary: | MT-Safe  | AS-Unsafe corrupt | AC-Unsafe lock corrupt | See POSIX Safety Concepts. 
+The getchar function is equivalent to getc with stdin as the value of the stream argument. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: wint_t getwchar (void)
+Preliminary: | MT-Safe  | AS-Unsafe corrupt | AC-Unsafe lock corrupt | See POSIX Safety Concepts. 
+The getwchar function is equivalent to getwc with stdin as the value of the stream argument. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int getchar_unlocked (void)
+Preliminary: | MT-Unsafe race:stdin | AS-Unsafe corrupt | AC-Unsafe corrupt | See POSIX Safety Concepts. 
+The getchar_unlocked function is equivalent to the getchar function except that it does not implicitly lock the stream. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: wint_t getwchar_unlocked (void)
+Preliminary: | MT-Unsafe race:stdin | AS-Unsafe corrupt | AC-Unsafe corrupt | See POSIX Safety Concepts. 
+The getwchar_unlocked function is equivalent to the getwchar function except that it does not implicitly lock the stream. 
+This function is a GNU extension. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int getw (FILE *stream)
+Preliminary: | MT-Safe  | AS-Unsafe corrupt | AC-Unsafe lock corrupt | See POSIX Safety Concepts. 
+This function reads a word (that is, an int) from stream. It’s provided for compatibility with SVID.  We recommend you use fread instead (see Block Input/Output).  Unlike getc, any int value could be a valid result.  getw returns EOF when it encounters end-of-file or an error, but there is no way to distinguish this from an input word with value -1. 

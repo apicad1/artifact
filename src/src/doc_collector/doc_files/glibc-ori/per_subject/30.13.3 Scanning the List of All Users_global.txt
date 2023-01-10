@@ -1,0 +1,3 @@
+This section explains how a program can read the list of all users in the system, one user at a time.  The functions described here are declared in pwd.h. 
+You can use the fgetpwent function to read user entries from a particular file. 
+The way to scan all the entries in the user database is with setpwent, getpwent, and endpwent. 

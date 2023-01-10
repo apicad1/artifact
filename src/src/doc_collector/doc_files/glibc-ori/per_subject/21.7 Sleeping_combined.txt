@@ -1,0 +1,29 @@
+The function sleep gives a simple way to make the program wait for a short interval.  If your program doesn’t use signals (except to terminate), then you can expect sleep to wait reliably throughout the specified interval.  Otherwise, sleep can return sooner if a signal arrives; if you want to wait for a given interval regardless of signals, use select (see Waiting for I/O) and don’t specify any descriptors to wait for. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: unsigned int sleep (unsigned int seconds)
+Preliminary: | MT-Unsafe sig:SIGCHLD/linux | AS-Unsafe  | AC-Unsafe  | See POSIX Safety Concepts. 
+The sleep function waits for seconds seconds or until a signal is delivered, whichever happens first. 
+If sleep returns because the requested interval is over, it returns a value of zero.  If it returns because of delivery of a signal, its return value is the remaining time in the sleep interval. 
+The sleep function is declared in unistd.h. 
+<<<<<<<<<<<<<<<<<<<<
+
+Resist the temptation to implement a sleep for a fixed amount of time by using the return value of sleep, when nonzero, to call sleep again.  This will work with a certain amount of accuracy as long as signals arrive infrequently.  But each signal can cause the eventual wakeup time to be off by an additional second or so.  Suppose a few signals happen to arrive in rapid succession by bad luck—there is no limit on how much this could shorten or lengthen the wait. 
+Instead, compute the calendar time at which the program should stop waiting, and keep trying to wait until that calendar time.  This won’t be off by more than a second.  With just a little more work, you can use select and make the waiting period quite accurate.  (Of course, heavy system load can cause additional unavoidable delays—unless the machine is dedicated to one application, there is no way you can avoid this.) 
+On some systems, sleep can do strange things if your program uses SIGALRM explicitly.  Even if SIGALRM signals are being ignored or blocked when sleep is called, sleep might return prematurely on delivery of a SIGALRM signal.  If you have established a handler for SIGALRM signals and a SIGALRM signal is delivered while the process is sleeping, the action taken might be just to cause sleep to return instead of invoking your handler.  And, if sleep is interrupted by delivery of a signal whose handler requests an alarm or alters the handling of SIGALRM, this handler and sleep will interfere. 
+On GNU systems, it is safe to use sleep and SIGALRM in the same program, because sleep does not work by means of SIGALRM. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int nanosleep (const struct timespec *requested_time, struct timespec *remaining)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+If resolution to seconds is not enough the nanosleep function can be used.  As the name suggests the sleep interval can be specified in nanoseconds.  The actual elapsed time of the sleep interval might be longer since the system rounds the elapsed time you request up to the next integer multiple of the actual resolution the system can deliver. 
+*requested_time is the elapsed time of the interval you want to sleep. 
+The function returns as *remaining the elapsed time left in the interval for which you requested to sleep.  If the interval completed without getting interrupted by a signal, this is zero. 
+struct timespec is described in Time Types. 
+If the function returns because the interval is over the return value is zero.  If the function returns -1 the global variable errno is set to the following values: 
+	EINTR
+The call was interrupted because a signal was delivered to the thread. If the remaining parameter is not the null pointer the structure pointed to by remaining is updated to contain the remaining elapsed time.  
+	EINVAL
+The nanosecond value in the requested_time parameter contains an illegal value.  Either the value is negative or greater than or equal to 1000 million. 
+This function is a cancellation point in multi-threaded programs.  This is a problem if the thread allocates some resources (like memory, file descriptors, semaphores or whatever) at the time nanosleep is called.  If the thread gets canceled these resources stay allocated until the program ends.  To avoid this calls to nanosleep should be protected using cancellation handlers. 
+The nanosleep function is declared in time.h. 

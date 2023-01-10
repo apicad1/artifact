@@ -1,0 +1,1 @@
+Here are functions that provide information on the current status of allocation in an obstack.  You can use them to learn about an object while still growing it. 

@@ -1,0 +1,20 @@
+Defining and using a variadic function involves three steps: 
+  Define the function as variadic, using an ellipsis (‘…’) in the argument list, and using special macros to access the variable arguments.  See Receiving Arguments.   Declare the function as variadic, using a prototype with an ellipsis (‘…’), in all the files which call it. See Variadic Prototypes.   Call the function by writing the fixed arguments followed by the additional variable arguments.  See Calling Variadics. 
+
+TABLE_BEGIN
+ • Variadic Prototypes    How to make a prototype for a function
+			  with variable arguments.
+
+ • Receiving Arguments    Steps you must follow to access the
+			  optional argument values.
+
+ • How Many Arguments    How to decide whether there are more arguments.
+
+ • Calling Variadics    Things you need to know about calling
+			  variable arguments functions.
+
+ • Argument Macros    Detailed specification of the macros
+        		  for accessing variable arguments.
+
+TABLE_END
+

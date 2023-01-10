@@ -1,0 +1,52 @@
+The database that keeps track of “well-known” services is usually either the file /etc/services or an equivalent from a name server. You can use these utilities, declared in netdb.h, to access the services database.  
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: struct servent
+This data type holds information about entries from the services database. It has the following members: 
+	char *s_name
+This is the “official” name of the service.  
+	char **s_aliases
+These are alternate names for the service, represented as an array of strings.  A null pointer terminates the array.  
+	int s_port
+This is the port number for the service.  Port numbers are given in network byte order; see Byte Order.  
+	char *s_proto
+This is the name of the protocol to use with this service. See Protocols Database. 
+<<<<<<<<<<<<<<<<<<<<
+
+To get information about a particular service, use the getservbyname or getservbyport functions.  The information is returned in a statically-allocated structure; you must copy the information if you need to save it across calls. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: struct servent * getservbyname (const char *name, const char *proto)
+Preliminary: | MT-Unsafe race:servbyname locale | AS-Unsafe dlopen plugin heap lock | AC-Unsafe corrupt lock fd mem | See POSIX Safety Concepts. 
+The getservbyname function returns information about the service named name using protocol proto.  If it can’t find such a service, it returns a null pointer. 
+This function is useful for servers as well as for clients; servers use it to determine which port they should listen on (see Listening). 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: struct servent * getservbyport (int port, const char *proto)
+Preliminary: | MT-Unsafe race:servbyport locale | AS-Unsafe dlopen plugin heap lock | AC-Unsafe corrupt lock fd mem | See POSIX Safety Concepts. 
+The getservbyport function returns information about the service at port port using protocol proto.  If it can’t find such a service, it returns a null pointer. 
+<<<<<<<<<<<<<<<<<<<<
+
+You can also scan the services database using setservent, getservent and endservent.  Be careful when using these functions because they are not reentrant. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void setservent (int stayopen)
+Preliminary: | MT-Unsafe race:servent locale | AS-Unsafe dlopen plugin heap lock | AC-Unsafe corrupt lock fd mem | See POSIX Safety Concepts. 
+This function opens the services database to begin scanning it. 
+If the stayopen argument is nonzero, this sets a flag so that subsequent calls to getservbyname or getservbyport will not close the database (as they usually would).  This makes for more efficiency if you call those functions several times, by avoiding reopening the database for each call. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: struct servent * getservent (void)
+Preliminary: | MT-Unsafe race:servent race:serventbuf locale | AS-Unsafe dlopen plugin heap lock | AC-Unsafe corrupt lock fd mem | See POSIX Safety Concepts. 
+This function returns the next entry in the services database.  If there are no more entries, it returns a null pointer. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void endservent (void)
+Preliminary: | MT-Unsafe race:servent locale | AS-Unsafe dlopen plugin heap lock | AC-Unsafe corrupt lock fd mem | See POSIX Safety Concepts. 
+This function closes the services database. 

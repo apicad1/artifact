@@ -1,0 +1,49 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: struct netent
+This data type is used to represent information about entries in the networks database.  It has the following members: 
+	char *n_name
+This is the “official” name of the network.  
+	char **n_aliases
+These are alternative names for the network, represented as a vector of strings.  A null pointer terminates the array.  
+	int n_addrtype
+This is the type of the network number; this is always equal to AF_INET for Internet networks.  
+	unsigned long int n_net
+This is the network number.  Network numbers are returned in host byte order; see Byte Order. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: struct netent * getnetbyname (const char *name)
+Preliminary: | MT-Unsafe race:netbyname env locale | AS-Unsafe dlopen plugin heap lock | AC-Unsafe corrupt lock fd mem | See POSIX Safety Concepts. 
+The getnetbyname function returns information about the network named name.  It returns a null pointer if there is no such network. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: struct netent * getnetbyaddr (uint32_t net, int type)
+Preliminary: | MT-Unsafe race:netbyaddr locale | AS-Unsafe dlopen plugin heap lock | AC-Unsafe corrupt lock fd mem | See POSIX Safety Concepts. 
+The getnetbyaddr function returns information about the network of type type with number net.  You should specify a value of AF_INET for the type argument for Internet networks. 
+getnetbyaddr returns a null pointer if there is no such network. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void setnetent (int stayopen)
+Preliminary: | MT-Unsafe race:netent env locale | AS-Unsafe dlopen plugin heap lock | AC-Unsafe corrupt lock fd mem | See POSIX Safety Concepts. 
+This function opens and rewinds the networks database. 
+If the stayopen argument is nonzero, this sets a flag so that subsequent calls to getnetbyname or getnetbyaddr will not close the database (as they usually would).  This makes for more efficiency if you call those functions several times, by avoiding reopening the database for each call. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: struct netent * getnetent (void)
+Preliminary: | MT-Unsafe race:netent race:netentbuf env locale | AS-Unsafe dlopen plugin heap lock | AC-Unsafe corrupt lock fd mem | See POSIX Safety Concepts. 
+This function returns the next entry in the networks database.  It returns a null pointer if there are no more entries. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void endnetent (void)
+Preliminary: | MT-Unsafe race:netent env locale | AS-Unsafe dlopen plugin heap lock | AC-Unsafe corrupt lock fd mem | See POSIX Safety Concepts. 
+This function closes the networks database. 

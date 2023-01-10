@@ -1,0 +1,1 @@
+The functions and data structures for accessing the system user database are declared in the header file pwd.h.  

@@ -1,0 +1,30 @@
+The most general dynamic allocation facility is malloc.  It allows you to allocate blocks of memory of any size at any time, make them bigger or smaller at any time, and free the blocks individually at any time (or never). 
+
+TABLE_BEGIN
+ • Basic Allocation    Simple use of malloc.
+
+ • Malloc Examples    Examples of malloc.  xmalloc.
+
+ • Freeing after Malloc    Use free to free a block you
+				 got with malloc.
+
+ • Changing Block Size    Use realloc to make a block
+				 bigger or smaller.
+
+ • Allocating Cleared Space    Use calloc to allocate a
+				 block and clear it.
+
+ • Aligned Memory Blocks    Allocating specially aligned memory.
+
+ • Malloc Tunable Parameters    Use mallopt to adjust allocation
+                                 parameters.
+
+ • Heap Consistency Checking    Automatic checking for errors.
+
+ • Statistics of Malloc    Getting information about how much
+				 memory your program is using.
+
+ • Summary of Malloc    Summary of malloc and related functions.
+
+TABLE_END
+

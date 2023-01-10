@@ -1,0 +1,63 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: fd_set
+The fd_set data type represents file descriptor sets for the select function.  It is actually a bit array. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int FD_SETSIZE
+The value of this macro is the maximum number of file descriptors that a fd_set object can hold information about.  On systems with a fixed maximum number, FD_SETSIZE is at least that number.  On some systems, including GNU, there is no absolute limit on the number of descriptors open, but this macro still has a constant value which controls the number of bits in an fd_set; if you get a file descriptor with a value as high as FD_SETSIZE, you cannot put that descriptor into an fd_set. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: void FD_ZERO (fd_set *set)
+Preliminary: | MT-Safe race:set | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This macro initializes the file descriptor set set to be the empty set. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: void FD_SET (int filedes, fd_set *set)
+Preliminary: | MT-Safe race:set | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This macro adds filedes to the file descriptor set set. 
+The filedes parameter must not have side effects since it is evaluated more than once. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: void FD_CLR (int filedes, fd_set *set)
+Preliminary: | MT-Safe race:set | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This macro removes filedes from the file descriptor set set. 
+The filedes parameter must not have side effects since it is evaluated more than once. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int FD_ISSET (int filedes, const fd_set *set)
+Preliminary: | MT-Safe race:set | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+This macro returns a nonzero value (true) if filedes is a member of the file descriptor set set, and zero (false) otherwise. 
+The filedes parameter must not have side effects since it is evaluated more than once. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int select (int nfds, fd_set *read-fds, fd_set *write-fds, fd_set *except-fds, struct timeval *timeout)
+Preliminary: | MT-Safe race:read-fds race:write-fds race:except-fds | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The select function blocks the calling process until there is activity on any of the specified sets of file descriptors, or until the timeout period has expired. 
+The file descriptors specified by the read-fds argument are checked to see if they are ready for reading; the write-fds file descriptors are checked to see if they are ready for writing; and the except-fds file descriptors are checked for exceptional conditions.  You can pass a null pointer for any of these arguments if you are not interested in checking for that kind of condition. 
+A file descriptor is considered ready for reading if a read call will not block.  This usually includes the read offset being at the end of the file or there is an error to report.  A server socket is considered ready for reading if there is a pending connection which can be accepted with accept; see Accepting Connections.  A client socket is ready for writing when its connection is fully established; see Connecting. 
+“Exceptional conditions” does not mean errors—errors are reported immediately when an erroneous system call is executed, and do not constitute a state of the descriptor.  Rather, they include conditions such as the presence of an urgent message on a socket.  (See Sockets, for information on urgent messages.) 
+The select function checks only the first nfds file descriptors.  The usual thing is to pass FD_SETSIZE as the value of this argument. 
+The timeout specifies the maximum time to wait.  If you pass a null pointer for this argument, it means to block indefinitely until one of the file descriptors is ready.  Otherwise, you should provide the time in struct timeval format; see Time Types. Specify zero as the time (a struct timeval containing all zeros) if you want to find out which descriptors are ready without waiting if none are ready. 
+The normal return value from select is the total number of ready file descriptors in all of the sets.  Each of the argument sets is overwritten with information about the descriptors that are ready for the corresponding operation.  Thus, to see if a particular descriptor desc has input, use FD_ISSET (desc, read-fds) after select returns. 
+If select returns because the timeout period expires, it returns a value of zero. 
+Any signal will cause select to return immediately.  So if your program uses signals, you can’t rely on select to keep waiting for the full time specified.  If you want to be sure of waiting for a particular amount of time, you must check for EINTR and repeat the select with a newly calculated timeout based on the current time.  See the example below.  See also Interrupted Primitives. 
+If an error occurs, select returns -1 and does not modify the argument file descriptor sets.  The following errno error conditions are defined for this function: 
+	EBADF
+One of the file descriptor sets specified an invalid file descriptor.  
+	EINTR
+The operation was interrupted by a signal.  See Interrupted Primitives.  
+	EINVAL
+The timeout argument is invalid; one of the components is negative or too large. 

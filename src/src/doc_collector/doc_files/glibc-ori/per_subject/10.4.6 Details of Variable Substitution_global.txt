@@ -1,0 +1,4 @@
+Part of ordinary shell syntax is the use of ‘$variable’ to substitute the value of a shell variable into a command.  This is called variable substitution, and it is one part of doing word expansion. 
+There are two basic ways you can write a variable reference for substitution: 
+When you use braces, you can also use various constructs to modify the value that is substituted, or test it in various ways. 
+These variants of variable substitution let you remove part of the variable’s value before substituting it.  The prefix and suffix are not mere strings; they are wildcard patterns, just like the patterns that you use to match multiple file names.  But in this context, they match against parts of the variable value rather than against file names. 

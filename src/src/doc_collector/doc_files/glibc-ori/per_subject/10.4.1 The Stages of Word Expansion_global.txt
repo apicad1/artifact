@@ -1,0 +1,2 @@
+When word expansion is applied to a sequence of words, it performs the following transformations in the order shown here: 
+For the details of these transformations, and how to write the constructs that use them, see The BASH Manual (to appear). 

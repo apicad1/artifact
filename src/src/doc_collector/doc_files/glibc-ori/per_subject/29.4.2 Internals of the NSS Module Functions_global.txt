@@ -1,0 +1,2 @@
+Until now we only provided the syntactic interface for the functions in the NSS module.  In fact there is not much more we can say since the implementation obviously is different for each function.  But a few general rules must be followed by all functions. 
+In fact there are four kinds of different functions which may appear in the interface.  All derive from the traditional ones for system databases. db in the following table is normally an abbreviation for the database (e.g., it is pw for the user database). 

@@ -1,0 +1,2 @@
+You can use the uname function to find out some information about the type of computer your program is running on.  This function and the associated data type are declared in the header file sys/utsname.h.  
+As a bonus, uname also gives some information identifying the particular system your program is running on.  This is the same information which you can get with functions targeted to this purpose described in Host Identification. 

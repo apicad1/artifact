@@ -1,0 +1,3 @@
+Some applications may need to read or write data to multiple buffers, which are separated in memory.  Although this can be done easily enough with multiple calls to read and write, it is inefficient because there is overhead associated with each kernel call. 
+Instead, many platforms provide special high-speed primitives to perform these scatter-gather operations in a single kernel call.  The GNU C Library will provide an emulation on any system that lacks these primitives, so they are not a portability threat.  They are defined in sys/uio.h. 
+These functions are controlled with arrays of iovec structures, which describe the location and size of each buffer. 

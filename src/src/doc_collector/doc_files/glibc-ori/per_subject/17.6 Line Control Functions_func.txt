@@ -1,0 +1,72 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int tcsendbreak (int filedes, int duration)
+Preliminary: | MT-Unsafe race:tcattr(filedes)/bsd | AS-Unsafe  | AC-Unsafe corrupt/bsd | See POSIX Safety Concepts. 
+This function generates a break condition by transmitting a stream of zero bits on the terminal associated with the file descriptor filedes.  The duration of the break is controlled by the duration argument.  If zero, the duration is between 0.25 and 0.5 seconds.  The meaning of a nonzero value depends on the operating system. 
+This function does nothing if the terminal is not an asynchronous serial data port. 
+The return value is normally zero.  In the event of an error, a value of -1 is returned.  The following errno error conditions are defined for this function: 
+	EBADF
+The filedes is not a valid file descriptor.  
+	ENOTTY
+The filedes is not associated with a terminal device. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int tcdrain (int filedes)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The tcdrain function waits until all queued output to the terminal filedes has been transmitted. 
+This function is a cancellation point in multi-threaded programs.  This is a problem if the thread allocates some resources (like memory, file descriptors, semaphores or whatever) at the time tcdrain is called.  If the thread gets canceled these resources stay allocated until the program ends.  To avoid this calls to tcdrain should be protected using cancellation handlers. 
+The return value is normally zero.  In the event of an error, a value of -1 is returned.  The following errno error conditions are defined for this function: 
+	EBADF
+The filedes is not a valid file descriptor.  
+	ENOTTY
+The filedes is not associated with a terminal device.  
+	EINTR
+The operation was interrupted by delivery of a signal. See Interrupted Primitives. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int tcflush (int filedes, int queue)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The tcflush function is used to clear the input and/or output queues associated with the terminal file filedes.  The queue argument specifies which queue(s) to clear, and can be one of the following values: 
+	TCIFLUSH  
+ Clear any input data received, but not yet read.  
+	TCOFLUSH  
+ Clear any output data written, but not yet transmitted.  
+	TCIOFLUSH  
+ Clear both queued input and output. 
+The return value is normally zero.  In the event of an error, a value of -1 is returned.  The following errno error conditions are defined for this function: 
+	EBADF
+The filedes is not a valid file descriptor.  
+	ENOTTY
+The filedes is not associated with a terminal device.  
+	EINVAL
+A bad value was supplied as the queue argument. 
+It is unfortunate that this function is named tcflush, because the term “flush” is normally used for quite another operation—waiting until all output is transmitted—and using it for discarding input or output would be confusing.  Unfortunately, the name tcflush comes from POSIX and we cannot change it. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int tcflow (int filedes, int action)
+Preliminary: | MT-Unsafe race:tcattr(filedes)/bsd | AS-Unsafe  | AC-Safe  | See POSIX Safety Concepts. 
+The tcflow function is used to perform operations relating to XON/XOFF flow control on the terminal file specified by filedes. 
+The action argument specifies what operation to perform, and can be one of the following values: 
+	TCOOFF  
+Suspend transmission of output.  
+	TCOON  
+Restart transmission of output.  
+	TCIOFF  
+Transmit a STOP character.  
+	TCION  
+Transmit a START character. 
+For more information about the STOP and START characters, see Special Characters. 
+The return value is normally zero.  In the event of an error, a value of -1 is returned.  The following errno error conditions are defined for this function: 
+ 
+	EBADF
+The filedes is not a valid file descriptor.   
+	ENOTTY
+The filedes is not associated with a terminal device.   
+	EINVAL
+A bad value was supplied as the action argument. 

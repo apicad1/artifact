@@ -1,0 +1,27 @@
+MB_CUR_MAX(3)                                   Linux Programmer's Manual                                  MB_CUR_MAX(3)
+
+NAME
+       MB_CUR_MAX - maximum length of a multibyte character in the current locale
+
+SYNOPSIS
+       #include <stdlib.h>
+
+DESCRIPTION
+       The  MB_CUR_MAX macro defines an integer expression giving the maximum number of bytes needed to represent a sin‐
+       gle wide character in the current locale.  This value is locale dependent and therefore not a  compile-time  con‐
+       stant.
+
+RETURN VALUE
+       An integer in the range [1, MB_LEN_MAX].  The value 1 denotes traditional 8-bit encoded characters.
+
+CONFORMING TO
+       POSIX.1-2001, POSIX.1-2008, C99.
+
+SEE ALSO
+       MB_LEN_MAX(3), mblen(3), mbstowcs(3), mbtowc(3), wcstombs(3), wctomb(3)
+
+COLOPHON
+       This  page  is  part  of  release 5.13 of the Linux man-pages project.  A description of the project, information
+       about reporting bugs, and the latest version of this page, can be found at https://www.kernel.org/doc/man-pages/.
+
+Linux                                                  2015-08-08                                          MB_CUR_MAX(3)

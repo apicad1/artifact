@@ -1,0 +1,4 @@
+When you read the attributes of a file, they come back in a structure called struct stat.  This section describes the names of the attributes, their data types, and what they mean.  For the functions to read the attributes of a file, see Reading Attributes. 
+The header file sys/stat.h declares all the symbols defined in this section.  
+The extensions for the Large File Support (LFS) require, even on 32-bit machines, types which can handle file sizes up to 2^63. Therefore a new definition of struct stat is necessary. 
+Some of the file attributes have special data type names which exist specifically for those attributes.  (They are all aliases for well-known integer types that you know and love.)  These typedef names are defined in the header file sys/types.h as well as in sys/stat.h. Here is a list of them. 

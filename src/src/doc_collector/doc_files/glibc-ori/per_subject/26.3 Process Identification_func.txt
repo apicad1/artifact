@@ -1,0 +1,26 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Data Type: pid_t
+The pid_t data type is a signed integer type which is capable of representing a process ID.  In the GNU C Library, this is an int. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: pid_t getpid (void)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The getpid function returns the process ID of the current process. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: pid_t getppid (void)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The getppid function returns the process ID of the parent of the current process. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: pid_t gettid (void)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The gettid function returns the thread ID of the current thread.  The returned value is obtained from the Linux kernel and is not subject to caching.  See the discussion of thread IDs above, especially regarding reuse of the IDs of threads which have exited. 
+This function is specific to Linux. 

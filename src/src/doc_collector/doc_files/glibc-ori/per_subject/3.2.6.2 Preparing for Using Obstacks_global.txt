@@ -1,0 +1,33 @@
+Each source file in which you plan to use the obstack functions must include the header file obstack.h, like this: 
+
+EXAMPLE_BEGIN
+#include <obstack.h>
+EXAMPLE_END
+
+Also, if the source file uses the macro obstack_init, it must declare or define two functions or macros that will be called by the obstack library.  One, obstack_chunk_alloc, is used to allocate the chunks of memory into which objects are packed.  The other, obstack_chunk_free, is used to return chunks when the objects in them are freed.  These macros should appear before any use of obstacks in the source file. 
+Usually these are defined to use malloc via the intermediary xmalloc (see Unconstrained Allocation).  This is done with the following pair of macro definitions: 
+
+EXAMPLE_BEGIN
+#define obstack_chunk_alloc xmalloc
+#define obstack_chunk_free free
+EXAMPLE_END
+
+Though the memory you get using obstacks really comes from malloc, using obstacks is faster because malloc is called less often, for larger blocks of memory.  See Obstack Chunks, for full details. 
+At run time, before the program can use a struct obstack object as an obstack, it must initialize the obstack by calling obstack_init. 
+Here are two examples of how to allocate the space for an obstack and initialize it.  First, an obstack that is a static variable: 
+
+EXAMPLE_BEGIN
+static struct obstack myobstack;
+…
+obstack_init (&myobstack);
+EXAMPLE_END
+
+Second, an obstack that is itself dynamically allocated: 
+
+EXAMPLE_BEGIN
+struct obstack *myobstack_ptr
+  = (struct obstack *) xmalloc (sizeof (struct obstack));
+
+obstack_init (myobstack_ptr);
+EXAMPLE_END
+

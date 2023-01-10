@@ -1,0 +1,38 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int access (const char *filename, int how)
+Preliminary: | MT-Safe  | AS-Safe  | AC-Safe  | See POSIX Safety Concepts. 
+The access function checks to see whether the file named by filename can be accessed in the way specified by the how argument.  The how argument either can be the bitwise OR of the flags R_OK, W_OK, X_OK, or the existence test F_OK. 
+This function uses the real user and group IDs of the calling process, rather than the effective IDs, to check for access permission.  As a result, if you use the function from a setuid or setgid program (see How Change Persona), it gives information relative to the user who actually ran the program. 
+The return value is 0 if the access is permitted, and -1 otherwise.  (In other words, treated as a predicate function, access returns true if the requested access is denied.) 
+In addition to the usual file name errors (see File Name Errors), the following errno error conditions are defined for this function: 
+	EACCES
+The access specified by how is denied.  
+	ENOENT
+The file doesn’t exist.  
+	EROFS
+Write permission was requested for a file on a read-only file system. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int R_OK
+Flag meaning test for read permission. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int W_OK
+Flag meaning test for write permission. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int X_OK
+Flag meaning test for execute/search permission. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Macro: int F_OK
+Flag meaning test for existence of the file. 

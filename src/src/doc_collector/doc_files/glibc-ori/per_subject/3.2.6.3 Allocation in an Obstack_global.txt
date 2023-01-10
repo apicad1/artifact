@@ -1,0 +1,28 @@
+The most direct way to allocate an object in an obstack is with obstack_alloc, which is invoked almost like malloc. 
+For example, here is a function that allocates a copy of a string str in a specific obstack, which is in the variable string_obstack: 
+
+EXAMPLE_BEGIN
+struct obstack string_obstack;
+
+char *
+copystring (char *string)
+{
+  size_t len = strlen (string) + 1;
+  char *s = (char *) obstack_alloc (&string_obstack, len);
+  memcpy (s, string, len);
+  return s;
+}
+EXAMPLE_END
+
+To allocate a block with specified contents, use the function obstack_copy, declared like this: 
+The obstack_copy0 function is convenient for copying a sequence of characters into an obstack as a null-terminated string.  Here is an example of its use: 
+
+EXAMPLE_BEGIN
+char *
+obstack_savestring (char *addr, int size)
+{
+  return obstack_copy0 (&myobstack, addr, size);
+}
+EXAMPLE_END
+
+Contrast this with the previous example of savestring using malloc (see Basic Allocation). 

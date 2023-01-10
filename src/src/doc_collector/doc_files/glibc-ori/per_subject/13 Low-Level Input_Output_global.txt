@@ -1,0 +1,61 @@
+This chapter describes functions for performing low-level input/output operations on file descriptors.  These functions include the primitives for the higher-level I/O functions described in I/O on Streams, as well as functions for performing low-level control operations for which there are no equivalents on streams. 
+Stream-level I/O is more flexible and usually more convenient; therefore, programmers generally use the descriptor-level functions only when necessary.  These are some of the usual reasons: 
+  For reading binary files in large chunks.   For reading an entire file into core before parsing it.   To perform operations other than data transfer, which can only be done with a descriptor.  (You can use fileno to get the descriptor corresponding to a stream.)   To pass descriptors to a child process.  (The child can create its own stream to use a descriptor that it inherits, but cannot inherit a stream directly.) 
+
+TABLE_BEGIN
+ • Opening and Closing Files    How to open and close file
+                                         descriptors.
+
+ • I/O Primitives    Reading and writing data.
+
+ • File Position Primitive    Setting a descriptor’s file
+                                         position.
+
+ • Descriptors and Streams    Converting descriptor to stream
+                                         or vice-versa.
+
+ • Stream/Descriptor Precautions    Precautions needed if you use both
+                                         descriptors and streams.
+
+ • Scatter-Gather    Fast I/O to discontinuous buffers.
+
+ • Copying File Data    Copying data between files.
+
+ • Memory-mapped I/O    Using files like memory.
+
+ • Waiting for I/O    How to check for input or output
+					 on multiple file descriptors.
+
+ • Synchronizing I/O    Making sure all I/O actions completed.
+
+ • Asynchronous I/O    Perform I/O in parallel.
+
+ • Control Operations    Various other operations on file
+					 descriptors.
+
+ • Duplicating Descriptors    Fcntl commands for duplicating
+                                         file descriptors.
+
+ • Descriptor Flags    Fcntl commands for manipulating
+                                         flags associated with file
+                                         descriptors.
+
+ • File Status Flags    Fcntl commands for manipulating
+                                         flags associated with open files.
+
+ • File Locks    Fcntl commands for implementing
+                                         file locking.
+
+ • Open File Description Locks    Fcntl commands for implementing
+                                         open file description locking.
+
+ • Open File Description Locks Example    An example of open file description lock
+                                         usage
+
+ • Interrupt Input    Getting an asynchronous signal when
+                                         input arrives.
+
+ • IOCTLs    Generic I/O Control operations.
+
+TABLE_END
+

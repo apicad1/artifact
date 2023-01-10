@@ -1,0 +1,5 @@
+All of the signal blocking functions use a data structure called a signal set to specify what signals are affected.  Thus, every activity involves two stages: creating the signal set, and then passing it as an argument to a library function.  
+These facilities are declared in the header file signal.h.  
+There are two ways to initialize a signal set.  You can initially specify it to be empty with sigemptyset and then add specified signals individually.  Or you can specify it to be full with sigfillset and then delete specified signals individually. 
+You must always initialize the signal set with one of these two functions before using it in any other way.  Don’t try to set all the signals explicitly because the sigset_t object might include some other information (like a version field) that needs to be initialized as well.  (In addition, it’s not wise to put into your program an assumption that the system has no signals aside from the ones you know about.) 
+Finally, there is a function to test what signals are in a signal set: 

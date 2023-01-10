@@ -1,0 +1,16 @@
+
+>>>>>>>>>>>>>>>>>>>>
+- Tunable namespace: glibc.mem
+This tunable namespace supports operations that affect the way the GNU C Library and the process manage memory. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Tunable: glibc.mem.tagging
+If the hardware supports memory tagging, this tunable can be used to control the way the GNU C Library uses this feature.  At present this is only supported on AArch64 systems with the MTE extention; it is ignored for all other systems. 
+This tunable takes a value between 0 and 255 and acts as a bitmask that enables various capabilities. 
+Bit 0 (the least significant bit) causes the malloc subsystem to allocate tagged memory, with each allocation being assigned a random tag. 
+Bit 1 enables precise faulting mode for tag violations on systems that support deferred tag violation reporting.  This may cause programs to run more slowly. 
+Other bits are currently reserved. 
+The GNU C Library startup code will automatically enable memory tagging support in the kernel if this tunable has any non-zero value. 
+The default value is ‘0’, which disables all memory tagging. 

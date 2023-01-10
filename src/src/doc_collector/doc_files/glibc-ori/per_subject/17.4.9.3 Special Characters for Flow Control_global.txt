@@ -1,0 +1,1 @@
+These special characters may be active in either canonical or noncanonical input mode, but their use is controlled by the flags IXON and IXOFF (see Input Modes). 

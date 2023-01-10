@@ -1,0 +1,55 @@
+The address of a block returned by malloc or realloc in GNU systems is always a multiple of eight (or sixteen on 64-bit systems).  If you need a block whose address is a multiple of a higher power of two than that, use aligned_alloc or posix_memalign. aligned_alloc and posix_memalign are declared in stdlib.h. 
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void * aligned_alloc (size_t alignment, size_t size)
+Preliminary: | MT-Safe  | AS-Unsafe lock | AC-Unsafe lock fd mem | See POSIX Safety Concepts. 
+The aligned_alloc function allocates a block of size bytes whose address is a multiple of alignment.  The alignment must be a power of two and size must be a multiple of alignment. 
+The aligned_alloc function returns a null pointer on error and sets errno to one of the following values: 
+	ENOMEM
+There was insufficient memory available to satisfy the request.  
+	EINVAL
+alignment is not a power of two.  This function was introduced in ISO C11 and hence may have better portability to modern non-POSIX systems than posix_memalign. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void * memalign (size_t boundary, size_t size)
+Preliminary: | MT-Safe  | AS-Unsafe lock | AC-Unsafe lock fd mem | See POSIX Safety Concepts. 
+The memalign function allocates a block of size bytes whose address is a multiple of boundary.  The boundary must be a power of two!  The function memalign works by allocating a somewhat larger block, and then returning an address within the block that is on the specified boundary. 
+The memalign function returns a null pointer on error and sets errno to one of the following values: 
+	ENOMEM
+There was insufficient memory available to satisfy the request.  
+	EINVAL
+boundary is not a power of two.  
+The memalign function is obsolete and aligned_alloc or posix_memalign should be used instead. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: int posix_memalign (void **memptr, size_t alignment, size_t size)
+Preliminary: | MT-Safe  | AS-Unsafe lock | AC-Unsafe lock fd mem | See POSIX Safety Concepts. 
+The posix_memalign function is similar to the memalign function in that it returns a buffer of size bytes aligned to a multiple of alignment.  But it adds one requirement to the parameter alignment: the value must be a power of two multiple of sizeof (void *). 
+If the function succeeds in allocation memory a pointer to the allocated memory is returned in *memptr and the return value is zero. Otherwise the function returns an error value indicating the problem. The possible error values returned are: 
+	ENOMEM
+There was insufficient memory available to satisfy the request.  
+	EINVAL
+alignment is not a power of two multiple of sizeof (void *).  
+This function was introduced in POSIX 1003.1d.  Although this function is superseded by aligned_alloc, it is more portable to older POSIX systems that do not support ISO C11. 
+<<<<<<<<<<<<<<<<<<<<
+
+
+>>>>>>>>>>>>>>>>>>>>
+- Function: void * valloc (size_t size)
+Preliminary: | MT-Unsafe init | AS-Unsafe init lock | AC-Unsafe init lock fd mem | See POSIX Safety Concepts. 
+Using valloc is like using memalign and passing the page size as the value of the first argument.  It is implemented like this: 
+
+EXAMPLE_BEGIN
+void *
+valloc (size_t size)
+{
+  return memalign (getpagesize (), size);
+}
+EXAMPLE_END
+
+Query Memory Parameters for more information about the memory subsystem. 
+The valloc function is obsolete and aligned_alloc or posix_memalign should be used instead. 

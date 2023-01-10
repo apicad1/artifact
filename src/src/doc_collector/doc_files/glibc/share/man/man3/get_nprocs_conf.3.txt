@@ -1,0 +1,65 @@
+GET_NPROCS(3)                                   Linux Programmer's Manual                                  GET_NPROCS(3)
+
+NAME
+       get_nprocs, get_nprocs_conf - get number of processors
+
+SYNOPSIS
+       #include <sys/sysinfo.h>
+
+       int get_nprocs(void);
+       int get_nprocs_conf(void);
+
+DESCRIPTION
+       The function get_nprocs_conf() returns the number of processors configured by the operating system.
+
+       The  function  get_nprocs() returns the number of processors currently available in the system.  This may be less
+       than the number returned by get_nprocs_conf() because processors may be offline (e.g., on hotpluggable systems).
+
+RETURN VALUE
+       As given in DESCRIPTION.
+
+ATTRIBUTES
+       For an explanation of the terms used in this section, see attributes(7).
+
+       ┌──────────────────────────────────────────────────────────────────────────────────────┬───────────────┬─────────┐
+       │Interface                                                                             │ Attribute     │ Value   │
+       ├──────────────────────────────────────────────────────────────────────────────────────┼───────────────┼─────────┤
+       │get_nprocs(), get_nprocs_conf()                                                       │ Thread safety │ MT-Safe │
+       └──────────────────────────────────────────────────────────────────────────────────────┴───────────────┴─────────┘
+
+CONFORMING TO
+       These functions are GNU extensions.
+
+NOTES
+       The current implementation of these functions is rather expensive, since they open and parse files  in  the  /sys
+       filesystem each time they are called.
+
+       The following sysconf(3) calls make use of the functions documented on this page to return the same information.
+
+           np = sysconf(_SC_NPROCESSORS_CONF);     /* processors configured */
+           np = sysconf(_SC_NPROCESSORS_ONLN);     /* processors available */
+
+EXAMPLES
+       The following example shows how get_nprocs() and get_nprocs_conf() can be used.
+
+       #include <stdlib.h>
+       #include <stdio.h>
+       #include <sys/sysinfo.h>
+
+       int
+       main(int argc, char *argv[])
+       {
+           printf("This system has %d processors configured and "
+                   "%d processors available.\n",
+                   get_nprocs_conf(), get_nprocs());
+           exit(EXIT_SUCCESS);
+       }
+
+SEE ALSO
+       nproc(1)
+
+COLOPHON
+       This  page  is  part  of  release 5.13 of the Linux man-pages project.  A description of the project, information
+       about reporting bugs, and the latest version of this page, can be found at https://www.kernel.org/doc/man-pages/.
+
+GNU                                                    2021-03-22                                          GET_NPROCS(3)
