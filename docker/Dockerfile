@@ -10,7 +10,8 @@ RUN apt-get update && \
 	ln -s /usr/bin/llvm-ar-12 /usr/bin/llvm-ar
 
 RUN pip3 install --upgrade wllvm requests lxml hanlp
-RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs > rust.sh && \
+    bash rust.sh -y
 # Note: In China, you may need to use mirror websites like below:
 # RUN pip3 install --upgrade wllvm requests lxml hanlp -i https://pypi.tuna.tsinghua.edu.cn/simple/
 # RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs > rust.sh && \
