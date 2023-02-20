@@ -21,7 +21,7 @@ This artifact provides the guidance and the information needed to support the re
   
     This directory contains the original evaluation results of the study.
     
-    See more in the inside [README](./evaluation/ori_evaluation_results/README.md).
+    See more in the inside [README](./evaluation/evaluation_results/README.md).
   
 - "src" directory
 
