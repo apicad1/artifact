@@ -18,6 +18,8 @@ After obtaining and decompressing the artifact, we have two ways to build it. Th
 - Install prerequisites
 
   ```bash
+  # Note: assume we have proper permissions to execute the below commands.
+  # Otherwise, we may meet the errors about "permission denied".
   $ apt-get -y install clang-12 python3 python3-pip curl # about 4 mins
   $ ln -s /usr/bin/clang++-12 /usr/bin/clang++ && \
   	ln -s /usr/bin/clang-12 /usr/bin/clang && \
@@ -25,7 +27,11 @@ After obtaining and decompressing the artifact, we have two ways to build it. Th
   	ln -s /usr/bin/llvm-link-12 /usr/bin/llvm-link && \
   	ln -s /usr/bin/llvm-ar-12 /usr/bin/llvm-ar
   $ pip3 install --upgrade wllvm requests lxml hanlp # about 5 mins
-  $ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh # about 1 min
+  # About 1 min and one option may need to be confirmed during the process:
+  $ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+  # Restart the shell to reload PATH environment variable.
+  # Or, configure for the current shell:
+  $ source "%HOME/.cargo/env"
   ```
 
 - Install APICAD (In the "./src" directory)
@@ -34,7 +40,7 @@ After obtaining and decompressing the artifact, we have two ways to build it. Th
   # Please ensure that `apicad` is executable.
   # If not, use `chmod +x apicad` to enable the permission.
   $ make # about 2 mins
-  $ make install
+  $ make install # Require proper permissions.
   ```
 
 # Build Artifact from the Dockerfile

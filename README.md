@@ -58,7 +58,7 @@ In workflow 1, we can run with 2 steps to generate code-based spec:
    # If this operation is not performed in advance,
    # apicad will attempt to automatically do this in `apicad analyze`
    $ apicad generate-bc [-obj --bcdir=...]
-   # Or you can generate by yourself with using -g
+   # Or you can generate by yourself with `-g`
    $ clang -c -emit-llvm source.c -g -o source.bc
    ```
 
@@ -81,7 +81,8 @@ $ apicad detect [--type retval|arg.pre|arg.post|causality] [--target func_name]
 ## Workflow 2
 
 For more accurate detection, APICAD can give play to both code-based spec and doc-based spec rather than taking a single source.
-To enable doc-based spec for detection, you need to first collect documents and use our document analyzer to generate doc-based spec.
+
+To enable doc-based spec for detection, you need to collect documents and then use the document analyzer to generate doc-based spec.
 
 1. collect documents from the website
 
